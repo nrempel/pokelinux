@@ -2,26 +2,39 @@
 
 ## Immediate integration order
 
-The complete early worker diagnostic now passes an actual normal-worker CLI
-missing-record baseline and unchanged-consumer candidate check, plus50 selected
-host tests and host/ARM compilation. It is a best-effort single nonblocking FIFO
-write before error propagation, with no deadline or retirement changes. Run one
-otherwise unchanged graphical ARM wireless diagnostic next to identify the
-truncated RefreshBackend cause, then make the bounded repair and proceed to
-installed cold boot. No GUI recovery is established by these host checks.
-[Diagnostic evidence](evidence/native-connectivity-early-diagnostic.json).
+The normal Main first-retirement latch now passes its actual native x86_64 CLI
+boundary with one unchanged consumer: baseline missing-reason RED, then candidate
+GREEN preserving `startup_failure`/`poll_worker`/`InvalidData` through a later
+Stop and retaining the original startup cutoff. Initial UID0/SETPCAP-only
+execution becomes cap0 Main with NET_ADMIN always absent; the worker fails before
+backend access.45 library plus8 owner tests pass,1 ignored, along with formatting,
+strict Clippy and host/ARM compilation. No graphical first-retirement candidate
+or ARM test has executed. [Host evidence](evidence/native-connectivity-first-retirement.json).
 
-Latest graphical wireless checkpoint: root1 fails normal Main startup with
-EACCES before app input. Root2 reaches one real Settings Enable, matching
-Completed, independent station association/fixed IPv4 and one cap0 nonce/ACK.
-The first app has an actual normal wait0 and brief background readback, then the
-original worker is terminal before second-window qualification while Main stays
-alive. Its stderr truncates within `RefreshBackend`; final wait records signal9.
-The underlying error and any IPv6 cause remain unestablished. No second packet,
-Disable or complete GUI success follows. QEMU/Xvfb wait0 and container wait1,
-removal/absence and unchanged inputs pass separately; nested controller/guest
-custody flags remain false. Preserve both attempts and the earlier failed
-virtual-link traces. [Partial GUI evidence](evidence/native-wireless-settings-window-partial.json).
+Next run one otherwise unchanged graphical ARM attempt with the latch to identify
+Main's first retirement cause before behavioral changes, then continue installed
+cold boot.
+
+The latest actual graphical wireless run remains failed root3: real
+Enable/Completed, association/fixed IPv4 and one cap0 packet precede the
+retained-worker guard. The close request precedes the guard; the combined
+app-wait0/SDK-retirement record is published after cancel without a separate wait
+observation time. No background persistence is qualified. Main's complete log is
+one closure JSON with worker signal9 and no early worker report. The error stage,
+underlying cause and Main's first retirement reason remain unknown in that epoch.
+The later host reporting GREEN does not repair or explain this graphical failure.
+[Early worker diagnostic](evidence/native-connectivity-early-diagnostic.json).
+
+Root3 controller custody qualifies; the compiled desired assertion fails after
+backend cleanup. Guest-case closure remains false with34 adopted actual waits,
+all exit0, despite eventual ECHILD. Wireless teardown/loopback preservation,
+QEMU/Xvfb wait0, container wait1/removal/absence and unchanged inputs pass
+separately. No second window/packet, Disable, quiet or complete GUI success is
+qualified. Preserve root1's startup EACCES and root2's distinct truncated
+`RefreshBackend` failure: root2 had a normal first-app wait and brief background
+readback before retirement; root3 does not establish that chronology or error
+path. No IPv6, scheduling or transport cause is established.
+[Partial GUI evidence](evidence/native-wireless-settings-window-partial.json).
 
 Latest follow-up: the two-file Clippy repair passes the actual current virtual
 Service/worker packet lifecycle and normal host/ARM builds. Both diagnostic-cohort

@@ -143,3 +143,11 @@ still produce natural worker exit 1 and `ReceiveCommand`/`TimedOut` after its
 unchanged 50 ms envelope and before the unchanged 100 ms action cutoff. The
 8192 syscall-stop bound is unchanged. No effect retry, late-frame forgiveness,
 renewed cutoff or supervisor-kill substitute qualifies that control.
+
+## Normal Main first-retirement consumer
+
+The exact [`first-retirement/consumer.py`](first-retirement/consumer.py) passes
+its native host missing-first-reason RED/candidate GREEN with unchanged bytes.
+It preserves startup failure through a later Stop; no GUI cause is established.
+See its [short reproduction contract](first-retirement/README.md) and
+[curated host evidence](../../docs/evidence/native-connectivity-first-retirement.json).

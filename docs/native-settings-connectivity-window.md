@@ -368,7 +368,7 @@ phone gate remain open.
 
 ## Current graphical wireless tracer remains partial
 
-Two later generic ARM attempts join the normal installed Settings window to the
+Three later generic ARM attempts join the normal installed Settings window to the
 current Rust wireless Main/worker and an owned hwsim open AP. They retain
 authored actor authority, fixed IPv4 and the existing ARM measurement bounds;
 this is the normal Local connection toggle for one selected AP, without SSID
@@ -387,11 +387,35 @@ app launches but never qualifies its window. Worker stderr truncates within
 `RefreshBackend` and is concatenated with Main's closure record, which reports
 worker signal9. The underlying component error and any IPv6 cause are unknown.
 No second packet, Disable/removal/quiet or complete graphical success qualifies.
-Both controller classifications remain `SETUP_FAILURE`, with functional false
+Root1/root2 controller classifications remain `SETUP_FAILURE`, with functional false
 and nested controller/guest custody false. Their cleanup assertion failures
 remain recorded despite eventual guest ECHILD, QEMU/Xvfb wait0, container wait1
 and exact removal/absence on the same daemon. Selected source and inputs remain
 unchanged. These failures do not replace the earlier virtual-link traces.
+
+Root3 selects the published `6073b4e` early-diagnostic Main/worker, retaining the
+same controller, actor, normal Settings app, AP/profile predicates, IPv6 behavior,
+resources and cutoffs. It again reaches real Enable, matching Completed,
+independent association/fixed IPv4 and one cap0 nonce/ACK. A normal close dispatch
+is acknowledged before the retained-worker guard fires. The combined record of
+first-app wait0 and SDK/listener retirement is published after cancellation;
+it retains no separate app-wait observation time. This run adds no pre-guard
+combined retirement or background-persistence proof. No second window, packet, Disable
+or quiet qualification follows.
+
+Its complete Main log contains exactly one closure JSON with worker signal9;
+there is no early worker diagnostic or recorded worker-error stage. Main's first
+retirement reason is absent. This neither identifies the cause nor establishes
+that root3 followed root2's truncated `RefreshBackend` path. Root3 controller
+custody passes, and the compiled desired assertion fails after backend cleanup
+with driver101. Guest-case closure remains false because the original criterion
+rejects its34 adopted actual waits, all exit0, despite eventual ECHILD and closed
+handles. Wireless teardown/loopback preservation, QEMU/Xvfb wait0, container wait1,
+exact removal/absence and unchanged inputs pass separately. A later Main
+first-retirement latch now passes its separate native host CLI missing-reason
+RED/candidate GREEN, preserving startup failure through a later Stop. That
+candidate has not run graphically and identifies no cause for root3.
+[First-retirement host evidence](evidence/native-connectivity-first-retirement.json).
 
 Root2 retains one original Enable-ready PNG at 1080×2424. External compositor
 measurements are scale 2.625, nominal 65×146mm and a 411×923 mapped Settings window
@@ -401,4 +425,5 @@ buffer/PNG hash matching and Root's original-frame review show Disabled/Connecti
 ready, Enable active and Disable dimmed in the ordinary fallback theme. There is
 no connected-success frame, resize or new public screenshot in this checkpoint.
 [Hash-only partial provenance](evidence/native-wireless-settings-window-partial.json)
-binds both attempts, frozen sources, key gates, outer receipts and the frame.
+binds all three attempts, frozen sources, key gates and outer receipts; its
+visually reviewed frame remains root2 only.

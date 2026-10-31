@@ -38,6 +38,7 @@ fn service() -> Service {
         exit_status: None,
         main_caps_dropped: false,
         start_until: boot_time_ns() + 1_000_000_000,
+        first_retirement: None,
     }
 }
 
@@ -152,4 +153,85 @@ fn old_positional_worker_startup_refuses_before_capability_changes() {
             .kind(),
         io::ErrorKind::InvalidData
     );
+}
+
+// Authored record tests complement the actual normal Main closure consumer.
+#[test]
+fn retirement_keeps_first_record_failure_through_stop_and_snapshot() {
+    let mut s = service();
+    let mut bytes = wireless(s.namespace);
+    let at = boot_time_ns().saturating_sub(LEASE + 1);
+    bytes[10..18].copy_from_slice(&at.to_le_bytes());
+    assert!(s.accept(&bytes).is_err());
+    let first = s
+        .snapshot()
+        .first_retirement
+        .expect("first rejecting decision");
+    assert_eq!(first.reason, RetirementReason::RecordExpired);
+    assert_eq!(first.observation_at_ns, Some(at));
+    assert!(first.observation_age_ns.unwrap() >= LEASE);
+    assert_eq!(first.original_until_ns, Some(at + LEASE));
+    s.stop().unwrap();
+    s.stop().unwrap();
+    assert_eq!(s.snapshot().first_retirement, Some(first));
+    let value = serde_json::to_value(first).unwrap();
+    assert_eq!(value["reason"], "record_expired");
+    assert!(value.get("payload").is_none());
+}
+
+#[test]
+fn retirement_distinguishes_future_regression_identity_and_bad_frames() {
+    for (offset, value, reason) in [
+        (0, 1, RetirementReason::RecordVersion),
+        (1, 9, RetirementReason::RecordType),
+        (18, 99, RetirementReason::RecordIdentity),
+    ] {
+        let mut s = service();
+        let mut bytes = wireless(s.namespace);
+        if offset == 18 {
+            bytes[offset] ^= 1;
+        } else {
+            bytes[offset] = value;
+        }
+        assert!(s.accept(&bytes).is_err());
+        assert_eq!(s.snapshot().first_retirement.unwrap().reason, reason);
+    }
+    let mut s = service();
+    assert!(s.accept(&[2]).is_err());
+    assert_eq!(
+        s.snapshot().first_retirement.unwrap().reason,
+        RetirementReason::RecordLength
+    );
+    let mut s = service();
+    let mut bytes = wireless(s.namespace);
+    let future = boot_time_ns() + 1_000_000_000;
+    bytes[10..18].copy_from_slice(&future.to_le_bytes());
+    assert!(s.accept(&bytes).is_err());
+    let first = s.snapshot().first_retirement.unwrap();
+    assert_eq!(first.reason, RetirementReason::RecordFuture);
+    assert_eq!(first.observation_at_ns, Some(future));
+    assert_eq!(first.observation_age_ns, None);
+    let mut s = service();
+    let mut bytes = wireless(s.namespace);
+    assert!(s.accept(&bytes).is_ok());
+    let at = u64::from_le_bytes(bytes[10..18].try_into().unwrap());
+    bytes[10..18].copy_from_slice(&(at - 1).to_le_bytes());
+    assert!(s.accept(&bytes).is_err());
+    assert_eq!(
+        s.snapshot().first_retirement.unwrap().reason,
+        RetirementReason::RecordRegression
+    );
+}
+
+#[test]
+fn valid_observation_has_no_retirement_and_external_stop_is_recorded_once() {
+    let mut s = service();
+    assert!(s.accept(&wireless(s.namespace)).is_ok());
+    assert_eq!(s.snapshot().first_retirement, None);
+    s.stop().unwrap();
+    let first = s.snapshot().first_retirement.unwrap();
+    assert_eq!(first.reason, RetirementReason::ExternalStop);
+    assert_eq!(first.observation_at_ns, None);
+    s.stop().unwrap();
+    assert_eq!(s.snapshot().first_retirement, Some(first));
 }

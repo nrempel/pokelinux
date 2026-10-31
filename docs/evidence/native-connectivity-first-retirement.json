@@ -1,0 +1,172 @@
+{
+  "schema": 1,
+  "classification": "ACTUAL_NORMAL_MAIN_FIRST_STARTUP_RETIREMENT_RED_GREEN",
+  "scope": "Native x86_64 normal Main/worker startup failure; authored absent target; no backend/interface/GUI/phone qualification",
+  "consumer": {
+    "path": "tools/native-connectivity-worker/first-retirement/consumer.py",
+    "bytes": 13728,
+    "sha256": "e7c0bbbd4dcc68caa6061b78ea8aeafdb7b2519e92439c48e27edd4e1b6f365e",
+    "identical_baseline_and_candidate": true
+  },
+  "helpers": {
+    "owned.py": {
+      "source": "tools/native-installed-services/owned.py",
+      "bytes": 12712,
+      "sha256": "5a738b9529a1a0e5d5b0bd20e27e2ec4244d4e61d7c8e0dad96fe1ffbef3c423"
+    },
+    "closure.py": {
+      "source": "tools/native-audio-preview/closure.py",
+      "bytes": 3596,
+      "sha256": "646e9cfd5f755b626fe8babfa26637ddac328ede05cdab75aa77cc51332d70d6"
+    }
+  },
+  "capability_cohort": {
+    "initial_parent_Main_UID_GID": 0,
+    "initial_parent_Main_only_capability": "SETPCAP",
+    "initial_bitmask": 256,
+    "NET_ADMIN_bounding_always_absent": true,
+    "inheritable_and_ambient": 0,
+    "supplementary_groups": [],
+    "NoNewPrivs": 1,
+    "observed_Main_after_startup_failure_all_capability_sets": 0
+  },
+  "original_bounds": {
+    "work_seconds": 1,
+    "closure_seconds": 3,
+    "merged_stdout_stderr_bytes": 16384
+  },
+  "baseline": {
+    "passed": false,
+    "actual_consumer_exit": 1,
+    "classification": "ACTUAL_NORMAL_MAIN_MISSING_FIRST_STARTUP_RETIREMENT_RED",
+    "observation_qualified": true,
+    "behavior_RED_qualified": true,
+    "first_retirement": null,
+    "original_work_until_ns": 7418300730906023,
+    "original_close_until_ns": 7418302730906023,
+    "external_Stop_sent_at_ns": 7418299764967294,
+    "actual_Main_exit": 0,
+    "Main_reported_worker_exit_code": 1,
+    "Main_reported_worker_exit_signal": null,
+    "readonly_Inspect_requests": 2,
+    "Main_SIGTERM_commands_admitted": 1,
+    "startup_worker_error": {
+      "stage": "ReduceCapabilities",
+      "io_kind": "PermissionDenied",
+      "raw_os_error": 1
+    },
+    "network_mutating_requests_admitted": 0,
+    "network_inventory_unchanged": true,
+    "Main_cap0_at_failed_startup": true,
+    "one_Main_direct_wait_and_PIPE_EOF_timely": true,
+    "all_parent_handles_closed": true,
+    "retained_namespace_handle_closed": true,
+    "ECHILD_no_adopted_waits_or_signals": true,
+    "normal_ELFs": {
+      "main": {
+        "bytes": 942608,
+        "sha256": "5777cf89d8f6f66e1490192a7fbb7bc6a0e49481126373b6ec84d7e3d2e38a67",
+        "ELF_machine": 62
+      },
+      "worker": {
+        "bytes": 979176,
+        "sha256": "95468dde74ef3c5ddd53bd5c42f1129667ad7f2650b4685849bcd176ee8fb85b",
+        "ELF_machine": 62
+      }
+    },
+    "proof_sha256": {
+      "baseline/result.json": "b62531d4e4ba9de960f2342138b7ea207a4fb5eb27136a669e65ded1fb7cf45e",
+      "baseline/normal-main.log": "abd8aa0cbe2e58786ae25a2f1aff8530bf634bfe165801aea3952db58ef1a80f",
+      "baseline-selection.json": "808f03eba55acf3df4654f0ce71f6a3cb2429e40e4f8f64b2158460dc783c5b3"
+    }
+  },
+  "candidate": {
+    "passed": true,
+    "actual_consumer_exit": 0,
+    "classification": "ACTUAL_NORMAL_MAIN_FIRST_STARTUP_RETIREMENT_GREEN",
+    "observation_qualified": true,
+    "behavior_RED_qualified": false,
+    "first_retirement": {
+      "detected_at_ns": 7418701779453265,
+      "errno": null,
+      "io_kind": "InvalidData",
+      "observation_age_ns": null,
+      "observation_at_ns": null,
+      "operation": "poll_worker",
+      "original_until_ns": 7418702749939366,
+      "reason": "startup_failure",
+      "record_length": null,
+      "record_type": null
+    },
+    "original_work_until_ns": 7418702749939366,
+    "original_close_until_ns": 7418704749939366,
+    "external_Stop_sent_at_ns": 7418701782604530,
+    "actual_Main_exit": 0,
+    "Main_reported_worker_exit_code": 1,
+    "Main_reported_worker_exit_signal": null,
+    "readonly_Inspect_requests": 2,
+    "Main_SIGTERM_commands_admitted": 1,
+    "startup_worker_error": {
+      "stage": "ReduceCapabilities",
+      "io_kind": "PermissionDenied",
+      "raw_os_error": 1
+    },
+    "network_mutating_requests_admitted": 0,
+    "network_inventory_unchanged": true,
+    "Main_cap0_at_failed_startup": true,
+    "one_Main_direct_wait_and_PIPE_EOF_timely": true,
+    "all_parent_handles_closed": true,
+    "retained_namespace_handle_closed": true,
+    "ECHILD_no_adopted_waits_or_signals": true,
+    "normal_ELFs": {
+      "main": {
+        "bytes": 958712,
+        "sha256": "ddfdef92311359d2ab9e1f6609b338b202b1037c273af9da824cb7ca8a096f8f",
+        "ELF_machine": 62
+      },
+      "worker": {
+        "bytes": 978520,
+        "sha256": "d34d35a96fd2fbab6a5b69d8b286ca946c4138ffedf3dcfd543f1aac177f8200",
+        "ELF_machine": 62
+      }
+    },
+    "proof_sha256": {
+      "candidate/result.json": "a26f3000fcf796aba4d9759437c33610171d715f880258ed30d9379098b8e1a4",
+      "candidate/normal-main.log": "c281b72edc908b6a1032f04af5c9e9312c65b65cedcf3133b80930e39603f65e",
+      "candidate-selection.json": "262addc0a916a4684082ac99bd3b469126d9ff54516c043562ccd5217e3129b2"
+    }
+  },
+  "candidate_first_reason_precedes_later_Stop": true,
+  "candidate_original_startup_cutoff_preserved": true,
+  "candidate_build": {
+    "source_base_commit": "6073b4e7b8bc1d4c91098f83b5d7ff13ef805af7",
+    "frozen_input_files": 59,
+    "source_manifest_sha256": "eaadc8f0a6f7c2551a6577a71e424aed74d17774ef3d8f6268ee1ed37625b48c",
+    "build_result_sha256": "96bbed130225209d0f042e9a857699b4e62a22db847c7462f90afe3273dee10a",
+    "outer_receipt_sha256": "d0eb882ab25d123ca619438b63cab26b11ce953bfa1d2986cad17cdcfd8d499f",
+    "active_library_tests": 45,
+    "active_owner_tests": 8,
+    "ignored_library_tests": 1,
+    "fmt_strict_all_target_Clippy_host_ARM_compilation_passed": true,
+    "source_locks_and_selected_inputs_unchanged": true,
+    "actual_compiler_container_exit": 0,
+    "exact_container_absence_same_daemon": true,
+    "closure_ECHILD_without_adopted_waits": true,
+    "ARM_tests_executed": false,
+    "normal_ARM_Main_worker_executed": false
+  },
+  "earlier_root1_setup_failure": {
+    "cohort": "pokelinux-main-first-retirement-cli-root-1",
+    "consumer_sha256": "3439b0e9a4ea6ba03b0bc7cc527690efe83c677dac5fd5601c76bba7c3258969",
+    "result_sha256": "3669e1ef8378c417657a3aad14c8778ab0c162634a1c9e01dbf977519baa2b63",
+    "review_sha256": "f77e021361ee0c595fbb97772278589f7da251551379c5d16848a97813018105",
+    "behavior_RED_qualified": false,
+    "scope": "cap0 Main could not perform its own bounding-set drop; immutable setup failure"
+  },
+  "graphical_root3_failure_preserved": true,
+  "graphical_first_retirement_candidate_executed": false,
+  "graphical_underlying_cause_known": false,
+  "behavior_or_deadline_change_qualified": false,
+  "phone_accessed": false,
+  "raw_host_network_inventory_or_private_outputs_published": false
+}

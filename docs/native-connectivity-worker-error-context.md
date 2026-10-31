@@ -21,10 +21,34 @@ not the graphical RefreshBackend failure.
 Four actual FIFO/sink controls and the full selected host suite pass:42 library
 tests and8 owner tests, with1 ignored library test. Formatting, strict all-target
 Clippy, host/ARM normal Release builds and ARM libtest compilation pass. ARM
-tests and the new GUI diagnostic have not executed. An initial test run used
-UID1000 and failed11 existing root-fixture assertions; the unchanged source and
-tests pass with isolated UID0 plus CHOWN/DAC_OVERRIDE, without network authority.
-The original GUI cause remains unknown. [Exact evidence](evidence/native-connectivity-early-diagnostic.json).
+tests remain unexecuted. An initial test run used UID1000 and failed11 existing
+root-fixture assertions; the unchanged source and tests pass with isolated UID0
+plus CHOWN/DAC_OVERRIDE, without network authority.
+
+The new normal ARM GUI diagnostic has now executed as root3 and failed after
+Enable/Completed, association/fixed IPv4, one cap0 packet and a normal close
+request. Its combined app-wait0/SDK-retirement record is published after the
+retained-worker guard and cancellation, without a separate wait observation time.
+Main's complete output is one closure JSON reporting
+worker signal9, with no early worker diagnostic or error stage. This establishes
+neither root2's `RefreshBackend` path nor a retirement cause; the successful host
+reporting control does not qualify graphical recovery. Controller custody passes;
+guest-case closure remains false. [Partial graphical evidence](evidence/native-wireless-settings-window-partial.json)
+and [host diagnostic evidence](evidence/native-connectivity-early-diagnostic.json).
+
+Main now latches its first retirement reason in the existing closure JSON. The
+unchanged13728-byte normal-Main consumer records an actual native x86_64
+missing-reason RED, then candidate GREEN: `startup_failure`, `poll_worker` and
+`InvalidData` precede external Stop and retain the original startup cutoff.
+Initial UID0/SETPCAP-only authority lets Main reduce itself to cap0; NET_ADMIN
+is always absent and the worker fails ReduceCapabilities with errno1 before
+backend access. Main exits0, worker exits1 and both cases qualify actual
+wait/PIPE EOF, closed handles and ECHILD. The candidate passes45 library plus8
+owner tests,1 ignored, formatting, strict Clippy and host/ARM compilation. This
+first-retirement candidate has not executed the GUI failure path or ARM tests.
+[Curated host evidence](evidence/native-connectivity-first-retirement.json) and
+[exact consumer/reproduction](../tools/native-connectivity-worker/first-retirement/README.md).
+Root3 and its unknown cause remain unchanged.
 
 ## Earlier context-wrapper checkpoint
 
@@ -140,6 +164,6 @@ and curated provenance.
 
 Repeated graphical ARM resource campaigns are parked with the production 50 ms
 guard unchanged. Full background/reopen/Disable, other error-context branches,
-matched Pixel behavior and all phone gates remain open. The next product priority
-is a reproducible VM preview; headless wireless association requires implementation
-and a behavioral test.
+matched Pixel behavior and all phone gates remain open. The separate
+[headless wireless service](../tools/native-wireless-service/README.md) now has
+passing ARM evidence; it does not qualify the complete graphical lifecycle.

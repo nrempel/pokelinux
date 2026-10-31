@@ -163,6 +163,118 @@
       "outer_normal_app_executed_scalar": false,
       "outer_scalar_scope": "Legacy false scalar is not updated on this failing path; actual app execution is bound by the window/executable/input and Completed records",
       "first_per_app_SDK_helper_terminal_and_listener_absent": true
+    },
+    "root3": {
+      "passed": false,
+      "controller_classification": "SETUP_FAILURE",
+      "normal_case_custody_qualified": true,
+      "guest_case_closure_qualified": false,
+      "normal_Main_worker_source_commit": "6073b4e7b8bc1d4c91098f83b5d7ff13ef805af7",
+      "source_manifest_sha256": "b5272b33988e400c76fb56bb321efaa36340dd6856a36200426cb1dd2f3dcf8a",
+      "frozen_test_source_sha256": {
+        "source/guest.py": "e7f20701589496bd8ac610ef49c02280718b90e1395290af5c2f04f3e5e801a6",
+        "source/controller.py": "4bcfa261fbd952930bae90548edaf135cbbf929580559f0a5c5e517a8ad61632",
+        "source/boot.py": "ad8cd83047f0c7be6990b0304a5178f433de0dbca85bfe5788f20bb541d78c41",
+        "source/service_connectivity_window_tests.rs": "6db946087dccdc34e3f5ae2722d09459199a575475ee2359fb844b797b64188b"
+      },
+      "ELFs": {
+        "main": {
+          "bytes": 956360,
+          "sha256": "85b6564bd6f0660d623f2587b88b74c11aff6991ba9dae460cfd153180c24c3c"
+        },
+        "worker": {
+          "bytes": 960488,
+          "sha256": "b58fca09ad3a1c1f0044ef5d61fe16c44aad9a0d35ad7b733e85971012212f60"
+        }
+      },
+      "other_ELF_cohorts_unchanged_from_root2": [
+        "driver",
+        "launcher",
+        "storage",
+        "normal_Settings"
+      ],
+      "outer_closure": {
+        "functional_passed": false,
+        "actual_QEMU_wait_exit": 0,
+        "actual_Xvfb_wait_exit": 0,
+        "boot_wait_EOF_handles_closed": true,
+        "actual_container_cleanup_wait_exit": 1,
+        "exact_container_removed_and_absent_same_daemon": true,
+        "cleanup_errors": [],
+        "unresolved_direct_children": 0,
+        "source_unchanged": true,
+        "selected_inputs_unchanged": true
+      },
+      "guest_eventual_ECHILD": true,
+      "guest_adopted_actual_waits": {
+        "count": 34,
+        "all_exit_codes_zero": true,
+        "pidfds_signaled": 0
+      },
+      "wireless_owned_radios_removed": true,
+      "wireless_teardown_custody_qualified": true,
+      "STA_loopback_preserved": true,
+      "nested_cleanup_assertion_errors_preserved": [],
+      "proof_sha256": {
+        "selection.json": "68dbfdd78dbfede092c7415b42d6841241bf9fe73c9b436749aee586d529728a",
+        "SOURCE.json": "b5272b33988e400c76fb56bb321efaa36340dd6856a36200426cb1dd2f3dcf8a",
+        "result.json": "c3308cfe46153751997101f3416b33cabc9ceb379d5890cde64638d9dc86f7a8",
+        "connectivity-case/result.json": "2ba56d3ab9c9b25fdd86d9cf3065fae4234e5b4fae2e0d01ce4e08e67ec6ab38",
+        "boot-result.json": "8f007027e8443f9b0d13b6a8401ecb218997a5c075e71cf16036fc59937a3e2c",
+        "run/receipt.json": "5730a4843047a82a4a9273c8c02734fd10f79541a32780af592e54c5f1a5d0ae",
+        "connectivity-case/services/normal-connectivity-main.log": "df1d36288377ca9aa14b1611c8391464e319004647c56e1d1545f26d64f1ec13",
+        "connectivity-case/gates/connected-proof.json": "2cd44bd7db187444303f0ab78c208f956c04e56c97d6e6972fdac209d0ecce6a",
+        "connectivity-case/gates/nonce-1-complete.json": "6aef88e97a81c7dfb63b74838af95cc24227a22b6bea59a5d9c8508a1a36cf74",
+        "connectivity-case/gates/close-first-sent.json": "9207fe7e8f70f8241edc4f18cdde58e138bfb7379a89a78f33d019a1253d305b",
+        "connectivity-case/gates/first-closed.json": "9d9a0a89428f60b7349b640299cc0d7452ac566437dc8bde0493427d805ce61f",
+        "connectivity-case/gates/cancel-case.json": "c7ee6cdbee5202b905356b6d77dae60d0526b2730431567e79a67605ceebc113",
+        "connectivity-case/gates/actor-publications.json": "c242e1309dec0165723b4997df5f28b0ce6471e47e4b6944993e01a5efee9ed8",
+        "connectivity-case/gates/actor-closed.json": "bfb400cc3a01216af464dca5c21aa73ff2edb79449c69361793d100ff445807e",
+        "connectivity-case/gates/peer-packets.json": "b37cabf3afde7c61712c9489a20dbb71fbb2fef51e63695c19cf55fbe423bd9e",
+        "connectivity-case/gates/cleanup-complete.json": "a9e0cba7ffd74345f5f1ba017d0da2ac299eda537cdeaa61a0b4f8fc76e00d99",
+        "connectivity-case/gates/desired-assertion.json": "13e3a176882b2b3f409589fe303a99353ade3929300ffe91e50dfcb853dbd696",
+        "connectivity-case/services/cap0-nonce-1.log": "278a2d7e1165d557ca0ca5873c274c6812b123789f2ab3897d1f4e0cf4081f8a"
+      },
+      "failure_boundary": "Retained-worker guard before the combined first-app/SDK retirement proof",
+      "actual_Enable_touches": 1,
+      "matching_Completed_true": true,
+      "station_association_readback": true,
+      "AP_station_dump_observed": false,
+      "fixed_IPv4_and_subnet_route_readback": true,
+      "nonce_roundtrips_verified": 1,
+      "cap0_client_actual_wait_EOF": true,
+      "first_App_actual_wait_exit_code": 0,
+      "first_per_app_SDK_helper_terminal_and_listener_absent": true,
+      "close_dispatch_completed_ns": 136425422005,
+      "retained_guard_observed_ns": 136774321935,
+      "cancel_requested_ns": 136814911609,
+      "background_persistence_after_first_wait_qualified": false,
+      "original_worker_pidfd_terminal": true,
+      "Main_child_vector_empty": true,
+      "Main_live_at_guard": true,
+      "process_state_snapshot_atomic": false,
+      "second_window_qualified": false,
+      "second_packet_verified": false,
+      "Disable_or_quiet_qualified": false,
+      "worker_error_stage": null,
+      "early_worker_diagnostic_observed": false,
+      "normal_Main_log_nonempty_lines": 1,
+      "normal_Main_log_only_closure_JSON": true,
+      "first_Main_retirement_reason_recorded": false,
+      "underlying_component_error_known": false,
+      "IPv6_cause_established": false,
+      "normal_Main_exit_code": 0,
+      "worker_exit_signal_from_Main_log_tail": 9,
+      "driver_exit_after_owned_cleanup": 101,
+      "compiled_desired_assertion_after_backend_cleanup_failed": true,
+      "functional_green": false,
+      "new_image_analysis_or_visual_review_performed": false,
+      "service_behavior_RED_qualified": false,
+      "first_App_and_SDK_retirement_recorded_ns": 136936382663,
+      "combined_retirement_recorded_before_guard": false,
+      "combined_retirement_recorded_after_cancel": true,
+      "first_App_wait_observation_time_separately_recorded": false,
+      "failure_path_Main_worker_closure_verified": true
     }
   },
   "selected_measurement_bounds": {
@@ -216,5 +328,14 @@
       "bytes": 6458240,
       "sha256": "97ce7a3c1db928fb4ce0d12e4a627502c41aef47fc3be923393a49c27e2c3e7e"
     }
+  },
+  "selected_production_source_commit_scope": "root1/root2 normal Main/worker; root3 records its later diagnostic source and providers separately",
+  "latest_attempt": "root3",
+  "ELFs_scope": "root1/root2; root3 Main/worker overrides are recorded in attempts.root3.ELFs",
+  "later_host_first_retirement_diagnostic": {
+    "evidence": "native-connectivity-first-retirement.json",
+    "qualified_native_x86_64_RED_GREEN": true,
+    "graphical_candidate_executed": false,
+    "root3_cause_established": false
   }
 }

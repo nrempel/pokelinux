@@ -25,8 +25,11 @@ use std::{
 
 const LEASE: u64 = 250_000_000;
 const ENVELOPE: u64 = 50_000_000;
+#[path = "retirement.rs"]
+mod retirement;
 #[path = "worker_diagnostic.rs"]
 mod worker_diagnostic;
+pub use retirement::{Retirement, RetirementReason};
 fn invalid() -> io::Error {
     io::ErrorKind::InvalidData.into()
 }
@@ -233,6 +236,7 @@ pub struct Snapshot {
     pub main_caps_dropped: bool,
     pub occupied: bool,
     pub namespace_handles_open: bool,
+    pub first_retirement: Option<Retirement>,
 }
 
 pub struct Service {
@@ -252,6 +256,7 @@ pub struct Service {
     exit_status: Option<ExitStatus>,
     main_caps_dropped: bool,
     start_until: u64,
+    first_retirement: Option<Retirement>,
 }
 impl Service {
     /// Trusted startup for one exclusively administered selected backend. Once
@@ -334,16 +339,28 @@ impl Service {
             exit_status: None,
             main_caps_dropped: false,
             start_until: original_start_until,
+            first_retirement: None,
         };
         let launched = service.supervisor.start_worker(&mut command);
         match launched {
             Ok(id) => service.identity = Some(id),
             Err(_) => {
+                service.note(
+                    Retirement::new(RetirementReason::StartupFailure, boot_time_ns())
+                        .operation("start_worker")
+                        .until(original_start_until),
+                );
                 service.terminal = true;
             }
         }
-        service.main_caps_dropped = reduce(CapabilitySet::empty()).is_ok();
-        if !service.main_caps_dropped {
+        let reduced = reduce(CapabilitySet::empty());
+        service.main_caps_dropped = reduced.is_ok();
+        if let Err(error) = reduced {
+            service.note(
+                Retirement::new(RetirementReason::CapabilityReductionFailure, boot_time_ns())
+                    .operation("reduce_main_capabilities")
+                    .io(&error),
+            );
             service.terminal = true;
         }
         if service.terminal {
@@ -358,18 +375,55 @@ impl Service {
     pub fn child_pid(&self) -> Option<u32> {
         self.supervisor.child_pid()
     }
+    fn note(&mut self, record: Retirement) {
+        self.first_retirement.get_or_insert(record);
+    }
+    pub(crate) fn note_external_stop(&mut self) {
+        if self.first_retirement.is_none() {
+            self.note(Retirement::new(
+                RetirementReason::ExternalStop,
+                boot_time_ns(),
+            ));
+        }
+    }
+    pub(crate) fn note_main_failure(&mut self, error: &io::Error) {
+        if self.first_retirement.is_none() {
+            self.note(Retirement::new(RetirementReason::MainFailure, boot_time_ns()).io(error));
+        }
+    }
+    fn reap_with_context(&mut self) -> io::Result<Option<ExitStatus>> {
+        let result = self.supervisor.poll_reap();
+        if let Err(error) = &result {
+            self.note(
+                Retirement::new(RetirementReason::ReapFailure, boot_time_ns())
+                    .operation("poll_reap")
+                    .io(error),
+            );
+        }
+        result
+    }
+    fn reject_record(&mut self, record: Retirement) -> io::Error {
+        self.note(record);
+        invalid()
+    }
     fn expired(&mut self, now: u64) {
         if self.handshake
             && !self
                 .identity
                 .is_some_and(|identity| self.supervisor.admits(identity))
         {
+            self.note(Retirement::new(RetirementReason::WorkerAdmissionLost, now));
             self.terminal = true;
             self.observed = None;
         }
-        if self.owner.view(now).pending.is_some_and(|p| {
-            p.phase == owner::Phase::Dispatched && now >= p.command.original_until_ns
-        }) {
+        if let Some(p) = self.owner.view(now).pending
+            && p.phase == owner::Phase::Dispatched
+            && now >= p.command.original_until_ns
+        {
+            self.note(
+                Retirement::new(RetirementReason::ActionExpired, now)
+                    .until(p.command.original_until_ns),
+            );
             self.terminal = true;
         }
     }
@@ -410,6 +464,7 @@ impl Service {
             main_caps_dropped: self.main_caps_dropped,
             occupied: self.occupied(),
             namespace_handles_open: true,
+            first_retirement: self.first_retirement,
         }
     }
     pub fn submit(
@@ -434,15 +489,17 @@ impl Service {
         bytes[2..10].copy_from_slice(&id.0.to_le_bytes());
         bytes[10..18].copy_from_slice(&command.original_until_ns.to_le_bytes());
         bytes[18] = u8::from(action == Action::Connect);
-        if self
-            .supervisor
-            .send_message(
-                self.identity.ok_or(Reject::Unavailable)?,
-                cutoff(original_until),
-                &bytes,
-            )
-            .is_err()
-        {
+        if let Err(error) = self.supervisor.send_message(
+            self.identity.ok_or(Reject::Unavailable)?,
+            cutoff(original_until),
+            &bytes,
+        ) {
+            self.note(
+                Retirement::new(RetirementReason::CommandSendFailure, boot_time_ns())
+                    .operation("send_message")
+                    .until(original_until)
+                    .io(&error),
+            );
             self.terminal = true;
             let _ = self.stop();
             return Err(Reject::Uncertain);
@@ -464,6 +521,7 @@ impl Service {
     /// Revocation precedes the signal. Retains child and selected namespace handles;
     /// this call does not promise the kernel will make the worker reclaimable.
     pub fn stop(&mut self) -> io::Result<()> {
+        self.note_external_stop();
         self.stopping = true;
         self.terminal = true;
         self.observed = None;
@@ -474,12 +532,29 @@ impl Service {
         self.expired(now);
         if !self.stopping && !self.handshake {
             if now >= self.start_until {
+                self.note(
+                    Retirement::new(RetirementReason::StartupExpired, now).until(self.start_until),
+                );
                 let _ = self.stop();
             } else {
                 match self.supervisor.poll_worker() {
                     Ok(WorkerState::Ready) => self.handshake = true,
                     Ok(WorkerState::Initializing) => {}
-                    _ => {
+                    Ok(_) => {
+                        self.note(
+                            Retirement::new(RetirementReason::StartupFailure, boot_time_ns())
+                                .operation("poll_worker")
+                                .until(self.start_until),
+                        );
+                        let _ = self.stop();
+                    }
+                    Err(error) => {
+                        self.note(
+                            Retirement::new(RetirementReason::StartupFailure, boot_time_ns())
+                                .operation("poll_worker")
+                                .until(self.start_until)
+                                .io(&error),
+                        );
                         let _ = self.stop();
                     }
                 }
@@ -497,7 +572,13 @@ impl Service {
                     }
                 }
                 Ok(None) => {}
-                Err(_) => {
+                Err(error) => {
+                    self.note(
+                        Retirement::new(RetirementReason::ReceiveFailure, boot_time_ns())
+                            .operation("receive_message")
+                            .until(now.saturating_add(ENVELOPE))
+                            .io(&error),
+                    );
                     let _ = self.stop();
                 }
             }
@@ -507,10 +588,19 @@ impl Service {
             match self.supervisor.read_output(&mut buffer) {
                 Ok(0) => self.output_eof = true,
                 Ok(_) => {
+                    self.note(
+                        Retirement::new(RetirementReason::UnexpectedOutput, boot_time_ns())
+                            .operation("read_output"),
+                    );
                     let _ = self.stop();
                 }
                 Err(e) if e.kind() == io::ErrorKind::WouldBlock => {}
                 Err(e) => {
+                    self.note(
+                        Retirement::new(RetirementReason::OutputReadFailure, boot_time_ns())
+                            .operation("read_output")
+                            .io(&e),
+                    );
                     let _ = self.stop();
                     return Err(e);
                 }
@@ -519,8 +609,12 @@ impl Service {
         // The shared owner revokes at actual wait and returns Some only after
         // an actual nonempty-buffer EOF witness. A held writer keeps custody.
         if self.occupied()
-            && let Some(status) = self.supervisor.poll_reap()?
+            && let Some(status) = self.reap_with_context()?
         {
+            self.note(
+                Retirement::new(RetirementReason::WorkerExited, boot_time_ns())
+                    .operation("poll_reap"),
+            );
             self.output_eof = true;
             self.exit_status = Some(status);
             self.reaped = true;
@@ -535,31 +629,69 @@ impl Service {
         Ok(())
     }
     fn accept(&mut self, bytes: &[u8]) -> io::Result<()> {
-        let (_, id, fact, at) = decode_record(bytes)?;
+        let (_, id, fact, at) = match decode_record(bytes) {
+            Ok(value) => value,
+            Err(error) => {
+                let reason = if !matches!(bytes.len(), 48 | 61) {
+                    RetirementReason::RecordLength
+                } else if bytes[0] != 2 {
+                    RetirementReason::RecordVersion
+                } else if !(1..=4).contains(&bytes[1]) {
+                    RetirementReason::RecordType
+                } else {
+                    RetirementReason::RecordMalformed
+                };
+                self.note(
+                    Retirement::new(reason, boot_time_ns())
+                        .operation("accept_record")
+                        .record(bytes)
+                        .io(&error),
+                );
+                return Err(error);
+            }
+        };
         let id = Id(id);
         let now = boot_time_ns();
-        if at > now
-            || now - at >= LEASE
-            || fact.namespace != self.namespace
-            || !self.selected.accepts(fact)
-        {
-            return Err(invalid());
+        let context = |reason| {
+            Retirement::new(reason, now)
+                .operation("accept_record")
+                .observation(at)
+                .record(bytes)
+        };
+        if at > now {
+            return Err(self.reject_record(context(RetirementReason::RecordFuture)));
         }
-        if let Some((old, old_at)) = self.observed
-            && (!old.same_target(fact) || at < old_at)
-        {
-            return Err(invalid());
+        if now - at >= LEASE {
+            return Err(self.reject_record(
+                context(RetirementReason::RecordExpired).until(at.saturating_add(LEASE)),
+            ));
+        }
+        if fact.namespace != self.namespace || !self.selected.accepts(fact) {
+            return Err(self.reject_record(context(RetirementReason::RecordIdentity)));
+        }
+        if let Some((old, old_at)) = self.observed {
+            if !old.same_target(fact) {
+                return Err(self.reject_record(context(RetirementReason::RecordIdentity)));
+            }
+            if at < old_at {
+                return Err(self.reject_record(context(RetirementReason::RecordRegression)));
+            }
         }
         if bytes[1] == 1 {
             if id.0 != 0 {
-                return Err(invalid());
+                return Err(self.reject_record(context(RetirementReason::CommandMismatch)));
             }
             self.observed = Some((fact, at));
             self.owner.observe(fact.connected, at);
         } else {
-            let pending = self.owner.view(now).pending.ok_or_else(invalid)?;
+            let Some(pending) = self.owner.view(now).pending else {
+                return Err(self.reject_record(context(RetirementReason::CommandMismatch)));
+            };
             if pending.command.id != id {
-                return Err(invalid());
+                return Err(self.reject_record(
+                    context(RetirementReason::CommandMismatch)
+                        .until(pending.command.original_until_ns),
+                ));
             }
             let outcome = match bytes[1] {
                 2 => Finish::Observed(fact.connected),
@@ -571,6 +703,14 @@ impl Service {
                     || at >= pending.command.original_until_ns
                     || fact.connected != (pending.command.action == Action::Connect))
             {
+                let reason = if now >= pending.command.original_until_ns
+                    || at >= pending.command.original_until_ns
+                {
+                    RetirementReason::CompletionLate
+                } else {
+                    RetirementReason::CompletionMismatch
+                };
+                self.note(context(reason).until(pending.command.original_until_ns));
                 self.terminal = true;
             }
             if !self.owner.finish(
@@ -582,12 +722,19 @@ impl Service {
                     outcome
                 },
             ) {
-                return Err(invalid());
+                return Err(self.reject_record(
+                    context(RetirementReason::CompletionRejected)
+                        .until(pending.command.original_until_ns),
+                ));
             }
             if bytes[1] == 2 {
                 self.observed = Some((fact, at));
             }
             if bytes[1] == 4 {
+                self.note(
+                    context(RetirementReason::WorkerUncertain)
+                        .until(pending.command.original_until_ns),
+                );
                 self.terminal = true;
                 self.observed = None;
             }

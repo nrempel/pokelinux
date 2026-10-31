@@ -148,7 +148,9 @@ pub(crate) fn clients_turn(
             }
             Err(rustix::io::Errno::AGAIN | rustix::io::Errno::INTR) => break,
             Err(e) => {
-                fatal.get_or_insert(e.into());
+                let error = io::Error::from(e);
+                service.note_main_failure(&error);
+                fatal.get_or_insert(error);
                 *stopping = true;
                 break;
             }
@@ -157,6 +159,7 @@ pub(crate) fn clients_turn(
     let mut n = 0;
     while !*stopping && n < peers.len() {
         if termination_requested() {
+            service.note_external_stop();
             *stopping = true;
             break;
         }
@@ -278,6 +281,11 @@ pub fn run(
     let mut stopping = !service.snapshot().main_caps_dropped;
     loop {
         if termination_requested() || fatal.is_some() {
+            if let Some(error) = &fatal {
+                service.note_main_failure(error);
+            } else {
+                service.note_external_stop();
+            }
             stopping = true;
         }
         if stopping {
@@ -312,7 +320,7 @@ pub fn run(
     }
     let s = service.snapshot();
     let closed = s.reaped && s.output_eof && !s.occupied;
-    let receipt = serde_json::json!({"event":"connectivity_main_closure","closed":closed,"reaped":s.reaped,"output_eof":s.output_eof,"occupied":s.occupied,"namespace_handles_open":s.namespace_handles_open,"worker_exit_code":s.exit_status.and_then(|s|s.code()),"worker_exit_signal":s.exit_status.and_then(|s|s.signal()),"completed_at_ns":boot_time_ns()});
+    let receipt = serde_json::json!({"event":"connectivity_main_closure","first_retirement":s.first_retirement,"closed":closed,"reaped":s.reaped,"output_eof":s.output_eof,"occupied":s.occupied,"namespace_handles_open":s.namespace_handles_open,"worker_exit_code":s.exit_status.and_then(|s|s.code()),"worker_exit_signal":s.exit_status.and_then(|s|s.signal()),"completed_at_ns":boot_time_ns()});
     let emitted = writeln!(io::stdout().lock(), "{receipt}");
     let _ = fs::remove_file(path);
     emitted?;

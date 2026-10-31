@@ -177,6 +177,7 @@ fn cached_snapshot_revokes_after_actual_wait_before_stdout_eof() {
         exit_status: None,
         main_caps_dropped: false,
         start_until: work_until,
+        first_retirement: None,
     };
     let (channel, child_channel) = UnixDatagram::pair().expect("actual inherited control");
     channel
@@ -524,6 +525,7 @@ fn accept_error_stop_fences_existing_private_client_work() {
         exit_status: None,
         main_caps_dropped: false,
         start_until: original_until,
+        first_retirement: None,
     };
     let mut serial = 1;
     let mut fatal = None;
