@@ -34,11 +34,13 @@ must be represented separately. One-shot association closes its event sockets,
 so a persistent backend must retain radio observation rather than renew readiness
 from IPv4 alone. The executable consumer and copied real actor test now reuse the existing kernel
 validators and generic hwsim owner. Fresh unmodified normal Main/worker host+ARM
-builds and the ARM actor/SDK/launcher/storage builds pass. No actual persistent
-wireless RED has run yet. Stage this frozen consumer against the passing prior
-address/packet cohort (second GREEN, not the first failed publication cohort),
-observe actual normal-service refusal and complete cleanup, then implement the
-retained backend without changing the desired consumer.
+builds and the ARM actor/SDK/launcher/storage builds pass. The first actual ARM attempt stops at the cap0 path preflight before Main/actor
+launch: operational files were under UID1000-owned0700 results. This is setup
+failure, not service RED. The corrected root-owned guest runtime layout passes
+a separate actual host cap0 RED→GREEN control using the unchanged helper. Run a
+fresh ARM cohort, observe actual normal-service refusal and full cleanup, then
+implement the retained backend without changing the desired consumer. Keep the
+first failed attempt and normal closure qualification separate.
 Astra's review supports one concrete virtual-pair/wireless-open startup profile
 enum and typed observations, retaining radio and IPv4 objects on one worker
 thread. Subscribe before baseline; combine radio/profile observations using the

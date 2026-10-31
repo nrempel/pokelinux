@@ -54,7 +54,7 @@
   },
   "consumer_sources_sha256": {
     "tools/native-wireless-service/service_connectivity_wireless_actor_tests.rs": "cb73446cf7e5f5806c827895c83b1d77feaf20f030df6d6b6552aeeec57d94b5",
-    "tools/native-wireless-service/consumer.py": "887df0ae3831b02f79ea41ff9282b86f85a61cdeafb052dc5ca5307ea6be7787",
+    "tools/native-wireless-service/consumer.py": "92bfa45884c1efb7f0fa9d559a1df6bf3f41b4dc2ffe544bdcf350275da6b37d",
     "tools/native-wireless-service/CONTRACT.json": "d3d1a7b459d440494617319f40de15824d9432792a87e18185ca56787fd1f5b6",
     "tools/native-wireless-service/arm/guest-main.py": "fadc85a19ebabce7a4f5266ad0e5904d05f5cb6191e1e12ab2036a3c0a31102a"
   },
@@ -65,5 +65,39 @@
     "Normal Settings window and matched Pixel hardware gates"
   ],
   "physical_phone_accessed": false,
-  "RED_requires_exact_worker_refusal_line": true
+  "RED_requires_exact_worker_refusal_line": true,
+  "first_ARM_attempt": {
+    "scope": "Actual ARM hwsim setup failure before normal Main/actor launch; not service RED",
+    "receipts_sha256": {
+      "selection.json": "90e580f0d4ac1e63cc015105164531ba7f1c93ef3bbadced710b0257b6eefe20",
+      "run/receipt.json": "a9cf4f2bd565160600a7d0eed1db14ebd4b1c05b783d73e5a3f303b173da7cbe",
+      "result.json": "c48aa64c2ecd1b7c076c707e82d4d2bd5d1c3850c351a7c994bd09b54fe1662a",
+      "boot-result.json": "f58990827cfa0fa3027f23b271075053c0a2762cf6eaf154db8172cbdf726fbb",
+      "wireless-service-case/case-result.json": "a92a8c533d57b5f5dc52226ebd5721b5607e955f62fb250e22a50cd1273a82ef",
+      "wireless-service-case/actual-cap0-guest-gate-permission-preflight.log": "88e79b837b54583b23f6dae1f45f684fd8f881eac267576d1ff50c82abb71c9b"
+    },
+    "outer_passed": false,
+    "behavior_RED_qualified": false,
+    "actual_container_exit": 2,
+    "normal_Main_started": false,
+    "network_commands_admitted": 0,
+    "failure": "cap0 UID0 cannot traverse UID1000-owned0700 /results ancestor for operational gate files",
+    "owned_radio_removal_confirmed": true,
+    "actual_QEMU_wait_exit": 0,
+    "QEMU_handles_closed": true,
+    "exact_CID_absence": true,
+    "same_daemon": true,
+    "all_selected_inputs_unchanged_at_closure": true,
+    "normal_case_cleanup_contract_passed": false,
+    "host_cleanup_errors": []
+  },
+  "cap0_operational_path_repair": {
+    "scope": "Actual native host Linux permission boundary with unchanged guest helper; no service RED/GREEN",
+    "receipt_sha256": "f589cbcf01d4aac3cc719f1daf4e1a1f43bc64aced3d0d295fb58bec08d95c2d",
+    "old_UID1000_results_ancestor_exit": 1,
+    "new_root_owned_runtime_ancestor_exit": 0,
+    "actual_wait_and_PIPE_EOF": true,
+    "same_original_one_second_cutoff": true,
+    "fresh_ARM_retry_pending": true
+  }
 }

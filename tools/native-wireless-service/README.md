@@ -111,3 +111,14 @@ worker exit1. Wrapped capability/bootstrap failures or other error text remain
 unqualified. This identifies the retained implementation's refusal class, not
 the exact underlying kernel error discarded by that implementation. It is an
 expected baseline contract until the actual runtime observes it.
+
+The first actual ARM attempt fails the cap0 path preflight before Main/actor
+launch or any network command: `/results` belongs to UID1000 with mode0700,
+so capability-free guest UID0 cannot traverse it. The failed case stays separate
+from service RED. QEMU wait0, owned radio removal, exact container absence and
+unchanged inputs are recorded; normal case closure qualification remains false.
+Operational gates, startup profile/socket and journal now live beneath the
+root-owned guest input/runtime directory; only output logs remain under `/results`.
+The unchanged helper reproduces the bad-ancestor refusal and passes the corrected
+layout in actual native host cap0 processes with waits/EOF and original one-second
+bounds. A fresh ARM run is still required.
