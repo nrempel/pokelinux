@@ -50,6 +50,15 @@ and task-count-one observations are separate from the owned command PIPE EOFs.
 Actor join and Main's native-worker wait/output EOF remain separate too. The
 final desired assertion runs after backend cleanup. Reaping is not vendor cleanup.
 
+On failure, the SDK fixture now attempts one bounded, create-new diagnostic
+file in its writable application directory. It records the first failing stage,
+operation, original deadline and already-observed stop/join/task-count values.
+The report adds no SDK calls, waits or deadline extensions; failure to write it
+does not replace the original error. The wireless actor collects this report
+only on failure, alongside bounded control/getter observations. Successful
+diagnostic ARM reruns do not establish the causes of earlier uninstrumented
+failures; see the [separate cohorts](../../docs/evidence/native-wireless-service-followup.json).
+
 The refusing SDK baseline reached a genuine behavioral RED after healthy setup
 and cleanup. Its formatted consumer bytes are frozen for the implementation
 check. Hash-only results and remaining gates belong in the corresponding public

@@ -12,12 +12,13 @@ use rustix::{
 };
 use serde_json::{Value, json};
 use std::{
+    cell::{Cell, RefCell},
     env,
     fs::{self, File},
-    io::{self, Read},
+    io::{self, Read, Write},
     net::{Ipv4Addr, UdpSocket},
     os::unix::{
-        fs::{FileTypeExt, MetadataExt, PermissionsExt},
+        fs::{FileTypeExt, MetadataExt, OpenOptionsExt, PermissionsExt},
         process::ExitStatusExt,
     },
     panic::{self, AssertUnwindSafe},
@@ -34,6 +35,8 @@ use std::{
 const APP: &str = "org.omarchy.Settings";
 const PEER: Ipv4Addr = Ipv4Addr::new(192, 0, 2, 2);
 const PORT: u16 = 36042;
+const APP_ERROR_LIMIT: u64 = 4096;
+const DIAGNOSTIC_LIMIT: usize = 32768;
 fn pause() {
     thread::sleep(Duration::from_millis(2));
 }
@@ -55,6 +58,80 @@ fn gate(root: &Path, name: &str, end: u64) -> Value {
     }
     panic!("original cutoff waiting for {name}");
 }
+fn diagnostic_once(root: &Path, name: &str, value: &Value) {
+    // Error-only evidence must not replace the original assertion or renew any
+    // deadline. One bounded write attempt; no per-getter files, waits or retry.
+    if let Ok(bytes) = serde_json::to_vec(value)
+        && bytes.len() <= DIAGNOSTIC_LIMIT
+    {
+        let _ = fs::OpenOptions::new()
+            .write(true)
+            .create_new(true)
+            .mode(0o600)
+            .open(root.join(name))
+            .and_then(|mut file| file.write_all(&bytes));
+    }
+}
+fn app_error_report(control: &Path, pid: u32) -> Value {
+    let path = control
+        .parent()
+        .unwrap()
+        .join(format!("fixture-error-{pid}.json"));
+    let report = (|| -> io::Result<Value> {
+        let file = fs::OpenOptions::new()
+            .read(true)
+            .custom_flags(
+                (rustix::fs::OFlags::NOFOLLOW | rustix::fs::OFlags::NONBLOCK).bits() as i32,
+            )
+            .open(&path)?;
+        let metadata = file.metadata()?;
+        if !metadata.is_file()
+            || metadata.uid() != 11050
+            || metadata.gid() != 11050
+            || metadata.nlink() != 1
+            || metadata.permissions().mode() & 0o7777 != 0o644
+            || metadata.len() > APP_ERROR_LIMIT
+        {
+            return Err(io::ErrorKind::InvalidData.into());
+        }
+        let mut bytes = vec![];
+        file.take(APP_ERROR_LIMIT + 1).read_to_end(&mut bytes)?;
+        if bytes.len() as u64 > APP_ERROR_LIMIT {
+            return Err(io::ErrorKind::InvalidData.into());
+        }
+        match serde_json::from_slice::<Value>(&bytes) {
+            Ok(report) => Ok(json!({"present":true,"report":report})),
+            Err(error) => Ok(json!({"present":true,"parse_error":error.to_string(),
+                "raw_report_hex":hex(&bytes)})),
+        }
+    })();
+    match report {
+        Ok(mut report) => {
+            report["path"] = json!(path);
+            report["collected_at_ns"] = json!(boottime_ns());
+            report
+        }
+        Err(error) => {
+            json!({"path":path,"present":false,"read_error_kind":format!("{:?}",error.kind()),
+            "raw_os_error":error.raw_os_error(),"collected_at_ns":boottime_ns()})
+        }
+    }
+}
+fn unavailable_matches(row: &Value, after: u64) -> Value {
+    let view = &row["sdk_view"];
+    json!({"sdk_view_is_object":view.is_object(),"sdk_view_is_null":view.is_null(),
+        "getter_after_loss":row["sdk_call_before_ns"].as_u64().is_some_and(|at|at >= after),
+        "available_false":view["available"] == false,"configured_null":view["configured"].is_null(),
+        "pending_false":view["pending"] == false,"can_control_false":view["can_control"] == false,
+        "observed_at_zero":view["observed_at_ns"] == 0,"until_zero":view["until_ns"] == 0,
+        "status_unavailable":view["status"] == "unavailable"})
+}
+struct CommandContext<'a> {
+    operation: &'a str,
+    expected_sequence: u64,
+    original_until_ns: u64,
+    started_at_ns: u64,
+}
 struct App {
     pid: u32,
     alive: OwnedFd,
@@ -63,6 +140,9 @@ struct App {
     next_sequence: u64,
 }
 struct Case {
+    diagnostic_root: PathBuf,
+    diagnostics: RefCell<Value>,
+    failed_app: Cell<Option<u32>>,
     runtime: PathBuf,
     policy: PathBuf,
     app_control: PathBuf,
@@ -77,7 +157,7 @@ struct Case {
     closed: bool,
 }
 impl Case {
-    fn new(socket: &Path, case: u64, close: u64) -> Self {
+    fn new(socket: &Path, case: u64, close: u64, diagnostic_root: &Path) -> Self {
         let id = fresh_id().unwrap();
         let install = PathBuf::from("/opt/connectivity-actor-fixture").join(&id);
         let runtime = PathBuf::from("/run/connectivity-actor-fixture").join(&id);
@@ -173,6 +253,9 @@ impl Case {
             let _ = tx.try_send(result);
         });
         Self {
+            diagnostic_root: diagnostic_root.to_owned(),
+            diagnostics: RefCell::new(json!({})),
+            failed_app: Cell::new(None),
             runtime,
             policy,
             app_control: application.join("control.sock"),
@@ -264,8 +347,19 @@ impl Case {
     }
     fn command(&self, app: &mut App, op: &str, connected: Option<bool>, end: u64) -> Value {
         assert!(boottime_ns() < end && end <= self.case);
-        let fd = ipc::connect(&app.control).unwrap();
-        let cred = socket_peercred(&fd).unwrap();
+        let context = CommandContext {
+            operation: op,
+            expected_sequence: app.next_sequence.saturating_add(1),
+            original_until_ns: end,
+            started_at_ns: boottime_ns(),
+        };
+        let fd = self.command_result(app, &context, "connect", ipc::connect(&app.control));
+        let cred = self.command_result(
+            app,
+            &context,
+            "peer_credentials",
+            socket_peercred(&fd).map_err(io::Error::from),
+        );
         assert_eq!(cred.pid.as_raw_nonzero().get() as u32, app.pid);
         assert_eq!(cred.uid.as_raw(), 11050);
         assert_eq!(cred.gid.as_raw(), 11050);
@@ -273,9 +367,16 @@ impl Case {
         if let Some(v) = connected {
             packet["connected"] = json!(v);
         }
-        ipc::send(&fd, &serde_json::to_vec(&packet).unwrap()).unwrap();
+        self.command_result(
+            app,
+            &context,
+            "send",
+            ipc::send(&fd, &serde_json::to_vec(&packet).unwrap()),
+        );
         while boottime_ns() < end {
-            if let Some((bytes, c)) = ipc::receive(&fd).unwrap() {
+            if let Some((bytes, c)) =
+                self.command_result(app, &context, "receive", ipc::receive(&fd))
+            {
                 assert_eq!(c.pid, cred.pid);
                 assert_eq!(c.uid, cred.uid);
                 assert_eq!(c.gid, cred.gid);
@@ -318,7 +419,63 @@ impl Case {
             }
             pause();
         }
+        self.command_failure(
+            app,
+            &context,
+            "receive_deadline",
+            &io::ErrorKind::TimedOut.into(),
+        );
         panic!("original native app control deadline expired");
+    }
+    fn command_result<T>(
+        &self,
+        app: &App,
+        context: &CommandContext<'_>,
+        stage: &str,
+        result: io::Result<T>,
+    ) -> T {
+        match result {
+            Ok(value) => value,
+            Err(error) => {
+                self.command_failure(app, context, stage, &error);
+                panic!("called `Result::unwrap()` on an `Err` value: {error:?}");
+            }
+        }
+    }
+    fn command_failure(
+        &self,
+        app: &App,
+        context: &CommandContext<'_>,
+        stage: &str,
+        error: &io::Error,
+    ) {
+        let failed_at = boottime_ns();
+        let mut diagnostics = self.diagnostics.borrow_mut();
+        if diagnostics.get("command_failure").is_some() {
+            return;
+        }
+        self.failed_app.set(Some(app.pid));
+        let value = json!({"schema":1,"operation":context.operation,"app_pid":app.pid,
+            "expected_sequence":context.expected_sequence,"original_until_ns":context.original_until_ns,
+            "started_at_ns":context.started_at_ns,"failed_at_ns":failed_at,"ipc_stage":stage,
+            "error_kind":format!("{:?}",error.kind()),"raw_os_error":error.raw_os_error(),
+            "app_error_before_cleanup":app_error_report(&app.control,app.pid)});
+        diagnostic_once(&self.diagnostic_root, "actor-command-failure.json", &value);
+        diagnostics["command_failure"] = value;
+    }
+    fn failure_diagnostics(&self) -> Value {
+        let mut value = self.diagnostics.borrow().clone();
+        if let Some(pid) = self.failed_app.get() {
+            value["app_error_after_existing_wait"] = if let Some((_, status)) =
+                self.reaped.iter().find(|(waited, _)| *waited == pid)
+            {
+                json!({"existing_Apps_wait":true,"app_pid":pid,"code":status.code(),"signal":status.signal(),
+                    "report":app_error_report(&self.app_control,pid)})
+            } else {
+                json!({"existing_Apps_wait":false,"app_pid":pid,"read_attempted":false})
+            };
+        }
+        value
     }
     fn state(&self, app: &mut App, configured: bool, can: bool, end: u64) -> Value {
         while boottime_ns() < end {
@@ -350,8 +507,16 @@ impl Case {
     }
     fn unavailable_after(&self, app: &mut App, after: u64, end: u64) -> Value {
         assert!(after > 0 && after <= boottime_ns() && boottime_ns() < end);
+        let entered_at = boottime_ns();
+        let mut attempts = 0_u64;
+        let mut first = None;
+        let mut last = None;
         while boottime_ns() < end {
             let row = self.command(app, "status", None, end);
+            attempts += 1;
+            if first.is_none() {
+                first = Some(row.clone());
+            }
             let view = &row["sdk_view"];
             if row["sdk_call_before_ns"].as_u64().unwrap() >= after
                 && view["available"] == false
@@ -364,10 +529,23 @@ impl Case {
             {
                 return row;
             }
+            last = Some(row);
             // Fresh read-only SDK getters share the frozen loss cutoff. No
             // choice, Disconnect, replacement or action retry is submitted.
             pause();
         }
+        self.failed_app.set(Some(app.pid));
+        let value = json!({"schema":1,"app_pid":app.pid,"after_loss_ns":after,
+            "original_until_ns":end,"entered_at_ns":entered_at,"failed_at_ns":boottime_ns(),
+            "attempt_count":attempts,"first_predicate_matches":first.as_ref().map(|row|unavailable_matches(row,after)),
+            "last_predicate_matches":last.as_ref().map(|row|unavailable_matches(row,after)),
+            "first_sdk_row":first,"last_sdk_row":last});
+        diagnostic_once(
+            &self.diagnostic_root,
+            "actor-unavailable-timeout.json",
+            &value,
+        );
+        self.diagnostics.borrow_mut()["unavailable_timeout"] = value;
         panic!("original AP-loss cutoff: actual SDK did not become unavailable");
     }
     fn collect_waits(&mut self) {
@@ -456,8 +634,11 @@ fn hex(bytes: &[u8]) -> String {
 fn roundtrip(root: &Path, bytes: &[u8], case: u64) -> Value {
     let end = until(case);
     let tag = bytes[4];
-    publish(root, &format!("nonce-{tag}-request.json"),
-        &json!({"tag":tag,"nonce_hex":hex(bytes),"requested_at_ns":boot_time_ns(),"original_until_ns":end}));
+    publish(
+        root,
+        &format!("nonce-{tag}-request.json"),
+        &json!({"tag":tag,"nonce_hex":hex(bytes),"requested_at_ns":boot_time_ns(),"original_until_ns":end}),
+    );
     let value = gate(root, &format!("nonce-{tag}-complete.json"), end);
     assert_eq!(value["passed"], true);
     assert_eq!(value["payload_hex"], hex(bytes));
@@ -634,8 +815,12 @@ fn desired(c: &mut Case, root: &Path, scenario: &str) -> Value {
     let first_packet = roundtrip(root, &nonce(1), case);
     c.exit_app(&mut first);
     let first_waited = boottime_ns();
-    publish(root, "first-requester-closed.json", &json!({"pid":first.pid,
-        "actual_Apps_wait_observed_at_ns":first_waited,"SDK_stop_join":first.sdk_stop}));
+    publish(
+        root,
+        "first-requester-closed.json",
+        &json!({"pid":first.pid,
+        "actual_Apps_wait_observed_at_ns":first_waited,"SDK_stop_join":first.sdk_stop}),
+    );
     let retained = gate(root, "persistent-after-first-wait.json", case);
     assert_eq!(retained["same_worker_radio_profile_confirmed"], true);
     assert!(retained["observed_at_ns"].as_u64().unwrap() > first_waited);
@@ -663,9 +848,13 @@ fn desired(c: &mut Case, root: &Path, scenario: &str) -> Value {
         "two fresh background observations after actual first app wait"
     );
     let background_packet = roundtrip(root, &nonce(2), case);
-    publish(root, "before-disconnect.json", &json!({"second_app_pid":second.pid,
+    publish(
+        root,
+        "before-disconnect.json",
+        &json!({"second_app_pid":second.pid,
         "first_app_actual_wait_observed_at_ns":first_waited,
-        "fresh_idle_observations":idle,"requested_at_ns":boottime_ns()}));
+        "fresh_idle_observations":idle,"requested_at_ns":boottime_ns()}),
+    );
     if scenario == "ap_loss" {
         let intent = gate(root, "loss-intent.json", until(case));
         assert_eq!(intent["scenario"], scenario);
@@ -679,8 +868,13 @@ fn desired(c: &mut Case, root: &Path, scenario: &str) -> Value {
         assert_eq!(lost["original_until_ns"], loss_until);
         assert_eq!(lost["loss_requested_at_ns"], loss_requested_at);
         for key in [
-            "independent_radio_loss_confirmed", "profile_retained", "same_target_identity",
-            "IFF_UP", "worker_pidfd_terminal", "no_replacement", "Main_unavailable",
+            "independent_radio_loss_confirmed",
+            "profile_retained",
+            "same_target_identity",
+            "IFF_UP",
+            "worker_pidfd_terminal",
+            "no_replacement",
+            "Main_unavailable",
             "terminal_uncertain",
         ] {
             assert_eq!(lost[key], true, "actual AP-loss prerequisite: {key}");
@@ -701,9 +895,13 @@ fn desired(c: &mut Case, root: &Path, scenario: &str) -> Value {
         assert_eq!(main["state"]["until_ns"], "0");
         assert_eq!(main["state"]["worker"], lost["original_worker_identity"]);
         let unavailable = c.unavailable_after(&mut second, observed_at, loss_until);
-        publish(root, "loss-SDK-unavailable.json", &json!({
+        publish(
+            root,
+            "loss-SDK-unavailable.json",
+            &json!({
             "original_until_ns":loss_until,"loss_observed_at_ns":observed_at,
-            "actual_SDK_unavailable":unavailable,"observed_at_ns":boottime_ns()}));
+            "actual_SDK_unavailable":unavailable,"observed_at_ns":boottime_ns()}),
+        );
         let silent = quiet_without_probe(root, case);
         c.exit_app(&mut second);
         let second_waited = boottime_ns();
@@ -723,10 +921,17 @@ fn desired(c: &mut Case, root: &Path, scenario: &str) -> Value {
             "Disconnect_commands_admitted":0,"peer_quiet":silent,
             "functional_finished_at_ns":boottime_ns()});
     }
-    assert_eq!(gate(root, "disconnect-ready.json", case)["same_worker_radio_profile_confirmed"], true);
+    assert_eq!(
+        gate(root, "disconnect-ready.json", case)["same_worker_radio_profile_confirmed"],
+        true
+    );
     let disconnect_until = until(case);
-    publish(root, "disconnect-attempt.json", &json!({"attempted_at_ns":boottime_ns(),
-        "original_until_ns":disconnect_until,"second_app_pid":second.pid}));
+    publish(
+        root,
+        "disconnect-attempt.json",
+        &json!({"attempted_at_ns":boottime_ns(),
+        "original_until_ns":disconnect_until,"second_app_pid":second.pid}),
+    );
     let disconnected = c.command(&mut second, "set", Some(false), disconnect_until);
     assert_eq!(disconnected["choice_accepted"], true);
     let disconnected_observation = c.state(&mut second, false, true, disconnect_until);
@@ -776,7 +981,7 @@ fn settings_sdk_wireless_packet_lifecycle() {
         .parse::<u32>()
         .unwrap();
     assert!(boottime_ns() < start && start <= case && case < close);
-    let mut c = Case::new(&endpoint, case, close);
+    let mut c = Case::new(&endpoint, case, close, &root);
     publish(
         &root,
         "created.json",
@@ -794,6 +999,11 @@ fn settings_sdk_wireless_packet_lifecycle() {
     };
     result["scenario"] = json!(scenario);
     c.close();
+    if result.get("setup_error").is_some() {
+        // Operational gate files are not exported by the enclosing VM owner.
+        // Carry error-only evidence through its existing functional receipt.
+        result["diagnostics"] = c.failure_diagnostics();
+    }
     let waits:Vec<_>=c.reaped.iter().map(|(pid,s)|json!({"pid":pid,"code":s.code(),"signal":s.signal(),"witness":"existing Apps Child::try_wait Some observer","PIPE_EOF_claim":false})).collect();
     assert!(!waits.is_empty());
     publish(
@@ -803,10 +1013,7 @@ fn settings_sdk_wireless_packet_lifecycle() {
     );
     publish(&root, "functional-finished.json", &result);
     let cleanup = gate(&root, "cleanup-complete.json", close);
-    assert_eq!(
-        cleanup["main_worker_packet_actual_wait_EOF_closed"],
-        true
-    );
+    assert_eq!(cleanup["main_worker_packet_actual_wait_EOF_closed"], true);
     assert_eq!(cleanup["all_namespace_handles_retained"], true);
     publish(
         &root,

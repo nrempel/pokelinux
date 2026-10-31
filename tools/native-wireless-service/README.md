@@ -195,5 +195,35 @@ These extended consumer bytes are a new cohort. Their first two ARM executions
 both fail at the app boundary: persistence sees app-control UnexpectedEof and
 app exit1, while AP loss reaches unavailable Main but does not satisfy the SDK
 getter predicate before its original cutoff. Neither qualifies GREEN. Failure
-cleanup completed; bounded diagnostics are next. The original frozen-consumer
-success above remains separate. See [follow-up evidence](../../docs/evidence/native-wireless-service-followup.json).
+cleanup completed; both unexplained failures remain preserved as `current-arm-root-1`.
+The original frozen-consumer success above remains separate.
+
+The fresh `current-arm-root-2` pair now passes both scenarios. Main/worker ELFs,
+the Python consumer/guest, desired predicates and original deadlines remain
+unchanged from root1. The actor and SDK app fixture add bounded error-only
+diagnostics; these are a new test-source cohort, not a causal repair or an
+explanation of the earlier failures. Persistence completes two cap0 nonce/ACK
+exchanges across actual first-requester wait and fresh reopen on the same worker,
+then explicit Disconnect, independent radio/address removal and quiet.
+
+AP loss admits one actual AP deauthentication after two packets. Independent
+radio loss is followed by unavailable Main and actual SDK getters with null
+configuration and zero observation times. The original worker is independently
+terminal before Main Stop, with no replacement and Main still alive. Its actual
+exit1 records `RefreshBackend` / `refresh_wireless` radio contention. IFF_UP,
+fixed IPv4 and the subnet route remain present after worker retirement and Main
+Stop; only the later explicit hwsim teardown removes the interface. No service
+Disconnect, reconnect or post-loss UDP probe is admitted. Peer quiet passes
+under the original800ms budget, which includes gate delivery.
+
+Both scenarios observe two Apps waits0, both SDK joins0, Main/driver/peer exit0,
+complete wait/output EOF and namespace closure, QEMU0 and actual container
+wait0/removal/absence on the same daemon. Persistence's worker SIGKILL9 is normal
+owned retirement, separate from radio cleanup. Selected inputs and source remain
+unchanged during each run. These are generic ARM simulated-radio SDK-fixture
+results with authored authority; no normal graphical Settings, installed session,
+WPA, DHCP/DNS, Internet or phone result follows. See
+[follow-up evidence](../../docs/evidence/native-wireless-service-followup.json).
+That record separately maps the executed actor/SDK fixture hashes to the later
+rustfmt-only publication hashes. The final formatting check passes; the formatted
+publication bytes were not executed in either ARM run.

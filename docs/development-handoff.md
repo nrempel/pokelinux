@@ -3,20 +3,43 @@
 ## Immediate integration order
 
 Latest follow-up: the two-file Clippy repair passes the actual current virtual
-Service/worker packet lifecycle and normal host/ARM builds. The new ARM
-`persistent` and `ap_loss` scenario runs both fail at the app SDK boundary.
-Persistence reaches Connect and starts one packet client, then receives
-UnexpectedEof from app control and observes app exit1. AP loss reaches two packet
-clients and one real deauthentication; independent loss, retained IPv4, original
-worker retirement, Main survival and unavailable state pass, but the actual SDK
-getter predicate does not pass before its original cutoff. Rejected getter rows
-and the positive failing control operation were not recorded, so neither cause
-is established. Both failure cleanups confirm closed handles, ECHILD and exact
-container absence; normal case qualification is false. Preserve these attempts
-and collect bounded diagnostics next. Do not loosen deadlines or label either
-run GREEN. The earlier frozen-consumer ARM success below remains its separate
-source cohort. [Follow-up evidence](evidence/native-wireless-service-followup.json)
+Service/worker packet lifecycle and normal host/ARM builds. Both diagnostic-cohort
+`current-arm-root-2` ARM scenarios now pass their desired assertions and complete
+guest/boot/outer closure. Persistence connects once, exchanges two cap0 packets
+across actual app wait/reopen on the same worker, then explicitly Disconnects
+with independent radio/address absence and quiet. AP loss deauthenticates once
+after two packets, observes independent radio loss and actual unavailable SDK
+state, and retires the original worker before Main Stop without replacement.
+Main stays alive; IFF_UP, fixed IPv4 and subnet route remain through worker
+retirement and Main Stop until explicit hwsim teardown. Both Apps waits and SDK
+joins pass, as do Main/driver/peer exit0, QEMU0, container wait0 and same-daemon
+removal/absence. Persistence records normal worker SIGKILL9; AP loss records
+worker exit1 with `RefreshBackend` / `refresh_wireless` radio contention.
+
+The preceding `current-arm-root-1` attempts remain failed and unexplained:
+persistence reaches Connect/one packet client before app-control UnexpectedEof
+and app exit1; AP loss reaches independent loss and unavailable Main but misses
+the SDK getter predicate. Those attempts lack the rejected getter rows and failing
+positive operation. The root2 actor/SDK fixture adds error-only diagnostics;
+production Main/worker, consumer/guest, desired predicates and deadlines are
+unchanged. The new passes establish no causal repair or repeatability guarantee.
+Root1 failure cleanup and the earlier frozen-consumer success retain their own
+source cohorts. No graphical Settings or phone ran.
+[Follow-up evidence](evidence/native-wireless-service-followup.json)
 and [current virtual regression](evidence/native-connectivity-current-virtual-lifecycle.json).
+
+
+Architecture priority after this SDK boundary: complete one normal graphical
+Settings wireless tracer, then join installed cold-boot composition. Use the
+existing installer, PID1 units and Rust session owner to start connectivity Main,
+permissions and the normal graphical session without post-boot service launch or
+fixture-created authority. Normal Permissions/Settings should grant control,
+connect, retain traffic across close/reopen, report AP loss truthfully and
+Disconnect, followed by supervisor shutdown and a second cold boot without
+replaying Connect. Start on the generic ARM guest kernel; matched-Google-kernel
+installed root-disk/session qualification is a subsequent software gate. Pixel
+loader, board drivers, firmware and physical measurements remain hardware gates.
+Do not turn the wireless slice into an expanding isolated-harness campaign.
 
 
 The ninth Sounds/Permissions acceptance passes end to end: guest build, real menu
@@ -72,9 +95,10 @@ The first failure's cause is not retroactively established.
 The current host connectivity suite passes38 tests with one deliberately ignored
 child fixture; the radio suite passes28. Host/ARM normal builds and dependent
 virtual-driver compilation pass. Astra found no unsafe parser weakening or
-lifetime invention; that review is not runtime evidence. Next run actual radio
-observation-loss/identity-change negatives and current virtual runtime
-regressions, then join the normal Settings Wi-Fi UI. Open AP and fixed test IPv4
+lifetime invention; that review is not runtime evidence. The current virtual
+regression and actual AP-loss control now pass; identity-change negatives remain
+separate. Follow the graphical Settings then installed-composition priority above.
+Open AP and fixed test IPv4
 remain tracer inputs: WPA, DHCP/DNS/Internet, installed service composition,
 matched Pixel driver startup and all hardware gates remain open.
 

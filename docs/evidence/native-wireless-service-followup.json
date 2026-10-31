@@ -1,13 +1,14 @@
 {
   "schema": 1,
-  "status": "Both current ARM scenario attempts failed at the app SDK boundary; no new ARM GREEN",
+  "status": "Both diagnostic-cohort current-arm-root-2 ARM scenarios pass; the two unexplained current-arm-root-1 failures remain preserved",
   "scope": "Generic ARM Linux simulated radios; no graphical app or phone",
   "published_parent": "bbbbccfbe725ec54d800390b7ed0949abe536a83",
   "production_repair": "Boxed owned wireless backend plus test conditional; current virtual runtime separately passes",
   "current_test_source": {
     "tools/native-wireless-service/consumer.py": "1dd642abdf56d7a2f60ae77da0d38b1514a9613b151034d21e6477c18d2b6fa9",
     "tools/native-wireless-service/arm/guest-main.py": "4be77b3493534ad67c73de317b5a2ff95ed4020aa546a58c1e84d4b1473e291b",
-    "tools/native-wireless-service/service_connectivity_wireless_actor_tests.rs": "969cd241b6c81d3ea569a711596a42e41dd764ad5818b801b03311bddd78ca35"
+    "tools/native-wireless-service/service_connectivity_wireless_actor_tests.rs": "3ba552773fc3647faf824607e06fcc7a1e41a08aaa861e32a73d76bfccfa7fed",
+    "tools/native-connectivity-settings-sdk/settings-connectivity-sdk-app.rs": "1e39f348bc3547652b2b723a868031ea591db4e102bac7124b41be2e7a52bab8"
   },
   "normal_build_sha256": "53ceaef184f056f6bffd30f7720a7b6bdfe731fb5a9b21f488aeac70794787af",
   "attempts": {
@@ -74,5 +75,258 @@
       "cause": "Unresolved; rejected getter rows were not retained; no API mismatch found in source review"
     }
   },
-  "next": "Capture bounded app-control operation/error context and rejected SDK getter rows without changing original deadlines or desired predicates; then re-evaluate actual boundary."
+  "next": "Complete the normal graphical Settings wireless tracer, then installed cold-boot composition; preserve all earlier failures and do not infer a causal repair from diagnostics.",
+  "attempts_scope": "Preserved current-arm-root-1 runs; both remain failed and unqualified",
+  "root1_test_source": {
+    "tools/native-wireless-service/consumer.py": "1dd642abdf56d7a2f60ae77da0d38b1514a9613b151034d21e6477c18d2b6fa9",
+    "tools/native-wireless-service/arm/guest-main.py": "4be77b3493534ad67c73de317b5a2ff95ed4020aa546a58c1e84d4b1473e291b",
+    "tools/native-wireless-service/service_connectivity_wireless_actor_tests.rs": "969cd241b6c81d3ea569a711596a42e41dd764ad5818b801b03311bddd78ca35"
+  },
+  "current_test_source_scope": "Actual executed current-arm-root-2 source bytes, before the separate publication-only formatting below",
+  "diagnostic_followup": {
+    "cohort": "current-arm-root-2",
+    "production_source_commit": "919ac56256d7040f23b6ed1cb82647067d592e0b",
+    "production_ELFs_identical_to_failed_root1": true,
+    "consumer_and_guest_identical_to_failed_root1": true,
+    "test_change": "Actor and SDK app fixture add bounded error-only diagnostics; diagnostic bookkeeping can affect timing",
+    "causal_repair_claimed": false,
+    "original_failures_explained": false,
+    "repeatability_established": false,
+    "desired_predicates_and_original_bounds_unchanged": true,
+    "bounds": {
+      "functional_seconds": 6,
+      "startup_seconds": 3,
+      "action_seconds": 1,
+      "service_lease_ms": 250,
+      "SDK_Stop_join_ms": 200,
+      "quiet_budget_ms": 800
+    },
+    "actor_build_sha256": "17db1844edf7534306d7f9311e621bbdaa8100096216358e5fd2e95b99819ffa",
+    "actor_build_source_manifest_sha256": "5d79a5df8c951485f9cf76099d66cc70e1f52c950bdb18ab6fb1ae1dc5331d61",
+    "attempts": {
+      "persistent": {
+        "qualified": true,
+        "desired_passed": true,
+        "consumer_classification": "NORMAL_ACTOR_PERSISTENT_WIRELESS_PACKET_GREEN",
+        "guest_classification": "DESIRED_PERSISTENT_WIRELESS_SERVICE_PASSED",
+        "boot_classification": "QUALIFIED_NORMAL_PERSISTENT_WIRELESS_PACKET_GREEN",
+        "outer_classification": "CLOSED_NORMAL_MAIN_ACTOR_PERSISTENT_WIRELESS_PACKET_GREEN",
+        "Connect_success_gate_count": 1,
+        "Disconnect_success_gate_count": 1,
+        "UDP_clients_started": 2,
+        "verified_nonce_ACK_roundtrips": 2,
+        "AP_deauthentication_commands": 0,
+        "actual_Apps_wait_exit_codes": [
+          0,
+          0
+        ],
+        "SDK_join_statuses": [
+          0,
+          0
+        ],
+        "SDK_task_counts_after_join": [
+          1,
+          1
+        ],
+        "normal_Main_exit_code": 0,
+        "actor_driver_exit_code": 0,
+        "packet_peer_exit_code": 0,
+        "worker_terminal": {
+          "exit_code": null,
+          "signal": 9,
+          "reaped": true,
+          "output_EOF": true
+        },
+        "quiet": {
+          "original_budget_ms": 800,
+          "received_datagrams": 0,
+          "final_EAGAIN_after_original_cutoff": true,
+          "armed_to_final_EAGAIN_ns": 800244603
+        },
+        "closure": {
+          "normal_case_custody_qualified": true,
+          "all_guest_commands_actual_wait_EOF": true,
+          "guest_handles_closed": true,
+          "guest_ECHILD": true,
+          "adopted_terminal_waits": 33,
+          "adopted_waits_all_exit0": true,
+          "STA_and_AP_namespace_custody_qualified": true,
+          "owned_radios_removed": true,
+          "STA_loopback_baseline_preserved": true,
+          "actual_QEMU_wait_exit": 0,
+          "QEMU_wait_EOF_and_handles_closed": true,
+          "actual_container_wait_exit": 0,
+          "cleanup_container_wait_exit": 0,
+          "container_removed_and_absent_same_daemon": true,
+          "cleanup_errors": [],
+          "source_unchanged": true,
+          "selected_inputs_unchanged": true,
+          "unresolved_owned_children": 0
+        },
+        "radio_or_address_retry_admitted": false,
+        "proof_sha256": {
+          "selection.json": "4500e5d651556b8a5f7becc0bbb457e38a1a0a222e39eac607299d27fb7b0ab2",
+          "result.json": "880da429a4ba309e8705f102b97496a349f80d79fd33746ae5abfa315ac28d41",
+          "boot-result.json": "cce8ae1a94fdcdb767d7646663d3b5a38cd7698d05811aee4f7ec94fcaff750a",
+          "run/receipt.json": "c1d0d31ac9dc93af6aef470d757828ed5b928bac69934fa2505f03166915d9f0",
+          "wireless-service-case/case-result.json": "16d536b0484ce2036be3369d4c36f345a283ea4e2143f022ce91b0e6680adf9e"
+        },
+        "functional_green": true,
+        "persistent_same_worker_after_actual_first_app_wait": true,
+        "explicit_Disconnect_independent_radio_and_profile_absent": true,
+        "worker_signal_scope": "Normal owned Stop after explicit Disconnect; not vendor or radio cleanup"
+      },
+      "ap-loss": {
+        "qualified": true,
+        "desired_passed": true,
+        "consumer_classification": "NORMAL_ACTOR_AP_LOSS_RETIRES_WIRELESS_EPOCH",
+        "guest_classification": "DESIRED_WIRELESS_AP_LOSS_CONTROL_PASSED",
+        "boot_classification": "QUALIFIED_NORMAL_ACTOR_AP_LOSS_RETIRES_WIRELESS_EPOCH",
+        "outer_classification": "CLOSED_NORMAL_ACTOR_AP_LOSS_RETIRES_WIRELESS_EPOCH",
+        "Connect_success_gate_count": 1,
+        "Disconnect_success_gate_count": 0,
+        "UDP_clients_started": 2,
+        "verified_nonce_ACK_roundtrips": 2,
+        "AP_deauthentication_commands": 1,
+        "actual_Apps_wait_exit_codes": [
+          0,
+          0
+        ],
+        "SDK_join_statuses": [
+          0,
+          0
+        ],
+        "SDK_task_counts_after_join": [
+          1,
+          1
+        ],
+        "normal_Main_exit_code": 0,
+        "actor_driver_exit_code": 0,
+        "packet_peer_exit_code": 0,
+        "worker_terminal": {
+          "exit_code": 1,
+          "signal": null,
+          "reaped": true,
+          "output_EOF": true
+        },
+        "quiet": {
+          "original_budget_ms": 800,
+          "received_datagrams": 0,
+          "final_EAGAIN_after_original_cutoff": true,
+          "armed_to_final_EAGAIN_ns": 798512415
+        },
+        "closure": {
+          "normal_case_custody_qualified": true,
+          "all_guest_commands_actual_wait_EOF": true,
+          "guest_handles_closed": true,
+          "guest_ECHILD": true,
+          "adopted_terminal_waits": 33,
+          "adopted_waits_all_exit0": true,
+          "STA_and_AP_namespace_custody_qualified": true,
+          "owned_radios_removed": true,
+          "STA_loopback_baseline_preserved": true,
+          "actual_QEMU_wait_exit": 0,
+          "QEMU_wait_EOF_and_handles_closed": true,
+          "actual_container_wait_exit": 0,
+          "cleanup_container_wait_exit": 0,
+          "container_removed_and_absent_same_daemon": true,
+          "cleanup_errors": [],
+          "source_unchanged": true,
+          "selected_inputs_unchanged": true,
+          "unresolved_owned_children": 0
+        },
+        "radio_or_address_retry_admitted": false,
+        "proof_sha256": {
+          "selection.json": "3eff32000ee5c4a3d132785977ddaeb9c1615b0fadfef67507b35d789a27d32f",
+          "result.json": "2ce615d22f488d5135a1903604cedfc0c1848ab1bdcfa7640c31c93ac53316fb",
+          "boot-result.json": "3af71d674e6c71333c485c64e21cf3846db85732817333bed2257b2ba9666fcf",
+          "run/receipt.json": "b5438f1901cc8acc5d51153135c0bf21bc80b70d6e84032ceeb73e74e80ade92",
+          "wireless-service-case/case-result.json": "8b76b4655c1e18c9ee9395260956f6f63c45261c5867285471279475ee356e8f"
+        },
+        "functional_ap_loss_green": true,
+        "functional_green": false,
+        "loss_proof": {
+          "independent_radio_loss_confirmed": true,
+          "profile_retained": true,
+          "same_target_identity": true,
+          "IFF_UP": true,
+          "worker_pidfd_terminal": true,
+          "no_replacement": true,
+          "Main_unavailable": true,
+          "terminal_uncertain": true
+        },
+        "actual_SDK_unavailable": {
+          "available": false,
+          "configured": null,
+          "pending": false,
+          "can_control": false,
+          "status": "unavailable",
+          "observation_times_zero": true
+        },
+        "original_worker_terminal_before_Main_Stop": true,
+        "Main_alive_before_Stop": true,
+        "Main_children_empty_before_Stop": true,
+        "IFF_UP_fixed_IPv4_subnet_route_retained_after_worker_terminal": true,
+        "IFF_UP_fixed_IPv4_subnet_route_retained_after_Main_Stop": true,
+        "STA_profile_retained_until_explicit_hwsim_teardown": true,
+        "post_loss_Set_commands": 0,
+        "post_loss_Disconnect_commands": 0,
+        "no_post_loss_UDP_probe": true,
+        "worker_diagnostic": {
+          "stage": "RefreshBackend",
+          "operation": "refresh_wireless",
+          "classification": "Conflict",
+          "radio_error": "Contended",
+          "scope": "Actual response to this AP-loss injection; not the cause of the earlier SDK-boundary failure"
+        }
+      }
+    },
+    "ELFs": {
+      "main": {
+        "bytes": 955872,
+        "sha256": "d7afa115b392293d16bf701234216edcc77255116847641d87aebf4a6bffc7ff"
+      },
+      "worker": {
+        "bytes": 955264,
+        "sha256": "4a8def53431d9e9aa2029e8fecc0b80c6f219f0e56010451aa033326ac4b0cff"
+      },
+      "driver": {
+        "bytes": 4864880,
+        "sha256": "409efd5590294a49b63af823347c1401cf45eed1b6c9e24ec5772cfd11685cdd"
+      },
+      "settings_app": {
+        "bytes": 872352,
+        "sha256": "d4ca514e7db039345b8c8b3d9492c406c7c7e3c95d419c84b891ee9f665ca86c"
+      },
+      "launcher": {
+        "bytes": 1108368,
+        "sha256": "cb18ce42f430c353800b13e07e07fe428f33cb1adea139b35eb6e28981587ca4"
+      },
+      "storage": {
+        "bytes": 1677112,
+        "sha256": "ab18aa2941ac6d6dd3623b3ea9442bb26ce54a06e28c193a0e6fc1c57fe99265"
+      }
+    }
+  },
+  "publication_format_only": {
+    "scope": "After both ARM successes; formatted publication bytes were not executed in ARM",
+    "rustfmt_version": "rustfmt 1.9.0-stable (48a229ceae 2026-09-01)",
+    "formatter_image": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+    "review_sha256": "3d15a875bfca3fbce5774caa176f79bb029a47200a4eb96a99b5ddf10bedd2a8",
+    "formatting_patch_sha256": "cffc4ebf306f0a2d33cecee5d232450fcc526fe8d6adb442a9608425aaa3ae10",
+    "final_check_receipt_sha256": "80a70827d6e2befd6c16d80b116aab59fadd2a4a1c66cfa3f4e0b21ecd020ca1",
+    "rustfmt_check_exit": 0,
+    "formatter_container_exit0_removed_and_absent": true,
+    "formatted_bytes_ARM_executed": false,
+    "files": {
+      "tools/native-wireless-service/service_connectivity_wireless_actor_tests.rs": {
+        "tested_sha256": "3ba552773fc3647faf824607e06fcc7a1e41a08aaa861e32a73d76bfccfa7fed",
+        "publication_formatted_sha256": "24bf5a42abb942634b6db84f72c3b9c79a3f407d9564cec013e43371c6ef203a"
+      },
+      "tools/native-connectivity-settings-sdk/settings-connectivity-sdk-app.rs": {
+        "tested_sha256": "1e39f348bc3547652b2b723a868031ea591db4e102bac7124b41be2e7a52bab8",
+        "publication_formatted_sha256": "21da4903dd2ba6aefda4349c9b35b9728135e94618a3a69f740394001f5e68be"
+      }
+    }
+  }
 }
