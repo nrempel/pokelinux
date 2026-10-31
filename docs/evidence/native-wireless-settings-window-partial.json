@@ -479,5 +479,11 @@
     "graphical_candidate_executed": true,
     "root3_cause_established": false,
     "graphical_epoch": "root4"
+  },
+  "later_controlled_Main_idle_receive": {
+    "evidence": "native-connectivity-main-idle-receive.json",
+    "qualified_host_RED_GREEN": true,
+    "root4_underlying_timing_cause_established": false,
+    "new_GUI_readiness_candidate_executed": false
   }
 }

@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "files": {
+    "bootstrap.rs": {
+      "source": "native-process-owner/src/bootstrap.rs",
+      "sha256": "b24d557868dbfb0cf9603ea8efb20b9a459a7ed01f2c0bb483b0fc4711a661e1"
+    },
+    "pidfd.rs": {
+      "source": "native-kernel-identity/src/pidfd.rs",
+      "sha256": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff"
+    },
+    "supervisor.rs": {
+      "source": "native-process-owner/src/supervisor.rs",
+      "sha256": "09cc14970803318f814c0ec2f6a729d69f2189725b1fc4dd30a6a40d8fb2a073"
+    },
+    "service.rs": {
+      "source": "native-connectivity-control/src/service.rs",
+      "sha256": "d5b1d5627d5c8d3856ddbbe7f196038d1ff243a1bebd414591b1e6413f3c155e"
+    },
+    "main_service.rs": {
+      "source": "native-connectivity-control/src/main_service.rs",
+      "sha256": "d0c498790b37de73300e640cb0db2d9e0d07d9fe52dec7a2004ca1a6a9a51960"
+    },
+    "private_channel.rs": {
+      "source": "native-connectivity-control/src/private_channel.rs",
+      "sha256": "de1b4cfc09772729fc55b77d9276bf529eff836af492fc9fa785b376cf595d24"
+    },
+    "retirement.rs": {
+      "source": "native-connectivity-control/src/retirement.rs",
+      "sha256": "1d7e2a069a52cc8e5686ca9988b4c427cf9f0a29bbeae449f0cab23a308edf87"
+    }
+  },
+  "roles": {
+    "readiness_helper": "bootstrap.rs::poll_message_readiness",
+    "readiness_poll_nfds": 3,
+    "readiness_descriptor_roles": [
+      "private_channel",
+      "retained_child_pidfd",
+      "same_retained_child_pidfd"
+    ],
+    "identity_helper": "pidfd.rs::ProcessView::matches_after_reads",
+    "identity_poll_nfds": 2,
+    "zero_timeout": true,
+    "Main_other_three_fd_poll_paths": [],
+    "next_gettid_role": "ParentBootstrap receive pre-auth on baseline; readiness local check on candidate before new50ms envelope",
+    "roles_source_qualified": true
+  },
+  "scope": "Pinned actual compiled candidate source/control-flow attribution only, not runtime pollfd-array or payload inspection. ParentBootstrap readiness is the unique3fd zero-poll(channel+samechild in both watch slots), full identity is2fd. Base commit names historical published bytes; the four changed candidate files are unpublished. No candidate integration runtime has executed.",
+  "published_base_commit": "034148d0051c7f51d033b93888b6f8a99e724d56",
+  "selected_source_status": "Unpublished four-file working-tree candidate on the published base; snapshots are copied from actual compiled source, not asserted present at base commit",
+  "candidate_patch": {
+    "bytes": 7313,
+    "sha256": "85a333f35fc1b407584ca1551366a4044ec6e898dbba4ca97b97f5e6ffe2ebe4"
+  },
+  "compiled_source_manifest": {
+    "bytes": 28756,
+    "sha256": "c1181f012862c131fe0865a7f9f2ee66f6a13a4a84dee7735277dadafaff2baf",
+    "source_rows": 59
+  },
+  "candidate_freeze_sha256": "3598ed58deb6b0401de9f42f7cf472212991fb3bf6151c965bdb7813c5bdc82e",
+  "qualified_build_result_sha256": "d9090908466fc06ba7b0deeeb1a502cdbe382a43f9850db850c065ad49848ca8",
+  "qualified_build_outer_receipt_sha256": "801b90989ef50b641f23ef59de188bcd01fba78914c1df0f777d12e73a0c85ab",
+  "normal_host_ELFs": {
+    "main": {
+      "bytes": 960488,
+      "sha256": "8be0e13ad3d0e8652209fa3fd9ebad87efb316298f3e41ffdf9a42fff0215b15",
+      "ELF_machine": 62
+    },
+    "worker": {
+      "bytes": 978512,
+      "sha256": "405a881e846a01fe7b0343ac3ad08bd957649b80a0606201b60fd7fbe064811d",
+      "ELF_machine": 62
+    }
+  },
+  "unpublished_changed_source_files": {
+    "native-connectivity-control/src/retirement.rs": {
+      "bytes": 2792,
+      "sha256": "1d7e2a069a52cc8e5686ca9988b4c427cf9f0a29bbeae449f0cab23a308edf87"
+    },
+    "native-connectivity-control/src/service.rs": {
+      "bytes": 34757,
+      "sha256": "d5b1d5627d5c8d3856ddbbe7f196038d1ff243a1bebd414591b1e6413f3c155e"
+    },
+    "native-process-owner/src/bootstrap.rs": {
+      "bytes": 21408,
+      "sha256": "b24d557868dbfb0cf9603ea8efb20b9a459a7ed01f2c0bb483b0fc4711a661e1"
+    },
+    "native-process-owner/src/supervisor.rs": {
+      "bytes": 28237,
+      "sha256": "09cc14970803318f814c0ec2f6a729d69f2189725b1fc4dd30a6a40d8fb2a073"
+    }
+  }
+}

@@ -322,6 +322,7 @@ impl Pending {
             identity,
             until: self.until,
             ready: false,
+            owner_pid: process::getpid(),
             uid: process::getuid(),
             gid: process::getgid(),
         })
@@ -335,27 +336,49 @@ pub(crate) struct ParentBootstrap {
     pub(crate) identity: ProcessIdentity,
     until: u64,
     ready: bool,
+    owner_pid: Pid,
     uid: process::Uid,
     gid: process::Gid,
 }
 impl ParentBootstrap {
+    fn check_local_owner(&self) -> io::Result<()> {
+        if !self.ready
+            || rustix::thread::gettid() != process::getpid()
+            || process::getuid() != self.uid
+            || process::geteuid() != self.uid
+            || process::getgid() != self.gid
+            || process::getegid() != self.gid
+        {
+            return Err(io::ErrorKind::PermissionDenied.into());
+        }
+        // Like ProcessView, refuse a view inherited by a fork child. A hint
+        // needs this local fence without reading the parent's procfs table.
+        if process::getpid() != self.owner_pid {
+            return Err(io::ErrorKind::InvalidInput.into());
+        }
+        Ok(())
+    }
     fn check_message(&self, until: Deadline) -> io::Result<()> {
         if !self.ready {
             return Err(io::ErrorKind::PermissionDenied.into());
         }
         message_before(until)?;
-        if rustix::thread::gettid() != process::getpid()
-            || process::getuid() != self.uid
-            || process::geteuid() != self.uid
-            || process::getgid() != self.gid
-            || process::getegid() != self.gid
-            || !self
-                .view
-                .matches(&self.child, &self.child, self.child_pid)?
+        self.check_local_owner()?;
+        if !self
+            .view
+            .matches(&self.child, &self.child, self.child_pid)?
         {
             return Err(io::ErrorKind::PermissionDenied.into());
         }
         message_before(until)
+    }
+    pub(crate) fn message_ready(&self) -> io::Result<bool> {
+        self.check_local_owner()?;
+        // This side retains one child watch; both helper watch slots refer to
+        // that same immutable pidfd. No payload or deadline is admitted here.
+        let result = poll_message_readiness(&self.channel, &self.child, &self.child);
+        self.check_local_owner()?;
+        result
     }
     pub(crate) fn send_message(&mut self, until: Deadline, bytes: &[u8]) -> io::Result<()> {
         message_length(bytes)?;
@@ -581,6 +604,7 @@ impl ParentBootstrap {
             identity,
             until: cutoff().unwrap(),
             ready: true,
+            owner_pid: process::getpid(),
             uid: process::getuid(),
             gid: process::getgid(),
         }

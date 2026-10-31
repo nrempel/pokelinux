@@ -1,0 +1,245 @@
+{
+  "schema": 1,
+  "classification": "ACTUAL_NATIVE_X86_64_PARENT_READINESS_FORK_OWNERSHIP_GREEN",
+  "scope": "Real Linux Supervisor/BoundParent channel; inherited fork hint refusal and original-parent usability; separate from Main, GUI, ARM or physical hardware",
+  "passed": true,
+  "behavior_RED_claimed": false,
+  "published_sources": {
+    "src/main.rs": {
+      "bytes": 7179,
+      "sha256": "d89da719386d4cd2d407a7d23798f458a8b959eeaff81a3dc7ad15c0977e5ae2"
+    },
+    "src/common.rs": {
+      "bytes": 6793,
+      "sha256": "652edeee7f6fa02851394b2c3ff60261ca530922623416c08ca730c6aff95fb9",
+      "copied_exactly_from": "tools/native-parent-channel-contract/src/common.rs"
+    },
+    "Cargo.toml": {
+      "bytes": 343,
+      "sha256": "45d562136ad19889f860304319a5ad6dec225f5f3abfb0fd76133aefa02b658d",
+      "manifest_not_executed": true
+    }
+  },
+  "prior_source_only_preparation": {
+    "status_at_that_epoch": "UNCOMPILED_UNEXECUTED",
+    "raw_main": {
+      "bytes": 7142,
+      "sha256": "45f0b7a29c1959425a1e06858e1e6fd7de84f5652e74fb129615c4002d4b5891"
+    },
+    "source_manifest_sha256": "00f92b1ce815880ae1c907b0b2e2cc071875ad993e93bf1931dbea3ee8f5e563",
+    "missing_API_compile_is_behavior_RED": false
+  },
+  "compiler": {
+    "image": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+    "version": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "fixture_build_kind": "DIRECT_RUSTC",
+    "consumer_Cargo_execution": false,
+    "consumer_Cargo_artifact_claimed": false,
+    "rustc_argv": [
+      "rustc",
+      "--edition=2024",
+      "--crate-name",
+      "parent_fork_readiness_contract",
+      "-Dwarnings",
+      "-Dunsafe_code",
+      "-Dunsafe_op_in_unsafe_fn",
+      "-Copt-level=3",
+      "-Ccodegen-units=1",
+      "-Ldependency=/inputs/deps",
+      "--extern",
+      "pokelinux_process_owner=/inputs/deps/libpokelinux_process_owner-52abb5622fce0b06.rlib",
+      "--extern",
+      "rustix=/inputs/deps/librustix-d4ac1c693bf45d60.rlib",
+      "--extern",
+      "libc=/inputs/deps/liblibc-0ed2d413ea78dd5f.rlib",
+      "/out/formatted/main.rs",
+      "-o",
+      "/out/parent-fork-readiness-contract"
+    ],
+    "format_only_main_skip_children": true,
+    "common_unchanged": true,
+    "format_and_check_exit": 0,
+    "compile_exit": 0,
+    "warnings_denied": true,
+    "compiled_source_hashes_unchanged": true,
+    "regular_compiler_output_is_not_PIPE_EOF": true,
+    "fixture_execution_in_compiler_phase": false,
+    "ELF": {
+      "bytes": 4711360,
+      "sha256": "68f4e6b521068e36078ff5d16a371ad8c54f8ff7ad8495e68879e61eb66958e5",
+      "machine": 62
+    },
+    "six_exact_upstream_release_rlibs": {
+      "pokelinux_process_owner": {
+        "file": "libpokelinux_process_owner-52abb5622fce0b06.rlib",
+        "bytes": 261754,
+        "sha256": "f4d22cb0d5916fa9d9a1bf0821ad33af2a988de103693f6ed286ea5572716551",
+        "upstream_Cargo_package": "path+file:///inputs/native-process-owner#pokelinux-process-owner@0.1.0",
+        "upstream_profile_opt_level": "3",
+        "upstream_features": []
+      },
+      "pokelinux_kernel_identity": {
+        "file": "libpokelinux_kernel_identity-41ec1cc7449f6335.rlib",
+        "bytes": 79502,
+        "sha256": "92b719f88502e93391099351d9dd555885be4f6f48efc145d0b2eae6c33ead1e",
+        "upstream_Cargo_package": "path+file:///inputs/native-kernel-identity#pokelinux-kernel-identity@0.1.0",
+        "upstream_profile_opt_level": "3",
+        "upstream_features": []
+      },
+      "rustix": {
+        "file": "librustix-d4ac1c693bf45d60.rlib",
+        "bytes": 12607478,
+        "sha256": "e0134655ce70d76a624719c40efa46cab81b8caa407ceeb41ccaf6b652fc23eb",
+        "upstream_Cargo_package": "registry+https://github.com/rust-lang/crates.io-index#rustix@1.1.5",
+        "upstream_profile_opt_level": "3",
+        "upstream_features": [
+          "alloc",
+          "default",
+          "event",
+          "fs",
+          "net",
+          "process",
+          "std",
+          "stdio",
+          "thread",
+          "time"
+        ]
+      },
+      "libc": {
+        "file": "liblibc-0ed2d413ea78dd5f.rlib",
+        "bytes": 4403392,
+        "sha256": "870fd6f40524c63e711d809ac0caa90bf35b7e54f7a2f6eb0bc0eb0ddbc731c2",
+        "upstream_Cargo_package": "registry+https://github.com/rust-lang/crates.io-index#libc@0.2.190",
+        "upstream_profile_opt_level": "3",
+        "upstream_features": [
+          "default",
+          "std"
+        ]
+      },
+      "bitflags": {
+        "file": "libbitflags-435140e96680ba31.rlib",
+        "bytes": 263938,
+        "sha256": "2a4df0dc041c65d97fb93d94e0b448a9d3268fdbced730d281f3b7af4f060053",
+        "upstream_Cargo_package": "registry+https://github.com/rust-lang/crates.io-index#bitflags@2.13.2",
+        "upstream_profile_opt_level": "3",
+        "upstream_features": [
+          "std"
+        ]
+      },
+      "linux_raw_sys": {
+        "file": "liblinux_raw_sys-1aeb531f92426392.rlib",
+        "bytes": 6056504,
+        "sha256": "b7723e1a4901640847ee1cbfa4a6def5aca44a04037c84279c70817a46111054",
+        "upstream_Cargo_package": "registry+https://github.com/rust-lang/crates.io-index#linux-raw-sys@0.12.1",
+        "upstream_profile_opt_level": "3",
+        "upstream_features": [
+          "auxvec",
+          "elf",
+          "errno",
+          "general",
+          "if_ether",
+          "ioctl",
+          "net",
+          "netlink",
+          "no_std",
+          "prctl",
+          "xdp"
+        ]
+      }
+    },
+    "outer_work_close_seconds": [
+      180,
+      200
+    ],
+    "container_UID_GID": [
+      1000,
+      1000
+    ],
+    "container_cap_drop": [
+      "ALL"
+    ],
+    "container_no_new_privileges": true,
+    "container_network": "none",
+    "container_CPUs": 2,
+    "container_memory_bytes": 4294967296
+  },
+  "actual_fork_contract": {
+    "separately_admitted_after_compiler_owner_closed": true,
+    "consumer_exit": 0,
+    "single_thread_checked_before_fork": true,
+    "real_bootstrap_and_silent_channel_asserted": true,
+    "inherited_hint_error_kind": "InvalidInput",
+    "fork_exit_via": "libc::_exit",
+    "inherited_Supervisor_Drop": false,
+    "fork_actual_exit": 0,
+    "fork_pidfd_terminal": true,
+    "fork_actual_wait_ECHILD": true,
+    "fork_waited_at_boottime_ns": 7422394974089779,
+    "original_parent_same_worker_admission_asserted": true,
+    "single_fresh_request_reply_after_fork_wait_asserted": true,
+    "send_retries": 0,
+    "worker_actual_exit_signal": 9,
+    "worker_actual_wait_and_PIPE_EOF": true,
+    "worker_stdout_remaining_bytes": 0,
+    "fork_separate_PIPE_EOF_claimed": false,
+    "durable_successor_refusal_asserted": true,
+    "original_fixture_work_seconds": 4,
+    "original_fixture_cleanup_seconds": 6,
+    "reply_cutoff_at_most_seconds": 1,
+    "original_until_ns": 7422398944847078,
+    "original_cleanup_until_ns": 7422400944847078,
+    "outer_work_close_seconds": [
+      30,
+      40
+    ],
+    "container_UID_GID": [
+      1000,
+      1000
+    ],
+    "container_cap_drop": [
+      "ALL"
+    ],
+    "container_no_new_privileges": true,
+    "container_network": "none",
+    "container_CPUs": 1,
+    "container_memory_bytes": 268435456
+  },
+  "closure": {
+    "compiler_container_actual_wait": 0,
+    "runtime_container_actual_wait": 0,
+    "exact_CIDs_and_names_removed_and_absent": true,
+    "same_daemon_both_phases": true,
+    "compiler_outer_direct_waits_PIPE_EOF": 14,
+    "runtime_outer_direct_waits_PIPE_EOF": 14,
+    "all_outer_waits_EOF_before_original_cutoffs": true,
+    "outer_handles_closed": true,
+    "both_outer_ECHILD": true,
+    "adopted_outer_waits_or_signals": 0,
+    "all_selected_inputs_unchanged": true
+  },
+  "proof_sha256": {
+    "compiler-owner/receipt.json": "2c0b4acf82046fd1ff293dc48012e962d2d4ade2305b3d576a90da2abe8d9f36",
+    "runtime-owner/receipt.json": "1d9024c673702ce3eaa0f4d446c834829537cf875d1e036961ae3959a7610614",
+    "compiler-output/direct-rustc-artifact.json": "902fec35ffab351cbbf1da39c3fa4b93274c69d45be1af05878b15f6a8c09b4f",
+    "compiler-output/compiled-source-before.sha256": "5cd4458b87c6ddf9e9c8b712525210125f06804ef65441fa4a4e24ffa59dbe37",
+    "compiler-output/compiled-source-after.sha256": "5cd4458b87c6ddf9e9c8b712525210125f06804ef65441fa4a4e24ffa59dbe37",
+    "compiler-output/compiler.txt": "778fbc643a806f0dd123c056e66201d7e8a56a61928ec0a33171be8d6c2d5a37",
+    "compiler-output/rustfmt.txt": "5ee6d8b8c1029331c46a25d772a77b5ea1721c1f8464413f2b10ebbb584fdbbb",
+    "runtime-owner/06-attach.log": "c710110ec16eefd56164a5e39e2cfd5f412a182150e723820ffe5dccedbb70f2",
+    "control.json": "24528164b370ec21b0b3ccca0407e976e0028d5552ec1c05103ea3efc571fff0",
+    "format-build.sh": "ee8bac96d04d76853135fbb9b0caf98e1a181f3cfc68b8d9f3d3c39979cd1252",
+    "run_once.py": "bda69b91746033e3ff328f8846ef7cf6ef47befab5f6668574e3634d7a967f42",
+    "owned.py": "5a738b9529a1a0e5d5b0bd20e27e2ec4244d4e61d7c8e0dad96fe1ffbef3c423",
+    "closure.py": "646e9cfd5f755b626fe8babfa26637ddac328ede05cdab75aa77cc51332d70d6",
+    "inputs/provenance/upstream-owner-receipt.json": "801b90989ef50b641f23ef59de188bcd01fba78914c1df0f777d12e73a0c85ab",
+    "inputs/provenance/out-build-result.json": "d9090908466fc06ba7b0deeeb1a502cdbe382a43f9850db850c065ad49848ca8",
+    "inputs/provenance/source-pins.json": "c1181f012862c131fe0865a7f9f2ee66f6a13a4a84dee7735277dadafaff2baf",
+    "inputs/provenance/upstream-rlibs.json": "dfb37fd37577eed95381ca63c108a80152797dfb2cda4888a7a3e9baecfdc766"
+  },
+  "limits": [
+    "No fork baseline behavioral RED was executed.",
+    "The earlier unexecuted source-only preparation is separate from these formatted compiled bytes.",
+    "This fixture was compiled directly with rustc; Cargo rows describe only reused upstream rlibs.",
+    "No Main idle-persistence, GUI, ARM, hardware or safe effect-retry qualification follows."
+  ]
+}

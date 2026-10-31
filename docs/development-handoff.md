@@ -2,6 +2,17 @@
 
 ## Immediate integration order
 
+The normal Main empty-idle regression now passes the unchanged host consumer
+after qualified RED. A source-qualified zero-readiness hint defers starting an
+empty 50 ms receive envelope; the same worker publishes a newer fact after resume.
+Consumed 48-byte expiry and parent death remain strict controls. All three
+containers close before one in-process desired assertion. 53 host tests and
+host/ARM compilation pass; the separate actual fork ownership control passes.
+Held G4/G5 action-expiry/Stop controls now pass on unchanged bounds
+([evidence](evidence/native-connectivity-main-readiness-held-controls.json)); the
+new GUI candidate has not executed. This does not attribute root4's timing cause or repair the
+complete GUI path. [Main idle evidence](native-connectivity-main-idle-receive.md).
+
 The normal Main first-retirement latch now passes its actual native x86_64 CLI
 boundary with one unchanged consumer: baseline missing-reason RED, then candidate
 GREEN preserving `startup_failure`/`poll_worker`/`InvalidData` through a later
@@ -27,9 +38,9 @@ Root4 controller custody, wireless teardown/loopback preservation, QEMU/Xvfb
 wait0 and container wait1/removal/absence qualify with unchanged inputs. Guest
 closure remains false with34 adopted actual exit0 waits. Second-window readiness,
 second packet, Disable/quiet and complete GUI success remain failed. Root is
-investigating the narrow actual receive boundary before behavioral changes;
-then continue installed cold boot, keeping the existing receive duration and
-original action cutoffs.
+preserving this failed epoch while the separate controlled host idle fix is
+qualified. Continue to the unchanged graphical slice and installed cold boot,
+keeping the receive duration and original action cutoffs.
 [Partial GUI evidence](evidence/native-wireless-settings-window-partial.json).
 
 Latest follow-up: the two-file Clippy repair passes the actual current virtual

@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "selected_source_commit": "034148d0051c7f51d033b93888b6f8a99e724d56",
+  "files": {
+    "bootstrap.rs": {
+      "source": "native-process-owner/src/bootstrap.rs",
+      "sha256": "857715d16c81a616742d8c8b29e8da907565a0c361583f67ca0867e38fa7aa48"
+    },
+    "pidfd.rs": {
+      "source": "native-kernel-identity/src/pidfd.rs",
+      "sha256": "caf4b44738fc53093a32ef96c2e639c1a376935ad29fa17a42091a56180b11ff"
+    },
+    "supervisor.rs": {
+      "source": "native-process-owner/src/supervisor.rs",
+      "sha256": "c8dac99e60685dcac9f383be2adb16f9dc7d6e14fac79e939fdf9de59c74490c"
+    },
+    "service.rs": {
+      "source": "native-connectivity-control/src/service.rs",
+      "sha256": "dc73e8df6463409d7efee40fa631777cba5844aea4aceda31c055070b3b70f1c"
+    },
+    "main_service.rs": {
+      "source": "native-connectivity-control/src/main_service.rs",
+      "sha256": "d0c498790b37de73300e640cb0db2d9e0d07d9fe52dec7a2004ca1a6a9a51960"
+    },
+    "private_channel.rs": {
+      "source": "native-connectivity-control/src/private_channel.rs",
+      "sha256": "de1b4cfc09772729fc55b77d9276bf529eff836af492fc9fa785b376cf595d24"
+    }
+  },
+  "roles": {
+    "readiness_helper": "bootstrap.rs::poll_message_readiness",
+    "readiness_poll_nfds": 3,
+    "readiness_descriptor_roles": [
+      "private_channel",
+      "retained_child_pidfd",
+      "same_retained_child_pidfd"
+    ],
+    "identity_helper": "pidfd.rs::ProcessView::matches_after_reads",
+    "identity_poll_nfds": 2,
+    "zero_timeout": true,
+    "Main_other_three_fd_poll_paths": [],
+    "next_gettid_role": "ParentBootstrap receive pre-auth on baseline; readiness local check on candidate before new50ms envelope",
+    "roles_source_qualified": true
+  },
+  "scope": "Source/control-flow attribution, not runtime fd-array or packet inspection. Baseline Main has no readiness call; candidate must reuse reviewed3fd helper with the child in both watch slots. Provider build/source equality remains an outer admission prerequisite."
+}

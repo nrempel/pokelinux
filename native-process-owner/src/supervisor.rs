@@ -342,6 +342,23 @@ impl Supervisor {
     /// Receive one owned post-GO record from the exact current Ready worker.
     /// None means actual EAGAIN. Stop/reap revoke admission before any I/O.
     /// This may discard bytes on error and never clears the admission marker.
+    /// Non-consuming, zero-wait hint from the exact admitted worker. Retained
+    /// death/error watches and local ownership checks fence the hint; only
+    /// `receive_message` authenticates a record under its original deadline.
+    pub fn message_ready(&self, source: ProcessIdentity) -> io::Result<bool> {
+        if !self.admits(source) {
+            return Err(io::ErrorKind::PermissionDenied.into());
+        }
+        let result = self
+            .bootstrap
+            .as_ref()
+            .ok_or(io::ErrorKind::PermissionDenied)?
+            .message_ready();
+        if !self.admits(source) {
+            return Err(io::ErrorKind::PermissionDenied.into());
+        }
+        result
+    }
     pub fn receive_message(
         &mut self,
         source: ProcessIdentity,

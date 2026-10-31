@@ -1,0 +1,443 @@
+{
+  "schema": 1,
+  "classification": "ACTUAL_NORMAL_MAIN_EMPTY_IDLE_RECEIVE_RED_GREEN",
+  "scope": "Native x86_64 normal Main/worker in three fresh private Linux container namespaces; no Settings/VM/phone",
+  "published_fixture": "tools/native-connectivity-worker/main-idle-receive",
+  "unchanged_executable_fixture_sources": {
+    "consumer.py": {
+      "bytes": 7383,
+      "sha256": "a9ed4919c2f8c8405e64649f3e6e0fdd2e6bf2ed135ca4ad0c8bf00455ab75b1"
+    },
+    "controller.py": {
+      "bytes": 15536,
+      "sha256": "acdc7d72b2a1e5628c88d38575a2132b12af434fec1004b662a1e8653ae0ba1b"
+    },
+    "main_trace.py": {
+      "bytes": 10489,
+      "sha256": "9fc147a1ef92810a1be9ca65c66f893ed212b1d0eff917d98dc5a6217a27f2a2"
+    },
+    "inside.py": {
+      "bytes": 3028,
+      "sha256": "edb90031880868838d855b34468b1b044f0fdf59bf0aeb5912cfb8f735b72f6a"
+    },
+    "peer.py": {
+      "bytes": 10834,
+      "sha256": "83132acf9befb9ed901d22221dd64f493ff736357a58faa5404b5a9825ad05cb"
+    }
+  },
+  "exact_shared_helpers": {
+    "owned.py": {
+      "source": "tools/native-installed-services/owned.py",
+      "bytes": 12712,
+      "sha256": "5a738b9529a1a0e5d5b0bd20e27e2ec4244d4e61d7c8e0dad96fe1ffbef3c423"
+    },
+    "closure.py": {
+      "source": "tools/native-audio-preview/closure.py",
+      "bytes": 3596,
+      "sha256": "646e9cfd5f755b626fe8babfa26637ddac328ede05cdab75aa77cc51332d70d6"
+    },
+    "worker_trace.py": {
+      "source": "tools/native-connectivity-worker/idle-receive/worker_trace.py",
+      "bytes": 8605,
+      "sha256": "4076d637d52e8342f71441ca031302bc623818fecd41e49c755c5932fa1a4a7b"
+    }
+  },
+  "epochs": {
+    "baseline": {
+      "normal_host_ELFs": {
+        "pokelinux-connectivity-main": {
+          "bytes": 958712,
+          "sha256": "ddfdef92311359d2ab9e1f6609b338b202b1037c273af9da824cb7ca8a096f8f"
+        },
+        "pokelinux-connectivity-service": {
+          "bytes": 978520,
+          "sha256": "d34d35a96fd2fbab6a5b69d8b286ca946c4138ffedf3dcfd543f1aac177f8200"
+        }
+      },
+      "outer_expected_result_qualified": true,
+      "desired_policy_passed": false,
+      "behavior_RED_qualified": true,
+      "desired_assertion_calls": 1,
+      "desired_assertion_mode": "in-process after all three exact containers close; no consumer child exit",
+      "desired_assertion_error": "IDLE_EMPTY_MAIN_RECEIVE_MUST_KEEP_SAME_WORKER_FOR_FRESH_OBSERVATION",
+      "all_three_containers_actual_exit0_removed_same_daemon": true,
+      "all_selected_inputs_unchanged": true,
+      "outer_owned_wait_EOF_qualified": true,
+      "cleanup_errors": [],
+      "source_proof": {
+        "path": "tools/native-connectivity-worker/main-idle-receive/baseline/main-source-proof.json",
+        "bytes": 2004,
+        "sha256": "e6cb222bcdbf50682d63c6f534b61adedf9f98f62ceedadf4091f74bba6ad231"
+      },
+      "proof_sha256": {
+        "selection.json": "6fe89c83f21fab8f7f7f98630ccfc1c8719865b9595d8a6f6f5f5e523d9006ad",
+        "SOURCE.json": "db2e784c584b2ddb29361fd6d527d12e7e5742e2955e922d76f498dd03d62584",
+        "command.json": "0583c6533578f31fabaea7bf9c40b0fef11c45a53b4b0e61c7f3d66056c460d7",
+        "run/receipt.json": "32bc9390c1f06ea840368748ababe8f0c2e566f869c3aa2a117b1c615085766d"
+      },
+      "cases": {
+        "idle": {
+          "review": {
+            "passed": false,
+            "behavior_RED_qualified": true,
+            "actual_outcome_confirmed": true,
+            "detail": {
+              "original_envelope_until_ns": 7421416403841818,
+              "detected_at_ns": 7421416435092733
+            }
+          },
+          "container_actual_exit": 0,
+          "case_custody_qualified": true,
+          "inside_wait_EOF_and_closure_qualified": true,
+          "actual_effect_requests": 0,
+          "proof_sha256": {
+            "case-result.json": "f8e8d42f4e9d2ac15cc9d482fadcf0d9a73237cad9ab988a4260000742ee8a8b",
+            "inside-result.json": "2676b0e3713504e355fb6bf665a5778000a647510e42de3b52af486cad74ddc1",
+            "normal-main.log": "ffc0d5f1f6b85d4ee5b2b5b2b7738dfef822ca308813a607974e94d27873e488"
+          },
+          "no_data_anchor": "private_recvmsg_EAGAIN",
+          "source_role_qualification": true,
+          "worker_safely_silent_through_Main_hold": true,
+          "Main_requested_hold_ns": 80000000,
+          "same_worker_fresh_after_idle": false,
+          "worker_terminal_before_cleanup": true,
+          "post_hold_private_receives": 0,
+          "first_retirement": {
+            "detected_at_ns": 7421416435092733,
+            "errno": null,
+            "io_kind": "TimedOut",
+            "observation_age_ns": null,
+            "observation_at_ns": null,
+            "operation": "receive_message",
+            "original_until_ns": 7421416403841818,
+            "reason": "receive_failure",
+            "record_length": null,
+            "record_type": null
+          },
+          "actual_Main_exit": 0
+        },
+        "consumed": {
+          "review": {
+            "passed": true,
+            "actual_consumed_bytes": 48,
+            "actual_Main_receive_failure": {
+              "original_envelope_until_ns": 7421417089943210,
+              "detected_at_ns": 7421417120190788
+            },
+            "no_late_success_or_retry": true
+          },
+          "container_actual_exit": 0,
+          "case_custody_qualified": true,
+          "inside_wait_EOF_and_closure_qualified": true,
+          "actual_effect_requests": 0,
+          "proof_sha256": {
+            "case-result.json": "f22a3dc5e77d692fa0021773d99d1b8fed68cfb6107eb65dfcf73fa76cce4c2d",
+            "inside-result.json": "505f6030c6349e2f354b6dd58c5de7e48e1aa3495e83e7688829697ef6268898",
+            "normal-main.log": "dd621c8cdc37c13963cc10b52fa12dad60f1d8ce19472079ac9f6d66632840aa"
+          },
+          "actual_consumed_bytes": 48,
+          "frame_contents_inspected": false,
+          "Main_requested_hold_ns": 80000000,
+          "first_retirement": {
+            "detected_at_ns": 7421417120190788,
+            "errno": null,
+            "io_kind": "TimedOut",
+            "observation_age_ns": null,
+            "observation_at_ns": null,
+            "operation": "receive_message",
+            "original_until_ns": 7421417089943210,
+            "reason": "receive_failure",
+            "record_length": null,
+            "record_type": null
+          },
+          "worker_terminal_before_cleanup": true,
+          "no_late_success_or_second_receive": true
+        },
+        "parent-death": {
+          "review": {
+            "passed": true,
+            "actual_known_worker_parent_death_wait_signal": 9,
+            "ordinary_Main_worker_wait_claimed": false
+          },
+          "container_actual_exit": 0,
+          "case_custody_qualified": true,
+          "inside_wait_EOF_and_closure_qualified": true,
+          "actual_effect_requests": 0,
+          "proof_sha256": {
+            "case-result.json": "6ba6ecc3b9199c702deae033cb8c068a74c0af09ea063d23e4d27199d9e6907c",
+            "inside-result.json": "93dc75aa866322d4d543dd45ed5647ac001a1059f8da0e5243326bbca7a26b50",
+            "normal-main.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "Main_actual_wait_signal": 9,
+          "known_worker_adopted_actual_wait_signal": 9,
+          "Main_wait_and_EOF_precede_known_worker_wait": true,
+          "ordinary_Main_worker_wait_claimed": false
+        }
+      }
+    },
+    "candidate": {
+      "normal_host_ELFs": {
+        "pokelinux-connectivity-main": {
+          "bytes": 960488,
+          "sha256": "8be0e13ad3d0e8652209fa3fd9ebad87efb316298f3e41ffdf9a42fff0215b15"
+        },
+        "pokelinux-connectivity-service": {
+          "bytes": 978512,
+          "sha256": "405a881e846a01fe7b0343ac3ad08bd957649b80a0606201b60fd7fbe064811d"
+        }
+      },
+      "outer_expected_result_qualified": true,
+      "desired_policy_passed": true,
+      "behavior_RED_qualified": false,
+      "desired_assertion_calls": 1,
+      "desired_assertion_mode": "in-process after all three exact containers close; no consumer child exit",
+      "desired_assertion_error": null,
+      "all_three_containers_actual_exit0_removed_same_daemon": true,
+      "all_selected_inputs_unchanged": true,
+      "outer_owned_wait_EOF_qualified": true,
+      "cleanup_errors": [],
+      "source_proof": {
+        "path": "tools/native-connectivity-worker/main-idle-receive/candidate/main-source-proof.json",
+        "bytes": 4107,
+        "sha256": "39071d1857b2281a0f6526b975273bd29c7ce926242b8065060a5452849323b7"
+      },
+      "proof_sha256": {
+        "selection.json": "c23e117c4a3324b6b5f1602af4cc9603b9cd09f08ed32ff182a3237a8d84d319",
+        "SOURCE.json": "3c7053b002a99bab2548e3f524183874c1fa570d9c245beedfb6a5180bc0439f",
+        "command.json": "efd799338ad5c8ff1c6096fe8c3c3d0b6aa9323b9927d5e5e2043a32a15b1612",
+        "run/receipt.json": "b50a9142e8c4040895019bfb0f806dd3c43a405990e0defe4ae1cfc4f3da61c8"
+      },
+      "cases": {
+        "idle": {
+          "review": {
+            "passed": true,
+            "behavior_RED_qualified": false,
+            "actual_outcome_confirmed": true,
+            "detail": {}
+          },
+          "container_actual_exit": 0,
+          "case_custody_qualified": true,
+          "inside_wait_EOF_and_closure_qualified": true,
+          "actual_effect_requests": 0,
+          "proof_sha256": {
+            "case-result.json": "0e05bf488019dccbbd34fd321fc1c99b9bfe79ef2b234e9db8226516635628c4",
+            "inside-result.json": "6b6289fa36c3fa461a1cb73f2871335d223086d2fc9cc6fbebd95a79ac8eb92f",
+            "normal-main.log": "557a23bfbdeaa5421fda603ad11681040e60409467d6a2a2aab0410f13804668"
+          },
+          "no_data_anchor": "source_qualified_three_fd_readiness_zero",
+          "source_role_qualification": true,
+          "worker_safely_silent_through_Main_hold": true,
+          "Main_requested_hold_ns": 80000000,
+          "same_worker_fresh_after_idle": true,
+          "worker_terminal_before_cleanup": false,
+          "post_hold_private_receives": 0,
+          "first_retirement": {
+            "detected_at_ns": 7422098706933840,
+            "errno": null,
+            "io_kind": null,
+            "observation_age_ns": null,
+            "observation_at_ns": null,
+            "operation": null,
+            "original_until_ns": null,
+            "reason": "external_stop",
+            "record_length": null,
+            "record_type": null
+          },
+          "actual_Main_exit": 0,
+          "worker_resume_requested_at_ns": 7422098702783687,
+          "new_fact_observed_at_ns": 7422098702815977,
+          "available_after_resume": true,
+          "configured_after_resume": false,
+          "pending_after_resume": false
+        },
+        "consumed": {
+          "review": {
+            "passed": true,
+            "actual_consumed_bytes": 48,
+            "actual_Main_receive_failure": {
+              "original_envelope_until_ns": 7422099378758542,
+              "detected_at_ns": 7422099409328650
+            },
+            "no_late_success_or_retry": true
+          },
+          "container_actual_exit": 0,
+          "case_custody_qualified": true,
+          "inside_wait_EOF_and_closure_qualified": true,
+          "actual_effect_requests": 0,
+          "proof_sha256": {
+            "case-result.json": "abe7ff60792e2b86f57f06f27258fc63c5461735f832b857f6fa154b89bc4486",
+            "inside-result.json": "06e54ca4c97290189a52f007313d4f133a609ab48fd423cd352522ef1b7eccd8",
+            "normal-main.log": "201202552b267a22645994d7d31937fb38d3c9ea90c98f6c08df8a23033f77a5"
+          },
+          "actual_consumed_bytes": 48,
+          "frame_contents_inspected": false,
+          "Main_requested_hold_ns": 80000000,
+          "first_retirement": {
+            "detected_at_ns": 7422099409328650,
+            "errno": null,
+            "io_kind": "TimedOut",
+            "observation_age_ns": null,
+            "observation_at_ns": null,
+            "operation": "receive_message",
+            "original_until_ns": 7422099378758542,
+            "reason": "receive_failure",
+            "record_length": null,
+            "record_type": null
+          },
+          "worker_terminal_before_cleanup": true,
+          "no_late_success_or_second_receive": true
+        },
+        "parent-death": {
+          "review": {
+            "passed": true,
+            "actual_known_worker_parent_death_wait_signal": 9,
+            "ordinary_Main_worker_wait_claimed": false
+          },
+          "container_actual_exit": 0,
+          "case_custody_qualified": true,
+          "inside_wait_EOF_and_closure_qualified": true,
+          "actual_effect_requests": 0,
+          "proof_sha256": {
+            "case-result.json": "f51bebdbf0a94f199e118beec9bf049c145f48200248e4fe5be52f13a5217880",
+            "inside-result.json": "eae5d748f1a50519737dd6285571c2376ec0d505f964f20fe6bfc76e9427a121",
+            "normal-main.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "Main_actual_wait_signal": 9,
+          "known_worker_adopted_actual_wait_signal": 9,
+          "Main_wait_and_EOF_precede_known_worker_wait": true,
+          "ordinary_Main_worker_wait_claimed": false
+        }
+      }
+    }
+  },
+  "candidate_source": {
+    "published_base_commit": "034148d0051c7f51d033b93888b6f8a99e724d56",
+    "published_candidate_commit_at_measurement": null,
+    "patch": {
+      "bytes": 7313,
+      "sha256": "85a333f35fc1b407584ca1551366a4044ec6e898dbba4ca97b97f5e6ffe2ebe4"
+    },
+    "runtime_source_changes": {
+      "native-connectivity-control/src/retirement.rs": {
+        "bytes": 2792,
+        "sha256": "1d7e2a069a52cc8e5686ca9988b4c427cf9f0a29bbeae449f0cab23a308edf87"
+      },
+      "native-connectivity-control/src/service.rs": {
+        "bytes": 34757,
+        "sha256": "d5b1d5627d5c8d3856ddbbe7f196038d1ff243a1bebd414591b1e6413f3c155e"
+      },
+      "native-process-owner/src/bootstrap.rs": {
+        "bytes": 21408,
+        "sha256": "b24d557868dbfb0cf9603ea8efb20b9a459a7ed01f2c0bb483b0fc4711a661e1"
+      },
+      "native-process-owner/src/supervisor.rs": {
+        "bytes": 28237,
+        "sha256": "09cc14970803318f814c0ec2f6a729d69f2189725b1fc4dd30a6a40d8fb2a073"
+      }
+    },
+    "frozen_compiler_input_rows": 59,
+    "source_manifest": {
+      "bytes": 28756,
+      "sha256": "c1181f012862c131fe0865a7f9f2ee66f6a13a4a84dee7735277dadafaff2baf"
+    }
+  },
+  "candidate_build": {
+    "active_library_tests": 45,
+    "active_owner_tests": 8,
+    "ignored_library_tests": 1,
+    "fmt_strict_all_target_Clippy_host_ARM_compilation_passed": true,
+    "all_original_locks_unchanged": true,
+    "build_result_sha256": "d9090908466fc06ba7b0deeeb1a502cdbe382a43f9850db850c065ad49848ca8",
+    "outer_receipt_sha256": "801b90989ef50b641f23ef59de188bcd01fba78914c1df0f777d12e73a0c85ab",
+    "actual_compiler_container_exit": 0,
+    "closure_ECHILD_and_exact_absence_same_daemon": true,
+    "ARM_component_libtest_executed": false
+  },
+  "original_bounds": {
+    "whole_host_work": 180,
+    "whole_host_close": 200,
+    "inside_work": 30,
+    "inside_close": 40,
+    "functional_case": 6,
+    "Main_startup": 3,
+    "transport_envelope": 0.05,
+    "observation_refresh_schedule": 0.05,
+    "observation_read": 0.1,
+    "observation_lease": 0.25,
+    "explicit_consumed_action": 0.1
+  },
+  "fixed_Main_holds_ns": {
+    "idle": 80000000,
+    "consumed": 80000000
+  },
+  "resources": {
+    "CPUs": 2,
+    "memory_GiB": 2,
+    "sequential_fresh_containers": 3,
+    "network": "none",
+    "host_devices": [],
+    "fixture_setup_capabilities": [
+      "NET_ADMIN",
+      "SYS_ADMIN",
+      "SETPCAP",
+      "SYS_PTRACE"
+    ]
+  },
+  "earlier_root1_setup_failure": {
+    "path": "/tmp/pokelinux-main-idle-receive-red-root-1",
+    "selection": {
+      "bytes": 41983,
+      "sha256": "7fcd42b5d6ac1326dd4d9dafb76dfc7c984c8391bc80c3cb3d9d1a732b8c2c78"
+    },
+    "receipt": {
+      "bytes": 20237,
+      "sha256": "ade21abba46529bd231d2bd741880dce06751a1aeed02f98255db2ac8e9f8dd6"
+    },
+    "classification": "SETUP_SELECTOR_FAILURE_BEFORE_MAIN_TRACE_NOT_BEHAVIORAL_RED",
+    "preserved_in_place": true,
+    "only_runtime_fixture_change": "Permit connected abstract/no-path SEQPACKET; exclude filesystem ingress",
+    "selector_diff": "fixture-selector.diff"
+  },
+  "fork_ownership_control": {
+    "qualified_separately": true,
+    "evidence": "../../tools/native-parent-channel-fork-readiness/evidence.json",
+    "evidence_sha256": "5b85d6191ea5660c1a6c47ec8602c1e8cb7b39497f32e41460b81b8e3d7e7384",
+    "baseline_fork_RED_claimed": false
+  },
+  "held_G4_G5_regressions": {
+    "status": "qualified",
+    "setup_failures": [
+      {
+        "epoch": "sol1",
+        "stage": "compiler artifact closure",
+        "error": "E0463 using an incomplete selected Cargo artifact set",
+        "held_test_executed": false,
+        "behavior_RED_claimed": false,
+        "complete_selected_Cargo_artifact_set_compiled": true,
+        "artifact_additions_were_not_isolated": true
+      },
+      {
+        "epoch": "sol2",
+        "compiler_passed": true,
+        "stage": "expiry launch before fixture process start",
+        "container_exit": 127,
+        "error": "compiler image lacks Python",
+        "held_test_executed": false,
+        "cleanup_qualified": true,
+        "behavior_RED_claimed": false
+      }
+    ],
+    "expiry_passed": true,
+    "Stop_passed": true,
+    "evidence": "native-connectivity-main-readiness-held-controls.json",
+    "runtime_epoch": "sol3",
+    "evidence_sha256": "a56babdec240c7b379c782211fa3f5d7debf0b0d464ddf09a11f524c009f5d21"
+  },
+  "new_GUI_readiness_candidate_executed": false,
+  "root4_underlying_timing_cause_established": false,
+  "empty_idle_does_not_prove_root4_was_empty": true,
+  "consumed_case_does_not_prove_root4_consumed_a_frame": true,
+  "root4_pre_or_post_guard_identified": false,
+  "CPU_or_IPv6_cause_established": false,
+  "raw_inventories_packet_contents_process_memory_private_logs_published": false
+}

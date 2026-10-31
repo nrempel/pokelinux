@@ -11,6 +11,7 @@ pub enum RetirementReason {
     WorkerAdmissionLost,
     ActionExpired,
     CommandSendFailure,
+    ReadinessFailure,
     ReceiveFailure,
     RecordLength,
     RecordVersion,

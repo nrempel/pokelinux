@@ -561,22 +561,35 @@ impl Service {
             }
         }
         if self.handshake && !self.stopping {
-            let result = self.supervisor.receive_message(
-                self.identity.ok_or_else(invalid)?,
-                cutoff(now.saturating_add(ENVELOPE)),
-            );
-            match result {
-                Ok(Some(bytes)) => {
-                    if self.accept(&bytes).is_err() {
-                        let _ = self.stop();
+            let identity = self.identity.ok_or_else(invalid)?;
+            match self.supervisor.message_ready(identity) {
+                Ok(false) => {}
+                Ok(true) => {
+                    // Idle turns start no receive deadline. Once data is ready,
+                    // keep the original envelope through all pre/post checks.
+                    let until = boot_time_ns().saturating_add(ENVELOPE);
+                    match self.supervisor.receive_message(identity, cutoff(until)) {
+                        Ok(Some(bytes)) => {
+                            if self.accept(&bytes).is_err() {
+                                let _ = self.stop();
+                            }
+                        }
+                        Ok(None) => {}
+                        Err(error) => {
+                            self.note(
+                                Retirement::new(RetirementReason::ReceiveFailure, boot_time_ns())
+                                    .operation("receive_message")
+                                    .until(until)
+                                    .io(&error),
+                            );
+                            let _ = self.stop();
+                        }
                     }
                 }
-                Ok(None) => {}
                 Err(error) => {
                     self.note(
-                        Retirement::new(RetirementReason::ReceiveFailure, boot_time_ns())
-                            .operation("receive_message")
-                            .until(now.saturating_add(ENVELOPE))
+                        Retirement::new(RetirementReason::ReadinessFailure, boot_time_ns())
+                            .operation("message_ready")
                             .io(&error),
                     );
                     let _ = self.stop();

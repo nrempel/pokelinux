@@ -1,0 +1,231 @@
+{
+  "schema": 1,
+  "passed": true,
+  "scope": "Actual native x86_64 direct Service/normal worker virtual-pair held controls with authored trusted authority; separate from normal Main CLI/GUI/ARM/phone",
+  "private_cohort": "pokelinux-main-readiness-held-controls-sol-3",
+  "production_source": {
+    "published_base_commit": "034148d0051c7f51d033b93888b6f8a99e724d56",
+    "status_at_build": "Unpublished reviewed four-file working-tree patch on the published base; changed bytes not claimed at that base",
+    "source_manifest": {
+      "bytes": 28756,
+      "sha256": "c1181f012862c131fe0865a7f9f2ee66f6a13a4a84dee7735277dadafaff2baf"
+    },
+    "source_rows": 59,
+    "candidate_patch": {
+      "bytes": 7313,
+      "sha256": "85a333f35fc1b407584ca1551366a4044ec6e898dbba4ca97b97f5e6ffe2ebe4"
+    }
+  },
+  "provider_provenance": {
+    "direct_rustc_driver": {
+      "bytes": 4957728,
+      "sha256": "1021c50709759b788b973225f2707a8ce56ad737e1f847e34448f89b5322b5a5",
+      "source": {
+        "bytes": 16281,
+        "sha256": "fa7dcdebc3c10323452091c9618e02c8ebac385ed42d2d6d572f176f8bc53a57"
+      },
+      "compiler": {
+        "bytes": 196,
+        "sha256": "778fbc643a806f0dd123c056e66201d7e8a56a61928ec0a33171be8d6c2d5a37"
+      },
+      "Cargo_consumer_artifact_claimed": false,
+      "upstream_library_Cargo_rows_only": true,
+      "upstream_linkable_artifacts": {
+        "rlibs": 22,
+        "proc_macro_shared_objects": 1,
+        "manifest": {
+          "bytes": 29514,
+          "sha256": "7a1d1619d3a3dc4374ff1a2fac3bfb1a658653c18344e979fead5d09473c23e2"
+        }
+      },
+      "artifact_record": {
+        "bytes": 1265,
+        "sha256": "308bd7d06daa94920585db0fa11e8a59f359864d4539bae0d7ffcc384b8439b0"
+      },
+      "qualified_compiler_outer": {
+        "bytes": 30284,
+        "sha256": "05b461e8fe1b8ecfbdc04ed4a5c44834d291a6c42c6fcda2ed430d4088bbef4b"
+      }
+    },
+    "normal_worker": {
+      "bytes": 978512,
+      "sha256": "405a881e846a01fe7b0343ac3ad08bd957649b80a0606201b60fd7fbe064811d"
+    },
+    "compiler_root_reused_without_recompilation": "pokelinux-main-readiness-held-controls-sol-2",
+    "compiler_image": "sha256:0b4b956502a9f55d992eaced6975737b523be19bd2034078983b36bbcfd7aee6",
+    "runtime_image": "sha256:b6818cecd61a5e378fecbf25d7b0979360cf29fda9ad0801b4a21e2054f69678"
+  },
+  "frozen_consumer": {
+    "driver": {
+      "bytes": 16281,
+      "sha256": "fa7dcdebc3c10323452091c9618e02c8ebac385ed42d2d6d572f176f8bc53a57"
+    },
+    "controller": {
+      "bytes": 19828,
+      "sha256": "062ccb562999ec7867c771c889d02801432f7f93dc4f8df96d6ab9184c326194"
+    },
+    "historical_driver_sha256": "96f84561e726d3c76b7e5c4e2c779cf067303854c95070a3d7e6ac2af802efef",
+    "earlier_current_driver_API_migration": "Typed Profile/Fact; expiry and Stop bodies byte-identical to historical successful bodies",
+    "controller_and_peer_match_historical_execution": true,
+    "preparation": {
+      "bytes": 5760,
+      "sha256": "15476b63fe8163c24e6c37462fccf0df1e9731448c07cc4a979483483310010b"
+    }
+  },
+  "original_contract_ns": {
+    "case_aggregate": 6000000000,
+    "Service_startup_at_most": 1000000000,
+    "action": 100000000,
+    "observation_lease": 250000000,
+    "snapshot_only_hold": 350000000,
+    "resume_control_from_dispatch": 450000000,
+    "independent_monitor_from_dispatch": 1250000000,
+    "snapshot_Stop_poll_responsiveness_bound": 100000000,
+    "inner_work": 140000000000,
+    "inner_close": 160000000000,
+    "outer_work": 180000000000,
+    "outer_close": 200000000000
+  },
+  "runtime_resources": {
+    "cpus": 4,
+    "memory_bytes": 2147483648,
+    "pids": 128,
+    "network": "none; two owned private namespaces",
+    "root_filesystem": "read-only",
+    "initial_UID": 0,
+    "initial_caps": [
+      "NET_ADMIN",
+      "SYS_ADMIN",
+      "SETPCAP"
+    ],
+    "no_new_privileges": true,
+    "caller_capabilities_after_setup": 0,
+    "worker_capability": "NET_ADMIN only"
+  },
+  "cases": {
+    "expiry": {
+      "passed": true,
+      "classification": "ACTUAL_PERSISTENT_SERVICE_EXPIRY_GREEN",
+      "outer": {
+        "bytes": 26173,
+        "sha256": "971519b4085a8f61e41c8f0007e465599beab0173f2af4cac3d08fc35fcd1af8"
+      },
+      "loader": {
+        "bytes": 3848,
+        "sha256": "7b2da8bfd96213fe21559a3309d13c8926dd4de272584f671dfd8dda27df6f93"
+      },
+      "controller": {
+        "bytes": 402115,
+        "sha256": "b2fec74b99a33b2634a6f9d4b99a4b04d46d91622d9a6d61c5d1eb7e93ba1ceb"
+      },
+      "expiry_control": {
+        "actual_dispatched_original_deadline": true,
+        "snapshot_only_hold_budget_ns": 350000000,
+        "snapshot_only_samples": 170,
+        "both_observation_layers_expired_after_250ms_lease": true,
+        "terminal_uncertainty_same_occupied_worker_retained": true,
+        "same_worker_SIGCONT_within_original450ms_control": true,
+        "late_snapshots": 433,
+        "terminal_stays_closed_and_no_reply_revives": "Passed unchanged driver assertions through original1250ms monitor",
+        "elapsed_snapshot_hold_ns": 351886725,
+        "SIGCONT_after_start_ns": 353831968,
+        "measurement_is_not_performance_guarantee": true
+      },
+      "control_gate": {
+        "bytes": 94843,
+        "sha256": "a7d54daf64b3099861d4fd90197cf451c8748d03aacbba1418e4d9338f022cf6"
+      }
+    },
+    "stop": {
+      "passed": true,
+      "classification": "ACTUAL_PERSISTENT_SERVICE_STOP_GREEN",
+      "outer": {
+        "bytes": 26146,
+        "sha256": "429df433266043bca16a6a891d1a2bdb3500baf0789d4e1d0f631c4babb8ba9f"
+      },
+      "loader": {
+        "bytes": 3848,
+        "sha256": "3c87ffc22215175340158b57e0030d2c9015dc4447ce656da7a1c7e2ef9b8adf"
+      },
+      "controller": {
+        "bytes": 18548,
+        "sha256": "af6ce1352caea313d77366e32448ba14d2758dec051909fce53438e33a542884"
+      },
+      "Stop_control": {
+        "exact_outstanding_Dispatched_Connect_before_Stop": true,
+        "Stop_before_original100ms_cutoff": true,
+        "no_poll_between_enqueue_and_Stop": "Unchanged source body; actual dispatch and Stop gates passed",
+        "immediate_both_observation_layers_absent": true,
+        "immediate_terminal_stopping_same_child_unreaped_output_not_EOF": true,
+        "outstanding_reply_fenced_through_wait_EOF": "Passed unchanged driver assertions",
+        "measurement_is_not_performance_guarantee": true,
+        "Stop_and_immediate_snapshot_elapsed_ns": 9979
+      },
+      "control_gate": {
+        "bytes": 1458,
+        "sha256": "3f5cb8805078aa21bf463cca5c0c07708ebf0252ab601887cc0cbf7a0efd0cf6"
+      }
+    }
+  },
+  "preserved_setup_failures": [
+    {
+      "cohort": "pokelinux-main-readiness-held-controls-sol-1",
+      "phase": "compiler",
+      "receipt": {
+        "bytes": 27461,
+        "sha256": "452d7d912a98af246b6396a60bbe15ffa982243792cd885bee0df9efb097dbeb"
+      },
+      "actual_attach_exit": 1,
+      "actual_container_wait": 1,
+      "complete_outer_closure_inputs_unchanged": true,
+      "held_control_executed": false,
+      "classification": "E0463 with incomplete selected artifact set; no runtime or behavioral RED",
+      "stderr": {
+        "bytes": 413,
+        "sha256": "74b72b095ddd6c1d7216f7dfcc9c928bb79b01c76a331fcb2a7a83bc655c4657"
+      },
+      "artifact_correction": "Five missing Cargo artifacts added together; complete selected artifact set compiled. No individual missing dependency isolated."
+    },
+    {
+      "cohort": "pokelinux-main-readiness-held-controls-sol-2",
+      "phase": "expiry",
+      "receipt": {
+        "bytes": 30585,
+        "sha256": "c104e6b1b0871aafbc1890ae6da4790fed5ccd7e57dd15f01b0136af4c96f41b"
+      },
+      "actual_attach_exit": 1,
+      "actual_container_wait": 127,
+      "complete_outer_closure_inputs_unchanged": true,
+      "held_control_executed": false,
+      "classification": "Compiler image lacks /usr/bin/python3; Python/held test never started; not behavioral RED"
+    }
+  ],
+  "limits": [
+    "Literal fixture authority/direct Service integration; no OS permission or normal Main client ingress claim.",
+    "Native worker signal9 is process retirement; independent absence and namespace custody are separate evidence.",
+    "No packet exchange in these controls; cap0 peer received zero datagrams.",
+    "No product semantic repair in compiler closure/image corrections; no GUI root4 cure, ARM or physical phone qualification."
+  ],
+  "common_actual_qualification": {
+    "healthy_capability_split_and_peer_setup": true,
+    "one_original_worker_pidfd_stopped_before_dispatch": true,
+    "one_Connect_no_retry_or_implicit_Disconnect": "Passed frozen driver assertions; authored fixture authority",
+    "independent_IPv4_and_default_route_absence": true,
+    "zero_target_address_notifications": true,
+    "actual_final_EAGAIN": true,
+    "cap0_peer_datagrams": 0,
+    "driver_exit": 0,
+    "native_worker_signal": 9,
+    "native_worker_wait_and_EOF_before_driver_exit": true,
+    "namespace_FDs_retained_through_all_owned_waits_EOF": true,
+    "Scope_wait_EOF_counts": {
+      "outer": 14,
+      "loader": 4,
+      "controller": 3,
+      "provisioner": 1
+    },
+    "all_original_cutoffs_and_complete_ECHILD_closure": true,
+    "exact_container_CID_and_name_absent": true,
+    "same_daemon_inputs_unchanged": true
+  }
+}

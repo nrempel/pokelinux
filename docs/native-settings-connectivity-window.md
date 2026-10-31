@@ -433,6 +433,11 @@ run, leaving root2/root3 unexplained. Worker signal9, Main0 and driver101 follow
 wireless teardown and outer closure qualify; guest-case closure remains false
 with34 adopted exit0 waits. Complete reopen/Disable/quiet remains failed.
 
+A later [controlled host Main idle regression](native-connectivity-main-idle-receive.md)
+now has unchanged-consumer RED/GREEN and strict 48-byte consumed-expiry/parent-death
+controls. It does not establish which receive path root4 took. The new readiness
+candidate has not run graphically; no completed GUI repair is claimed.
+
 Root2 retains one original Enable-ready PNG at 1080×2424. External compositor
 measurements are scale 2.625, nominal 65×146mm and a 411×923 mapped Settings window
 under the selected 422PPI/420 logical-density profile. Actual Settings QWindow

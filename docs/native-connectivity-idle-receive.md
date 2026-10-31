@@ -98,3 +98,10 @@ does not execute the candidate persistent ARM loop. Existing ARM one-shot
 fixed-address/packet evidence remains unchanged. No Settings, ARM persistence,
 wireless ownership, real user consent or Internet claim follows from this
 investigation.
+
+## Separate Main receive boundary
+
+The later [normal Main idle control](native-connectivity-main-idle-receive.md)
+passes its own unchanged-consumer host RED/GREEN. Its consumed record is 48 bytes;
+this earlier worker control consumes 19-byte commands. Neither controlled result
+identifies graphical root4's exact receive path or qualifies a complete GUI fix.

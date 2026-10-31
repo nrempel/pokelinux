@@ -151,3 +151,11 @@ its native host missing-first-reason RED/candidate GREEN with unchanged bytes.
 It preserves startup failure through a later Stop; no GUI cause is established.
 See its [short reproduction contract](first-retirement/README.md) and
 [curated host evidence](../../docs/evidence/native-connectivity-first-retirement.json).
+
+## Normal Main idle readiness consumer
+
+The separate [Main fixture](main-idle-receive/README.md) publishes exact frozen
+consumer/controller/tracer and owning-case wrapper bytes, with source-qualified
+provider inputs. Its controlled host empty-idle RED/GREEN preserves strict
+48-byte consumed expiry and parent-death controls. It does not replace the
+older 19-byte worker checkpoint or attribute the graphical failure.

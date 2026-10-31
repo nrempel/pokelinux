@@ -61,6 +61,14 @@ unexplained. One packet and brief post-close background readback qualify, but
 complete graphical success remains failed.
 [Graphical evidence](evidence/native-wireless-settings-window-partial.json).
 
+The separate [Main idle regression](native-connectivity-main-idle-receive.md)
+now passes a frozen host RED/GREEN: empty readiness defers envelope creation,
+while a consumed 48-byte frame still times out on its original 50 ms cutoff.
+Parent death and a separate actual fork ownership control pass, as do the
+[held G4/G5 expiry/Stop controls](evidence/native-connectivity-main-readiness-held-controls.json).
+The new GUI candidate remains unexecuted. This does not identify
+root4's empty/consumed state, pre/post guard or underlying timing cause.
+
 ## Earlier context-wrapper checkpoint
 
 The later [idle receive investigation](native-connectivity-idle-receive.md)
