@@ -328,12 +328,228 @@
   "limits": [
     "Source/session and installation facts are authored component inputs.",
     "Baseline three failures occur at initial scope assertions; later negative/cross-scope assertions are reached only in candidate GREEN.",
-    "Audio provider isolation here uses the existing spy and durable audio grant, not a live audio transport or PCM capture.",
+    "The original baseline/candidate/24-regression cohorts use the audio spy and durable grant. Supplemental actual Owner/UnixStream/lease coverage is recorded separately with authored peer responses; no PCM or physical rendering continuity is claimed.",
     "Session-owner installation checks and normal Permissions client/UI remain Audio-only at this checkpoint.",
     "No normal NetworkControl UI consent, graphical desktop launch, ARM execution, phone, carrier or hardware completion is claimed."
   ],
   "preserved_setup_failures": {
     "baseline_helper_loader_failure": "Helper loader check failed before component tests; next attempt adds explicit exec to protected /opt and records actual mount flags. Prior kernel mount flags were not sampled.",
     "candidate_executable_mode_failure": "Copied libtest lacked executable mode; loaders passed but no component test began. Fresh replay preserves executable modes and checks access before loader preflight."
+  },
+  "supplemental_boundary_regressions": {
+    "evidence_class": "supplemental native x86_64 host component regressions in an offline Linux container",
+    "source_base_commit": "5482cac968d75f5b84289bfc4a7b37892605cdea",
+    "publication_base_commit": "9589a8d4638d5e56cfa902a813503f3921cb0e0e",
+    "supplemental_regressions": true,
+    "independent_RED_claimed": false,
+    "production_repair_claimed": false,
+    "initial_authority_production_sources_and_helper_unchanged": true,
+    "original_three_test_bodies_preserved": true,
+    "prior_run_objects_preserved": [
+      "baseline_RED",
+      "candidate_GREEN",
+      "permission_regressions"
+    ],
+    "same_initial_24_tests_rerun_with_four_additions": true,
+    "source_files": {
+      "native-lifecycle/src/authority.rs": {
+        "bytes": 107818,
+        "sha256": "0cb09bb5faca782f78cf916a5a091600657a17779886667a6e2884f97b653d32"
+      },
+      "native-lifecycle/src/service.rs": {
+        "bytes": 115529,
+        "sha256": "00fc0eaf3dcc6f986c127c5a5424907e4ca1d0efe7e98e18e48a7e1fdce90e81"
+      },
+      "native-lifecycle/src/permission.rs": {
+        "bytes": 504,
+        "sha256": "f7922e286040c9bf5390a7b8517d3792e18e825a18094f7a219da010f58cb52a"
+      },
+      "native-lifecycle/src/permission_service_tests.rs": {
+        "bytes": 26307,
+        "sha256": "02b99fb8fa0892385c0f7052398a5b2e52df858529f96d1f860db6c72ceaa168"
+      },
+      "native-lifecycle/src/permission_scope_isolation_tests.rs": {
+        "bytes": 16058,
+        "sha256": "71fd479a6b5d8ae2bb93c85441b364795c48aa56e79170afa5a48511274475d1"
+      }
+    },
+    "compiler": {
+      "private_artifact_name": "pokelinux-network-permission-scope-controls-compile-sol-1",
+      "receipt": {
+        "bytes": 1734428,
+        "sha256": "4de7281ddcfe43978f2ac780a9be2666de7dd5708134995d1107b345e1fff82f"
+      },
+      "artifact": {
+        "bytes": 43095,
+        "sha256": "bcc60aac887806ad31b0269a859df8aec4314792e5d7c8a442cdabc8799be3c7"
+      },
+      "passed": true,
+      "selected_format_and_check_passed": true,
+      "strict_all_target_clippy_passed": true,
+      "tests_executed_in_compiler": false,
+      "source_file_count": 249,
+      "binaries": {
+        "helper": {
+          "bytes": 1740504,
+          "sha256": "1d9aaaa7f3c733dd73f9a5bd6e83a8480545145e30989ba0fb2676b87450f96b",
+          "ELF_machine": 62
+        },
+        "libtest": {
+          "bytes": 5140856,
+          "sha256": "b6815996d707087e75f78bfc8e9b771c6bf8f12ddbf54365d07ad8c142ec7a41",
+          "ELF_machine": 62
+        }
+      },
+      "actual_container_wait": 0,
+      "owned_CLI_waits_and_EOF": 14,
+      "exact_CID_absent": true,
+      "exact_name_absent": true,
+      "same_daemon": true,
+      "inputs_unchanged": true,
+      "closure": {
+        "closed": true,
+        "errors": [],
+        "adopted_actual_waits": [],
+        "adopted_pidfds_signaled": [],
+        "wait_all_ECHILD": true
+      }
+    },
+    "runtime": {
+      "private_artifact_name": "pokelinux-network-permission-scope-regressions-root-1",
+      "receipt": {
+        "bytes": 89136,
+        "sha256": "fd0ef5ee2015f206213286f35afbb4a71b2d48ab1229389e4257200268fabe6c"
+      },
+      "runtime_result": {
+        "bytes": 4398,
+        "sha256": "54d6072d7044c1e9b709d1ba2cb32d3db29749b482036836b2ea1996d5cdcfcc"
+      },
+      "control": {
+        "bytes": 68289,
+        "sha256": "340d6d3b554e684f3356f9f78b0400ca0b97344b07e4030a14f481f8935f96c1"
+      },
+      "run_once": {
+        "bytes": 9183,
+        "sha256": "37fdbe7c6919316d0bdf717ab3c1493d90c0e20a1e8ccf36a06850f25e018cd3"
+      },
+      "runtime": {
+        "bytes": 6031,
+        "sha256": "7545b7663bb7ba8535e48b5e6f5cb2d235ef78e54bdfcc220d0ff87d11f6f9b2"
+      },
+      "qualifier": {
+        "bytes": 974,
+        "sha256": "e4c995ce030320e76691456bfaa9bb3b8c7db6c11194dc52777976c8fa0dcb3e"
+      },
+      "passed": true,
+      "image": "sha256:b6818cecd61a5e378fecbf25d7b0979360cf29fda9ad0801b4a21e2054f69678",
+      "cpus": 2,
+      "memory": "512m",
+      "work_seconds": 60,
+      "close_seconds": 90,
+      "capability_mask": 233,
+      "NoNewPrivs": 1,
+      "loader": {
+        "receipt": {
+          "bytes": 5075,
+          "sha256": "a213768da5f7dfcb0778d37b394c1f36216b7ac69cf858719451be0c6226315f"
+        },
+        "passed": true,
+        "actual_checks": 5,
+        "original_until_ns": 7427986470341946,
+        "protected_helper_mount": {
+          "mountpoint": "/opt",
+          "filesystem": "tmpfs",
+          "options": [
+            "rw",
+            "nosuid",
+            "nodev",
+            "relatime"
+          ],
+          "exec_allowed": true
+        },
+        "closure": {
+          "closed": true,
+          "errors": [],
+          "adopted_actual_waits": [],
+          "adopted_pidfds_signaled": [],
+          "wait_all_ECHILD": true
+        }
+      },
+      "actual_test_summaries": {
+        "permission-profile": {
+          "actual_exit": 0,
+          "passed": 6,
+          "failed": 0,
+          "stdout": {
+            "bytes": 711,
+            "sha256": "0c993bb1625adad88fa5c22db2c61066de6db2dfbedd9b93da97f0086bf70fca"
+          }
+        },
+        "permission-ingress": {
+          "actual_exit": 0,
+          "passed": 8,
+          "failed": 0,
+          "stdout": {
+            "bytes": 1002,
+            "sha256": "506d92f3f53c9e3cfc614289eabbfd72cb9a066d6ba7520effcc0f8dd78080cf"
+          }
+        },
+        "permission-service": {
+          "actual_exit": 0,
+          "passed": 14,
+          "failed": 0,
+          "stdout": {
+            "bytes": 3157,
+            "sha256": "da6cc8c68a8d19d83ed4c1de1ea267102490c4e004702f1e3436b98b3c8a05d3"
+          }
+        }
+      },
+      "total_passed": 28,
+      "total_failed": 0,
+      "supplemental_test_names": [
+        "service::permission_service_tests::scope_isolation::permission_scope_unsent_connectivity_stays_unsent_after_revoke_and_regrant",
+        "service::permission_service_tests::scope_isolation::permission_scope_sent_connectivity_retains_remote_custody_without_publication_or_retry",
+        "service::permission_service_tests::scope_isolation::permission_scope_established_connectivity_survives_revoke_until_new_explicit_action",
+        "service::permission_service_tests::scope_isolation::permission_scope_network_grant_revoke_keeps_live_settled_audio_lease_and_transport"
+      ],
+      "actual_attach_exit": 0,
+      "actual_container_wait": 0,
+      "original_work_until_ns": 7428043057965175,
+      "original_close_until_ns": 7428073057965175,
+      "completed_at_ns": 7427984350099852,
+      "outer_CLI_waits_and_EOF": 14,
+      "loader_process_waits_and_EOF": 5,
+      "library_process_waits_and_EOF": 3,
+      "exact_CID_absent": true,
+      "exact_name_absent": true,
+      "same_daemon": true,
+      "inputs_unchanged": true,
+      "inner_closure": {
+        "closed": true,
+        "errors": [],
+        "adopted_actual_waits": [],
+        "adopted_pidfds_signaled": [],
+        "wait_all_ECHILD": true
+      },
+      "outer_closure": {
+        "closed": true,
+        "errors": [],
+        "adopted_actual_waits": [],
+        "adopted_pidfds_signaled": [],
+        "wait_all_ECHILD": true
+      }
+    },
+    "assertion_boundaries": {
+      "permission_ingress": "Actual UID11045 controller packets/SCM_CREDENTIALS, retained pidfd and actual owned storage Worker; Source snapshots, target app registrations and action caller identities are authored.",
+      "connectivity": "Authored recording backend and remote-state model. Unsent Set stays unsent through revoke/regrant; Sent work remains modeled remotely pending and late completion cannot publish; established modeled configuration persists until a new explicit action. No automatic Disconnect, replay, cancellation or rollback is introduced.",
+      "audio": "Actual audio Owner and UnixStream/SO_PEERCRED against the fixture UID0 peer; authored peer replies establish parsed applied route, policy_settled and playing generation. Normal media Session publication approves a retained lease, and subsequent fences validate that same lease. Network grant/revoke/regrant preserves the Owner incarnation, state and open quiet transport plus durable audio grant.",
+      "focus_and_policy": "Switching the authored Source focus to the actual controller also invalidates pending action stamps. These tests do not isolate policy-only causality; existing global policy revision invalidation is retained."
+    },
+    "limits": [
+      "Supplemental candidate-only boundary regressions; no independent RED or production repair is claimed.",
+      "Network backend observations, remote custody/configuration and target app identities are authored component facts, not a running connectivity Main or kernel association.",
+      "Audio peer responses are authored observations decoded by the real Owner; no running audio Main, PipeWire/PCM or physical rendering continuity is claimed.",
+      "No actual Settings/Sounds app IPC, installed UI consent, ARM execution, cold boot, phone or hardware completion is established."
+    ]
   }
 }

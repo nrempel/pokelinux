@@ -1,0 +1,207 @@
+{
+  "schema": 1,
+  "scope": "Supplement to preserved root1\u2013root5 records; generic ARM64 QEMU/hwsim, authored authority, fixed open AP/IPv4. Neither later cohort qualifies aggregate GUI success.",
+  "prior_evidence": "native-wireless-settings-window-partial.json",
+  "provider_cohort": {
+    "compiled_source_commit": "88842e2fc979e77edce499f20851a6ebdf3cb09b",
+    "unchanged_from_root5": true,
+    "newer_permission_authority_not_selected_by_these_runs": true,
+    "main_sha256": "897c6e62602bb65b11d366bc5f5c756c7443caea18cbcadb5976fbe6d9e0d9b2",
+    "worker_sha256": "a5f3c28d793cc7f925a68aaf1d35307153324898d411bb26ff2dc9813dc7a3c9"
+  },
+  "attempts": {
+    "root6": {
+      "overall_passed": false,
+      "guest_functional_passed": true,
+      "controller_functional_GREEN": true,
+      "controller_custody_qualified": true,
+      "guest_case_closure_qualified": false,
+      "receipts": {
+        "selection": {
+          "bytes": 232249,
+          "sha256": "498644801c82dda967d0ea27870ce631cd6e2ad7f88b59655c48c0887a0c6d92"
+        },
+        "guest": {
+          "bytes": 475037,
+          "sha256": "6bd9b83eae1f45e97c99707223cd918c40f16ce93ac3716a4be337c06aa48472"
+        },
+        "controller": {
+          "bytes": 152357,
+          "sha256": "ffa253ac4cf901e391a318eae1a52f3ded3648b8935eb8bcd7fc80c15afc5ba0"
+        },
+        "boot": {
+          "bytes": 17041,
+          "sha256": "43e9f01d0e3d1047ad6fdaf31847736a87d70d9ff069983c98e10a19b5f8d5f8"
+        },
+        "outer": {
+          "bytes": 220965,
+          "sha256": "be2a90b9380561a93ed1fb3c815813323ce46bf81d49a226acee2b7b06fd79ac"
+        },
+        "Main_log": {
+          "bytes": 446,
+          "sha256": "119aacafdd392cef70b16f366f761054480fabc74435d9e289be8e204cae7285"
+        }
+      },
+      "fixture_sources": {
+        "guest.py": "2eea63d255aad08970427fe8ebec5267c18c1b46fc42e0d20342620f982a205e",
+        "guest_custody.py": "d9b5b1821f87414d18f3d0285bc9804de9b9ce034306da2f6ba8ea4ce6325ff3"
+      },
+      "installer": {
+        "passed": true,
+        "attributed_actual_waits": 33,
+        "ECHILD": true,
+        "terminal_comm_values": [
+          "bash",
+          "gpg",
+          "gpgconf",
+          "gpgsm"
+        ],
+        "closed_before_graphics": "Source-ordered helper actual wait/EOF before graphics setup"
+      },
+      "global_adopted_child": {
+        "count": 1,
+        "exit_code": 0,
+        "identity_and_original_parent": "Unattributed; no retroactive executable label"
+      },
+      "Main": {
+        "first_retirement": {
+          "detected_at_ns": 144056616856,
+          "errno": null,
+          "io_kind": null,
+          "observation_age_ns": null,
+          "observation_at_ns": null,
+          "operation": null,
+          "original_until_ns": null,
+          "reason": "external_stop",
+          "record_length": null,
+          "record_type": null
+        },
+        "actual_exit": 0,
+        "worker_signal": 9,
+        "Main_reported_worker_wait_EOF": true
+      },
+      "sequence": "Full authored-authority Enable/Completed, two independent packets across actual first-app retirement/reopen, then Disable/absence/quiet passes",
+      "compositor_child": "Xwayland identity witnessed; old helper rejected absent /proc. No own child wait/exit status was recorded; that custody result remains failed."
+    },
+    "root7": {
+      "overall_passed": false,
+      "guest_functional_passed": false,
+      "controller_functional_GREEN": false,
+      "controller_custody_qualified": false,
+      "guest_case_closure_qualified": false,
+      "receipts": {
+        "selection": {
+          "bytes": 232500,
+          "sha256": "7d50e86069a09c9454f55185e8068ecef5c01970fe1729b896074414c72602c4"
+        },
+        "guest": {
+          "bytes": 276125,
+          "sha256": "0db6871d8c6390b248fbaa133cdad7fed283ace5476f710c6f99474c426513ec"
+        },
+        "controller": {
+          "bytes": 35309,
+          "sha256": "723cd3fa5bcf6510da771faa4a2396eabfa91de4e79da80d04147594dae1cb58"
+        },
+        "boot": {
+          "bytes": 17043,
+          "sha256": "7bb8be97a4451f550bfee57f3b6c2e436c1d6663a1c3f33da40deee7ffc6ea32"
+        },
+        "outer": {
+          "bytes": 220965,
+          "sha256": "290723bc58b3581a8e15a785a53bfccc3e0e5ccd00953f63dbf70efbe1019bfa"
+        },
+        "Main_log": {
+          "bytes": 959,
+          "sha256": "11e3941018d30d6a071cf0bb79a12245637158abca36ecabdb64dff05775f4bc"
+        }
+      },
+      "fixture_sources": {
+        "guest.py": "b3187e6a70234d9f9e2d88d40fc5cd185572516e1508e8c9abfbf195fe82207a",
+        "guest_custody.py": "0df95e7c6c4c5343b336321f19824eafc204ade1c6dbefee04435f8156e05107"
+      },
+      "installer": {
+        "passed": true,
+        "attributed_actual_waits": 33,
+        "ECHILD": true,
+        "terminal_comm_values": [
+          "bash",
+          "gpg",
+          "gpgconf",
+          "gpgsm"
+        ],
+        "closed_before_graphics": "Source-ordered helper actual wait/EOF before graphics setup"
+      },
+      "global_adopted_child": {
+        "count": 1,
+        "exit_code": 0,
+        "identity_and_original_parent": "Unattributed; no retroactive executable label"
+      },
+      "Main": {
+        "first_retirement": {
+          "detected_at_ns": 136389832703,
+          "errno": null,
+          "io_kind": "PermissionDenied",
+          "observation_age_ns": null,
+          "observation_at_ns": null,
+          "operation": "message_ready",
+          "original_until_ns": null,
+          "reason": "readiness_failure",
+          "record_length": null,
+          "record_type": null
+        },
+        "actual_exit": 0,
+        "worker_signal": 9,
+        "Main_reported_worker_wait_EOF": true
+      },
+      "partial_sequence": {
+        "first_window_Enable_and_packet_qualified": true,
+        "first_app_actual_wait_exit": 0,
+        "first_SDK_listener_retired": true,
+        "background_independent_readback_after_first_wait": true,
+        "second_window_published": true,
+        "second_window_qualified": false,
+        "second_packet_or_Disable_qualified": false
+      },
+      "worker_failure": {
+        "stage": "RefreshBackend",
+        "operation": "refresh_wireless",
+        "classification": "Observation(EvidenceLost)",
+        "component": "Radio Refresh Failed(Loss)",
+        "detected_at_ns": 136386441267,
+        "original_until_ns": 136485135158,
+        "remaining_before_recorded_cutoff_ns": 98693891,
+        "cause_established": false
+      },
+      "failure_sequence": "Worker diagnostic, then Main readiness_failure, then controller retained-worker guard/cancellation of second-window-qualified; guest later exhausts original qualification cutoff",
+      "compositor_lifetime": {
+        "observed_executable": "Xwayland",
+        "closed": true,
+        "terminal_exact_pidfd": true,
+        "original_process_absent": true,
+        "actual_P_PIDFD_ECHILD": true,
+        "own_adopted_wait_performed": false,
+        "child_exit_status": "Unavailable; no status invented"
+      },
+      "session_bus_direct_child_witnesses": 0,
+      "nested_cleanup_assertion_failures": 2
+    }
+  },
+  "common_actual_closure": {
+    "guest_global_reap_closed_ECHILD": true,
+    "QEMU_actual_wait_exit": 0,
+    "outer_container_actual_wait_exit": 1,
+    "exact_container_removal_absence": true,
+    "same_daemon_inputs_unchanged": true,
+    "outer_cleanup_errors": [],
+    "unresolved_outer_children": 0,
+    "nested_wait_EOF_and_namespace_retention_recorded": true,
+    "outer_cleanup_does_not_qualify_failed_nested_result": true
+  },
+  "limits_and_next_boundary": [
+    "No individual identity is assigned to either unattributed global adopted child.",
+    "No radio-loss cause or fixture-timing causation is established by the diagnostic taxonomy.",
+    "The fixture did not select installed PID1/full session-owner or genuine Source/auth authority.",
+    "Next aggregate acceptance belongs to installed PID1/session-owner composition; no standalone custody expansion is qualified here.",
+    "No WPA, DHCP/DNS, Internet or physical-phone qualification."
+  ]
+}

@@ -4,8 +4,11 @@ The [fixed NetworkControl permission authority](native-network-permission-author
 now passes actual three-case RED→GREEN, two unchanged audio controls and all 24
 affected permission regressions on native x86_64. Scope comes only from the
 installed role; network revoke preserves audio grant/provider state in the tested
-spy boundary. Normal session installation/client/UI are still Audio-only, and
-live audio/connectivity isolation plus installed ARM consent remain open.
+spy boundary. Four supplemental controls now pass alongside those 24 cases,
+including a real retained audio transport/lease with authored peer responses and
+connectivity Session checks with a modeled backend. Normal session installation/
+client/UI remain Audio-only; actual backend isolation and installed ARM consent
+remain open.
 
 The [permission-controller role boundary](native-permission-controller.md) now
 passes protected-profile RED→GREEN and scoped Rust regression checks. Controller

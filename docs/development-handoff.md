@@ -14,11 +14,12 @@ Installed PID1 startup and stable interface resolution remain separate.
 [CLI evidence and current-launch scope](native-connectivity-installed-startup.md).
 
 The [fixed NetworkControl permission authority](native-network-permission-authority.md)
-now passes actual three-case RED→GREEN, two unchanged audio controls and all 24
-affected permission regressions on native x86_64. Scope comes only from the
-installed role; network revoke preserves audio grant/provider state in the tested
-spy boundary. Normal session installation/client/UI are still Audio-only, and
-live audio/connectivity isolation plus installed ARM consent remain open.
+retains its three-case RED→GREEN and 24-regression receipts. A supplemental native
+x86_64 run passes all 28 tests, adding three connectivity Session cases with an
+authored backend model and real audio Owner/UnixStream/retained-lease isolation
+with authored peer responses. No independent RED, audio Main/PCM or physical
+continuity is claimed. Normal session installation/client/UI remain Audio-only;
+installed ARM consent, actual backend isolation and cold-boot persistence stay open.
 
 The normal Main empty-idle regression now passes the unchanged host consumer
 after qualified RED. A source-qualified zero-readiness hint defers starting an
@@ -41,9 +42,13 @@ driver, AP, peer and keeper exit 0, with the worker reaped after signal 9.
 The whole guest/VM remains failed: the original guest-closure criterion rejects
 34 adopted actual waits, all exit 0, despite eventual ECHILD and closed handles.
 Wireless teardown and loopback preservation, QEMU/Xvfb wait0, container wait1,
-exact removal/absence and unchanged inputs qualify separately. Trace the adopted
-children's ownership before claiming aggregate GUI success, then continue
-installed cold-boot composition. The [exact reviewed native frame](assets/settings-wireless-reopened-enabled.png)
+exact removal/absence and unchanged inputs qualify separately. Root6 repeats the
+functional pass but retains failed custody. Root7 reaches the first packet/app
+retirement, then reports radio observation loss before second-window qualification;
+its cause remains unresolved. One startup child remains unattributed. Preserve
+these failures and move the next aggregate acceptance to installed cold-boot
+composition, without expanding the standalone custody harness.
+[Later evidence](evidence/native-wireless-settings-window-custody-followup.json). The [exact reviewed native frame](assets/settings-wireless-reopened-enabled.png)
 shows reopened Local connection Enabled in the fallback theme under the selected
 Pixel 10 profile; this remains an authored hwsim/open-AP/fixed-IPv4 simulation.
 [Current GUI evidence](evidence/native-wireless-settings-window-partial.json).
@@ -104,8 +109,11 @@ source cohorts. No graphical Settings or phone ran in those headless cohorts.
 and [current virtual regression](evidence/native-connectivity-current-virtual-lifecycle.json).
 
 
-Architecture priority after this functional GUI milestone: qualify its remaining
-guest-closure criterion, then join installed cold-boot composition. Use the
+Architecture priority after the functional GUI milestone: join installed cold-boot
+composition. Verify the actual PID1/service/session owners and empty service
+cgroups at shutdown; do not transfer the standalone global-zero-adoptees rule
+to a composition where PID1 legitimately adopts children. Keep the standalone
+failures and unresolved radio-loss diagnostic separate. Use the
 existing installer, PID1 units and Rust session owner to start connectivity Main,
 permissions and the normal graphical session without post-boot service launch or
 fixture-created authority. Normal Permissions/Settings should grant control,

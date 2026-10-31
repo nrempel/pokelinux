@@ -739,3 +739,6 @@ fn permission_network_service_grant_revoke_preserves_audio() {
     assert_eq!(audio.revokes, 0);
     assert_eq!(audio.effects, 0);
 }
+
+#[path = "permission_scope_isolation_tests.rs"]
+mod scope_isolation;

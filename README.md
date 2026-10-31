@@ -81,12 +81,14 @@ including actual SDK unavailable state and complete owned shutdown. The earlier
 app-client failures remain unexplained; added test diagnostics are not a proven
 repair. [Current results](docs/evidence/native-wireless-service-followup.json).
 
-The normal Settings wireless sequence now passes in the ARM VM: Enable, packets,
-normal close/reopen, another packet, then Disable and silence. Main records only
-the planned external Stop. The overall run still fails its guest-closure rule:
-34 adopted children exit 0 and are reaped, but their ownership remains under
-investigation. This uses simulated radios, an open AP, fixed IPv4 and authored
-test authority. [Functional result and closure blocker](docs/native-settings-connectivity-window.md#root5-functional-sequence-passes-guest-closure-remains-open).
+Two ARM VM runs completed the normal Settings wireless sequence: Enable, packets,
+normal close/reopen, another packet, then Disable and silence. Full acceptance
+remains incomplete. Later checks narrowed startup-process ownership to one
+unattributed child; another run lost radio observation during reopening. The VMs
+shut down and were removed. The next full acceptance targets installed boot and
+normal permission consent. These runs use simulated radios, an open AP, fixed
+IPv4 and authored test authority.
+[Functional results and remaining gates](docs/native-settings-connectivity-window.md#root5-functional-sequence-passes-guest-closure-remains-open).
 
 <img src="docs/assets/settings-wireless-reopened-enabled.png" width="320" alt="Reopened normal Settings shows Local connection Enabled and Disable available in the ARM wireless simulation" />
 

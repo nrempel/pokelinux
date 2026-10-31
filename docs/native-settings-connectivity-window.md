@@ -500,3 +500,27 @@ binds all five attempts, frozen sources, key gates, the exact frame and outer
 receipts. A later documentation-only correction moves the existing
 `receive_message` API comment back above that method; it changes no behavior or
 root5 compiled bytes and supplies no new build or test result.
+
+Root6 repeats the complete root5 functional sequence with the same compiled
+`88842e2` providers. Its installation subprocess now actually waits 33 attributed
+transaction descendants and reaches ECHILD before graphics. Guest closure still
+fails: one global adopted child remains unattributed, and the compositor-child
+helper incorrectly required its witnessed Xwayland lifetime to end in our own
+wait. The failed result is preserved.
+
+Root7 correctly records Xwayland's terminal pidfd, absent process and actual
+ECHILD after compositor retirement, without inventing a child wait or exit
+status. Its bus direct-child snapshot is empty; one unattributed global adopted
+exit 0 remains. The first normal window, Enable, nonce and actual app retirement
+qualify. During reopening, the worker reports radio observation
+`EvidenceLost`/`Failed(Loss)` before its recorded cutoff; Main subsequently records
+`readiness_failure`/`message_ready`/`PermissionDenied`. The controller cancels the
+second-window gate, and the guest later exhausts its original qualification
+cutoff. This establishes neither the radio-loss cause nor fixture-timing
+causation. Controller custody and the complete functional sequence fail.
+
+Both attempts retain QEMU wait 0, container wait 1, exact removal/absence, unchanged
+inputs and complete outer cleanup with no unresolved children. Neither is an
+aggregate GUI pass. Further aggregate acceptance belongs to the installed
+PID1/session-owner composition. The [supplemental evidence](evidence/native-wireless-settings-window-custody-followup.json)
+records both outcomes without changing the earlier traces or adding a phone claim.
