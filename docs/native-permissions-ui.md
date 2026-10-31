@@ -38,6 +38,19 @@ The changed C view is 20 bytes with authenticated scope at offset 16 and uses
 retain their versions. No target or permission selector is added to requests.
 Neither granting nor reallowing network control starts a connection.
 
+The normal Permissions target now builds natively with ARM Qt 6.12 using the
+current AArch64 Rust archive and the source-exact retained appearance archive.
+Its two archives link once, three production files pass private DESTDIR staging,
+and Permissions/session-owner loader checks resolve against the unchanged guest
+libraries. The current session-owner and three fixed launchers plus
+`presentation-environment` have feature-empty ARM Release builds; the four
+utilities remain compile-only, without fresh loader/runtime checks. Original
+cutoffs, actual waits/EOF, ECHILD, exact container absence and input pins pass.
+This executes compilers and loaders in a generic ARM Linux VM, without a normal
+app/session-owner entrypoint, window, consent/backend action or image installation.
+[ARM build and loader evidence](evidence/native-network-consent-arm-build.json).
+Installed ARM consent, persistence and complete session closure remain open.
+
 ## What passed on Harbour
 
 - A genuine missing-dispatch RED followed by the fixed Permissions desktop route.

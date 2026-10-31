@@ -14,7 +14,8 @@ No physical phone has been tested, and there is no verified bootable phone image
 The shared Rust permission service now supports granting and revoking Settings
 network control while preserving audio permissions. The normal consent screen now
 passes host tests for both audio and network permissions, including actual button
-presses. Joining it to the installed ARM session and connection flow is next.
+presses. The ARM consent app and session owner also pass build and loader checks;
+joining them to the installed session and connection flow is next.
 [Permission progress](docs/native-network-permission-authority.md).
 
 The Rust connection service now resolves its configured interface at startup,

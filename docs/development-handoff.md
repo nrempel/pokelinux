@@ -32,7 +32,11 @@ continuity is claimed. Normal session configuration/client/UI now pass host
 RED→GREEN: 18 credentialed client cases, five protected configuration cases and
 both real unshown QML scope flows. Scope-bound confirmation and neutral initial
 labels are implemented; installed ARM consent, actual backend isolation and
-cold-boot persistence stay open. See [consent evidence](native-permissions-ui.md).
+cold-boot persistence stay open. Normal ARM Permissions and session-owner builds
+and loader checks now pass; three fixed launchers and the presentation helper
+also crossbuild, without entrypoint execution. See
+[consent evidence](native-permissions-ui.md) and
+[ARM build limits](evidence/native-network-consent-arm-build.json).
 
 The normal Main empty-idle regression now passes the unchanged host consumer
 after qualified RED. A source-qualified zero-readiness hint defers starting an

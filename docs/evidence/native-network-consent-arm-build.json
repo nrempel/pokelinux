@@ -1,0 +1,238 @@
+{
+  "schema": 1,
+  "classification": "NORMAL_ARM_PERMISSIONS_AND_SESSION_OWNER_BUILD_STAGE_LOADER_GREEN",
+  "passed": true,
+  "compiled_source_commit": "5934d2fa557a41a6f311f49120b86e37f734266c",
+  "evidence_class": "Host AArch64 Rust crossbuild plus native GCC/Qt6.12 build in a generic AArch64 Linux full-system TCG guest",
+  "normal_App_or_session_owner_entrypoint_executed": false,
+  "permission_or_backend_action_executed": false,
+  "ARM_tests_executed": false,
+  "host_consent_evidence": "native-network-permissions-ui.json",
+  "host_consent_limits_transferred_to_ARM": false,
+  "normal_providers": {
+    "session_owner": {
+      "bytes": 3368648,
+      "sha256": "ee4b7ebb489d3d8e772b8608368103f61f1de6c607aa6d5df499dc6a30d18f07",
+      "ELF_machine": 183
+    },
+    "Permissions": {
+      "bytes": 6288872,
+      "sha256": "25e903848f801333e7b605cdc865359c4c8bb2fbc41457b1aa75312c2ea30edb",
+      "ELF_machine": 183
+    }
+  },
+  "Permissions_Rust_archive": {
+    "bytes": 25967318,
+    "sha256": "871e14b6a82a0379b607c3ed15d07f072fce469eff27c472b324f34a6efb425d"
+  },
+  "Permissions_C_ABI": {
+    "strong_unique_API_count": 6,
+    "names": [
+      "pr_permissions_active_v1",
+      "pr_permissions_choose_v1",
+      "pr_permissions_free_v1",
+      "pr_permissions_new_v1",
+      "pr_permissions_tick_v1",
+      "pr_permissions_view_v2"
+    ],
+    "view_size_bytes": 20,
+    "old_view_v1_export_present": false,
+    "other_calls_remain_v1": true
+  },
+  "normal_Rust_profile": {
+    "target": "aarch64-unknown-linux-gnu",
+    "features": [],
+    "opt_level": 3,
+    "test": false,
+    "source_files": 305
+  },
+  "native_Qt_build": {
+    "Qt_versions": [
+      "6.12.0",
+      "6.12.0",
+      "6.12.0",
+      "6.12.0"
+    ],
+    "CMake_build_type": "Release",
+    "normal_target": "pokelinux-permissions",
+    "parallel": 4,
+    "CXX_flags": "-fPIC",
+    "both_selected_ARM_archives_linked_once": true,
+    "normal_Qt6Test_linkage": false,
+    "selected_sources_and_archives_unchanged": true,
+    "selected_source_files": 85,
+    "reused_appearance_archive": {
+      "bytes": 24830446,
+      "sha256": "1b760cf33b1a1cceb2a5b2f2f4e3914823e93e4ebe26c551b634297ad59286b9",
+      "relevant_source_manifest_lock_header_Rust_files_identical": 9
+    },
+    "retained_packages_unchanged": 393,
+    "retained_Qt_libraries_plugins_unchanged": 50,
+    "production_DESTDIR_rows": {
+      "usr/libexec/pokelinux/pokelinux-permissions": {
+        "bytes": 6288872,
+        "sha256": "25e903848f801333e7b605cdc865359c4c8bb2fbc41457b1aa75312c2ea30edb",
+        "mode": 493
+      },
+      "usr/share/pokelinux/appearance/PhoneAppearance.qml": {
+        "bytes": 1954,
+        "sha256": "705ab25799cba18095a76f4fb47e70eb10099ca035426d7e4400fa9cef8452bc",
+        "mode": 420
+      },
+      "usr/share/applications/org.omarchy.Permissions.desktop": {
+        "bytes": 299,
+        "sha256": "b7497480963c24620ec934c34de9cb837a6e38e88cc34dcba089058155da65da",
+        "mode": 420
+      }
+    },
+    "real_guest_filesystem_install_performed": false,
+    "image_layer_exported": false,
+    "loader_reported_COPY_relocation_error": false,
+    "unresolved_loader_symbols": false
+  },
+  "loader_only": {
+    "Permissions_loader_sha256": "d2adca654ac08e3239f46d977654d5ec7f7e090bd3715582630633cbc056b037",
+    "session_owner_loader_sha256": "d3d9d344f2c945a7a9d937cf028d63b656837b1864f60dba456519c0876ebd5c",
+    "normal_entrypoints_executed": false
+  },
+  "actual_wait_PIPE_EOF_counts": {
+    "Rust_compiler_owner": 14,
+    "native_host_owner": 15,
+    "native_boot": 3,
+    "native_guest_build": 17,
+    "guest_poweroff": 1,
+    "selected_utilities_compiler_owner": 14
+  },
+  "closure": {
+    "all_original_cutoffs_and_wait_EOF_qualified": true,
+    "guest_actual_subreaper_ECHILD_no_adopted": true,
+    "QEMU_actual_wait_exit": 0,
+    "container_actual_wait_exit": 0,
+    "exact_container_absence_same_daemon": true,
+    "all_source_archive_image_backing_pins_unchanged": true,
+    "empty_cleanup_errors": true
+  },
+  "native_build_resources": {
+    "host_cpus": 8,
+    "host_memory_GiB": 6,
+    "host_uid_gid": "1000:1000",
+    "capabilities": 0,
+    "guest_cpus": 4,
+    "guest_memory_MiB": 3072,
+    "mode": "AArch64 TCG; no NIC/display/KVM/host devices"
+  },
+  "original_bounds_seconds": {
+    "host": [
+      810,
+      840
+    ],
+    "QEMU_boot": [
+      780,
+      800
+    ],
+    "guest": [
+      660,
+      700
+    ],
+    "native_configure": 120,
+    "native_build": 300,
+    "DESTDIR": 30
+  },
+  "hash_only_receipts": {
+    "Rust_source_pins": {
+      "bytes": 50175,
+      "sha256": "a2094804e2b4870472a6d502baef343271acab14bb9ffb0ad88a2e93f6cfb642"
+    },
+    "Rust_artifacts": {
+      "bytes": 53285,
+      "sha256": "65a837ba09e77b8d50d647c7188d26e2592b7da405506eea29bb95f81187217f"
+    },
+    "Rust_owner": {
+      "bytes": 1697017,
+      "sha256": "14a55ef0f9a27bb218a810057723d52b4aebf0aa6c4ea644deacc7be0a53cb32"
+    },
+    "native_selection": {
+      "bytes": 72492,
+      "sha256": "b3f0df6584d6023117bbd0bd4e4ab68946d6af9ab52d4f3eebae504accb1cc84"
+    },
+    "native_command": {
+      "bytes": 2531,
+      "sha256": "152bcb2ec7ea5f25ca78dedd350ee33756f1442949f9ca03c0e42d1a9cd5fd8e"
+    },
+    "native_SOURCE": {
+      "bytes": 18491,
+      "sha256": "a6f94036f5fe8d1b217900877b843fcda54e13e5d16b84b131d3c1fc1309870d"
+    },
+    "native_guest_result": {
+      "bytes": 50619,
+      "sha256": "ec08b9626f24efb8763c0e9c86c6bcc6120a6bf40ea7dd2c47264afd1123b3a8"
+    },
+    "native_boot_result": {
+      "bytes": 14618,
+      "sha256": "5225e8502c154bacee9b6ae866202cba5f171156664a0bf0e1406af904701662"
+    },
+    "native_host_owner": {
+      "bytes": 50941,
+      "sha256": "bca3da499ce8d34c4a31366822c9bc9f335c490e1cda9b938e9835ca1e89d96e"
+    },
+    "selected_utilities_artifacts": {
+      "bytes": 56292,
+      "sha256": "52e100aaa53b93c46b343766cfe8f6a85e0a814384053a9d216ccef8988c78e4"
+    },
+    "selected_utilities_owner": {
+      "bytes": 1699181,
+      "sha256": "73405ddc8fec9a7ed2b4a617e0b20ab7c3e5c9528f14ef66a3abda125aa0996a"
+    }
+  },
+  "Main_worker_or_coherent_install_selection_included": false,
+  "remaining_gates": [
+    "installed Source/focus and normal ARM permission interaction",
+    "real backend continuity and durable cold-boot consent",
+    "normal window/native density and complete installed session closure",
+    "all physical-phone behavior"
+  ],
+  "phone_accessed": false,
+  "hardware_models_qualified": 0,
+  "raw_private_inputs_or_inventories_published": false,
+  "Rust_crossbuild_resources": {
+    "host_cpus": 8,
+    "host_memory_GiB": 4,
+    "uid_gid": "1000:1000",
+    "capabilities": 0,
+    "network": "none",
+    "original_work_close_seconds": [
+      600,
+      660
+    ]
+  },
+  "additional_selected_ARM_utilities": {
+    "source_commit": "5934d2fa557a41a6f311f49120b86e37f734266c",
+    "same_frozen_owner_source_files": 305,
+    "profile": "feature-empty Release opt3",
+    "artifacts": {
+      "sounds-launch": {
+        "bytes": 1015760,
+        "sha256": "7d35e177d0f9855974b5059278f648b06ba9bb39f77f64a80fce02b316e01668",
+        "ELF_machine": 183
+      },
+      "settings-launch": {
+        "bytes": 1016272,
+        "sha256": "608b45b5b1daaa5d4c473e8b9329b1eccbc81612a8932d000df1102bea108cb3",
+        "ELF_machine": 183
+      },
+      "permissions-launch": {
+        "bytes": 1017560,
+        "sha256": "f70c71225464bb8ef21060e02bc79937fda0109f72a4d666ee7b0ee86964f9ae",
+        "ELF_machine": 183
+      },
+      "presentation-environment": {
+        "bytes": 562912,
+        "sha256": "37a6d48f8a45be8ca54a08cabe843796dd3de364de20385a0d4edbc23ae4aaf9",
+        "ELF_machine": 183
+      }
+    },
+    "ARM_loader_resolution_qualified": false,
+    "ARM_entrypoint_or_helper_flow_executed": false,
+    "old_actors_source_closure_not_reused_as_current": true
+  }
+}
