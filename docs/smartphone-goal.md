@@ -6,9 +6,11 @@ affected permission regressions on native x86_64. Scope comes only from the
 installed role; network revoke preserves audio grant/provider state in the tested
 spy boundary. Four supplemental controls now pass alongside those 24 cases,
 including a real retained audio transport/lease with authored peer responses and
-connectivity Session checks with a modeled backend. Normal session installation/
-client/UI remain Audio-only; actual backend isolation and installed ARM consent
-remain open.
+connectivity Session checks with a modeled backend. Normal session configuration,
+client and UI now pass separate host RED→GREEN with 18 client cases, five
+configuration cases and real unshown QML Allow/Revoke for both scopes. Actual
+backend isolation and installed ARM consent remain open; see
+[normal consent evidence](native-permissions-ui.md).
 
 The [permission-controller role boundary](native-permission-controller.md) now
 passes protected-profile RED→GREEN and scoped Rust regression checks. Controller

@@ -22,8 +22,25 @@ fn now() -> u64 {
         .saturating_mul(1_000_000_000)
         .saturating_add(t.tv_nsec as u64)
 }
+/// A fixed pair authenticated in a controller reply, never selected by Qt.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[repr(u32)]
+pub enum Scope {
+    Audio = 1,
+    Network = 2,
+}
+impl Scope {
+    fn from_pair(target: &str, permission: &str) -> Option<Self> {
+        match (target, permission) {
+            ("org.omarchy.Sounds", "media_route") => Some(Self::Audio),
+            ("org.omarchy.Settings", "network_control") => Some(Self::Network),
+            _ => None,
+        }
+    }
+}
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct View {
+    pub scope: Option<Scope>,
     pub allowed: Option<bool>,
     pub pending: bool,
     pub can_set: bool,
@@ -56,6 +73,7 @@ enum Request<'a> {
     },
 }
 struct Confirmed {
+    scope: Scope,
     allowed: bool,
     owner: String,
     revision: u64,
@@ -64,6 +82,7 @@ struct Confirmed {
 enum Kind {
     Status,
     Set {
+        scope: Scope,
         allowed: bool,
         owner: String,
         revision: u64,
@@ -152,6 +171,7 @@ impl Client {
                 allowed,
                 owner,
                 revision,
+                ..
             } => Request::PermissionSet {
                 allowed: *allowed,
                 expected_owner: owner,
@@ -196,6 +216,7 @@ impl Client {
         }
         let until = t.saturating_add(BUDGET);
         let kind = Kind::Set {
+            scope: s.scope,
             allowed,
             owner: s.owner.clone(),
             revision: s.revision,
@@ -221,6 +242,12 @@ impl Client {
     pub fn view(&mut self) -> View {
         self.expire(now());
         View {
+            scope: self.confirmed.as_ref().map(|s| s.scope).or_else(|| {
+                self.pending.as_ref().and_then(|p| match p.kind {
+                    Kind::Set { scope, .. } => Some(scope),
+                    Kind::Status => None,
+                })
+            }),
             allowed: self.confirmed.as_ref().map(|s| s.allowed),
             pending: self.pending.is_some(),
             can_set: self.active
@@ -285,19 +312,27 @@ impl Client {
                     self.fail(t);
                     return;
                 };
-                let valid = target == "org.omarchy.Sounds"
-                    && permission == "media_route"
-                    && owner.len() == 32
+                let Some(scope) = Scope::from_pair(&target, &permission) else {
+                    self.fail(t);
+                    return;
+                };
+                let valid = owner.len() == 32
                     && owner
                         .bytes()
                         .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
                     && match &p.kind {
                         Kind::Status => true,
                         Kind::Set {
+                            scope: expected_scope,
                             allowed: a,
                             owner: o,
                             revision: r,
-                        } => allowed == *a && owner == *o && r.checked_add(1) == Some(revision),
+                        } => {
+                            scope == *expected_scope
+                                && allowed == *a
+                                && owner == *o
+                                && r.checked_add(1) == Some(revision)
+                        }
                     };
                 if !valid || now() >= p.until {
                     self.fail(now());
@@ -309,6 +344,7 @@ impl Client {
                 }
                 self.pending = None;
                 self.confirmed = Some(Confirmed {
+                    scope,
                     allowed,
                     owner,
                     revision,

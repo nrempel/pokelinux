@@ -386,3 +386,92 @@ fn permission_controller_identity_scope_and_endpoints_are_bound() {
         c.denied();
     }
 }
+
+// Fixed protected Settings/network_control composition. No process/backend starts.
+fn install_network_permissions(c: &mut Case) -> Value {
+    let mut p = install_permissions(c);
+    for name in ["settings-home", "settings-run"] {
+        let path = c.root.join(name);
+        fs::create_dir(&path).unwrap();
+        rustix::fs::chown(
+            &path,
+            Some(rustix::process::Uid::from_raw(11050)),
+            Some(rustix::process::Gid::from_raw(11050)),
+        )
+        .unwrap();
+        fs::set_permissions(path, fs::Permissions::from_mode(0o700)).unwrap();
+    }
+    fs::create_dir(c.root.join("connectivity")).unwrap();
+    fs::set_permissions(
+        c.root.join("connectivity"),
+        fs::Permissions::from_mode(0o700),
+    )
+    .unwrap();
+    fs::write(c.root.join("settings"), b"#!/bin/sh\nexit 0\n").unwrap();
+    fs::set_permissions(c.root.join("settings"), fs::Permissions::from_mode(0o755)).unwrap();
+    let mut settings = p["apps"][0].clone();
+    settings["app"] = json!("org.omarchy.Settings");
+    settings["uid"] = json!(11050);
+    settings["executable"] = json!(c.root.join("settings"));
+    settings["args"][0] = json!(c.root.join("settings-home"));
+    settings["args"][1] = json!(c.root.join("settings-run"));
+    p["apps"].as_array_mut().unwrap().push(settings);
+    p["apps"][1]["role"] = json!({
+        "kind": "permission_controller",
+        "target": "org.omarchy.Settings",
+        "permission": "network_control"
+    });
+    c.data["connectivity"] =
+        json!({"mode":"owner","socket":c.root.join("connectivity/control.sock")});
+    c.set_profile(&p);
+    c.write();
+    p
+}
+
+#[test]
+#[ignore = "requires isolated root and protected fixture directory"]
+fn permission_controller_fixed_network_control_installation_is_selected() {
+    let mut c = Case::new();
+    install_network_permissions(&mut c);
+    let config = Config::load(&c.path)
+        .expect("installed Settings/network_control permission controller must be selected");
+    assert!(matches!(
+        config.connectivity,
+        pokelinux_session_owner::config::Connectivity::Owner { socket }
+            if socket == c.root.join("connectivity/control.sock")
+    ));
+}
+
+#[test]
+#[ignore = "requires isolated root and protected fixture directory"]
+fn permission_controller_crossed_pairs_and_missing_network_target_are_refused() {
+    for mutation in 0..5 {
+        let mut c = Case::new();
+        let mut p = install_network_permissions(&mut c);
+        match mutation {
+            0 => p["apps"][1]["role"]["target"] = json!("org.omarchy.Sounds"),
+            1 => p["apps"][1]["role"]["permission"] = json!("media_route"),
+            2 => p["apps"][1]["role"]["target"] = json!("org.omarchy.Messages"),
+            3 => p["apps"][1]["role"]["permission"] = json!("capture"),
+            _ => {
+                p["apps"].as_array_mut().unwrap().pop();
+            }
+        }
+        c.set_profile(&p);
+        c.denied();
+    }
+}
+
+#[test]
+#[ignore = "requires isolated root and protected fixture directory"]
+fn permission_controller_audio_scope_remains_valid_with_installed_settings() {
+    let mut c = Case::new();
+    let mut p = install_network_permissions(&mut c);
+    p["apps"][1]["role"] = json!({
+        "kind": "permission_controller",
+        "target": "org.omarchy.Sounds",
+        "permission": "media_route"
+    });
+    c.set_profile(&p);
+    Config::load(&c.path).expect("installed Audio controller remains valid with Settings present");
+}

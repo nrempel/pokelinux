@@ -1,14 +1,42 @@
 # Native Permissions UI and desktop launch
 
-The Permissions app now exposes Allow and Revoke for Sounds audio. The request and
+The Permissions app exposes Allow and Revoke for Sounds audio or Settings network
+control, selected by its fixed installed role. The request and
 confirmation engine is Rust; Qt is the rendering/input adapter and uses the shared
 Omarchy appearance client. The fixed desktop launcher selects the installed
 UID11045 scoped controller through the lifecycle actor. Opening it grants nothing.
 The frozen human-preview recipe remains the earlier Sounds-only cohort.
 
 The [network permission authority](native-network-permission-authority.md) now
-passes separate host component checks. This normal client and UI still accept
-only Sounds audio; no NetworkControl UI consent is claimed yet.
+passes separate host component checks. The normal client, UI and installed session configuration now implement the fixed
+Settings/network-control pair alongside Sounds/audio. The candidate passes all
+18 credentialed client cases and five protected configuration cases. Both actual
+unshown QML scope cases pass neutral initial labels, authenticated scope labels,
+and Allow/Revoke press-release events with exactly the two intended writes.
+Normal Rust/Qt builds, selected formatting and strict client/owner Clippy pass.
+All five phase owners confirm actual container waits, exact removal and unchanged
+inputs. This is host boundary evidence, not installed ARM consent.
+[Scoped consent evidence](evidence/native-network-permissions-ui.json).
+
+The baseline checks established three gaps independently: two network
+client cases fail their initial confirmation prerequisite, protected installed
+configuration rejects the valid network controller, and both QML scope cases
+fail neutral labels before authentication. The QML failures occur before any
+read or click. Existing client and configuration refusal/audio controls pass.
+The repair carries authenticated scope through Rust, checks it again
+on Set confirmation, and exposes it through a coordinated v2 view getter.
+The QML test changes only that getter identifier for ABI compilation; its
+behavioral assertions and input deadlines remain unchanged. Both Rust test files
+are byte-identical across the comparison. Both cohorts share the previously
+qualified three-file lifecycle authority overlay and corrected owner lock. The
+first compiler attempt failed stale locked metadata; its partial outputs were
+not reused. Full offline metadata corrected the lock without changing any of
+the 101 existing registry package identities.
+
+The changed C view is 20 bytes with authenticated scope at offset 16 and uses
+`pr_permissions_view_v2`; the old getter is removed. Unchanged ABI entry points
+retain their versions. No target or permission selector is added to requests.
+Neither granting nor reallowing network control starts a connection.
 
 ## What passed on Harbour
 

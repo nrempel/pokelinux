@@ -2,8 +2,8 @@
 #include <QFile>
 #include <cstddef>
 #include <cstdlib>
-static_assert(sizeof(PrPermissionsView)==16 && alignof(PrPermissionsView)==4);
-static_assert(offsetof(PrPermissionsView,unconfirmed)==12);
+static_assert(sizeof(PrPermissionsView)==20 && alignof(PrPermissionsView)==4);
+static_assert(offsetof(PrPermissionsView,unconfirmed)==12 && offsetof(PrPermissionsView,scope)==16);
 PermissionsClient::PermissionsClient(const QString &socket,QObject *parent):QObject(parent){
  const auto path=QFile::encodeName(socket);
  if(pr_permissions_new_v1(reinterpret_cast<const uint8_t*>(path.constData()),size_t(path.size()),&core)!=PR_PERMISSIONS_OK)return;
@@ -18,11 +18,12 @@ void PermissionsClient::close(){
  sync();
 }
 PrPermissionsView PermissionsClient::read() const{
- PrPermissionsView v{-1,0,0,0};
- if(core && pr_permissions_view_v1(core,&v)!=PR_PERMISSIONS_OK)std::abort();
+ PrPermissionsView v{-1,0,0,0,0};
+ if(core && pr_permissions_view_v2(core,&v)!=PR_PERMISSIONS_OK)std::abort();
  return v;
 }
 int PermissionsClient::allowed() const{return read().allowed;}
+int PermissionsClient::scope() const{return int(read().scope); }
 bool PermissionsClient::canSet() const{return read().can_set!=0;}
 bool PermissionsClient::pending() const{return read().pending!=0;}
 bool PermissionsClient::unconfirmed() const{return read().unconfirmed!=0;}
@@ -37,5 +38,5 @@ void PermissionsClient::choose(bool allowed){
 void PermissionsClient::sync(){
  if(core && pr_permissions_tick_v1(core)!=PR_PERMISSIONS_OK)std::abort();
  const auto v=read();
- if(v.allowed!=delivered.allowed || v.can_set!=delivered.can_set || v.pending!=delivered.pending || v.unconfirmed!=delivered.unconfirmed){delivered=v;emit changed();}
+ if(v.scope!=delivered.scope || v.allowed!=delivered.allowed || v.can_set!=delivered.can_set || v.pending!=delivered.pending || v.unconfirmed!=delivered.unconfirmed){delivered=v;emit changed();}
 }

@@ -28,6 +28,12 @@ const CASES: &[&str] = &[
     "expired-queued",
     "original-deadline",
     "choice-during-refresh",
+    "audio-confirmed-roundtrip",
+    "network-confirmed",
+    "network-wrong-target",
+    "network-wrong-permission",
+    "network-set-cross-scope",
+    "audio-set-cross-scope",
 ];
 
 fn now() -> u64 {
@@ -126,6 +132,22 @@ fn request(fd: &OwnedFd, operation: &str) -> Value {
         value["op"], operation,
         "an explicit Set must never replay as recovery"
     );
+    let fields = value.as_object().unwrap();
+    assert!(
+        fields.keys().all(|key| matches!(
+            key.as_str(),
+            "op" | "allowed" | "expected_owner" | "expected_revision" | "deadline_ns"
+        )),
+        "the controller must derive its scope from authenticated state, never an outgoing selector"
+    );
+    assert_eq!(
+        fields.len(),
+        if operation == "permission_status" {
+            2
+        } else {
+            5
+        }
+    );
     let deadline = value["deadline_ns"].as_u64().unwrap();
     assert!(now() < deadline && deadline <= now() + BUDGET);
     value
@@ -133,6 +155,14 @@ fn request(fd: &OwnedFd, operation: &str) -> Value {
 fn state(allowed: bool, revision: u64) -> Value {
     json!({"result":"permission_state", "target":"org.omarchy.Sounds", "permission":"media_route",
            "allowed":allowed, "owner":OWNER, "revision":revision})
+}
+fn scoped_state(scenario: &str, allowed: bool, revision: u64) -> Value {
+    let mut value = state(allowed, revision);
+    if scenario.starts_with("network-") {
+        value["target"] = json!("org.omarchy.Settings");
+        value["permission"] = json!("network_control");
+    }
+    value
 }
 fn send(fd: &OwnedFd, value: Value) {
     let bytes = serde_json::to_vec(&value).unwrap();
@@ -169,7 +199,12 @@ fn child(path: &Path, scenario: &str) {
     client.active(true);
     if matches!(
         scenario,
-        "wrong-target" | "wrong-permission" | "extra-field" | "wrong-pid"
+        "wrong-target"
+            | "wrong-permission"
+            | "extra-field"
+            | "wrong-pid"
+            | "network-wrong-target"
+            | "network-wrong-permission"
     ) {
         client.tick();
         until(
@@ -185,6 +220,17 @@ fn child(path: &Path, scenario: &str) {
     }
     confirmed(&mut client, false);
     assert!(client.view().can_set);
+    if matches!(scenario, "audio-confirmed-roundtrip" | "network-confirmed") {
+        assert!(client.choose(true));
+        assert_eq!(client.view().allowed, None, "Allow cannot be optimistic");
+        confirmed(&mut client, true);
+        assert!(client.choose(false));
+        assert_eq!(client.view().allowed, None, "Revoke cannot be optimistic");
+        confirmed(&mut client, false);
+        client.active(false);
+        no_saved_state(&mut client);
+        return;
+    }
     if scenario == "expired-state" {
         gate(path, "resume"); // No tick or fresh readonly exchange can renew this cached state.
         assert!(!client.choose(true)); // Recheck at click time, before any getter can expire the cache.
@@ -272,6 +318,17 @@ fn child(path: &Path, scenario: &str) {
             );
             assert!(client.view().unconfirmed);
         }
+        "network-set-cross-scope" | "audio-set-cross-scope" => {
+            until(
+                || {
+                    client.tick();
+                    client.view().unconfirmed
+                },
+                "a supported but different scope cannot acknowledge this explicit Set",
+            );
+            no_saved_state(&mut client);
+            assert!(!client.choose(false));
+        }
         "confirmed" => confirmed(&mut client, true),
         _ => panic!("unknown scenario"),
     }
@@ -302,6 +359,27 @@ fn run(root: &Path, scenario: &str) -> io::Result<()> {
     let status = request(&fd, "permission_status");
     let original_state_until = status["deadline_ns"].as_u64().unwrap();
     match scenario {
+        "audio-confirmed-roundtrip" | "network-confirmed" => {
+            send(&fd, scoped_state(scenario, false, 7));
+            drop(fd);
+            for (allowed, revision) in [(true, 7), (false, 8)] {
+                let setting = accept(&listener);
+                let set = request(&setting, "permission_set");
+                assert_eq!(set["allowed"], allowed);
+                assert_eq!(set["expected_owner"], OWNER);
+                assert_eq!(set["expected_revision"], revision);
+                send(&setting, scoped_state(scenario, allowed, revision + 1));
+            }
+        }
+        "network-wrong-target" | "network-wrong-permission" => {
+            let mut value = scoped_state(scenario, false, 7);
+            if scenario == "network-wrong-target" {
+                value["target"] = json!("org.omarchy.Sounds");
+            } else {
+                value["permission"] = json!("media_route");
+            }
+            send(&fd, value);
+        }
         "wrong-target" | "wrong-permission" | "extra-field" => {
             let mut value = state(false, 7);
             match scenario {
@@ -349,7 +427,7 @@ fn run(root: &Path, scenario: &str) -> io::Result<()> {
             if scenario == "expired-queued" {
                 clock_until(original_state_until.saturating_sub(600_000_000));
             }
-            send(&fd, state(false, 7));
+            send(&fd, scoped_state(scenario, false, 7));
             drop(fd);
             let fd = accept(&listener);
             match scenario {
@@ -377,6 +455,14 @@ fn run(root: &Path, scenario: &str) -> io::Result<()> {
                         "first send renewed the queued choice's original deadline"
                     );
                     match scenario {
+                        "network-set-cross-scope" | "audio-set-cross-scope" => {
+                            let opposite = if scenario == "network-set-cross-scope" {
+                                "audio-confirmed-roundtrip"
+                            } else {
+                                "network-confirmed"
+                            };
+                            send(&fd, scoped_state(opposite, true, 8));
+                        }
                         "lost-set" => {
                             drop(fd);
                             let recovery = accept(&listener);
@@ -438,8 +524,16 @@ fn main() -> io::Result<()> {
         Client::new(&root.0.join("wrong-uid.sock")).is_err(),
         "root is not the installed controller identity"
     );
-    for scenario in CASES {
+    // Test selection only. No scope is supplied to Client::new or any request.
+    if args.len() == 3 && args[1] == "--case" {
+        let scenario = args[2].to_str().unwrap();
+        assert!(CASES.contains(&scenario), "known fixed test case required");
         run(&root.0, scenario)?;
+    } else {
+        assert_eq!(args.len(), 1, "no client scope or arbitrary wire input");
+        for scenario in CASES {
+            run(&root.0, scenario)?;
+        }
     }
     Ok(())
 }

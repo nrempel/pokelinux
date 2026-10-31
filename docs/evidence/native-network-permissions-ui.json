@@ -1,0 +1,574 @@
+{
+  "schema": 1,
+  "evidence_class": "native x86_64 host component and actual unshown QML input boundaries",
+  "baseline": {
+    "control_sha256": "53ed41dd9b4bfea00119394b167655c29ace1d8ff1b216141fdb6ae8c36db776",
+    "builds": {
+      "rust": {
+        "receipt_sha256": "1123c4cac25e0fdf6d1625dd73d10854bf0937993e96391c6a4b6bd624c1e8ad",
+        "qualified": true,
+        "actual_container_wait": 0,
+        "exact_container_absence": true,
+        "inputs_unchanged": true,
+        "artifact_manifest_sha256": "ea34ddc48ca0729958644ed3684abea0720f8fc210ecd692d973e0aaa441b8ae"
+      },
+      "qt": {
+        "receipt_sha256": "a465ee1993022f91dd2982a12ffa6d2ec69d5817f142cebcda9b13c6c83c13c4",
+        "qualified": true,
+        "actual_container_wait": 0,
+        "exact_container_absence": true,
+        "inputs_unchanged": true,
+        "artifact_manifest_sha256": "8b7849e8985fc643793bedb898b25141702b309bd23b5d5af12cb423e686b97d"
+      }
+    },
+    "boundaries": {
+      "client": {
+        "receipt_sha256": "3d5afbd91f186974fc346b85b14b896e5b1f1c22407953fc689a46018c52e6ce",
+        "qualified": true,
+        "actual_container_wait": 0,
+        "exact_container_absence": true,
+        "inputs_unchanged": true,
+        "runtime_result_sha256": "ad0f01202d7780fb5b9971ac1983109704f16e199ceac46fa4b7f46cc48d5caf",
+        "classification": "FIXED_NETWORK_CLIENT_SCOPE_ADMISSION_ASSERTION_RED_WITH_AUDIO_REFUSAL_CONTROLS",
+        "steps": [
+          {
+            "case": "confirmed",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "desired_Network_scope_admission_failure": false,
+            "cross_scope_Set_refusal_reached": false,
+            "Network_cross_scope_Set_control_not_reached_in_baseline": false
+          },
+          {
+            "case": "wrong-target",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "desired_Network_scope_admission_failure": false,
+            "cross_scope_Set_refusal_reached": false,
+            "Network_cross_scope_Set_control_not_reached_in_baseline": false
+          },
+          {
+            "case": "wrong-permission",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "desired_Network_scope_admission_failure": false,
+            "cross_scope_Set_refusal_reached": false,
+            "Network_cross_scope_Set_control_not_reached_in_baseline": false
+          },
+          {
+            "case": "extra-field",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "desired_Network_scope_admission_failure": false,
+            "cross_scope_Set_refusal_reached": false,
+            "Network_cross_scope_Set_control_not_reached_in_baseline": false
+          },
+          {
+            "case": "wrong-pid",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "desired_Network_scope_admission_failure": false,
+            "cross_scope_Set_refusal_reached": false,
+            "Network_cross_scope_Set_control_not_reached_in_baseline": false
+          },
+          {
+            "case": "lost-set",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "desired_Network_scope_admission_failure": false,
+            "cross_scope_Set_refusal_reached": false,
+            "Network_cross_scope_Set_control_not_reached_in_baseline": false
+          },
+          {
+            "case": "late-set",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "desired_Network_scope_admission_failure": false,
+            "cross_scope_Set_refusal_reached": false,
+            "Network_cross_scope_Set_control_not_reached_in_baseline": false
+          },
+          {
+            "case": "focus-before-send",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "desired_Network_scope_admission_failure": false,
+            "cross_scope_Set_refusal_reached": false,
+            "Network_cross_scope_Set_control_not_reached_in_baseline": false
+          },
+          {
+            "case": "expired-state",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "desired_Network_scope_admission_failure": false,
+            "cross_scope_Set_refusal_reached": false,
+            "Network_cross_scope_Set_control_not_reached_in_baseline": false
+          },
+          {
+            "case": "expired-queued",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "desired_Network_scope_admission_failure": false,
+            "cross_scope_Set_refusal_reached": false,
+            "Network_cross_scope_Set_control_not_reached_in_baseline": false
+          },
+          {
+            "case": "original-deadline",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "desired_Network_scope_admission_failure": false,
+            "cross_scope_Set_refusal_reached": false,
+            "Network_cross_scope_Set_control_not_reached_in_baseline": false
+          },
+          {
+            "case": "choice-during-refresh",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "desired_Network_scope_admission_failure": false,
+            "cross_scope_Set_refusal_reached": false,
+            "Network_cross_scope_Set_control_not_reached_in_baseline": false
+          },
+          {
+            "case": "audio-confirmed-roundtrip",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "desired_Network_scope_admission_failure": false,
+            "cross_scope_Set_refusal_reached": false,
+            "Network_cross_scope_Set_control_not_reached_in_baseline": false
+          },
+          {
+            "case": "network-wrong-target",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "desired_Network_scope_admission_failure": false,
+            "cross_scope_Set_refusal_reached": false,
+            "Network_cross_scope_Set_control_not_reached_in_baseline": false
+          },
+          {
+            "case": "network-wrong-permission",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "desired_Network_scope_admission_failure": false,
+            "cross_scope_Set_refusal_reached": false,
+            "Network_cross_scope_Set_control_not_reached_in_baseline": false
+          },
+          {
+            "case": "audio-set-cross-scope",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "desired_Network_scope_admission_failure": false,
+            "cross_scope_Set_refusal_reached": true,
+            "Network_cross_scope_Set_control_not_reached_in_baseline": false
+          },
+          {
+            "case": "network-confirmed",
+            "actual_exit": 101,
+            "expected_exit": 101,
+            "passed_control": false,
+            "desired_Network_scope_admission_failure": true,
+            "cross_scope_Set_refusal_reached": false,
+            "Network_cross_scope_Set_control_not_reached_in_baseline": false
+          },
+          {
+            "case": "network-set-cross-scope",
+            "actual_exit": 101,
+            "expected_exit": 101,
+            "passed_control": false,
+            "desired_Network_scope_admission_failure": true,
+            "cross_scope_Set_refusal_reached": false,
+            "Network_cross_scope_Set_control_not_reached_in_baseline": true
+          }
+        ]
+      },
+      "config": {
+        "receipt_sha256": "123d89652e472663246d452f31ce750024abbe087e8ceb578da09a8839b2d821",
+        "qualified": true,
+        "actual_container_wait": 0,
+        "exact_container_absence": true,
+        "inputs_unchanged": true,
+        "runtime_result_sha256": "e34d54b692ee6b8b35889d6852606322858ff5feae71cb629ecfa9435dad3f1e",
+        "classification": "FIXED_NETWORK_SESSION_CONFIG_ADMISSION_ASSERTION_RED_WITH_COMMON_QUALIFIED_LIFECYCLE",
+        "steps": [
+          {
+            "case": "permission_controller_explicit_installation_is_selected",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true
+          },
+          {
+            "case": "permission_controller_identity_scope_and_endpoints_are_bound",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true
+          },
+          {
+            "case": "permission_controller_crossed_pairs_and_missing_network_target_are_refused",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true
+          },
+          {
+            "case": "permission_controller_audio_scope_remains_valid_with_installed_settings",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true
+          },
+          {
+            "case": "permission_controller_fixed_network_control_installation_is_selected",
+            "actual_exit": 101,
+            "expected_exit": 101,
+            "passed_control": false
+          }
+        ]
+      },
+      "qt-runtime": {
+        "receipt_sha256": "7d70c25fda4741aba94b3a024b2f1c2097562b647fa407c27ed361c50c80241e",
+        "qualified": true,
+        "actual_container_wait": 0,
+        "exact_container_absence": true,
+        "inputs_unchanged": true,
+        "runtime_result_sha256": "affa82d7b394bd7ef34b3843f37e698929a7466b12e121509d2295e2b03ff2ca",
+        "classification": "PERMISSIONS_UI_UNAUTHENTICATED_FIXED_LABEL_ASSERTION_RED",
+        "steps": [
+          {
+            "oracle": "media_route",
+            "actual_exit": 1,
+            "expected_exit": 1,
+            "desired_neutral_scope_label_assertion": true,
+            "status_reads": 0,
+            "sets": [],
+            "actual_UID11045_child_wait_EOF": true,
+            "real_clicks_not_reached_in_baseline": true
+          },
+          {
+            "oracle": "network_control",
+            "actual_exit": 1,
+            "expected_exit": 1,
+            "desired_neutral_scope_label_assertion": true,
+            "status_reads": 0,
+            "sets": [],
+            "actual_UID11045_child_wait_EOF": true,
+            "real_clicks_not_reached_in_baseline": true
+          }
+        ]
+      }
+    }
+  },
+  "candidate": {
+    "control_sha256": "1b57227658301539bf9d8616d40993a611ab99ed691b33e85071d46ef24bf62c",
+    "builds": {
+      "rust": {
+        "receipt_sha256": "4b4b09ce7a0f87a7aeb0005e7cb68e7411c07974e6de0d8f44a8cbdfc3ef3a88",
+        "qualified": true,
+        "actual_container_wait": 0,
+        "exact_container_absence": true,
+        "inputs_unchanged": true,
+        "artifact_manifest_sha256": "d9596098ea823ff79fb85cae936eeee97b7f43abc716c67ed6d21e61699e5b42"
+      },
+      "qt": {
+        "receipt_sha256": "a19418ec40f0177cec25a0596d95312b5ca5550c2420a5740df7b5b4b58e4cfa",
+        "qualified": true,
+        "actual_container_wait": 0,
+        "exact_container_absence": true,
+        "inputs_unchanged": true,
+        "artifact_manifest_sha256": "df51823d6b25719c55f2450d80ebe039f59a74473ff710e184d090e05f170953"
+      }
+    },
+    "boundaries": {
+      "client": {
+        "receipt_sha256": "13f41b26e03f0802b788a91a6eeef951f440a95c060871cf1738fd576595b266",
+        "qualified": true,
+        "actual_container_wait": 0,
+        "exact_container_absence": true,
+        "inputs_unchanged": true,
+        "runtime_result_sha256": "877ef3c4e5f74847b8efba7099c37ed83e28559c6cf2b725c49366e939568ffb",
+        "classification": "FIXED_NETWORK_CLIENT_SCOPE_GREEN_ALL18",
+        "steps": [
+          {
+            "case": "confirmed",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "cross_scope_Set_refusal_reached": false
+          },
+          {
+            "case": "wrong-target",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "cross_scope_Set_refusal_reached": false
+          },
+          {
+            "case": "wrong-permission",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "cross_scope_Set_refusal_reached": false
+          },
+          {
+            "case": "extra-field",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "cross_scope_Set_refusal_reached": false
+          },
+          {
+            "case": "wrong-pid",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "cross_scope_Set_refusal_reached": false
+          },
+          {
+            "case": "lost-set",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "cross_scope_Set_refusal_reached": false
+          },
+          {
+            "case": "late-set",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "cross_scope_Set_refusal_reached": false
+          },
+          {
+            "case": "focus-before-send",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "cross_scope_Set_refusal_reached": false
+          },
+          {
+            "case": "expired-state",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "cross_scope_Set_refusal_reached": false
+          },
+          {
+            "case": "expired-queued",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "cross_scope_Set_refusal_reached": false
+          },
+          {
+            "case": "original-deadline",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "cross_scope_Set_refusal_reached": false
+          },
+          {
+            "case": "choice-during-refresh",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "cross_scope_Set_refusal_reached": false
+          },
+          {
+            "case": "audio-confirmed-roundtrip",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "cross_scope_Set_refusal_reached": false
+          },
+          {
+            "case": "network-wrong-target",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "cross_scope_Set_refusal_reached": false
+          },
+          {
+            "case": "network-wrong-permission",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "cross_scope_Set_refusal_reached": false
+          },
+          {
+            "case": "audio-set-cross-scope",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "cross_scope_Set_refusal_reached": true
+          },
+          {
+            "case": "network-confirmed",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "cross_scope_Set_refusal_reached": false
+          },
+          {
+            "case": "network-set-cross-scope",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true,
+            "cross_scope_Set_refusal_reached": true
+          }
+        ]
+      },
+      "config": {
+        "receipt_sha256": "31c29fdc5be1ee97ec23fea8a6c8aa6e2be6698822a22c96dd9545cd3ec5c509",
+        "qualified": true,
+        "actual_container_wait": 0,
+        "exact_container_absence": true,
+        "inputs_unchanged": true,
+        "runtime_result_sha256": "056d93bbf507f796b97acf1174c3746b381d6781450643a4bc5c5dc30586fbde",
+        "classification": "FIXED_NETWORK_SESSION_CONFIG_GREEN_ALL5_COMMON_QUALIFIED_LIFECYCLE",
+        "steps": [
+          {
+            "case": "permission_controller_explicit_installation_is_selected",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true
+          },
+          {
+            "case": "permission_controller_identity_scope_and_endpoints_are_bound",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true
+          },
+          {
+            "case": "permission_controller_crossed_pairs_and_missing_network_target_are_refused",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true
+          },
+          {
+            "case": "permission_controller_audio_scope_remains_valid_with_installed_settings",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true
+          },
+          {
+            "case": "permission_controller_fixed_network_control_installation_is_selected",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "passed_control": true
+          }
+        ]
+      },
+      "qt-runtime": {
+        "receipt_sha256": "3ddd8f23cb710a415f83d7a51b4922f8889367640e06f98efac5fc4c709d5ff4",
+        "qualified": true,
+        "actual_container_wait": 0,
+        "exact_container_absence": true,
+        "inputs_unchanged": true,
+        "runtime_result_sha256": "e9f65be0aed68159e03384b457cc30f7c2bb1c44a23d726f5b70e82c89dc4c6f",
+        "classification": "FIXED_NETWORK_PERMISSIONS_UI_REAL_QML_SCOPE_CLICK_GREEN",
+        "steps": [
+          {
+            "oracle": "media_route",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "neutral_before_auth_and_scoped_labels_passed": true,
+            "status_reads": 1,
+            "sets": [
+              true,
+              false
+            ],
+            "actual_UID11045_child_wait_EOF": true,
+            "real_QML_clicks": 2,
+            "request_scope_selector_added": false
+          },
+          {
+            "oracle": "network_control",
+            "actual_exit": 0,
+            "expected_exit": 0,
+            "neutral_before_auth_and_scoped_labels_passed": true,
+            "status_reads": 1,
+            "sets": [
+              true,
+              false
+            ],
+            "actual_UID11045_child_wait_EOF": true,
+            "real_QML_clicks": 2,
+            "request_scope_selector_added": false
+          }
+        ]
+      }
+    }
+  },
+  "candidate_source_files": {
+    "native-permissions-ui/client-core/src/lib.rs": {
+      "bytes": 11907,
+      "sha256": "97afdf53cdb331801abb1de50ceebe4dbabffe4522d91a96073d92595b954985"
+    },
+    "native-permissions-ui/client-core/src/ffi.rs": {
+      "bytes": 3403,
+      "sha256": "8b4b6fe998e5229226602d5adf99c7b5d5e011eb15ed0454f77f3a1ba7f161c9"
+    },
+    "native-permissions-ui/client-core/include/pokelinux_permissions_client.h": {
+      "bytes": 1013,
+      "sha256": "abac3ec1ed608b1d5c34acbbccc70b6e8f409d99d9eee46d888a9293e5c57efe"
+    },
+    "native-permissions-ui/PermissionsClient.cpp": {
+      "bytes": 1931,
+      "sha256": "c3df17d59bcdd2ce3b2561b5e7c6bf125e4ef4d63f9ff281a55ffd950f3af459"
+    },
+    "native-permissions-ui/PermissionsClient.h": {
+      "bytes": 1004,
+      "sha256": "66f72dbe0dc42e33e1ea7e510662460738adca9a9d1b384eb923f30b95fba31b"
+    },
+    "native-permissions-ui/PermissionsView.qml": {
+      "bytes": 4390,
+      "sha256": "515bf15bef7153ca265fba361eb7bff4cfe572cb9c1f77c8b0da43d095116ef6"
+    },
+    "native-session-owner/src/config.rs": {
+      "bytes": 12047,
+      "sha256": "686715bd389261b23ca2cc3e9815bcb595606c0348f7b994fb82241c08d4fcbe"
+    },
+    "native-permissions-ui/client-core/tests/client-boundary.rs": {
+      "bytes": 19222,
+      "sha256": "f6e6521ed3c3a1e96ca95716a340a6ace7fe375f3c48ff75e787666ef8785cd5"
+    },
+    "native-session-owner/tests/config.rs": {
+      "bytes": 18104,
+      "sha256": "61a56cc10d85b6a4aaa6091e9bb99faa5b0671c09208d107c7dbef4d6bd787bf"
+    },
+    "native-session-owner/Cargo.lock": {
+      "bytes": 26678,
+      "sha256": "66fe35f742d60dd2b02e64e283bcc9a22e9f28ab56aecef2a7d86b3c7a7a3a06"
+    },
+    "native-permissions-ui/tests/click.cpp": {
+      "bytes": 8529,
+      "sha256": "4c8e34b162a16b203041300ee1b1acb59c689285f1220564044db48b3cb08547"
+    }
+  },
+  "comparison": {
+    "rust_test_bytes_identical": true,
+    "qt_test_change": "Exactly one null-output ABI getter identifier: pr_permissions_view_v1 to pr_permissions_view_v2. Behavioral assertions and deadlines unchanged.",
+    "common_lifecycle_overlay": "Previously qualified authority.rs, service.rs and permission.rs; both cohorts retain the same bytes.",
+    "lock": "Both cohorts use the same corrected session-owner lock; existing 101 registry identities unchanged.",
+    "source_scope": "380-file baseline snapshot plus seven production files and the one Qt test identifier; not a whole-current-HEAD runtime proof."
+  },
+  "limits": [
+    "Authored root socket peers, not installed lifecycle/GUI composition.",
+    "Actual QML press/release on unshown components; no screenshot or compositor-focus proof.",
+    "No ARM consent, coldboot persistence, real network backend isolation or physical-phone qualification."
+  ],
+  "failed_setup_preserved": [
+    "Original compiler cohort failed locked metadata after partial compilation; no prefix artifacts used.",
+    "First metadata reconciliation used --no-deps and did not repair the lock."
+  ]
+}

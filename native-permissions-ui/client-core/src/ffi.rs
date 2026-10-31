@@ -11,6 +11,7 @@ pub struct View {
     pub pending: u32,
     pub can_set: u32,
     pub unconfirmed: u32,
+    pub scope: u32,
 }
 pub struct Handle(Client);
 fn valid<T>(p: *const T) -> bool {
@@ -64,7 +65,7 @@ pub unsafe extern "C" fn pr_permissions_tick_v1(h: *mut Handle) -> i32 {
 /// # Safety
 /// Handle and output are disjoint live storage, exclusively owned by the caller.
 #[no_mangle]
-pub unsafe extern "C" fn pr_permissions_view_v1(h: *mut Handle, out: *mut View) -> i32 {
+pub unsafe extern "C" fn pr_permissions_view_v2(h: *mut Handle, out: *mut View) -> i32 {
     if !valid(h) || !valid(out) {
         return INVALID;
     }
@@ -76,6 +77,7 @@ pub unsafe extern "C" fn pr_permissions_view_v1(h: *mut Handle, out: *mut View) 
             pending: u32::from(v.pending),
             can_set: u32::from(v.can_set),
             unconfirmed: u32::from(v.unconfirmed),
+            scope: v.scope.map_or(0, |scope| scope as u32),
         })
     };
     OK

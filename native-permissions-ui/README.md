@@ -1,7 +1,8 @@
 # Native Permissions app
 
-A focused Sounds audio permission surface: Allow and Revoke go through the native
-lifecycle authority. Rust owns the authenticated request, deadline, cached policy
+A scoped permission surface for Sounds audio or Settings network control: Allow
+and Revoke go through the native lifecycle authority. The installed controller
+profile fixes the scope; the UI offers no scope selector. Rust owns the authenticated request, deadline, cached policy
 version and confirmation state. Qt/QML renders the shared Omarchy appearance and
 forwards activity and clicks through a narrow C ABI.
 
@@ -16,7 +17,13 @@ The client uses nonblocking Unix SEQPACKET with root peer/packet credentials and
 explicit choice can retire an in-flight read-only refresh while its cached policy
 version remains fresh; it cannot replace or replay a pending write. Focus loss,
 expiry or a missing reply clears confirmation. Regaining focus reads current policy
-without repeating a write. Reallow never sends Play.
+without repeating a write. Reallow never sends Play or Connect. Labels remain
+neutral until an authenticated reply identifies a supported target/permission pair.
+Write confirmation must match that pair as well as the owner, revision and choice.
+The changed view getter uses C ABI v2; unchanged entry points retain their versions.
+
+Both scopes pass 18 credentialed client cases, five protected installed-configuration
+cases and actual unshown QML Allow/Revoke clicks. Installed ARM consent remains open.
 
 ## Build and stage
 

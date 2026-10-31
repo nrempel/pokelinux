@@ -61,8 +61,7 @@ pub(crate) fn app_uid(app: &pokelinux_lifecycle::AppProfile) -> io::Result<u32> 
         pokelinux_lifecycle::AppRole::Application => app.app != PERMISSIONS_APP,
         pokelinux_lifecycle::AppRole::PermissionController { target, permission } => {
             app.app == PERMISSIONS_APP
-                && target == pokelinux_lifecycle::audio::APP
-                && *permission == pokelinux_lifecycle::Permission::MediaRoute
+                && pokelinux_lifecycle::permission::supported_scope(target, *permission)
         }
     };
     if !role_matches || app.uid != uid || app.args.len() != 6 {

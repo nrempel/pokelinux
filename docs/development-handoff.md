@@ -18,8 +18,11 @@ retains its three-case RED→GREEN and 24-regression receipts. A supplemental na
 x86_64 run passes all 28 tests, adding three connectivity Session cases with an
 authored backend model and real audio Owner/UnixStream/retained-lease isolation
 with authored peer responses. No independent RED, audio Main/PCM or physical
-continuity is claimed. Normal session installation/client/UI remain Audio-only;
-installed ARM consent, actual backend isolation and cold-boot persistence stay open.
+continuity is claimed. Normal session configuration/client/UI now pass host
+RED→GREEN: 18 credentialed client cases, five protected configuration cases and
+both real unshown QML scope flows. Scope-bound confirmation and neutral initial
+labels are implemented; installed ARM consent, actual backend isolation and
+cold-boot persistence stay open. See [consent evidence](native-permissions-ui.md).
 
 The normal Main empty-idle regression now passes the unchanged host consumer
 after qualified RED. A source-qualified zero-readiness hint defers starting an

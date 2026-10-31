@@ -4,6 +4,9 @@ Rectangle {
     id: root
     required property QtObject theme
     required property QtObject permissionClient
+    readonly property bool audioScope: permissionClient.scope === 1
+    readonly property bool networkScope: permissionClient.scope === 2
+    readonly property string permissionName: audioScope ? "Audio" : networkScope ? "Network control" : ""
     color: theme.background
     component ChoiceButton: Button {
         id: button
@@ -43,14 +46,14 @@ Rectangle {
                 font.pixelSize: root.theme.fontPixel("heading", 24)
             }
             Text {
-                text: "Sounds"
+                text: root.audioScope ? "Sounds" : root.networkScope ? "Settings" : ""
                 color: root.theme.foreground
                 font.family: root.theme.fontFamily
                 font.pixelSize: root.theme.fontPixel("title", 20)
             }
             Text {
                 width: parent.width
-                text: "Let Sounds play audio."
+                text: root.audioScope ? "Let Sounds play audio." : root.networkScope ? "Let Settings control the local connection." : ""
                 wrapMode: Text.Wrap
                 color: root.theme.foreground
                 font.family: root.theme.fontFamily
@@ -58,7 +61,7 @@ Rectangle {
             }
             Text {
                 objectName: "savedPermission"
-                text: root.permissionClient.allowed === 1 ? "Audio allowed" : root.permissionClient.allowed === 0 ? "Audio not allowed" : "Permission unavailable"
+                text: root.permissionName && root.permissionClient.allowed === 1 ? root.permissionName + " allowed" : root.permissionName && root.permissionClient.allowed === 0 ? root.permissionName + " not allowed" : "Permission unavailable"
                 width: parent.width
                 wrapMode: Text.Wrap
                 color: root.theme.foreground
@@ -66,22 +69,22 @@ Rectangle {
                 font.pixelSize: root.theme.fontPixel("body", 16)
             }
             ChoiceButton {
-                objectName: "allowAudio"
+                objectName: "allowPermission"
                 width: parent.width
-                text: "Allow audio"
+                text: root.audioScope ? "Allow audio" : root.networkScope ? "Allow network control" : "Allow"
                 enabled: root.permissionClient.canSet && root.permissionClient.allowed !== 1
                 onClicked: root.permissionClient.choose(true)
             }
             ChoiceButton {
-                objectName: "revokeAudio"
+                objectName: "revokePermission"
                 width: parent.width
-                text: "Revoke audio"
+                text: root.audioScope ? "Revoke audio" : root.networkScope ? "Revoke network control" : "Revoke"
                 enabled: root.permissionClient.canSet && root.permissionClient.allowed !== 0
                 onClicked: root.permissionClient.choose(false)
             }
             Text {
                 width: parent.width
-                text: root.permissionClient.unconfirmed ? "Couldn't confirm the last change." : "Start playback in Sounds after allowing audio."
+                text: root.permissionClient.unconfirmed ? "Couldn't confirm the last change." : root.audioScope ? "Start playback in Sounds after allowing audio." : root.networkScope ? "Enable the local connection in Settings after allowing control." : ""
                 wrapMode: Text.Wrap
                 color: root.theme.muted
                 font.family: root.theme.fontFamily
