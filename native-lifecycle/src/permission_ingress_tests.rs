@@ -40,6 +40,9 @@ pub(crate) struct Case {
 }
 impl Case {
     fn new(role: AppRole) -> Self {
+        Self::with_settings(role, false)
+    }
+    fn with_settings(role: AppRole, settings: bool) -> Self {
         assert_eq!(rustix::process::getuid().as_raw(), 0);
         let root = PathBuf::from("/run").join(format!("permission-{}", fresh_id().unwrap()));
         fs::create_dir(&root).unwrap();
@@ -67,7 +70,7 @@ impl Case {
             }
         };
         rustix::net::sockopt::set_socket_passcred(&fd, true).unwrap();
-        let mut authority = Authority::loading(vec![
+        let mut profiles = vec![
             AppProfile {
                 role: AppRole::Application,
                 app: crate::audio::APP.into(),
@@ -82,16 +85,25 @@ impl Case {
                 executable: "/usr/bin/python3".into(),
                 args: vec![],
             },
-        ])
-        .unwrap();
+        ];
+        if settings {
+            profiles.push(AppProfile {
+                role: AppRole::Application,
+                app: crate::connectivity::APP.into(),
+                uid: crate::connectivity::UID,
+                executable: "/usr/bin/true".into(),
+                args: vec![],
+            });
+        }
+        let apps = profiles
+            .iter()
+            .map(|profile| profile.app.clone())
+            .collect::<Vec<_>>();
+        let mut authority = Authority::loading(profiles).unwrap();
         authority.require_session().unwrap();
         fs::create_dir(root.join("policy")).unwrap();
         fs::set_permissions(root.join("policy"), fs::Permissions::from_mode(0o700)).unwrap();
-        let (disk, durable) = crate::storage::Disk::open(
-            &root.join("policy"),
-            &[crate::audio::APP.into(), APP.into()],
-        )
-        .unwrap();
+        let (disk, durable) = crate::storage::Disk::open(&root.join("policy"), &apps).unwrap();
         authority.activate(durable);
         let pid = rustix::process::Pid::from_raw(child.id() as i32).unwrap();
         authority
@@ -138,6 +150,39 @@ impl Case {
             target: crate::audio::APP.into(),
             permission: Permission::MediaRoute,
         })
+    }
+    pub(crate) fn network_controller() -> Self {
+        Self::with_settings(
+            AppRole::PermissionController {
+                target: crate::connectivity::APP.into(),
+                permission: Permission::NetworkControl,
+            },
+            true,
+        )
+    }
+    pub(crate) fn installed_apps(&self) -> Vec<String> {
+        self.authority
+            .profiles
+            .iter()
+            .map(|profile| profile.app.clone())
+            .collect()
+    }
+    fn authored_audio_history(&mut self) {
+        // This seeds unrelated component history, never the requested network grant.
+        let intent = self
+            .authority
+            .plan_grant(
+                crate::audio::APP,
+                Permission::MediaRoute,
+                true,
+                crate::boottime_ns(),
+            )
+            .unwrap();
+        self.disk.replace(&intent.next).unwrap();
+        assert_eq!(
+            self.authority.finish(intent, true, crate::boottime_ns()),
+            Reply::Ok
+        );
     }
     pub(crate) fn refresh(&mut self) {
         self.sample.sequence += 1;
@@ -349,5 +394,65 @@ fn permission_ingress_locked_suspended_or_missing_source_refuses() {
             }
         }
         assert_eq!(c.status()["result"], "denied");
+    }
+}
+
+// Real UID/SCM_CREDENTIALS, retained pidfd and synced Disk; Source/profile facts
+// remain authored component inputs. This is not installed GUI consent evidence.
+#[test]
+fn permission_network_controller_persists_only_its_fixed_scope() {
+    let mut c = Case::network_controller();
+    c.authored_audio_history();
+    let mut state = c.status();
+    assert_eq!(
+        state["result"], "permission_state",
+        "NETWORK_CONTROLLER_STATUS_MUST_REPORT_FIXED_SCOPE"
+    );
+    assert_eq!(state["target"], crate::connectivity::APP);
+    assert_eq!(state["permission"], "network_control");
+    assert_eq!(state["allowed"], false);
+    let before = fs::read(c.root.join("policy/policy.json")).unwrap();
+    let forged = c.wire(json!({"op":"permission_set", "allowed":false,
+        "app":crate::audio::APP, "permission":"media_route",
+        "expected_owner":state["owner"], "expected_revision":state["revision"],
+        "deadline_ns":crate::boottime_ns()+900_000_000}));
+    assert_eq!(forged["result"], "denied");
+    assert_eq!(fs::read(c.root.join("policy/policy.json")).unwrap(), before);
+    for allowed in [true, false] {
+        state = c.wire(json!({"op":"permission_set", "allowed":allowed,
+            "expected_owner":state["owner"], "expected_revision":state["revision"],
+            "deadline_ns":crate::boottime_ns()+900_000_000}));
+        assert_eq!(state["result"], "permission_state");
+        assert_eq!(state["target"], crate::connectivity::APP);
+        assert_eq!(state["permission"], "network_control");
+        assert_eq!(state["allowed"], allowed);
+        let durable: crate::storage::Durable =
+            serde_json::from_slice(&fs::read(c.root.join("policy/policy.json")).unwrap()).unwrap();
+        assert_eq!(
+            durable.grants.len(),
+            2,
+            "NETWORK_SCOPE_MUST_NOT_ADD_OTHER_GRANTS"
+        );
+        assert!(
+            durable
+                .grants
+                .iter()
+                .any(|grant| grant.app == crate::audio::APP
+                    && grant.permission == Permission::MediaRoute
+                    && grant.allowed),
+            "NETWORK_GRANT_OR_REVOKE_MUST_PRESERVE_AUDIO_GRANT"
+        );
+        assert!(
+            durable
+                .grants
+                .iter()
+                .any(|grant| grant.app == crate::connectivity::APP
+                    && grant.permission == Permission::NetworkControl
+                    && grant.allowed == allowed)
+        );
+        assert!(
+            durable.receipts.is_empty(),
+            "permission consent is not an effect receipt"
+        );
     }
 }

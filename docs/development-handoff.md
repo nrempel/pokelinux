@@ -2,6 +2,13 @@
 
 ## Immediate integration order
 
+The [fixed NetworkControl permission authority](native-network-permission-authority.md)
+now passes actual three-case RED→GREEN, two unchanged audio controls and all 24
+affected permission regressions on native x86_64. Scope comes only from the
+installed role; network revoke preserves audio grant/provider state in the tested
+spy boundary. Normal session installation/client/UI are still Audio-only, and
+live audio/connectivity isolation plus installed ARM consent remain open.
+
 The normal Main empty-idle regression now passes the unchanged host consumer
 after qualified RED. A source-qualified zero-readiness hint defers starting an
 empty 50 ms receive envelope; the same worker publishes a newer fact after resume.

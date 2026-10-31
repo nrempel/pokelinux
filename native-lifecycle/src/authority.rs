@@ -22,6 +22,8 @@ struct Principal {
 #[derive(Clone)]
 pub(crate) struct PermissionStamp {
     app: String,
+    target: String,
+    permission: Permission,
     pid: u32,
     uid: u32,
     generation: u64,
@@ -31,6 +33,11 @@ pub(crate) struct PermissionStamp {
     source: String,
     revision: u64,
     pub(crate) until: u64,
+}
+impl PermissionStamp {
+    pub(crate) fn controls_audio(&self) -> bool {
+        self.target == crate::audio::APP && self.permission == Permission::MediaRoute
+    }
 }
 /// Internal, non-cloneable stamp; never serialized or supplied by an app.
 pub(crate) struct ReadStamp {
@@ -1235,20 +1242,27 @@ impl Authority {
         else {
             return Err(Reply::Denied);
         };
-        let controller = self.profiles.iter().any(|p| {
-            p.app == *app
-                && p.app == crate::permission::APP
-                && p.uid == crate::permission::UID
-                && matches!(&p.role, crate::AppRole::PermissionController{target,permission}
-                if target == crate::audio::APP && *permission == Permission::MediaRoute)
-        });
-        let target = self
+        let Some((target, permission)) = self.profiles.iter().find_map(|p| {
+            if p.app != *app || p.app != crate::permission::APP || p.uid != crate::permission::UID {
+                return None;
+            }
+            match &p.role {
+                crate::AppRole::PermissionController { target, permission }
+                    if crate::permission::supported_scope(target, *permission) =>
+                {
+                    Some((target, *permission))
+                }
+                _ => None,
+            }
+        }) else {
+            return Err(Reply::Denied);
+        };
+        let target_installed = self
             .profiles
             .iter()
-            .any(|p| p.app == crate::audio::APP && p.role == crate::AppRole::Application);
+            .any(|p| p.app == *target && p.role == crate::AppRole::Application);
         let sample = self.fresh_session(now).ok_or(Reply::Denied)?;
-        if !controller
-            || !target
+        if !target_installed
             || principal.background
             || sample.locked
             || !living(&principal.alive).unwrap_or(false)
@@ -1261,6 +1275,8 @@ impl Authority {
         }
         let stamp = PermissionStamp {
             app: app.clone(),
+            target: target.clone(),
+            permission,
             pid,
             uid,
             generation: principal.generation,
@@ -1307,13 +1323,15 @@ impl Authority {
                 final_now < stamp.until && self.fresh_session(final_now).is_some()
             }
     }
-    fn permission_state(&self) -> Reply {
+    fn permission_state(&self, stamp: &PermissionStamp) -> Reply {
         Reply::PermissionState {
-            target: crate::audio::APP.into(),
-            permission: Permission::MediaRoute,
-            allowed: self.durable.grants.iter().any(|g| {
-                g.app == crate::audio::APP && g.permission == Permission::MediaRoute && g.allowed
-            }),
+            target: stamp.target.clone(),
+            permission: stamp.permission,
+            allowed: self
+                .durable
+                .grants
+                .iter()
+                .any(|g| g.app == stamp.target && g.permission == stamp.permission && g.allowed),
             owner: self.incarnation.clone(),
             revision: self.policy,
         }
@@ -1833,7 +1851,7 @@ impl Authority {
         match request {
             AppRequest::PermissionStatus { deadline_ns } => {
                 match self.permission_stamp(pid, uid, deadline_ns, now) {
-                    Ok(_) => immediate(self.permission_state()),
+                    Ok(stamp) => immediate(self.permission_state(&stamp)),
                     Err(reply) => immediate(reply),
                 }
             }
@@ -1850,7 +1868,7 @@ impl Authority {
                 if expected_owner != self.incarnation || expected_revision != self.policy {
                     return immediate(Reply::Denied);
                 }
-                match self.plan_grant(crate::audio::APP, Permission::MediaRoute, allowed, now) {
+                match self.plan_grant(&stamp.target, stamp.permission, allowed, now) {
                     Ok(mut intent) => {
                         stamp.policy = self.policy;
                         intent.until = deadline_ns;
@@ -1999,7 +2017,7 @@ impl Authority {
             // Sync is historical fact even if current focus or deadline changed.
             // Losing publication authority does not undo or invent the commit.
             return if self.current_permission(stamp, now) {
-                self.permission_state()
+                self.permission_state(stamp)
             } else {
                 Reply::Denied
             };

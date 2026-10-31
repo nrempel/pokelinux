@@ -1,0 +1,339 @@
+{
+  "schema": 1,
+  "evidence_class": "native x86_64 host components in offline Linux containers",
+  "source_base_commit": "256c553c1eb7c8434711772fa815d2d5ab21cc00",
+  "implementation": "Exact installation-owned Sounds/media_route or Settings/network_control scope; caller cannot select target or permission; accepted non-audio revoke does not withdraw audio provider",
+  "compiler": {
+    "receipt": {
+      "bytes": 1732149,
+      "sha256": "490f8c65c214da8d0691a1ccf7da28c1c9b2f5f2e33899c90fb98b43a4c92299"
+    },
+    "passed": true,
+    "strict_clippy_passed": true,
+    "binaries": {
+      "helper": {
+        "bytes": 1740504,
+        "sha256": "1d9aaaa7f3c733dd73f9a5bd6e83a8480545145e30989ba0fb2676b87450f96b",
+        "ELF_machine": 62
+      },
+      "libtest": {
+        "bytes": 4906584,
+        "sha256": "18334aabd9e1a15991500a00b11b61525a9cebcd95ec989287b4d26fe9caa16f",
+        "ELF_machine": 62
+      }
+    }
+  },
+  "source_files": {
+    "native-lifecycle/src/service.rs": {
+      "bytes": 115529,
+      "sha256": "00fc0eaf3dcc6f986c127c5a5424907e4ca1d0efe7e98e18e48a7e1fdce90e81"
+    },
+    "native-lifecycle/src/authority.rs": {
+      "bytes": 107818,
+      "sha256": "0cb09bb5faca782f78cf916a5a091600657a17779886667a6e2884f97b653d32"
+    },
+    "native-lifecycle/src/permission_service_tests.rs": {
+      "bytes": 26237,
+      "sha256": "431f5ef6e33d0c0aa67eb9d3c27e1863014de5529636595508907b8d6d1eef95"
+    },
+    "native-lifecycle/src/permission.rs": {
+      "bytes": 504,
+      "sha256": "f7922e286040c9bf5390a7b8517d3792e18e825a18094f7a219da010f58cb52a"
+    },
+    "native-lifecycle/src/permission_profile_tests.rs": {
+      "bytes": 4160,
+      "sha256": "665ca766f02d8ae39c5351250df6eabd24b117062f4caa84a367ba8c3fd4ee54"
+    },
+    "native-lifecycle/src/permission_ingress_tests.rs": {
+      "bytes": 17617,
+      "sha256": "5b380e0078355cb854b85a42d739873d8709f9dfb511e036d8b1cbd72110f678"
+    }
+  },
+  "runs": {
+    "baseline_helper_loader_failure": {
+      "private_artifact_name": "pokelinux-network-permission-component-red-runtime-sol-1",
+      "receipt": {
+        "bytes": 86468,
+        "sha256": "6f45c54d05ab7b28329dd6c230497971ee2440c97be69d3f4995fa3d8a26577c"
+      },
+      "passed": false,
+      "exact_CID_absent": true,
+      "exact_name_absent": true,
+      "closure": {
+        "closed": true,
+        "errors": [],
+        "adopted_actual_waits": [],
+        "adopted_pidfds_signaled": [],
+        "wait_all_ECHILD": true
+      },
+      "test_steps": []
+    },
+    "baseline_RED": {
+      "private_artifact_name": "pokelinux-network-permission-component-red-runtime-sol-2",
+      "receipt": {
+        "bytes": 88863,
+        "sha256": "fd713999ec502ab1e6fc2cd6ca54614bc6c04de5b349beb9733be09b52bacb8d"
+      },
+      "passed": true,
+      "exact_CID_absent": true,
+      "exact_name_absent": true,
+      "closure": {
+        "closed": true,
+        "errors": [],
+        "adopted_actual_waits": [],
+        "adopted_pidfds_signaled": [],
+        "wait_all_ECHILD": true
+      },
+      "component_assertion_RED": {
+        "component_assertion_RED_qualified": true,
+        "functional_GREEN": false,
+        "actual_test_summaries": {
+          "audio-ingress": {
+            "actual_exit": 0,
+            "passed": 1,
+            "failed": 0,
+            "stdout": {
+              "bytes": 219,
+              "sha256": "c761d482e236f61bd9ac887727f2c670e62f56881fc652b153dc6c812e762794"
+            },
+            "stderr": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          },
+          "audio-service": {
+            "actual_exit": 0,
+            "passed": 1,
+            "failed": 0,
+            "stdout": {
+              "bytes": 563,
+              "sha256": "40951402e0c275a366a91f722650691a82b28fb37caa3726bffc9b5a76f24f1f"
+            },
+            "stderr": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          },
+          "network-red": {
+            "actual_exit": 101,
+            "passed": 0,
+            "failed": 3,
+            "stdout": {
+              "bytes": 1654,
+              "sha256": "0c1b922a0d9fa92e6633b449aca9d6ac3486b4de00460d5ae62d63d6681e880d"
+            },
+            "stderr": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          }
+        },
+        "exact_assertion_markers": 3,
+        "negative_cross_scope_assertions_present_but_not_reached_in_baseline": true,
+        "authored_Source_and_installation_inputs": true,
+        "installed_UI_consent_executed": false,
+        "compile_failure_RED_claimed": false
+      },
+      "test_steps": [
+        {
+          "role": "audio-ingress",
+          "expected_exit": 0,
+          "actual_exit": 0,
+          "merged_output": true,
+          "separate_stderr_claimed": false
+        },
+        {
+          "role": "audio-service",
+          "expected_exit": 0,
+          "actual_exit": 0,
+          "merged_output": true,
+          "separate_stderr_claimed": false
+        },
+        {
+          "role": "network-red",
+          "expected_exit": 101,
+          "actual_exit": 101,
+          "merged_output": true,
+          "separate_stderr_claimed": false
+        }
+      ]
+    },
+    "candidate_executable_mode_failure": {
+      "private_artifact_name": "pokelinux-network-permission-component-green-runtime-root-1",
+      "receipt": {
+        "bytes": 87427,
+        "sha256": "b35dd24a947806cb9e7e56858ee22f4e849b57529f74f683c005b96cfa549d2f"
+      },
+      "passed": false,
+      "exact_CID_absent": true,
+      "exact_name_absent": true,
+      "closure": {
+        "closed": true,
+        "errors": [],
+        "adopted_actual_waits": [],
+        "adopted_pidfds_signaled": [],
+        "wait_all_ECHILD": true
+      },
+      "test_steps": []
+    },
+    "candidate_GREEN": {
+      "private_artifact_name": "pokelinux-network-permission-component-green-runtime-root-2",
+      "receipt": {
+        "bytes": 88531,
+        "sha256": "4ee717ebff6813a38ffff6e0149ea0ec7fc9bbce9e4bfd784342f884028af7ea"
+      },
+      "passed": true,
+      "exact_CID_absent": true,
+      "exact_name_absent": true,
+      "closure": {
+        "closed": true,
+        "errors": [],
+        "adopted_actual_waits": [],
+        "adopted_pidfds_signaled": [],
+        "wait_all_ECHILD": true
+      },
+      "component_GREEN": {
+        "component_GREEN_qualified": true,
+        "actual_test_summaries": {
+          "audio-ingress": {
+            "actual_exit": 0,
+            "passed": 1,
+            "failed": 0,
+            "stdout": {
+              "bytes": 219,
+              "sha256": "c761d482e236f61bd9ac887727f2c670e62f56881fc652b153dc6c812e762794"
+            }
+          },
+          "audio-service": {
+            "actual_exit": 0,
+            "passed": 1,
+            "failed": 0,
+            "stdout": {
+              "bytes": 562,
+              "sha256": "dc3b097598b5d1e68d77a4b82a3a737ff20d4a5c528919b903e90846093c65c7"
+            }
+          },
+          "network-green": {
+            "actual_exit": 0,
+            "passed": 3,
+            "failed": 0,
+            "stdout": {
+              "bytes": 508,
+              "sha256": "81f09a7376b06791cc3c3c0f1a466182c42b1347feca6a44046768a49c0e2502"
+            }
+          }
+        },
+        "installed_UI_consent_executed": false,
+        "authored_Source_and_installation_inputs": true
+      },
+      "test_steps": [
+        {
+          "role": "audio-ingress",
+          "expected_exit": 0,
+          "actual_exit": 0,
+          "merged_output": true,
+          "separate_stderr_claimed": false
+        },
+        {
+          "role": "audio-service",
+          "expected_exit": 0,
+          "actual_exit": 0,
+          "merged_output": true,
+          "separate_stderr_claimed": false
+        },
+        {
+          "role": "network-green",
+          "expected_exit": 0,
+          "actual_exit": 0,
+          "merged_output": true,
+          "separate_stderr_claimed": false
+        }
+      ]
+    },
+    "permission_regressions": {
+      "private_artifact_name": "pokelinux-network-permission-regressions-root-1",
+      "receipt": {
+        "bytes": 88128,
+        "sha256": "91536f0771d8dcc736d7c8ef056ad8dc0b972bc32ac6ab3ca899856207acf70b"
+      },
+      "passed": true,
+      "exact_CID_absent": true,
+      "exact_name_absent": true,
+      "closure": {
+        "closed": true,
+        "errors": [],
+        "adopted_actual_waits": [],
+        "adopted_pidfds_signaled": [],
+        "wait_all_ECHILD": true
+      },
+      "component_GREEN": {
+        "component_GREEN_qualified": true,
+        "actual_test_summaries": {
+          "permission-profile": {
+            "actual_exit": 0,
+            "passed": 6,
+            "failed": 0,
+            "stdout": {
+              "bytes": 711,
+              "sha256": "eb4f996fe663c24e7df83cf1cba5dee98b500f5278983280c979fe3902669766"
+            }
+          },
+          "permission-ingress": {
+            "actual_exit": 0,
+            "passed": 8,
+            "failed": 0,
+            "stdout": {
+              "bytes": 1002,
+              "sha256": "39e1a87b568dd8101ddcac970926a7945b69d47cee20c8422767d9353c43c83d"
+            }
+          },
+          "permission-service": {
+            "actual_exit": 0,
+            "passed": 10,
+            "failed": 0,
+            "stdout": {
+              "bytes": 1940,
+              "sha256": "a2018e5b77a5348c790186691759e2faf982b745b342d132aa962e77f8711e41"
+            }
+          }
+        },
+        "installed_UI_consent_executed": false,
+        "authored_Source_and_installation_inputs": true
+      },
+      "test_steps": [
+        {
+          "role": "permission-profile",
+          "expected_exit": 0,
+          "actual_exit": 0,
+          "merged_output": true,
+          "separate_stderr_claimed": false
+        },
+        {
+          "role": "permission-ingress",
+          "expected_exit": 0,
+          "actual_exit": 0,
+          "merged_output": true,
+          "separate_stderr_claimed": false
+        },
+        {
+          "role": "permission-service",
+          "expected_exit": 0,
+          "actual_exit": 0,
+          "merged_output": true,
+          "separate_stderr_claimed": false
+        }
+      ]
+    }
+  },
+  "limits": [
+    "Source/session and installation facts are authored component inputs.",
+    "Baseline three failures occur at initial scope assertions; later negative/cross-scope assertions are reached only in candidate GREEN.",
+    "Audio provider isolation here uses the existing spy and durable audio grant, not a live audio transport or PCM capture.",
+    "Session-owner installation checks and normal Permissions client/UI remain Audio-only at this checkpoint.",
+    "No normal NetworkControl UI consent, graphical desktop launch, ARM execution, phone, carrier or hardware completion is claimed."
+  ],
+  "preserved_setup_failures": {
+    "baseline_helper_loader_failure": "Helper loader check failed before component tests; next attempt adds explicit exec to protected /opt and records actual mount flags. Prior kernel mount flags were not sampled.",
+    "candidate_executable_mode_failure": "Copied libtest lacked executable mode; loaders passed but no component test began. Fresh replay preserves executable modes and checks access before loader preflight."
+  }
+}

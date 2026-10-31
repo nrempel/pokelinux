@@ -149,11 +149,10 @@ pub fn profile(path: &Path) -> io::Result<Profile> {
             return Err(io::ErrorKind::InvalidData.into());
         }
         if let crate::AppRole::PermissionController { target, permission } = &p.role {
-            // First controller surface is explicitly limited to Sounds media.
+            // Each installed controller has exactly one supported fixed scope.
             // A role is installation metadata only; IPC must separately establish
             // the live caller and current session before any policy mutation.
-            if target != crate::audio::APP
-                || *permission != crate::Permission::MediaRoute
+            if !crate::permission::supported_scope(target, *permission)
                 || target == &p.app
                 || !profile
                     .apps
@@ -317,7 +316,13 @@ fn permission_request(
         }
         Decision::Persist(intent) => {
             connection.permission_stamp = intent.permission_stamp();
-            if revoke && let Some(provider) = audio.as_deref_mut() {
+            if revoke
+                && connection
+                    .permission_stamp
+                    .as_ref()
+                    .is_some_and(|stamp| stamp.controls_audio())
+                && let Some(provider) = audio.as_deref_mut()
+            {
                 // Withdraw the actual provider connection before durable IO.
                 // Retain media-session stamps so its queued replies also fence.
                 provider.revoke();
@@ -1720,7 +1725,7 @@ fn run_with_device_services_inner(
                     } else if let Some(p)=profiles.iter().find(|p| p.app==crate::permission::APP
                         && p.uid==crate::permission::UID
                         && matches!(&p.role,crate::AppRole::PermissionController{target,permission}
-                            if target==crate::audio::APP&&*permission==crate::Permission::MediaRoute))
+                            if crate::permission::supported_scope(target,*permission)))
                     {
                         match apps.start(p,connection.id,&authority,&mut display) {
                             crate::apps::Start::Rejected(reply)=>reply,

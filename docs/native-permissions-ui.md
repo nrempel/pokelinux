@@ -6,6 +6,10 @@ Omarchy appearance client. The fixed desktop launcher selects the installed
 UID11045 scoped controller through the lifecycle actor. Opening it grants nothing.
 The frozen human-preview recipe remains the earlier Sounds-only cohort.
 
+The [network permission authority](native-network-permission-authority.md) now
+passes separate host component checks. This normal client and UI still accept
+only Sounds audio; no NetworkControl UI consent is claimed yet.
+
 ## What passed on Harbour
 
 - A genuine missing-dispatch RED followed by the fixed Permissions desktop route.

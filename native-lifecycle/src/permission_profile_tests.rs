@@ -83,3 +83,40 @@ fn permission_profile_rejects_unknown_role_fields() {
     value["role"]["general_admin"] = json!(true);
     assert!(load(vec![ordinary(), value], 0o600).is_err());
 }
+
+#[test]
+fn permission_network_profile_accepts_only_exact_installed_scope() {
+    let settings = app(
+        crate::connectivity::APP,
+        crate::connectivity::UID,
+        json!({"kind":"application"}),
+    );
+    let profile = load(
+        vec![
+            ordinary(),
+            settings,
+            controller(crate::connectivity::APP, "network_control"),
+        ],
+        0o600,
+    )
+    .expect("NETWORK_CONTROLLER_PROFILE_MUST_ACCEPT_FIXED_INSTALLED_SCOPE");
+    assert_eq!(profile.apps.len(), 3);
+    for (target, permission) in [
+        (crate::audio::APP, "network_control"),
+        (crate::connectivity::APP, "media_route"),
+        (crate::connectivity::APP, "capture"),
+    ] {
+        let settings = app(
+            crate::connectivity::APP,
+            crate::connectivity::UID,
+            json!({"kind":"application"}),
+        );
+        assert!(
+            load(
+                vec![ordinary(), settings, controller(target, permission)],
+                0o600
+            )
+            .is_err()
+        );
+    }
+}

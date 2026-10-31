@@ -11,6 +11,11 @@ modules and firmware provide the initial device-support baseline.
 **Current status: working VM prototypes and installed ARM service checkpoints.
 No physical phone has been tested, and there is no verified bootable phone image.**
 
+The shared Rust permission service now supports granting and revoking Settings
+network control while preserving audio permissions. Host integration checks pass;
+the normal network consent screen is the next join.
+[Permission progress](docs/native-network-permission-authority.md).
+
 ## See it running
 
 These are real, unedited x86 VM captures at the

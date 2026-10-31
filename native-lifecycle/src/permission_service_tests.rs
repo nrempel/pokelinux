@@ -12,10 +12,17 @@ struct ServiceCase {
     connection: Connection,
     operation: Option<Operation>,
     policy: PathBuf,
+    apps: Vec<String>,
 }
 impl ServiceCase {
     fn new(pause: bool) -> Self {
-        let case = Case::controller();
+        Self::from_case(Case::controller(), pause)
+    }
+    fn network_controller() -> Self {
+        Self::from_case(Case::network_controller(), false)
+    }
+    fn from_case(case: Case, pause: bool) -> Self {
+        let apps = case.installed_apps();
         let runtime = case.root.join("worker");
         let policy = case.root.join("worker-policy");
         for path in [&runtime, &policy] {
@@ -50,15 +57,10 @@ impl ServiceCase {
             connection,
             operation: None,
             policy,
+            apps,
         };
         let until = boottime_ns() + 1_000_000_000;
-        let token = c
-            .worker
-            .start_load(
-                vec![crate::audio::APP.into(), crate::permission::APP.into()],
-                until,
-            )
-            .unwrap();
+        let token = c.worker.start_load(c.apps.clone(), until).unwrap();
         loop {
             c.case.refresh();
             match c.worker.poll().unwrap() {
@@ -77,6 +79,40 @@ impl ServiceCase {
             }
         }
         c
+    }
+    fn authored_audio_history(&mut self) {
+        // Unrelated audio grant is an authored component prerequisite. Persist it
+        // through the same actual owned Worker used by the tested network writes.
+        let intent = self
+            .case
+            .authority
+            .plan_grant(
+                crate::audio::APP,
+                crate::Permission::MediaRoute,
+                true,
+                boottime_ns(),
+            )
+            .unwrap();
+        let until = intent.until;
+        let token = self.worker.start_write(intent.next.clone(), until).unwrap();
+        loop {
+            self.case.refresh();
+            match self.worker.poll().unwrap() {
+                Some(Event::Complete {
+                    token: actual,
+                    success: true,
+                    state: None,
+                }) if actual == token => break,
+                None if boottime_ns() < until => {
+                    std::thread::sleep(std::time::Duration::from_millis(1))
+                }
+                _ => panic!("original audio-history write deadline"),
+            }
+        }
+        assert_eq!(
+            self.case.authority.finish(intent, true, boottime_ns()),
+            Reply::Ok
+        );
     }
     fn status(&mut self) -> Value {
         let (bytes, cred) = self
@@ -233,12 +269,9 @@ impl ServiceCase {
         println!(
             "PERMISSION_SERVICE_CLEAN_REOPEN worker_waited=true shutdown_reply_observed={reply_observed}"
         );
-        let durable = crate::storage::Disk::open(
-            &self.policy,
-            &[crate::audio::APP.into(), crate::permission::APP.into()],
-        )
-        .unwrap()
-        .1;
+        let durable = crate::storage::Disk::open(&self.policy, &self.apps)
+            .unwrap()
+            .1;
         assert!(
             !durable.lock_pending,
             "clean marker, not unclean grant retention, qualifies reopen"
@@ -636,4 +669,73 @@ fn permission_ingress_service_stop_during_held_write_is_bounded_and_never_clean_
     let durable: Durable =
         serde_json::from_slice(&fs::read(c.policy.join("policy.json")).unwrap()).unwrap();
     assert!(durable.grants.iter().any(|g| g.allowed));
+}
+
+#[test]
+fn permission_network_service_grant_revoke_preserves_audio() {
+    let mut c = ServiceCase::network_controller();
+    c.authored_audio_history();
+    let state = c.status();
+    assert_eq!(
+        state["result"], "permission_state",
+        "NETWORK_SERVICE_STATUS_MUST_REPORT_FIXED_SCOPE"
+    );
+    assert_eq!(state["target"], crate::connectivity::APP);
+    assert_eq!(state["permission"], "network_control");
+    let mut audio = Audio::default();
+    for allowed in [true, false] {
+        c.queue(allowed, boottime_ns() + 900_000_000, &mut Some(&mut audio));
+        assert_eq!(
+            audio.revokes, 0,
+            "NETWORK_SCOPE_MUST_NOT_REVOKE_AUDIO_PROVIDER"
+        );
+        assert_eq!(
+            audio.effects, 0,
+            "network permission must not submit audio effects"
+        );
+        let reply = c.finish();
+        let state = c.case.respond(reply);
+        assert_eq!(state["target"], crate::connectivity::APP);
+        assert_eq!(state["permission"], "network_control");
+        assert_eq!(state["allowed"], allowed);
+        let durable: Durable =
+            serde_json::from_slice(&fs::read(c.policy.join("policy.json")).unwrap()).unwrap();
+        assert_eq!(durable.grants.len(), 2);
+        assert!(
+            durable
+                .grants
+                .iter()
+                .any(|grant| grant.app == crate::audio::APP
+                    && grant.permission == crate::Permission::MediaRoute
+                    && grant.allowed),
+            "NETWORK_GRANT_OR_REVOKE_MUST_PRESERVE_AUDIO_GRANT"
+        );
+        assert!(
+            durable
+                .grants
+                .iter()
+                .any(|grant| grant.app == crate::connectivity::APP
+                    && grant.permission == crate::Permission::NetworkControl
+                    && grant.allowed == allowed)
+        );
+    }
+    let reopened = c.clean_reopen();
+    assert!(
+        reopened
+            .grants
+            .iter()
+            .any(|grant| grant.app == crate::audio::APP
+                && grant.permission == crate::Permission::MediaRoute
+                && grant.allowed)
+    );
+    assert!(
+        reopened
+            .grants
+            .iter()
+            .any(|grant| grant.app == crate::connectivity::APP
+                && grant.permission == crate::Permission::NetworkControl
+                && !grant.allowed)
+    );
+    assert_eq!(audio.revokes, 0);
+    assert_eq!(audio.effects, 0);
 }

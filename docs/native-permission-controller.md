@@ -1,9 +1,11 @@
 # Native permission controller
 
-The next user-facing slice is a separate trusted controller for Sounds Allow/Revoke,
-followed by explicit Play, measured tone, revocation and measured silence in the
-normal Omarchy session. Consent and authorization remain in the Rust session owner;
-QML will present the result. Sounds remains an ordinary app.
+The Sounds Allow/Revoke surface now passes a normal VM sequence with measured
+audio and shutdown; see [Permissions UI](native-permissions-ui.md). Consent and
+authorization remain in Rust; QML presents the result. Sounds remains ordinary.
+The authority now also supports the exact Settings/NetworkControl role, with
+[separate host evidence](native-network-permission-authority.md). The normal
+session-owner/client/UI NetworkControl join is still pending.
 
 ## Installed role boundary
 
@@ -24,8 +26,9 @@ The first controller configuration is narrowly scoped:
 }
 ```
 
-The protected profile loader requires an installed ordinary Sounds target and
-rejects self-targeting, missing targets and other permissions. Existing root-owned
+The protected lifecycle profile loader requires the selected ordinary target and
+accepts exactly Sounds/media_route or Settings/network_control. It rejects
+self-targeting, missing targets and crossed or unsupported pairs. Existing root-owned
 profile/executable checks remain in force. The role is configuration metadata;
 it grants no new app request or access to the root admin socket by itself.
 
@@ -67,8 +70,8 @@ uses DAC_OVERRIDE, with no production privilege change.
 
 All 17 owner configuration and 20 display tests pass, as do formatting and strict
 owner Clippy. [Owner selection evidence](evidence/native-permission-owner-selection.json)
-records the separate scopes. A desktop launch endpoint, native controller executable
-and visible consent remain to be joined to this selection.
+records the separate scopes. The later desktop launch, native controller and
+visible Sounds consent join is recorded in the Permissions UI evidence below.
 
 ## Scoped permission requests
 
@@ -82,7 +85,8 @@ reports the durable `allowed` fact, fixed target/permission, owner incarnation a
 policy revision. It does not authorize playback by itself.
 
 Set uses the existing sole durable writer. Busy refuses without changing the active
-operation. Revoke fences existing media before persistence. Immediately before a
+operation. A Sounds audio revoke fences existing media before persistence;
+NetworkControl revoke does not withdraw the audio provider. Immediately before a
 queued write can be sent, current authority is rechecked; only the exact provably
 unsent request can be withdrawn. After submission, the writer stays owned through
 its original deadline even if the controller disconnects. No uncertain write is
@@ -99,9 +103,10 @@ provider disconnected.
 
 The desktop launch route, Rust client and visible Allow/Revoke surface are now
 implemented with separate host boundary tests; see [Permissions UI](native-permissions-ui.md).
-These tests do not join the normal UI to the genuine Omarchy session. The full acceptance sequence remains open: denied/quiet → Allow → explicit
-Play → tone → Revoke → silence → reallow stays quiet until a new Play → close/reopen
-and normal shutdown. No permission, audio or phone completion-matrix row is closed.
+These host tests do not themselves join the normal UI to genuine Omarchy. The
+separate Sounds VM acceptance now records Allow → explicit Play → tone → Revoke
+→ silence → reallow without replay and normal shutdown. NetworkControl consent
+remains open. No permission, audio or phone completion-matrix row is closed.
 
 ## Host evidence and limits
 
@@ -129,7 +134,7 @@ RED classifier incorrectly accepted an extra absent-file fixture failure; its
 original result is preserved with a correction, and the replacement baseline
 requires exactly the two named behavioral failures.
 
-## Next visible join
+## Historical initial visible-join plan
 
 Use a separate Permissions surface with a Rust request/state client and the existing
 Omarchy appearance client. Qt presents state and forwards explicit choices. A failed
@@ -145,4 +150,5 @@ The fresh VM cohort must record both app identities, Pixel10 output/window metad
 and actual focus at each action. Reuse the PCM observer's tone, silence and producer
 retirement criteria; replace its historical root-admin revoke trigger with the real
 controller touch and committed state. Preserve all old runtime cohorts and their
-binary/profile pairs. These are planned joins, not executed evidence.
+binary/profile pairs. This was the initial plan; its later Sounds execution is recorded in the
+Permissions UI evidence. NetworkControl UI consent remains a separate open join.
