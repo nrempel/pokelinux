@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "classification": "PARTIAL_NORMAL_SETTINGS_WIRELESS_TRACE_FAILED",
+  "classification": "FUNCTIONAL_NORMAL_SETTINGS_WIRELESS_GREEN_GUEST_CLOSURE_UNQUALIFIED",
   "passed": false,
   "scope": "Full-system generic ARM Linux with normal installed Settings, production Rust wireless Main/worker, hwsim open AP and fixed IPv4; authored actor authority",
   "selected_production_source_commit": "5a805f11e573be2fcf544424f2541368f6102eb9",
@@ -416,6 +416,158 @@
         "published_lease_expiry_after_detection_ns": 66888913
       },
       "internal_pending_state_at_failure_established": false
+    },
+    "root5": {
+      "passed": false,
+      "overall_owner_passed": false,
+      "controller_passed": true,
+      "controller_classification": "NORMAL_SETTINGS_WINDOW_WIRELESS_OPEN_PACKET_GREEN",
+      "functional_GREEN": true,
+      "normal_case_custody_qualified": true,
+      "guest_functional_passed": true,
+      "guest_case_closure_qualified": false,
+      "normal_Main_worker_source_commit": "88842e2fc979e77edce499f20851a6ebdf3cb09b",
+      "source_manifest_sha256": "ccc50b46d9a0f3e6d33316f49b1c8c6e7c8eb1004472d689a927da8ad9cdc80b",
+      "ELFs": {
+        "main": {
+          "bytes": 962456,
+          "sha256": "897c6e62602bb65b11d366bc5f5c756c7443caea18cbcadb5976fbe6d9e0d9b2"
+        },
+        "worker": {
+          "bytes": 956560,
+          "sha256": "a5f3c28d793cc7f925a68aaf1d35307153324898d411bb26ff2dc9813dc7a3c9"
+        }
+      },
+      "frozen_test_source_sha256": {
+        "source/guest.py": "e7f20701589496bd8ac610ef49c02280718b90e1395290af5c2f04f3e5e801a6",
+        "source/controller.py": "4bcfa261fbd952930bae90548edaf135cbbf929580559f0a5c5e517a8ad61632",
+        "source/boot.py": "ad8cd83047f0c7be6990b0304a5178f433de0dbca85bfe5788f20bb541d78c41",
+        "source/service_connectivity_window_tests.rs": "6db946087dccdc34e3f5ae2722d09459199a575475ee2359fb844b797b64188b"
+      },
+      "same_Main_worker_link_namespace_retained": true,
+      "actual_Enable_and_Disable_touch_sequences": 2,
+      "matching_Completed_true_and_false": true,
+      "normal_app_test_control_endpoint_selected": false,
+      "actual_Qt_clicked_count_claimed": false,
+      "distinct_App_SDK_listener_generations": true,
+      "actual_Apps_wait_exit_codes": [
+        0,
+        0
+      ],
+      "both_SDK_pidfds_terminal_proc_and_listener_absent": true,
+      "durable_grant_unchanged": true,
+      "independent_radio_profile_sequence": [
+        "absent",
+        "associated_192.0.2.1/30",
+        "same_after_first_App_wait",
+        "absent_after_Disable"
+      ],
+      "default_route_absent_throughout": true,
+      "nonce_roundtrips_verified": 2,
+      "cap0_client_actual_wait_EOF": true,
+      "second_packet_after_fresh_reopened_states": true,
+      "quiet": {
+        "original_duration_ms": 800,
+        "cap0_loss_errno": 101,
+        "received_datagrams": 0,
+        "peer_final_actual_EAGAIN": true,
+        "no_late_datagram_after_peer_wait": true
+      },
+      "normal_Main_exit": 0,
+      "driver_exit": 0,
+      "packet_peer_exit": 0,
+      "AP_exit": 0,
+      "keeper_exit": 0,
+      "Main_first_retirement": {
+        "detected_at_ns": 141330207302,
+        "errno": null,
+        "io_kind": null,
+        "observation_age_ns": null,
+        "observation_at_ns": null,
+        "operation": null,
+        "original_until_ns": null,
+        "reason": "external_stop",
+        "record_length": null,
+        "record_type": null
+      },
+      "Main_reported_worker_exit_code": null,
+      "Main_reported_worker_exit_signal": 9,
+      "compiled_desired_assertion_passed_after_backend_cleanup": true,
+      "wireless_teardown_custody_qualified": true,
+      "owned_radios_removed_loopback_preserved": true,
+      "guest_eventual_ECHILD": true,
+      "guest_scope_closed": true,
+      "guest_adopted_actual_waits": {
+        "count": 34,
+        "all_exit_codes_zero": true,
+        "pidfds_signaled": 0
+      },
+      "guest_closure_blocker": "Original no-adopted-waits criterion remains false; all 34 adopted children were actually reaped exit0. Ownership/source investigation is separate.",
+      "outer_closure": {
+        "actual_QEMU_wait_exit": 0,
+        "actual_Xvfb_wait_exit": 0,
+        "boot_wait_EOF_handles_closed": true,
+        "actual_container_cleanup_wait_exit": 1,
+        "cleanup_error": null,
+        "cleanup_errors": [],
+        "exact_container_removed_absent_same_daemon": true,
+        "unresolved_direct_children": 0,
+        "source_and_selected_inputs_unchanged": true
+      },
+      "screenshot": {
+        "published_path": "docs/assets/settings-wireless-reopened-enabled.png",
+        "original_artifact": "second-disable-ready-1.png",
+        "bytes": 141569,
+        "sha256": "a989547f1731c4351697c4e12699b247436f0cd75f9b88912437a9dd717edba5",
+        "native_pixels": [
+          1080,
+          2424
+        ],
+        "decoded_RGBA_sha256": "a800a6f4cf400eca6d146a33476f7f4e90137a2a96d4f6c85ffb9f7053e52f58",
+        "independent_full_PNG_decode_matches_native_buffer": true,
+        "external_compositor_scale": 2.625,
+        "nominal_physical_mm": [
+          65,
+          146
+        ],
+        "selected_profile_PPI": 422,
+        "selected_logical_density": 420,
+        "mapped_window_logical_pixels": [
+          411,
+          923
+        ],
+        "normal_QWindow_getters_sampled": false,
+        "Root_original_frame_visually_reviewed": true,
+        "visible_state": "Reopened normal Settings: Local connection Enabled, Disable enabled, Enable dimmed; brightness/status unavailable in fallback theme",
+        "simulation_only": true,
+        "resize_crop_repaint_used": false
+      },
+      "proof_sha256": {
+        "selection.json": "359e6a5a8b438da029c7980fd1aec24d65a2493e94983e88a189f298b0889c7d",
+        "SOURCE.json": "ccc50b46d9a0f3e6d33316f49b1c8c6e7c8eb1004472d689a927da8ad9cdc80b",
+        "result.json": "84a7aa2c1f25aecd7b9aae22e9518c0fbf53c50546dca8c9f9c0a9e2a4ad5861",
+        "connectivity-case/result.json": "01f2d1f2b743bae46c7e10d37d942519d859e2f35754906d553ef2415e0b615d",
+        "boot-result.json": "0ce1423d306799a99457aa149bf07c8a34597303f904a0b7e67769d90c1fd588",
+        "run/receipt.json": "019c7a5a3a5f4bd3be5943592dd9a395c2793159e99a1bc4a65e90c62b44bde2",
+        "connectivity-case/services/normal-connectivity-main.log": "cd246c32b64bd97744545a47cfc8f80102ee93d01cf634c29e10c6876e882844",
+        "connectivity-case/gates/connected-proof.json": "9e3a41f753d0679a711a52f6340eeb7ee639bb48fa5b938d33df0c970341a891",
+        "connectivity-case/gates/disconnected-proof.json": "5529c14dc39fddf5536b2616c71e5175a4a8717bdc224988e5419b1f24446522",
+        "connectivity-case/gates/nonce-1-complete.json": "b9e0ba13ee2705bf14cbde62cca6fcd9119eb8c4a538bd1a1ef91c512d31912d",
+        "connectivity-case/gates/nonce-2-complete.json": "a83c14149be88ed57f2c5d1719566c4dff1cb5e21c3f1fe1fbd39634ab74e59f",
+        "connectivity-case/gates/first-closed.json": "30b85a856923bcec25c718c26c6cc0b4db83bb1ef4614ee91b686cebe8b2b08c",
+        "connectivity-case/gates/background-readback.json": "eb75841fa71c8d6f66174fe123fc36143220e1ce8c9932c4ad40eba64d0d27ec",
+        "connectivity-case/gates/disconnected-readback.json": "7df9130f453f2f4526bd5610c8f495d2762344f311114a4582e9f1e2ee5aa504",
+        "connectivity-case/gates/second-window-qualified.json": "4a31a4fcdb26d419a402e9aae31b5a6139f9312afb37f0c5f961917be5373a04",
+        "connectivity-case/gates/functional-finished.json": "0e7b76736cc69df35847937241418e7fc4213315106cc15d91fbc89b9d496de8",
+        "connectivity-case/gates/actor-closed.json": "b5e4c7999748e019dbfae21cce20e8f243f4e25179d8f005907b8119c1722a1e",
+        "connectivity-case/gates/peer-packets.json": "760e2a597b2857c16a3858f42110ccc0ed35e6cf02b56ef549411b3799cf9a6b",
+        "connectivity-case/gates/loss-probe-complete.json": "41e7b4fb5aa07a34553c45954bc9a2462aca14f74e8fe9b98606458df16fad0c",
+        "connectivity-case/gates/peer-quiet.json": "a56e078ed66843529b269ad1e38ad8ea87d3ec36cebe75d23b776be17963679c",
+        "connectivity-case/gates/desired-assertion.json": "85c50618f63f07380db39ca7c98c306dc40730578eedf8e8a94fceb56af822fd",
+        "second-disable-ready-1.png": "a989547f1731c4351697c4e12699b247436f0cd75f9b88912437a9dd717edba5"
+      },
+      "root2_root3_or_root4_unique_cause_established": false,
+      "aggregate_GUI_or_phone_pass_claimed": false
     }
   },
   "selected_measurement_bounds": {
@@ -470,9 +622,9 @@
       "sha256": "97ce7a3c1db928fb4ce0d12e4a627502c41aef47fc3be923393a49c27e2c3e7e"
     }
   },
-  "selected_production_source_commit_scope": "root1/root2 normal Main/worker; root3 records its later diagnostic source and providers separately",
-  "latest_attempt": "root4",
-  "ELFs_scope": "root1/root2; root3 Main/worker overrides are recorded in attempts.root3.ELFs",
+  "selected_production_source_commit_scope": "Initial root1/root2 cohort; later Main/worker overrides are recorded per attempt",
+  "latest_attempt": "root5",
+  "ELFs_scope": "Root1/root2 common providers; later Main/worker overrides are recorded in each attempt",
   "later_host_first_retirement_diagnostic": {
     "evidence": "native-connectivity-first-retirement.json",
     "qualified_native_x86_64_RED_GREEN": true,
@@ -484,6 +636,17 @@
     "evidence": "native-connectivity-main-idle-receive.json",
     "qualified_host_RED_GREEN": true,
     "root4_underlying_timing_cause_established": false,
-    "new_GUI_readiness_candidate_executed": false
-  }
+    "new_GUI_readiness_candidate_executed": true
+  },
+  "functional_graphical_lifecycle_passed": true,
+  "whole_guest_VM_aggregate_passed": false,
+  "post_run_documentation_only_correction": {
+    "source": "native-process-owner/src/supervisor.rs",
+    "change": "Existing three-line receive_message API comment moved back above receive_message",
+    "behavior_or_code_change": false,
+    "new_build_or_test_claimed": false,
+    "root5_compiled_source_commit": "88842e2fc979e77edce499f20851a6ebdf3cb09b"
+  },
+  "latest_normal_Main_worker_source_commit": "88842e2fc979e77edce499f20851a6ebdf3cb09b",
+  "complete_graphical_lifecycle_qualified_scope": "Includes the original aggregate guest-closure requirement"
 }

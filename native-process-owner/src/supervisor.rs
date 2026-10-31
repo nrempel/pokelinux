@@ -339,9 +339,6 @@ impl Supervisor {
         }
         result
     }
-    /// Receive one owned post-GO record from the exact current Ready worker.
-    /// None means actual EAGAIN. Stop/reap revoke admission before any I/O.
-    /// This may discard bytes on error and never clears the admission marker.
     /// Non-consuming, zero-wait hint from the exact admitted worker. Retained
     /// death/error watches and local ownership checks fence the hint; only
     /// `receive_message` authenticates a record under its original deadline.
@@ -359,6 +356,9 @@ impl Supervisor {
         }
         result
     }
+    /// Receive one owned post-GO record from the exact current Ready worker.
+    /// None means actual EAGAIN. Stop/reap revoke admission before any I/O.
+    /// This may discard bytes on error and never clears the admission marker.
     pub fn receive_message(
         &mut self,
         source: ProcessIdentity,

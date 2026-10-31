@@ -368,11 +368,13 @@ phone gate remain open.
 
 ## Current graphical wireless tracer remains partial
 
-Four later generic ARM attempts join the normal installed Settings window to the
+Five later generic ARM attempts join the normal installed Settings window to the
 current Rust wireless Main/worker and an owned hwsim open AP. They retain
 authored actor authority, fixed IPv4 and the existing ARM measurement bounds;
 this is the normal Local connection toggle for one selected AP, without SSID
-selection, WPA, DHCP/DNS, Internet or phone qualification.
+selection, WPA, DHCP/DNS, Internet or phone qualification. Root5 now passes the
+functional sequence and controller custody; the whole guest/VM still fails its
+original no-adopted-waits closure criterion. Earlier failures remain preserved.
 
 Root1 stops at normal Main startup with actual EACCES/PermissionDenied13 and
 Main exit1, before a Settings window, touch or packet. Root2 selects shared
@@ -435,8 +437,9 @@ with34 adopted exit0 waits. Complete reopen/Disable/quiet remains failed.
 
 A later [controlled host Main idle regression](native-connectivity-main-idle-receive.md)
 now has unchanged-consumer RED/GREEN and strict 48-byte consumed-expiry/parent-death
-controls. It does not establish which receive path root4 took. The new readiness
-candidate has not run graphically; no completed GUI repair is claimed.
+controls. It does not establish which receive path root4 took. Its readiness
+candidate later runs graphically as root5 below; that functional pass does not
+establish a unique cause or repeatability guarantee for the earlier failures.
 
 Root2 retains one original Enable-ready PNG at 1080×2424. External compositor
 measurements are scale 2.625, nominal 65×146mm and a 411×923 mapped Settings window
@@ -444,7 +447,56 @@ under the selected 422PPI/420 logical-density profile. Actual Settings QWindow
 getters are unsampled; the separate QScreen probe reports DPR3. Recorded native
 buffer/PNG hash matching and Root's original-frame review show Disabled/Connection
 ready, Enable active and Disable dimmed in the ordinary fallback theme. There is
-no connected-success frame, resize or new public screenshot in this checkpoint.
-[Hash-only partial provenance](evidence/native-wireless-settings-window-partial.json)
-binds all four attempts, frozen sources, key gates and outer receipts; its
-visually reviewed frame remains root2 only.
+no connected-success frame, resize or public screenshot from root2.
+
+### Root5 functional sequence passes; guest closure remains open
+
+Root5 selects normal Main/worker compiled from published `88842e2`, retaining the
+same normal Settings app, actor, controller, guest, AP/profile predicates,
+resources and original cutoffs. One Enable touch reaches matching Completed(true),
+independent association and `192.0.2.1/30`, then a cap0 nonce/ACK. The first app
+actually waits with exit 0; its SDK pidfd becomes terminal and its process,
+listener and directory disappear. The same worker/link/namespace remains live
+with independent association/profile readback.
+
+A distinct reopened App/SDK generation publishes fresh configured states and
+exchanges the second nonce/ACK. One Disable touch reaches matching
+Completed(false), independent address/association and subnet-route absence, then
+the existing quiet check. The cap0 loss probe returns errno 101 with zero replies;
+the peer observes zero extra datagrams and actual final EAGAIN after the original
+800 ms cutoff. The second app also actually waits with exit 0 and retires its SDK.
+The durable grant remains unchanged; there is no normal-app test-control endpoint
+or claim of a sampled Qt clicked-signal count.
+
+The compiled desired assertion passes after backend cleanup, with controller
+classification `NORMAL_SETTINGS_WINDOW_WIRELESS_OPEN_PACKET_GREEN` and qualified
+controller custody. Main, driver, AP, peer and keeper exit 0; actual AP wait/EOF
+precedes keeper Stop. Main records only first retirement `external_stop` and its
+worker reaped after signal 9 with output EOF. This qualifies this functional
+sequence, without attributing root2/root3 or root4's underlying timing cause.
+
+Guest functional state is true but aggregate guest closure is false: 34 adopted
+children actually exit 0 and are reaped, reaching ECHILD and closed handles; the
+original no-adopted-waits criterion remains unsatisfied. Their ownership is under
+investigation. Wireless teardown/loopback preservation, QEMU/Xvfb wait0, container
+wait1, exact removal/absence, unchanged inputs and no outer cleanup errors
+qualify separately. The overall owner exits 1; this is not an aggregate GUI pass.
+
+![Reopened normal Settings shows Local connection Enabled and Disable available in the ARM wireless simulation](assets/settings-wireless-reopened-enabled.png)
+
+The exact reviewed `second-disable-ready-1.png` is published unchanged: 141,569
+bytes, SHA-256 `a989547f1731c4351697c4e12699b247436f0cd75f9b88912437a9dd717edba5`.
+Its native 1080 × 2424 PNG decodes to the recorded full native-buffer pixel hash,
+without resizing, cropping or repainting. The identity-bound reopened Settings
+window is 411 × 923 logical pixels on external compositor/output metadata at
+scale 2.625 and nominal 65 × 146 mm, using the selected 422 PPI/420 logical-density
+Pixel 10 profile. Direct normal QWindow getters remain unsampled. The fallback
+theme shows Local connection Enabled, Enable dimmed and Disable active; brightness
+and status counters are unavailable. This is simulated ARM Linux, not a physical
+Pixel or installed full-session qualification.
+
+[Curated wireless provenance](evidence/native-wireless-settings-window-partial.json)
+binds all five attempts, frozen sources, key gates, the exact frame and outer
+receipts. A later documentation-only correction moves the existing
+`receive_message` API comment back above that method; it changes no behavior or
+root5 compiled bytes and supplies no new build or test result.

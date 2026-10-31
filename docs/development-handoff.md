@@ -9,9 +9,26 @@ Consumed 48-byte expiry and parent death remain strict controls. All three
 containers close before one in-process desired assertion. 53 host tests and
 host/ARM compilation pass; the separate actual fork ownership control passes.
 Held G4/G5 action-expiry/Stop controls now pass on unchanged bounds
-([evidence](evidence/native-connectivity-main-readiness-held-controls.json)); the
-new GUI candidate has not executed. This does not attribute root4's timing cause or repair the
-complete GUI path. [Main idle evidence](native-connectivity-main-idle-receive.md).
+([evidence](evidence/native-connectivity-main-readiness-held-controls.json)).
+The candidate has now executed graphically as root5 below. It does not identify
+root4's timing cause. [Main idle evidence](native-connectivity-main-idle-receive.md).
+
+Root5 (`88842e2`) passes the normal Settings ARM wireless functional sequence and
+controller custody: Enable/Completed, cap0 nonce/ACK, actual first-App wait0 and
+SDK/listener retirement, fresh reopened states, a second cap0 nonce/ACK, then
+Disable/Completed, independent address/association removal and strict quiet. Both
+Apps close normally. Main's first retirement is only `external_stop`; Main,
+driver, AP, peer and keeper exit 0, with the worker reaped after signal 9.
+
+The whole guest/VM remains failed: the original guest-closure criterion rejects
+34 adopted actual waits, all exit 0, despite eventual ECHILD and closed handles.
+Wireless teardown and loopback preservation, QEMU/Xvfb wait0, container wait1,
+exact removal/absence and unchanged inputs qualify separately. Trace the adopted
+children's ownership before claiming aggregate GUI success, then continue
+installed cold-boot composition. The [exact reviewed native frame](assets/settings-wireless-reopened-enabled.png)
+shows reopened Local connection Enabled in the fallback theme under the selected
+Pixel 10 profile; this remains an authored hwsim/open-AP/fixed-IPv4 simulation.
+[Current GUI evidence](evidence/native-wireless-settings-window-partial.json).
 
 The normal Main first-retirement latch now passes its actual native x86_64 CLI
 boundary with one unchanged consumer: baseline missing-reason RED, then candidate
@@ -22,7 +39,7 @@ backend access.45 library plus8 owner tests pass,1 ignored, along with formattin
 strict Clippy and host/ARM compilation. The ARM component libtest remains
 compile-only. [Host evidence](evidence/native-connectivity-first-retirement.json).
 
-The graphical latch candidate has now executed as failed root4 (`ee2d71b`). It
+The earlier graphical latch candidate executes as failed root4 (`ee2d71b`). It
 reaches Enable/Completed, one cap0 packet, first-app wait0/SDK retirement and brief
 associated/profile background readback before the second app launches. Main's
 first reason is `receive_failure` / `receive_message` / `TimedOut`: detection
@@ -36,11 +53,10 @@ internal pending state or receive phase.
 
 Root4 controller custody, wireless teardown/loopback preservation, QEMU/Xvfb
 wait0 and container wait1/removal/absence qualify with unchanged inputs. Guest
-closure remains false with34 adopted actual exit0 waits. Second-window readiness,
-second packet, Disable/quiet and complete GUI success remain failed. Root is
-preserving this failed epoch while the separate controlled host idle fix is
-qualified. Continue to the unchanged graphical slice and installed cold boot,
-keeping the receive duration and original action cutoffs.
+closure remains false with 34 adopted actual exit0 waits. Second-window readiness,
+second packet and Disable/quiet fail in that preserved epoch. Root5 above passes
+the functional sequence while retaining the receive duration and original action
+cutoffs; it establishes no unique timing cause for root4.
 [Partial GUI evidence](evidence/native-wireless-settings-window-partial.json).
 
 Latest follow-up: the two-file Clippy repair passes the actual current virtual
@@ -70,8 +86,8 @@ source cohorts. No graphical Settings or phone ran in those headless cohorts.
 and [current virtual regression](evidence/native-connectivity-current-virtual-lifecycle.json).
 
 
-Architecture priority after this SDK boundary: complete one normal graphical
-Settings wireless tracer, then join installed cold-boot composition. Use the
+Architecture priority after this functional GUI milestone: qualify its remaining
+guest-closure criterion, then join installed cold-boot composition. Use the
 existing installer, PID1 units and Rust session owner to start connectivity Main,
 permissions and the normal graphical session without post-boot service launch or
 fixture-created authority. Normal Permissions/Settings should grant control,

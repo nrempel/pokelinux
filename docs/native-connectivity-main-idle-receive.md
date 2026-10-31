@@ -55,8 +55,12 @@ The earlier [worker receive control](native-connectivity-idle-receive.md) consum
 cohorts remain separate. This controlled empty-input defect does not establish
 that graphical root4 was empty, consumed a record, or hit a particular pre/post
 guard. Root4's timing cause and root2/root3 remain unexplained. No CPU/IPv6
-attribution or complete graphical repair follows; the new GUI candidate has not
-executed. Continue with the unchanged graphical slice and installed cold-boot
-composition.
+attribution follows. The candidate now executes graphically as root5: the normal
+Settings wireless sequence and controller custody pass, with only planned
+external Stop latched. The whole guest/VM remains failed on its original closure
+criterion despite all 34 adopted children reaped exit 0 and eventual ECHILD.
+[Graphical result and exact capture](native-settings-connectivity-window.md#root5-functional-sequence-passes-guest-closure-remains-open).
+Resolve that ownership/closure boundary before aggregate GUI qualification and
+installed cold-boot composition.
 
 [Exact Main fixture and reproduction](../tools/native-connectivity-worker/main-idle-receive/README.md).

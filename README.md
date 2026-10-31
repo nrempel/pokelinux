@@ -68,7 +68,7 @@ and reopening in an ARM Linux VM. The same app SDK connects once, independent
 packet probes succeed before and after reopening, and explicit Disconnect removes
 the address and association and passes quiet checks. Full process and VM cleanup
 passes too. This uses simulated radios, an open test AP and fixed IPv4;
-normal Settings Wi-Fi controls, WPA, DHCP/DNS, Internet and Pixel hardware remain
+Wi-Fi network selection, WPA, DHCP/DNS, Internet and Pixel hardware remain
 open. The screenshots above show the earlier virtual-link UI, not this wireless
 run. [Persistent wireless evidence](tools/native-wireless-service/README.md).
 Two later diagnostic-cohort ARM runs pass persistence and AP-loss retirement,
@@ -76,11 +76,18 @@ including actual SDK unavailable state and complete owned shutdown. The earlier
 app-client failures remain unexplained; added test diagnostics are not a proven
 repair. [Current results](docs/evidence/native-wireless-service-followup.json).
 
-A later graphical ARM wireless trace is partial: one normal Settings Enable
-touch reaches matching completion, simulated open-AP association, fixed IPv4 and
-one packet exchange. The first app closes normally, then the worker retires
-before second-window qualification. Reopen, Disable and the complete graphical
-lifecycle remain failed. [Partial wireless trace](docs/native-settings-connectivity-window.md#current-graphical-wireless-tracer-remains-partial).
+The normal Settings wireless sequence now passes in the ARM VM: Enable, packets,
+normal close/reopen, another packet, then Disable and silence. Main records only
+the planned external Stop. The overall run still fails its guest-closure rule:
+34 adopted children exit 0 and are reaped, but their ownership remains under
+investigation. This uses simulated radios, an open AP, fixed IPv4 and authored
+test authority. [Functional result and closure blocker](docs/native-settings-connectivity-window.md#root5-functional-sequence-passes-guest-closure-remains-open).
+
+<img src="docs/assets/settings-wireless-reopened-enabled.png" width="320" alt="Reopened normal Settings shows Local connection Enabled and Disable available in the ARM wireless simulation" />
+
+Exact native 1080 × 2424 capture in the fallback theme, using the selected
+Pixel 10 display profile (422 PPI, 420 logical density). This is a simulated ARM
+window, without physical-phone or complete-session qualification.
 
 ## What works today
 
@@ -95,8 +102,8 @@ into one complete phone session.
 | Connection ownership | Touch Enable → packets → app close/reopen → explicit Disable and silence through the normal Settings app and Rust services. | [Settings connection](docs/native-settings-connectivity-window.md) |
 | Session recovery | The same Sounds window survives a compositor pause; fresh state returns about 55 ms after resume, followed by measured playback and permission-revoke silence. Earlier audio failures remain under investigation. | [Recovery checks](docs/native-session-timing-recovery.md) |
 | Connection reliability | Controlled idle delays no longer stop the connection worker; overdue replies are still rejected. Host process tests only. | [Main idle polling](docs/native-connectivity-main-idle-receive.md) |
-| Wireless | The Rust service preserves open-AP association and fixed IPv4 across SDK app close/reopen, with two independent packet checks, explicit Disconnect, quiet and complete cleanup in an ARM VM with simulated radios. WPA, DHCP/DNS, Settings Wi-Fi UI and Pixel hardware remain open. | [Persistent service](tools/native-wireless-service/README.md), [earlier IP tracer](docs/native-wireless-address-packets.md) |
-| ARM app build and partial runtime | Current Settings builds/installs with native Qt 6.12 and matching Rust libraries. A failed ARM trace reaches one Enable touch, a virtual address and one packet; background persistence, reopen and Disable remain open. | [ARM build/install](docs/native-settings-connectivity-window.md#native-arm-build-and-installation), [partial failed trace](docs/native-settings-connectivity-window.md#fourth-attempt-partial-touch-and-packets) |
+| Wireless | The Rust service passes headless persistence with full cleanup. Normal Settings also passes Enable, packets, close/reopen and Disable/quiet in an ARM radio simulation; the guest-closure criterion remains open. Wi-Fi selection, WPA, DHCP/DNS and Pixel hardware remain open. | [Normal Settings result](docs/native-settings-connectivity-window.md#root5-functional-sequence-passes-guest-closure-remains-open), [persistent service](tools/native-wireless-service/README.md) |
+| ARM app build and functional runtime | Normal Settings builds/installs with native Qt 6.12 and matching Rust libraries. The wireless window sequence passes; full guest closure and installed session composition remain open. Earlier failed virtual-link traces are preserved. | [ARM build/install](docs/native-settings-connectivity-window.md#native-arm-build-and-installation), [current wireless result](docs/native-settings-connectivity-window.md#root5-functional-sequence-passes-guest-closure-remains-open) |
 | Audio | Preview Play/Stop, volume and mute verified against measured virtual audio; separate installed ARM service startup and shutdown checks. Physical phone audio remains open. | [Preview](docs/native-sounds-preview.md), [live mute](docs/native-live-preview-mute.md) |
 | Battery and brightness | Rust services follow real Linux test drivers, including value changes and device loss; installed ARM startup and recovery checkpoints pass. | [Battery](docs/native-battery.md), [brightness](docs/native-brightness.md) |
 | Background services | Seven installed services cold-boot together in a headless ARM development image: battery, brightness, network status and the four-unit audio stack. | [Combined ARM image](docs/native-arm-development-image.md) |

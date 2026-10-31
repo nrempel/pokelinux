@@ -58,7 +58,7 @@ has passed; no exact internal pending state or receive stage is established.
 No CPU, scheduling or IPv6 attribution follows. This identifies only root4's
 first Main retirement branch; root2/root3 and the underlying timing cause remain
 unexplained. One packet and brief post-close background readback qualify, but
-complete graphical success remains failed.
+that preserved run's full graphical sequence fails.
 [Graphical evidence](evidence/native-wireless-settings-window-partial.json).
 
 The separate [Main idle regression](native-connectivity-main-idle-receive.md)
@@ -66,8 +66,13 @@ now passes a frozen host RED/GREEN: empty readiness defers envelope creation,
 while a consumed 48-byte frame still times out on its original 50 ms cutoff.
 Parent death and a separate actual fork ownership control pass, as do the
 [held G4/G5 expiry/Stop controls](evidence/native-connectivity-main-readiness-held-controls.json).
-The new GUI candidate remains unexecuted. This does not identify
-root4's empty/consumed state, pre/post guard or underlying timing cause.
+The candidate later executes graphically as root5, passing the normal Settings
+wireless functional sequence and controller custody. Main records only planned
+`external_stop`; the overall guest/VM still fails its original closure criterion
+with 34 adopted actual exit0 waits, all reaped before ECHILD.
+[Current graphical result and capture](native-settings-connectivity-window.md#root5-functional-sequence-passes-guest-closure-remains-open).
+This does not identify root4's empty/consumed state, pre/post guard or underlying
+timing cause.
 
 ## Earlier context-wrapper checkpoint
 

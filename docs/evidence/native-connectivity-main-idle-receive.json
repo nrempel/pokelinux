@@ -433,11 +433,21 @@
     "runtime_epoch": "sol3",
     "evidence_sha256": "a56babdec240c7b379c782211fa3f5d7debf0b0d464ddf09a11f524c009f5d21"
   },
-  "new_GUI_readiness_candidate_executed": false,
+  "new_GUI_readiness_candidate_executed": true,
   "root4_underlying_timing_cause_established": false,
   "empty_idle_does_not_prove_root4_was_empty": true,
   "consumed_case_does_not_prove_root4_consumed_a_frame": true,
   "root4_pre_or_post_guard_identified": false,
   "CPU_or_IPv6_cause_established": false,
-  "raw_inventories_packet_contents_process_memory_private_logs_published": false
+  "raw_inventories_packet_contents_process_memory_private_logs_published": false,
+  "new_GUI_readiness_result": {
+    "attempt": "root5",
+    "evidence": "native-wireless-settings-window-partial.json",
+    "functional_and_controller_custody_passed": true,
+    "Main_first_retirement": "external_stop",
+    "whole_guest_VM_aggregate_passed": false,
+    "guest_closure_original_no_adopted_waits_criterion_passed": false,
+    "adopted_actual_waits": 34,
+    "all_adopted_exit_zero_and_eventual_ECHILD": true
+  }
 }
