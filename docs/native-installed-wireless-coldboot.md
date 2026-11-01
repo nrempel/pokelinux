@@ -143,7 +143,14 @@ and the actual QEMU wait returns0. Full UI acceptance remains failed.
 The menu helper is staged under the upstream data directory, while the bar calls
 it by command name. The stager now exports the exact original helper to
 `/usr/bin/omarchy-shell`; actual file-boundary RED/GREEN passes with all prior
-rows unchanged. The installed rerun remains pending. The captured bar also has missing glyphs; font resources require a
+rows unchanged. Image preparation verifies the existing `qs` alias against the
+retained QuickShell ELF. The next boot reaches a menu layer, then fails to
+observe painted items in its first capture. The detector scans 2,116,000 pixels
+one at a time in Python; its failure is observed 48.5 seconds after the original
+menu deadline. Exact function duration was not instrumented. The next correction
+targets this observer cost while retaining the pixel predicates and deadline.
+Guest cleanup remains empty, normal shutdown completes and actual QEMU wait0
+passes. The full installed flow remains failed. The captured bar also has missing glyphs; font resources require a
 separate correction. No new public screenshot is qualified.
 [Current partial evidence](evidence/native-installed-menu-red.json).
 [Partial installed startup evidence](evidence/native-installed-vm-seat-startup.json).

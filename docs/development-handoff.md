@@ -85,8 +85,14 @@ guest shutdown. The complete installed UI sequence remains failed. Investigate
 the original menu helper installation before changing native services; the shell
 journal also reports missing command helpers. The exact original helper now
 stages at `/usr/bin/omarchy-shell` with actual host RED/GREEN; the installed
-menu rerun is still pending. Missing fonts remain a separate
-visual packaging issue. [Current partial evidence](evidence/native-installed-menu-red.json).
+rerun reaches a menu layer, then fails to observe painted items. Its first
+frame has no qualifying card; the diagnostic appears about 48.5 seconds after
+the original menu deadline. The detector loops over 2,116,000 pixels in Python;
+exact function duration was not instrumented. Optimize the same pixel oracle
+before another unchanged-image run. Guest closure and actual QEMU wait0 pass. Missing fonts remain a separate
+visual packaging issue. The exact custom Omarchy font and attribution files now
+pass separate staging RED/GREEN; ARM discovery/rendering and general icon fonts
+remain open. The menu-helper image excludes that font change. [Current partial evidence](evidence/native-installed-menu-red.json).
 [Partial seat startup evidence](evidence/native-installed-vm-seat-startup.json).
 The earlier failed
 boot has normal guest shutdown, actual QEMU wait0 and qualified outer cleanup;

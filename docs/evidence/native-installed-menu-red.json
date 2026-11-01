@@ -115,5 +115,43 @@
     "No full consent, connection, packet or second-boot sequence passed in this cohort.",
     "No new public screenshot is qualified.",
     "The VM seat service is not a Pixel hardware backend."
-  ]
+  ],
+  "followup_helper_export_only": {
+    "selection_sha256": "91aeb606cc103a204ecf01c635fe199ce278a758d7cafcd6dad62b6c44f4e87d",
+    "image_sha256": "ca539dee570a1bf4b6fb0d9bb0890b45ae8a7d57996462a3a6d4f6d5e633803f",
+    "passed": false,
+    "menu_layer_observed": true,
+    "painted_menu_rows_qualified": false,
+    "rendered_frame_observations": [
+      {
+        "error": "{'actual_native_card_candidate_edges': [], 'bordered_background_rows': 0}"
+      }
+    ],
+    "menu_original_BOOTTIME_until_ns": 61179338999,
+    "first_error_observed_BOOTTIME_ns": 109644699447,
+    "failure_observation_after_cutoff_ns": 48465360448,
+    "exact_pixel_function_duration_instrumented": false,
+    "guest_cleanup_errors": [],
+    "guest_case_closure_qualified": true,
+    "actual_QEMU_wait_exit": 0,
+    "outer_cleanup_errors": [],
+    "receipts": {
+      "first-failure-diagnostic.json": {
+        "bytes": 1294,
+        "sha256": "d9b690d4da0daad1fead8e3267859f45d0adfb2b0f3294f7f9d76ee49cc6ff4b"
+      },
+      "result.json": {
+        "bytes": 348742,
+        "sha256": "88a5d59bdc53bba5ac275bf12f20a8548dee62d688a6b51b7affdcda799e3942"
+      },
+      "boot-result.json": {
+        "bytes": 26392,
+        "sha256": "c1886883f27c1ad0d555bad58990ca0ad2f8d425322c7a7f601c0934af950239"
+      },
+      "run/receipt.json": {
+        "bytes": 23329,
+        "sha256": "6c15311c7aae71a2f4f3fd6aab00f44b42c16bc420768ab873b42cc73c321da4"
+      }
+    }
+  }
 }

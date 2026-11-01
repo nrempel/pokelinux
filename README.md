@@ -20,9 +20,11 @@ Installed theme startup now passes after fixing a missing runtime-directory
 dependency. Simulated-radio provisioning now starts and stops successfully. The
 combined ARM boot now starts the desktop session after adding an explicit VM
 seat service. Its identity, socket and normal shutdown checks now pass. The
-installed menu does not yet open from the bar. A missing command export is fixed
-and passes staging tests; its installed rerun is pending. UI consent, connection
-and reboot persistence remain unverified.
+installed menu layer now appears after fixing a missing command export, but
+painted menu items have not yet been verified. UI consent, connection and reboot
+persistence remain unverified.
+The original Omarchy icon font now stages with its attribution files; ARM
+font discovery and rendering remain unverified.
 [Cold-boot status](docs/native-installed-wireless-coldboot.md).
 [Permission progress](docs/native-network-permission-authority.md).
 

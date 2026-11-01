@@ -33,6 +33,8 @@ def stage(archive, provisioner, root, manifest):
                 for name, row in pins['files'].items()}
     helper = pins['menu_helper']
     selected['usr/bin/omarchy-shell'] = (helper['source'], helper)
+    for target, row in pins['font_resources'].items():
+        selected[target] = (row['source'], row)
     with tarfile.open(archive) as source:
         for target, (name, row) in selected.items():
             item = source.getmember(prefix + name)

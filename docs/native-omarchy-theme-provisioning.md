@@ -62,8 +62,9 @@ rows, then use `native-session-owner/packaging/install_deployment.py` for the
 build-only DESTDIR copy. The stager does not initialize a host home, activate a
 unit, fetch sources, patch Qt namespaces or change the shell environment.
 
-The forty genuine theme files, public menu helper, native helper, oneshot unit
-and four normal profile dependency drop-ins make forty-seven rows. The oneshot uses
+The forty genuine theme files, public menu helper, native helper, oneshot unit,
+four normal profile dependency drop-ins and three font/attribution resources
+make fifty rows. The oneshot uses
 `/etc/pokelinux/appearance.json` and `/usr/share/pokelinux/omarchy`, with a 30 second
 Start limit, 5 second Stop limit, control-group cleanup and `Restart=no`.
 Both the normal target and the appearance, session-owner and shell services have
@@ -155,3 +156,19 @@ Subsequent integration: the [combined cold x86 Omarchy/Sounds checkpoint](native
 now passes with this helper, real Source, the actual native window, qualified
 Pixel10-profile capture and normal shutdown. It is one permission-withheld case;
 authorized flows, failed-provision PID1 propagation and phone hardware remain open.
+
+## Original Omarchy icon font
+
+The stager now includes the selected upstream `omarchy.ttf` in
+`/usr/share/fonts/omarchy/`. The complete font README and repository LICENSE
+are retained under `/usr/share/doc/pokelinux/omarchy-font/`, including the
+README's third-party glyph attributions. This is the font requested by the
+genuine menu widget for U+E900. No substitute glyph or font alias is authored.
+
+An actual file-staging RED reproduces the missing font. The identical control
+then passes with the exact original font and attribution bytes, root ownership,
+0644 modes and manifest entries. All 47 prior rows remain unchanged, and the
+existing menu-helper staging control still passes. This adds three rows.
+ARM font discovery and rendering, general icon coverage and monospace selection
+remain unverified; the current menu-helper ARM rerun excludes this change.
+[File-boundary evidence](evidence/native-omarchy-font-staging.json).

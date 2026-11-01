@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "scope": "Actual host file staging, not font discovery or rendering; no physical phone execution.",
+  "base_commit": "e24f33198f018d7cfe8d9e1e62f2305dfc2df21e",
+  "upstream_commit": "c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+  "source_before_RED": {
+    "tools/native-omarchy-theme/stage.py": "98af45c216d3fac4dc69202712c5ab8a77eefd66873ec34ce5ff4490bb84c919",
+    "tools/native-omarchy-theme/assets.json": "7c5e10db156ad3382ec56097e7fd6836fe24b4b7a1da26bedb977abe29cb80c5",
+    "tools/native-omarchy-theme/tests/font_resources.py": "35e102b913a7de77f1f2af2cd0db5a84bba1b265fdbc78a6988fb0052b0934e9"
+  },
+  "source_after_GREEN": {
+    "tools/native-omarchy-theme/stage.py": {
+      "bytes": 4681,
+      "sha256": "698ee9f29dc15016c0093b1663377e61bd95ad38fa7c197b33e918b68298679e"
+    },
+    "tools/native-omarchy-theme/assets.json": {
+      "bytes": 8144,
+      "sha256": "b3164633f46cbce8685540481f3285e751c15f9314c62ac2cadee5f0b3419184"
+    },
+    "tools/native-omarchy-theme/tests/font_resources.py": {
+      "bytes": 2830,
+      "sha256": "35e102b913a7de77f1f2af2cd0db5a84bba1b265fdbc78a6988fb0052b0934e9"
+    }
+  },
+  "receipts": {
+    "RED": {
+      "bytes": 204,
+      "sha256": "736a6d8095ac07b8eb55657fcc1dedb7c0858fd71316b3bdef4a84cd492241a8",
+      "actual_exit": 1
+    },
+    "GREEN": {
+      "bytes": 681,
+      "sha256": "f15e3520657feea30750ff87935624ed81d4c788123a01213cf2d05ac5ea6a7a",
+      "actual_exit": 0
+    },
+    "menu_regression": {
+      "bytes": 724,
+      "sha256": "23fe36ea31781385c63bd21dfbac63119579176ad89206f450cdd7758304d8ff",
+      "actual_exit": 0
+    }
+  },
+  "RED_error": "AssertionError: original font resource is not installed: usr/share/fonts/omarchy/omarchy.ttf",
+  "frozen_test_unchanged": true,
+  "prior_47_rows_unchanged": true,
+  "added_rows": {
+    "usr/share/fonts/omarchy/omarchy.ttf": {
+      "bytes": 5412,
+      "sha256": "de860dce13dda83739a32eea787c422cb81e8a30f1b0bdc2cfc8829ee944e0ff",
+      "mode": 420
+    },
+    "usr/share/doc/pokelinux/omarchy-font/README.md": {
+      "bytes": 1385,
+      "sha256": "300c2fb653194b3cd39e5045584e3dd1e624e7d351fb68a0eb45643f9ed34ee3",
+      "mode": 420
+    },
+    "usr/share/doc/pokelinux/omarchy-font/LICENSE": {
+      "bytes": 1063,
+      "sha256": "717ba1949502290f8e47688ae2e323acd06c8ca47aec9f7596b15f678c1af4a2",
+      "mode": 420
+    }
+  },
+  "license_scope": "Exact upstream repository LICENSE and full font README retained together, including third-party glyph attribution. The font is not relabelled solely MIT.",
+  "limits": [
+    "The menu-helper ARM rerun uses the earlier image and excludes this font change.",
+    "ARM fontconfig discovery and actual native-frame rendering are unverified.",
+    "General Nerd Font glyph coverage and monospace font selection are separate unresolved packaging work.",
+    "No fontconfig alias, substituted glyph, palette or screenshot was authored."
+  ]
+}

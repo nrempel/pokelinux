@@ -213,5 +213,25 @@
       "sha256": "94a75f315b092f72ac684647ad20b72789b5d25a9f14885be7b87b374fb4160a",
       "mode": 420
     }
+  },
+  "font_resources": {
+    "usr/share/fonts/omarchy/omarchy.ttf": {
+      "source": "default/fonts/omarchy/omarchy.ttf",
+      "bytes": 5412,
+      "sha256": "de860dce13dda83739a32eea787c422cb81e8a30f1b0bdc2cfc8829ee944e0ff",
+      "mode": 420
+    },
+    "usr/share/doc/pokelinux/omarchy-font/README.md": {
+      "source": "default/fonts/omarchy/README.md",
+      "bytes": 1385,
+      "sha256": "300c2fb653194b3cd39e5045584e3dd1e624e7d351fb68a0eb45643f9ed34ee3",
+      "mode": 420
+    },
+    "usr/share/doc/pokelinux/omarchy-font/LICENSE": {
+      "source": "LICENSE",
+      "bytes": 1063,
+      "sha256": "717ba1949502290f8e47688ae2e323acd06c8ca47aec9f7596b15f678c1af4a2",
+      "mode": 420
+    }
   }
 }
