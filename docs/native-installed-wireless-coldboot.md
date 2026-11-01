@@ -449,6 +449,6 @@ established by this run.
 The reopened Settings frame is an unaltered 1080×2424 native capture matching its
 PNG/native-buffer receipt and actual configured output. App QWindow DPR is still
 unsampled, so it is a scoped ARM-VM illustration rather than complete display or
-hardware acceptance. A separate 102 s installed-UI time allowance is prepared;
+hardware acceptance. A separate 102 s installed-UI time allowance is selected for the next run;
 it has no runtime result and changes no native lease/action/packet/quiet/Stop bound.
 [Original receipts and scoped frame metadata](evidence/native-installed-wireless-cold26-partial.json).

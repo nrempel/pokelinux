@@ -6,6 +6,24 @@ lease, readiness rule, timer schedule, callback order or native ownership.
 The production phone-service and app-core target remains Rust. The probe lives
 at the retained C++ compositor boundary; it is not new phone policy.
 
+The reused `owned.py` helper retires a synchronous `Scope.run` command's owned
+streams and pidfd after actual wait, stdout EOF and successful data read. It
+keeps the child record and receipt. Async `start`/`finish` users keep their
+handles until `close`; failed synchronous completion also retains custody.
+[Real FD controls](../../docs/evidence/native-scope-run-fd-retirement.json)
+use a fixed per-test RLIMIT of 64. The original helper reaches actual EMFILE
+after 17 commands; the corrected helper completes all 48 while an async child
+remains live, holds seven FDs during the sequence and returns to three after
+close. Live-overflow and data-read-failure controls preserve handles and exact
+wait/EOF cleanup. This verifies the retention mechanism in the exact helper
+bytes; it does not alone establish Cold26's complete FD state or GUI success.
+
+```sh
+python3 -B tools/native-callback-spans/owned_fd_control.py \
+  --owned /absolute/checkout/tools/native-callback-spans/owned.py \
+  --output /absolute/fresh-fd-control
+```
+
 Apply `callback-span-producer.patch` only to upstream Hyprland
 `efb50993780079460b0cbed1363e2166a2de1d9f`. Its EventLoopManager.cpp baseline
 SHA256 is `104ff43a4c02fcc88e8711cade68becd3a1fe099e970e4b1306774c85dd76f7c`;

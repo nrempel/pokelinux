@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "scope": "Actual host Scope.run/pidfd/PIPE/file handles and child processes under fixed per-test RLIMIT64; no GUI, VM, ARM or hardware execution.",
+  "public_base_commit": "485d3e83b248a8038cc8b65691fee1b28e4a676b",
+  "origin": {
+    "maintained_path": "tools/native-callback-spans/owned.py",
+    "before": {
+      "bytes": 5960,
+      "sha256": "266024c425f92732c53c4b4ea1f06e90f4cd30cbc5cca0d19b8385e63921ae3f"
+    },
+    "Cold26_selected_helper_before": {
+      "bytes": 5960,
+      "sha256": "266024c425f92732c53c4b4ea1f06e90f4cd30cbc5cca0d19b8385e63921ae3f"
+    },
+    "byte_identical": true
+  },
+  "sources": {
+    "tools/native-callback-spans/owned.py": {
+      "bytes": 6331,
+      "sha256": "3fae9b005a90879560f6386975b0e62c5771355d6524cb3adf19f34993e31395"
+    },
+    "tools/native-callback-spans/owned_fd_control.py": {
+      "bytes": 6575,
+      "sha256": "031adb3b6accc8e892d33bbc0a560c70eb12bd48a84c2cb785d08e297b5a9a0b"
+    }
+  },
+  "change": "Retire only successful synchronous run owned handles after actual wait, EOF and data read; retain child records/receipts. start, finish and close are unchanged.",
+  "RED": {
+    "actual_test_exit": 1,
+    "receipt": {
+      "bytes": 21478,
+      "sha256": "06f983fbf5f3915bb8a34e7f670f772f2ada86229a01cda67da2616d888428df"
+    },
+    "completed_of_48": 17,
+    "actual_errno": 24,
+    "recorded_FD_counts": [
+      11,
+      14,
+      17,
+      20,
+      23,
+      26,
+      29,
+      32,
+      35,
+      38,
+      41,
+      44,
+      47,
+      50,
+      53,
+      56,
+      59
+    ],
+    "control_or_cleanup_errors": null,
+    "all_exact_wait_EOF_before_cutoffs": true,
+    "final_FD_count": 3
+  },
+  "GREEN": {
+    "actual_test_exit": 0,
+    "receipt": {
+      "bytes": 48676,
+      "sha256": "adb5d4bc1434ea0c3bad900aaddb0d62cd69ad1ade5dff83c25db133492cda0a"
+    },
+    "passed": true,
+    "completed_of_48": 48,
+    "live_async_peer_retained_during_runs": true,
+    "FD_count_with_async_peer": 7,
+    "FD_count_after_each_run": 7,
+    "final_FD_count": 3,
+    "async_finish_handles_retained": true,
+    "nonzero_returncode_7_preserved": true,
+    "all_sync_owned_handles_retired": true,
+    "all_exact_wait_EOF_before_cutoffs": true
+  },
+  "failure_controls": {
+    "live-overflow": {
+      "RED_passed": true,
+      "GREEN_passed": true,
+      "observed_error": "AssertionError",
+      "handles_retained_for_close": true,
+      "all_exact_wait_EOF_before_cutoffs": true
+    },
+    "data-read-failure": {
+      "RED_passed": true,
+      "GREEN_passed": true,
+      "observed_error": "FileNotFoundError",
+      "handles_retained_for_close": true,
+      "all_exact_wait_EOF_before_cutoffs": true
+    }
+  },
+  "RLIMIT_NOFILE": {
+    "control_process_only": [
+      64,
+      64
+    ],
+    "unchanged_during_sequence": true,
+    "limit_widened": false
+  },
+  "limits": [
+    "Host control verifies descriptor retention and EMFILE in the exact old helper, and bounded FD use after the change.",
+    "It does not alone establish Cold26 complete runtime FD state or qualify a GUI rerun, quiet window or two-boot flow.",
+    "No async handle lifetime, wait/EOF receipt, cutoff, failure ownership or limit is relaxed."
+  ]
+}

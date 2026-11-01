@@ -102,6 +102,15 @@ class Scope:
         item = self.start(argv, name, limit, stdin=stdin, env=env, cutoff=cutoff, identity=identity)
         code = self.finish(item, cutoff)
         data = (self.output / name).read_bytes()
+        # Synchronous custody and data are complete; retain the wait/EOF receipt.
+        stream = item['child'].stdin
+        if stream is not None and not stream.closed:
+            stream.close()
+        item['log'].close()
+        item['child'].stdout.close()
+        if item['pidfd'] is not None:
+            os.close(item['pidfd'])
+            item['pidfd'] = None
         return code, data
 
     def close(self, cutoff):

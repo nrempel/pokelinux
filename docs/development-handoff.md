@@ -16,10 +16,14 @@ guest strict closure is false despite timely recorded waits/EOF. QEMU 0/guest
 shutdown and outer cleanup qualify separately; peer/attach/container exits are 1.
 The full native-closure validator is unchecked, and boot 2 is not admitted.
 
-A separate declared 102 s installed-UI time allowance is prepared, not run;
+A separately declared 102 s installed-UI time allowance is selected for the next run;
 native leases, action/packet 1 s limits, quiet 800 ms and Stop bounds stay unchanged.
-FD-pressure retirement is being tested separately; no FD-limit raise or causal
-repair for Cold 26 is claimed. Preserve the actual failed run and image 21 providers.
+The synchronous-command handle correction now passes real fixed-RLIMIT64
+RED/GREEN: 48 commands finish at constant descriptor use while an asynchronous
+child remains owned. Failed-command and asynchronous custody remain intact.
+[Descriptor controls](evidence/native-scope-run-fd-retirement.json). No FD limit
+is raised or causal repair for Cold 26 claimed; the installed successor remains
+unqualified. Preserve the actual failed run and image 21 providers.
 [Curated actions, timing, closure and original frame](evidence/native-installed-wireless-cold26-partial.json).
 
 Previous assembly checkpoint: image 21; Cold 25 boot 1 failed before Allow or Enable. Cold 22's real connection,
