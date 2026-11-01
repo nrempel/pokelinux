@@ -67,8 +67,13 @@ Allow, Enable, packets or boot 2 follows. The process identity/cause is not infe
 All recorded direct-child waits/EOF are timely; guest strict closure, actual
 QEMU 0/guest shutdown and outer cleanup qualify. Peer/attach/container exits are 1
 and the functional aggregate stays failed. This does not qualify normal-service
-deferral/recovery. Correct and test the observer boundary separately before a
-fresh installed run; retain native providers and original acceptance bounds.
+deferral/recovery. The observer correction now passes focused host RED/GREEN: it
+retains parent pidfds and skips missing proc reads only after that exact parent
+has exited. The real-ESRCH control substitutes a held same-task stat file; it
+does not reproduce the host children-file behavior or qualify the ARM replay.
+[Observer evidence and limits](evidence/native-cold-proc-disappearance.json).
+A fresh installed run still must retain native providers and original acceptance
+bounds.
 Cold 24 and all earlier failures keep their original scope.
 [Qualified controls, exclusions and remaining gates](evidence/native-wireless-periodic-refresh.json).
 

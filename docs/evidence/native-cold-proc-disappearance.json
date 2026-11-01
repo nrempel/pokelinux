@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "scope": "Actual watcher functions and real procfs/pidfds; scheduled same-task stat substitution, not reproduced host children ESRCH or GUI/ARM rerun qualification.",
+  "public_base_commit": "9c384deb7b9c1e86fbb046e947a52dfc771f25fd",
+  "change": "Carry each traversal parent pidfd; ignore missing proc reads only when that exact pidfd is dead. Retain watched handles and fail when the process is live.",
+  "sources": {
+    "tools/native-cold-omarchy/guest.py": {
+      "bytes": 70254,
+      "sha256": "f0a7a42676247b10e6c5d081f11eb101405c3898f2e68d2934fbcb980c979d77"
+    },
+    "tools/native-cold-omarchy/tests/proc-children.py": {
+      "bytes": 7708,
+      "sha256": "0fe0ca140d1264cd48c8978b6bea84d2af35874363af99d28acd74b432c9d295"
+    },
+    "tools/native-cold-omarchy/tests/proc-parent-fixture.py": {
+      "bytes": 1110,
+      "sha256": "f78ec438d649b5b1145442946690237acd29d524289cc2fdd27993320ad20a48"
+    },
+    "tools/native-installed-services/owned.py": {
+      "bytes": 12712,
+      "sha256": "5a738b9529a1a0e5d5b0bd20e27e2ec4244d4e61d7c8e0dad96fe1ffbef3c423"
+    }
+  },
+  "private_installed_consumer": {
+    "before": {
+      "bytes": 68301,
+      "sha256": "73da7b2fc92fc6db2a49677c7450b3f3a9a6a60e621befc124f5a72859f0ad8c"
+    },
+    "after": {
+      "bytes": 68436,
+      "sha256": "c8169eced8a76d60256bf59c398a4d938170b8596a30e466796286422b47aaf3"
+    }
+  },
+  "genuine_ARM_failure": {
+    "cohort": "Cold25 boot1",
+    "operation": "open /proc/<PID>/task/<PID>/children",
+    "error": "ProcessLookupError",
+    "errno": 3,
+    "guest_closure_qualified": true,
+    "record_sha256": "a10b03e71e3ea743bc958572784992743409d6c739224930a0585c0c030cc0dd"
+  },
+  "host_kernel": "6.8.0-136-generic",
+  "boundary_limitations": [
+    "Host held children files return EOF after exit; the first two attempts are excluded from ESRCH RED.",
+    "At the actual watcher children-read boundary the scheduling hook opens the same task stat node while live, waits for the original parent to wait its child, then reads the held stat node to obtain real kernel ESRCH. No exception is fabricated.",
+    "The live negative reads a deliberately absent proc filename with the exact pidfd still live and propagates real kernel ENOENT. It does not establish CONFIG_PROC_CHILDREN absence on this host.",
+    "No empty-tree or vendor-cleanup proof is inferred. No actor/service-loss assertion, pidfd ownership, closure rule, budget or retry policy is relaxed.",
+    "Host controls do not qualify a corrected GUI/ARM or full Cold26 replay."
+  ],
+  "pre_edit_TDD_RED": {
+    "actual_test_exit": 1,
+    "receipt": {
+      "bytes": 10344,
+      "sha256": "64c2383bf69786594c4fed43b1fb82180cfbcd04ff1dc9ec21150c275e5df7dd"
+    },
+    "private_and_public_ESRCH_propagated": true,
+    "private_and_public_live_ENOENT_suppressed": true,
+    "setup_errors": null
+  },
+  "published_control_RED": {
+    "actual_test_exit": 1,
+    "receipt": {
+      "bytes": 10696,
+      "sha256": "b667e0fab6e6c9062fe1a2875bed4e09a72f302eb0d413a6e36c85cd2cc4db57"
+    },
+    "same_four_behavioral_failures": true,
+    "setup_errors": null
+  },
+  "published_control_GREEN": {
+    "actual_test_exit": 0,
+    "receipt": {
+      "bytes": 10695,
+      "sha256": "9d5541228354cbdc67fc8a72b21b332a57e7ed7a1769098f69d7c8ef3a6141c5"
+    },
+    "case_count": 4,
+    "private_and_public_dead_parent_handled": true,
+    "private_and_public_live_ENOENT_propagated": true,
+    "observed_pidfds_retained_until_fixture_cleanup": true,
+    "original_child_and_supervisor_waits": 0,
+    "all_supervisor_wait_EOF_before_cutoff": true
+  },
+  "no_GUI_VM_or_hardware_executed": true
+}

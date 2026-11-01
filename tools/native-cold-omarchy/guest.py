@@ -236,20 +236,24 @@ def bind_compositor_log(proc,row):
 def watch():
  global app_pid,app_pidfd,compositor_pid,compositor_pidfd
  observed_actor=actor if actor is not None else units.authenticated_pending_owner()
- parents={v['child'].pid for v in [service,observed_actor]if v is not None and live_fd(v['pidfd'])and Path('/proc/'+str(v['child'].pid)).exists()}
+ parents={v['child'].pid:v['pidfd'] for v in [service,observed_actor]if v is not None and live_fd(v['pidfd'])and Path('/proc/'+str(v['child'].pid)).exists()}
  for _ in range(3):
-  more=set()
-  for parent in parents:
+  more={}
+  for parent,parent_fd in parents.items():
+   if not live_fd(parent_fd):continue
    try:children=(Path('/proc')/str(parent)/'task'/str(parent)/'children').read_text().split()
-   except FileNotFoundError:continue
+   except (FileNotFoundError,ProcessLookupError):
+    if live_fd(parent_fd):raise
+    continue
    for child in children:
-    pid=int(child);more.add(pid);proc=Path('/proc')/child
+    pid=int(child);proc=Path('/proc')/child
     if pid not in watched:
      try:fd=os.pidfd_open(pid,os.O_NONBLOCK)
      except (FileNotFoundError,ProcessLookupError):continue
      watched[pid]={'fd':fd,'starttime':None,'cmdline_sha256':None,'UIDs':[],'parent_when_observed':parent,'observed_at_boottime_ns':now(),'observation_errors':[]}
     row=watched[pid]
     if not live_fd(row['fd']):continue
+    more[pid]=row['fd']
     try:
      text=(proc/'status').read_text();uids=next(v for v in text.splitlines()if v.startswith('Uid:')).split()[1:];row['UIDs']=uids
      row['starttime']=(proc/'stat').read_text().split(') ',1)[1].split()[19];row['cmdline_sha256']=hashlib.sha256((proc/'cmdline').read_bytes()).hexdigest()
