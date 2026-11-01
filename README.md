@@ -29,7 +29,11 @@ A real Enable click now connects over simulated Wi-Fi and exchanges one UDP
 roundtrip. The connection remains after normal Settings close. Reopening then
 fails a native capture check; Disconnect, quiet and reboot persistence remain
 unverified.
+The following run fails its first inspection before any menu after a radio-refresh
+deadline expires. The connection milestone is not yet repeatable; the host-tested
+capture-name fix has not been reached in GUI.
 [Latest progress](docs/evidence/native-installed-consent-close-progress.json).
+[Capture-name host evidence](docs/evidence/native-installed-menu-capture-ordinal.json).
 
 A host-tested correction preserves the original connection deadline while
 retaining permission checks; its installed ARM run reaches the milestone above,
@@ -43,6 +47,10 @@ A graphical-only [bundle composer](tools/native-omarchy-menu/README.md) now
 refuses omitted or unadapted native-menu components in actual host staging
 checks and composes the standard close binding once into the explicit normal
 compositor config; this adds no GUI or boot qualification.
+A fixed [installed-profile recipe](tools/native-installed-services/graphical-profile/README.md)
+now accounts for all319 supplied targets in host staging, using a named artifact
+index and two bounded layers. It preserves the maintained Settings rule and
+requires the existing base compositor; builds and boot acceptance remain separate.
 
 The Rust connection service now resolves its configured interface at startup,
 without saving boot-specific kernel IDs. An ARM simulation passes connection,

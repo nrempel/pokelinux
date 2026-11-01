@@ -1,0 +1,21 @@
+# TEST ONLY: create a fresh private numeric witness in this boot's /run.
+[Unit]
+Description=TEST ONLY fresh compositor startup event ring
+Requires=systemd-tmpfiles-setup.service user@1000.service
+After=systemd-tmpfiles-setup.service user@1000.service
+Before=pokelinux-session-owner.service
+PartOf=pokelinux-installed-wireless-test.target
+
+[Service]
+Type=oneshot
+User=1000
+Group=1000
+ExecStart=/usr/bin/python3 -B /usr/libexec/pokelinux-test/prepare-startup-event-ring.py
+RemainAfterExit=yes
+TimeoutStartSec=5s
+TimeoutStopSec=5s
+Restart=no
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+AmbientCapabilities=
+UMask=0077

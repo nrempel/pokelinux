@@ -1,0 +1,54 @@
+{
+  "apps": [
+    {
+      "app": "org.omarchy.Sounds",
+      "uid": 11042,
+      "executable": "/usr/libexec/pokelinux/pokelinux-sounds",
+      "args": [
+        "/var/lib/pokelinux/sounds",
+        "/run/pokelinux/apps/sounds",
+        "/run/user/1000/wayland-1",
+        "/run/pokelinux/appearance.sock",
+        "/run/pokelinux/session/app.sock",
+        "/usr/share/pokelinux/appearance"
+      ],
+      "role": {
+        "kind": "application"
+      }
+    },
+    {
+      "app": "org.omarchy.Settings",
+      "uid": 11050,
+      "executable": "/usr/libexec/pokelinux/pokelinux-settings",
+      "args": [
+        "/var/lib/pokelinux/settings",
+        "/run/pokelinux/apps/settings",
+        "/run/user/1000/wayland-1",
+        "/run/pokelinux/appearance.sock",
+        "/run/pokelinux/session/app.sock",
+        "/usr/share/pokelinux/appearance"
+      ],
+      "role": {
+        "kind": "application"
+      }
+    },
+    {
+      "app": "org.omarchy.Permissions",
+      "uid": 11045,
+      "executable": "/usr/libexec/pokelinux/pokelinux-permissions",
+      "args": [
+        "/var/lib/pokelinux/permissions",
+        "/run/pokelinux/apps/permissions",
+        "/run/user/1000/wayland-1",
+        "/run/pokelinux/appearance.sock",
+        "/run/pokelinux/session/app.sock",
+        "/usr/share/pokelinux/appearance"
+      ],
+      "role": {
+        "kind": "permission_controller",
+        "target": "org.omarchy.Settings",
+        "permission": "network_control"
+      }
+    }
+  ]
+}

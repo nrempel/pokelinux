@@ -1,0 +1,126 @@
+{
+  "etc/pokelinux/audio-profile.json": {
+    "source": "native-audio/packaging/vm/audio-profile.json",
+    "mode": 420
+  },
+  "etc/pokelinux/vm-audio/pipewire.conf": {
+    "source": "native-audio/packaging/vm/pipewire.conf",
+    "mode": 420
+  },
+  "etc/pokelinux/vm-audio/wireplumber/wireplumber.conf.d/native-audio.conf": {
+    "source": "native-audio/packaging/vm/wireplumber.conf",
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-audio-bus.service": {
+    "source": "native-audio/packaging/vm/pokelinux-audio-bus.service",
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-audio-pipewire.service": {
+    "source": "native-audio/packaging/vm/pokelinux-audio-pipewire.service",
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-audio-wireplumber.service": {
+    "source": "native-audio/packaging/vm/pokelinux-audio-wireplumber.service",
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-connectivity.service": {
+    "source": "native-connectivity-control/packaging/pokelinux-connectivity.service",
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-normal-audio.service": {
+    "source": "native-audio/packaging/pokelinux-audio.service",
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-normal-audio.service.d/20-vm-backend.conf": {
+    "source": "native-audio/packaging/vm/20-vm-backend.conf",
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-omarchy-shell.service.d/30-presentation.conf": {
+    "source": "native-session-owner/packaging/presentation/shell-presentation.conf",
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-omarchy-theme.service": {
+    "source": "native-appearance/packaging/pokelinux-omarchy-theme.service",
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-session-owner.service": {
+    "source": "native-session-owner/packaging/pokelinux-session-owner.service",
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-session-owner.service.d/30-presentation.conf": {
+    "source": "native-session-owner/packaging/presentation/owner-presentation.conf",
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-session-owner.service.d/63-vm-seatd.conf": {
+    "source": "native-session-owner/packaging/vm/session-owner-seatd.conf",
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-vm-seatd.service": {
+    "source": "native-session-owner/packaging/vm/pokelinux-vm-seatd.service",
+    "mode": 420
+  },
+  "usr/lib/sysusers.d/pokelinux-audio.conf": {
+    "source": "native-audio/packaging/pokelinux-audio.sysusers",
+    "mode": 420
+  },
+  "usr/lib/tmpfiles.d/pokelinux-audio-backend.conf": {
+    "source": "native-audio/packaging/vm/pokelinux-audio-backend.tmpfiles",
+    "mode": 420
+  },
+  "usr/libexec/pokelinux-fixture/actor_peer.py": {
+    "source": "tools/native-connectivity-actor/peer.py",
+    "mode": 420
+  },
+  "usr/libexec/pokelinux-fixture/udp_client.py": {
+    "source": "tools/native-wireless-association/address-packets/udp_client.py",
+    "mode": 420
+  },
+  "usr/libexec/pokelinux-fixture/worker_caps.py": {
+    "source": "tools/native-wireless-scan/arm/worker_caps.py",
+    "mode": 420
+  },
+  "usr/libexec/pokelinux-test/hwsim/source/consumer.py": {
+    "source": "tools/native-wireless-association/split-namespace/consumer.py",
+    "mode": 420
+  },
+  "usr/libexec/pokelinux-test/hwsim/source/namespace_peer.py": {
+    "source": "tools/native-connectivity-control/peer.py",
+    "mode": 420
+  },
+  "usr/libexec/pokelinux-test/hwsim/source/owned.py": {
+    "source": "tools/native-connectivity-worker/installed-startup/owned.py",
+    "mode": 420
+  },
+  "usr/libexec/pokelinux-test/hwsim/source/wifi_peer.py": {
+    "source": "tools/native-wireless-association/address-packets/wifi_peer.py",
+    "mode": 420
+  },
+  "usr/share/applications/org.omarchy.Permissions.desktop": {
+    "source": "native-permissions-ui/org.omarchy.Permissions.desktop",
+    "mode": 420
+  },
+  "usr/share/applications/org.omarchy.Settings.desktop": {
+    "source": "native-settings-ui/org.omarchy.Settings.desktop",
+    "mode": 420
+  },
+  "usr/share/applications/org.omarchy.Sounds.desktop": {
+    "source": "native-audio-ui/org.omarchy.Sounds.desktop",
+    "mode": 420
+  },
+  "usr/share/pokelinux/appearance/PhoneAppearance.qml": {
+    "source": "native-app/PhoneAppearance.qml",
+    "mode": 420
+  },
+  "usr/share/pokelinux/display-fixture/pixel10.json": {
+    "source": "sim/display-profiles/pixel10.json",
+    "mode": 420
+  },
+  "usr/share/pokelinux/presentation/normal-presentation.lua": {
+    "source": "native-session-owner/packaging/presentation/normal-presentation.lua",
+    "mode": 420
+  },
+  "usr/share/pokelinux/presentation/phone-windows.lua": {
+    "source": "native-session-owner/packaging/presentation/phone-windows.lua",
+    "mode": 420
+  }
+}

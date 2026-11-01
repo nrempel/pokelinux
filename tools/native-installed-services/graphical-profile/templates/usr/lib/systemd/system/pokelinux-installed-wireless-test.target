@@ -1,0 +1,7 @@
+[Unit]
+Description=TEST ONLY installed two-boot wireless and normal session composition
+Requires=pokelinux-hwsim-provision.service pokelinux-connectivity.service pokelinux-normal-session.target
+After=pokelinux-connectivity.service pokelinux-normal-session.target
+
+[Install]
+WantedBy=graphical.target

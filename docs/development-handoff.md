@@ -2,18 +2,23 @@
 
 ## Immediate integration order
 
-Current checkpoint: runtime correction published as `1928d4e` and qualified image 19. Only the
-normal session-owner changes from image 18; the other 325 installed records,
-including Main/worker, stay fixed. Cold 22 confirms genuine Permissions Allow,
-Settings Enable, connected Main state plus independent radio/fixed-IP readback,
-one cap0 UDP roundtrip, and connection retention after normal Settings close.
-Fresh-menu reopen then fails native capture exit 7. The aggregate and guest
-strict closure remain false; normal poweroff, actual QEMU wait 0 and outer cleanup
-qualify separately. No second packet, Disconnect/quiet, completed native closure
-or boot 2 is claimed. [Current installed evidence](evidence/native-installed-consent-close-progress.json).
+Current checkpoint: published `f24ce54`, runtime image 19. Cold 22's real connection,
+one cap0 UDP roundtrip and connection retention after normal Settings close remain
+a bounded milestone. Its aggregate and strict guest closure failed on reopen
+capture exit 7. The [capture-name correction](evidence/native-installed-menu-capture-ordinal.json)
+passes separate host controls, but Cold 23 fails initial Inspect with
+`terminal_uncertain` before any menu; GUI integration and repeatability remain open.
 
-Next qualify the capture-name correction with unchanged oracles and limits, then
-complete boot 1 before admitting boot 2 on the same disk. After the two-boot tracer,
+The worker reports `RefreshBackend / refresh_wireless`, Deadline with radio Refresh
+Expired, against its fixed 100 ms cutoff; exact inner stage/transaction status is
+not retained. Main's later `readiness_failure / message_ready / PermissionDenied`
+is subsequent evidence, not a credential diagnosis. Cold 23 has qualified guest
+closure, normal poweroff, actual QEMU wait 0 and outer cleanup; its functional
+aggregate remains failed. [Current installed evidence](evidence/native-installed-consent-close-progress.json).
+
+Next qualify precise stage/transaction diagnostics and one bounded error record
+for the normal journal sink, keeping existing cutoffs and no operation retry.
+Complete boot 1 before admitting boot 2 on the same disk. After the two-boot tracer,
 qualify the current Main/worker virtual pair and packet contract on the matched
 Google kernel. Its controller must account for `PROC_CHILDREN=n`; existing native
 prerequisite boot coverage does not need repeating. [Google-kernel scope](native-google-kernel-services.md).
@@ -142,6 +147,15 @@ missing-binding config, then passes all nine controls with the repair. The two
 positive compositions verify all236 files; an existing exact fragment remains
 byte-identical. This does not qualify GUI close behavior.
 [Close-composition evidence](evidence/native-omarchy-close-composition.json).
+The fixed `tools/native-installed-services/stage_graphical.py` recipe closes the
+selected source/template delivery gap with named artifact inputs and an explicit
+base compositor. Actual host staging accounts for all319 supplied targets:
+318 match the retained image17 reference exactly, and the standalone window-rule
+fragment receives the maintained Settings fix. Both generated config and fragment
+include Settings. Layers remain241/77 rows within the existing8MiB/file and64MiB
+aggregate bounds. Artifact origin is recorded from caller declarations; no
+compiler receipt or runtime cohort is attested by this stager. No VM ran here.
+[Installed-profile evidence](evidence/native-installed-graphical-profile.json).
 Missing fonts remain a separate
 visual packaging issue. The exact custom Omarchy font and attribution files now
 pass separate staging RED/GREEN. Actual ARM fontconfig discovery now passes as

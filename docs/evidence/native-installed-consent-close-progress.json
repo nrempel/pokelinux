@@ -286,7 +286,7 @@
     "all_original_app_and_owner_closure_limits": true
   },
   "next_production_correction": {
-    "status": "Cold22 connects, passes one cap0 UDP roundtrip and retains the connection after normal Settings close; fresh menu capture exits7, so reopen/Disconnect/quiet/boot2 remain unqualified.",
+    "status": "Cold22 connection/packet/background milestone remains valid; Cold23 fails initial Inspect before any menu. Radio refresh deadline precision and bounded journal diagnostics are next; repeatability remains open.",
     "Settings_desktop_file_name": "org.omarchy.Settings",
     "phone_window_profile": "Add Settings to the normal available-area rule; retain mode1/1 and workarea containment predicate"
   },
@@ -296,7 +296,8 @@
     "Cold21 reaches the actual Enable input but returns terminal_uncertain; its native action cutoff origin is not logged. No general receive-timeout fix or Source-lease provenance is established.",
     "The earlier two published screenshots retain their original cold17 scope and timing failure.",
     "No new screenshot, physical phone, deadline relaxation or numerical native-parent wait claim.",
-    "Cold22 confirms one real packet and background connection readback, not the full GUI/native-closure or two-boot contract."
+    "Cold22 confirms one real packet and background connection readback, not the full GUI/native-closure or two-boot contract.",
+    "Cold23 does not repeat Cold22: its initial Inspect is terminal_uncertain before any menu, so the host-qualified capture-name fix is not exercised in GUI."
   ],
   "settings_identity_ARM_build": {
     "scope": "Normal CMake Settings target only in generic ARM VM; no application, service or layout execution",
@@ -770,6 +771,89 @@
       "first-failure-diagnostic.json": {
         "bytes": 2366,
         "sha256": "acb370b3654896210ef83e6e475473a6345e69c25604105cd97abb2b852c5ba3"
+      }
+    }
+  },
+  "cold23": {
+    "published_base": "f24ce54e54a290d423c0e44d58ee607f81701bee",
+    "selection_sha256": "872ad58d60a759e4c40dbb9dd2ecf1abccc65674dcae27674de6bb099276fba2",
+    "same_runtime_image19": true,
+    "capture_fix_host_evidence": "native-installed-menu-capture-ordinal.json",
+    "capture_fix_reached_in_GUI": false,
+    "passed": false,
+    "functional_passed": false,
+    "first_observer_boundary": "Initial Inspect refuses terminal_uncertain before any menu or input",
+    "worker_failure": {
+      "stage": "RefreshBackend",
+      "operation": "refresh_wireless",
+      "classification": "Deadline",
+      "radio_component": "Refresh failed with Expired",
+      "fixed_refresh_budget_ns": 100000000,
+      "budget_start_ns": 30983937031,
+      "original_until_ns": 31083937031,
+      "detected_at_ns": 31094753491,
+      "exact_inner_radio_stage_or_transaction_status_known": false,
+      "journal_pin": {
+        "bytes": 932,
+        "sha256": "1a81c46b80c51d96afe44f049d1791433a7b2e0e5ed72476dc881d5e8520426e"
+      }
+    },
+    "subsequent_Main_first_retirement": {
+      "detected_at_ns": 31098472660,
+      "errno": null,
+      "io_kind": "PermissionDenied",
+      "observation_age_ns": null,
+      "observation_at_ns": null,
+      "operation": "message_ready",
+      "original_until_ns": null,
+      "reason": "readiness_failure",
+      "record_length": null,
+      "record_type": null
+    },
+    "PermissionDenied_credential_cause_inferred": false,
+    "menu_actions_or_Connect_reached": false,
+    "packet_flow_reached": false,
+    "boot2_executed": false,
+    "cold22_repeatability_qualified": false,
+    "closure": {
+      "guest_strict_qualified": true,
+      "guest_wait_EOF_allowed_exit_gate": true,
+      "guest_cleanup_errors": [],
+      "native_closure_checked_flag": false,
+      "completed_native_closure_claimed": false,
+      "bootstrap_custody_closed": true,
+      "normal_poweroff_command_closed": true,
+      "actual_QEMU_waited": true,
+      "QEMU_exit_code": 0,
+      "guest_shutdown_custody_qualified": true,
+      "outer_cleanup_qualified": true,
+      "outer_errors": [],
+      "external_peer_exit": 1,
+      "attach_exit": 1,
+      "container_exit": 1,
+      "exact_CID_and_name_absent": true,
+      "same_daemon": true,
+      "inputs_unchanged": true,
+      "all_handles_closed": true,
+      "ECHILD": true,
+      "adopted_waits": []
+    },
+    "receipts": {
+      "result.json": {
+        "bytes": 321597,
+        "sha256": "504f576b3ee871e5f8a99cce32afab71e33d03403efb518222922ec3be898d9c"
+      },
+      "boot-result.json": {
+        "bytes": 26391,
+        "sha256": "8b6394e3a77d270ae59711fcbaae862e60115098c34e5b722923befdca85e306"
+      },
+      "run/receipt.json": {
+        "bytes": 23329,
+        "sha256": "eded4648d1d9458527cb4900df598d8b48ca8f20f4dff4c482d80e746d9ef64c"
+      },
+      "first-failure-diagnostic.json": {
+        "bytes": 1270,
+        "sha256": "fbefd20291514ce32810d4189c9881e379048f2a536c9a8f41d611d370fb8f08"
       }
     }
   }

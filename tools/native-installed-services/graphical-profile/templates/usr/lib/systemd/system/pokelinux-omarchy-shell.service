@@ -1,0 +1,19 @@
+[Unit]
+Description=Genuine pinned Omarchy shell for the selected normal session
+Requires=pokelinux-session-owner.service
+After=pokelinux-session-owner.service
+PartOf=pokelinux-normal-session.target
+
+[Service]
+Type=exec
+User=1000
+Group=1000
+ExecStart=/usr/bin/quickshell -n -p /usr/share/pokelinux/omarchy/shell
+Environment=HOME=/home/alarm XDG_RUNTIME_DIR=/run/user/1000 WAYLAND_DISPLAY=wayland-1 XDG_SESSION_TYPE=wayland QT_QPA_PLATFORM=wayland LANG=C.UTF-8 XDG_CURRENT_DESKTOP=Hyprland OMARCHY_PATH=/usr/share/pokelinux/omarchy DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+Environment=QS_DISABLE_FILE_WATCHER=1 QS_NO_RELOAD_POPUP=1
+Restart=no
+KillMode=control-group
+TimeoutStopSec=5s
+SendSIGKILL=yes
+NoNewPrivileges=yes
+UMask=0077

@@ -321,3 +321,26 @@ qualify separately. External peer/attach/container exits stay 1 and the aggregat
 remains failed. Earlier cold 20/21 failures keep their own scopes.
 
 [Image 19 and cold 22 milestone/closure receipts](evidence/native-installed-consent-close-progress.json).
+
+## Early radio-refresh failure leaves repeatability open
+
+The capture-name correction passes [separate host controls](evidence/native-installed-menu-capture-ordinal.json).
+Cold 23 uses the same runtime image 19 but never reaches that GUI boundary:
+initial Inspect refuses `terminal_uncertain` before any menu or action. Cold 22's
+real connection, first packet and retained background connection remain scoped to
+that earlier run; they are not repeatability or completed two-boot evidence.
+
+The worker reports `RefreshBackend / refresh_wireless`, Deadline and radio Refresh
+Expired. Its fixed 100 ms budget starts at 30.983937031 seconds, ends at
+31.083937031 seconds and is detected expired at 31.094753491 seconds. The retained
+record does not identify the inner radio stage or transaction status. Main later
+records `readiness_failure / message_ready / PermissionDenied`; that ordering does
+not diagnose a credential fault. Better bounded stage/status and journal error
+records are next, with unchanged cutoffs and no operation retry.
+
+Guest strict closure passes with empty cleanup errors; bootstrap poweroff, actual
+QEMU wait 0/guest shutdown and outer cleanup qualify. Native full-closure success
+is not claimed. Peer/attach/container exits remain 1 and functional acceptance
+stays failed. No Connect, packets, capture-fix GUI result or boot 2 follows.
+
+[Cold 23 diagnostics and closure pins](evidence/native-installed-consent-close-progress.json).

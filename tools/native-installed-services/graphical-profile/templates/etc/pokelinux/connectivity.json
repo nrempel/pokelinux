@@ -1,0 +1,13 @@
+{
+  "backend": "wireless_open",
+  "interface": "wlan1",
+  "frequency_mhz": 2412,
+  "bssid": [
+    2,
+    0,
+    0,
+    0,
+    0,
+    0
+  ]
+}

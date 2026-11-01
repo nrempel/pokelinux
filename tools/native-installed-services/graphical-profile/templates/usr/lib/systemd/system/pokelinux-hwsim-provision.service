@@ -1,0 +1,25 @@
+# TEST ONLY source candidate; original owned guest660/700s, original unit Stop90s.
+# Adapt the existing hwsim owner to provision-only while retaining AP/namespace
+# custody. Its actual PID1 Main may send READY only after independent AP checks.
+[Unit]
+Description=TEST ONLY retained hwsim/AP provisioning owner
+After=systemd-tmpfiles-setup.service
+Before=pokelinux-connectivity.service pokelinux-session-owner.service
+PartOf=pokelinux-installed-wireless-test.target
+
+[Service]
+Type=notify
+NotifyAccess=main
+User=root
+Group=root
+ExecStart=/usr/bin/python3 -B /usr/libexec/pokelinux-test/hwsim/owner.py /etc/pokelinux/hwsim-provision.json
+RuntimeDirectory=pokelinux-hwsim
+RuntimeDirectoryMode=0700
+RuntimeDirectoryPreserve=yes
+KillMode=mixed
+TimeoutStartSec=660s
+TimeoutStopSec=90s
+SendSIGKILL=yes
+Restart=no
+NoNewPrivileges=yes
+UMask=0077

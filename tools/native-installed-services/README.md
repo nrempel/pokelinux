@@ -192,3 +192,10 @@ Installation, enablement, matching VM device tree and fresh boot belong to the
 outer fixture. Battery may be honestly unavailable; GPIO readback is not
 luminance and network counts are not connectivity. No normal app window,
 Source, matched-Pixel or physical-phone behavior is qualified by this source.
+## Fixed graphical profile composition
+
+`stage_graphical.py` assembles the source-owned generic ARM graphical+hwsim
+profile from an explicit named artifact index and verified base compositor.
+It reuses the existing stagers/composer and emits two bounded layers without
+building, activating services or booting an image. See the
+[recipe, index contract and scope](graphical-profile/README.md).

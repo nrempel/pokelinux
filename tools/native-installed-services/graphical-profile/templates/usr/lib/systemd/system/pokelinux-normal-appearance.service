@@ -1,0 +1,15 @@
+[Unit]
+Description=Native Rust appearance service for the explicitly selected desktop home
+PartOf=pokelinux-normal-session.target
+
+[Service]
+Type=exec
+User=root
+Group=root
+ExecStart=/usr/libexec/pokelinux/native-appearance --serve /run/pokelinux/appearance.sock /etc/pokelinux/appearance.json
+Restart=no
+KillMode=control-group
+TimeoutStopSec=5s
+SendSIGKILL=yes
+NoNewPrivileges=yes
+UMask=0077

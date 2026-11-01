@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "scope": "Actual host execution of the selected menu, deadline and display-wrapper functions into real exclusive filesystem creation; retained desktop/geometry/pixels; no Qt, GUI, ARM, VM or newly captured pixels.",
+  "sources": {
+    "consumer_before": {
+      "bytes": 29084,
+      "sha256": "06819dccb0dc95b31895c82676ea20bd92f99e7fb2e0112a522dc37ca9f8fe2c"
+    },
+    "consumer_after": {
+      "bytes": 29197,
+      "sha256": "31e695e9ba38a5e892d9aff998f5966980c5cb4e83e007b957d4272d5cf40242"
+    },
+    "actual_menu_control": {
+      "bytes": 8498,
+      "sha256": "83e7bdb66e36140965d3b7ee3a8af62b2d08b36f7726583b2a76f4ef9b78aaf1"
+    },
+    "exclusive_file_fixture": {
+      "bytes": 729,
+      "sha256": "beeaff55087dcca741fb9c0dccf604d4a7262bffdbf09de122aa58d0873230aa"
+    },
+    "reviewed_patch": {
+      "bytes": 1122,
+      "sha256": "2459023d5171d272a5e7df5ca3d271c4c7390c4b2690f0d476ef24de4605da67"
+    }
+  },
+  "change": "Each menu invocation records its ordinal and uses it in the artifact prefix. Capture exclusivity and existing deadlines/oracles remain unchanged.",
+  "qualified_RED": {
+    "actual_test_exit": 1,
+    "receipt": {
+      "bytes": 13352,
+      "sha256": "9b11a96bab6c0287a1f2bca158d2c8af1c9105700a51e07be2e0c50ba2595cd5"
+    },
+    "setup_error": null,
+    "menu_invocations": 2,
+    "completed_capture_sentinels": 1,
+    "distinct_capture_pathnames": 1,
+    "second_invocation_exclusive_create_exit": 7,
+    "first_capture_bytes_and_inode_preserved": true,
+    "all_actual_child_wait_and_EOF_before_cutoffs": true
+  },
+  "GREEN": {
+    "actual_test_exit": 0,
+    "receipt": {
+      "bytes": 13518,
+      "sha256": "5203506b13a7c9c79a2ee83adacbc1b0a8d23a0d431414f61318379dfb45ba46"
+    },
+    "passed": true,
+    "menu_invocations": 2,
+    "completed_capture_sentinels": 2,
+    "distinct_capture_pathnames": 2,
+    "recorded_menu_ordinals": [
+      2,
+      3
+    ],
+    "capture_basenames": [
+      "accept-settings-2-before-bar.png",
+      "accept-settings-3-before-bar.png"
+    ],
+    "first_capture_bytes_and_inode_preserved": true,
+    "forced_pathname_reuse_still_refused": true,
+    "forced_reuse_exit": 7,
+    "all_actual_child_wait_and_EOF_before_cutoffs": true
+  },
+  "excluded_setup_attempt": {
+    "qualified_RED": false,
+    "reason": "Private fixture directory mapping failed before any capture; corrected before the qualified RED and unchanged consumer.",
+    "receipt": {
+      "bytes": 2397,
+      "sha256": "8b89e9dcffa31989fa1e15a84bcb47719888828ad00be35fccabfe45c0d968fa"
+    }
+  },
+  "limits": [
+    "Only the capture naming boundary is exercised: each real menu invocation is sentinel-stopped after the display wrapper completes.",
+    "The subprocess fixture uses actual exclusive file creation and copies retained PNG/receipt bytes; it does not execute the Qt/Wayland capture helper.",
+    "There is no GUI rerun or subsequent functional/second-boot qualification in these host controls.",
+    "No image, binary, build, product source, deadline, oracle, overwrite rule or closure predicate changes."
+  ]
+}

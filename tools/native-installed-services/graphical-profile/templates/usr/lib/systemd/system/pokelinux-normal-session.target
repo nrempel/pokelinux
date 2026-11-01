@@ -1,0 +1,7 @@
+[Unit]
+Description=Explicit PokeLinux normal virtual-device session deployment
+Requires=pokelinux-session-owner.service pokelinux-omarchy-shell.service pokelinux-normal-audio.service pokelinux-normal-appearance.service
+After=pokelinux-session-owner.service pokelinux-omarchy-shell.service
+
+[Install]
+WantedBy=graphical.target

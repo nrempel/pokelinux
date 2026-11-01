@@ -1,0 +1,89 @@
+{
+  "usr/libexec/pokelinux-test/prepare-startup-event-ring.py": {
+    "mode": 420
+  },
+  "usr/libexec/pokelinux-test/hwsim/owner.py": {
+    "mode": 420
+  },
+  "usr/lib/tmpfiles.d/pokelinux-installed-wireless-test.conf": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-startup-event-ring.service": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-normal-session.target": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-installed-wireless-test.target": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-hwsim-provision.service": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-normal-appearance.service": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-omarchy-shell.service": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-audio-backend.target": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-normal-session.target.d/60-installed-wireless-test.conf": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-session-owner.service.d/61-startup-event-ring.conf": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-session-owner.service.d/60-installed-wireless-test.conf": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-session-owner.service.d/62-user-session.conf": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-audio-backend.target.d/60-installed-wireless-test.conf": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-connectivity.service.d/60-installed-wireless-test.conf": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-normal-appearance.service.d/60-installed-wireless-test.conf": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-normal-audio.service.d/30-main-ready.conf": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-normal-audio.service.d/60-installed-wireless-test.conf": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-omarchy-shell.service.d/60-installed-wireless-test.conf": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-omarchy-theme.service.d/60-installed-wireless-test.conf": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pokelinux-installed-wireless-test.target.d/70-audio-backend.conf": {
+    "mode": 420
+  },
+  "usr/lib/systemd/system/pixel-sim.service.d/60-installed-wireless-consumer.conf": {
+    "mode": 420
+  },
+  "etc/pokelinux/apps.json": {
+    "mode": 384
+  },
+  "etc/pokelinux/connectivity.json": {
+    "mode": 384
+  },
+  "etc/pokelinux/appearance.json": {
+    "mode": 384
+  },
+  "etc/pokelinux/session.json": {
+    "mode": 384
+  },
+  "etc/pokelinux/two-boot-hostapd.conf": {
+    "mode": 384
+  },
+  "etc/pokelinux/audio.env": {
+    "mode": 384
+  }
+}

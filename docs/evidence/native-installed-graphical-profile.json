@@ -1,0 +1,276 @@
+{
+  "schema": 1,
+  "scope": "Actual host source/template and named-artifact file composition only. No build, ELF/service execution, VM, phone or fresh runtime cohort.",
+  "base_published_commit": "d2fc93194bc0016d458198bc2515a343b011dc55",
+  "sources": {
+    "tools/native-installed-services/graphical-profile/plugins/CMakeLists.txt": {
+      "bytes": 2446,
+      "sha256": "009e23222682762376441cb35e9ddd022e1c90f8c8a05d7bc3f405f8abf797f9"
+    },
+    "tools/native-installed-services/graphical-profile/plugins/abi.json": {
+      "bytes": 176,
+      "sha256": "fa0cce734f1175d86596c94e0d1bea2cae98515187dc0e04f15b95f5e021a53c"
+    },
+    "tools/native-installed-services/graphical-profile/plugins/focus-observer.cpp": {
+      "bytes": 5856,
+      "sha256": "8d70b7a4418e4f03ab8329d47877a63d0f88182648317f36f85426e69d585d8d"
+    },
+    "tools/native-installed-services/graphical-profile/plugins/startup_event_ring.hpp": {
+      "bytes": 4800,
+      "sha256": "060f046074b348f439c5b38a7d08e8cc285c22b07f9b5b764bd7ca393797b153"
+    },
+    "tools/native-installed-services/graphical-profile/public-files.json": {
+      "bytes": 4744,
+      "sha256": "5ecb4e21b3a976effe0abc988dfecc117ce49af732e5a2125c90b4148e355d76"
+    },
+    "tools/native-installed-services/graphical-profile/templates.json": {
+      "bytes": 2666,
+      "sha256": "e9faf3e5aa4df14812b3fcdfa04d4d2aadfa7313c081972943f84f165d11de4f"
+    },
+    "tools/native-installed-services/graphical-profile/templates/etc/pokelinux/appearance.json": {
+      "bytes": 59,
+      "sha256": "6ea2a852b1d1e92c26a49ca7af71ea9f8f98f7d4c3461fc5fb1e5c463b735aa3"
+    },
+    "tools/native-installed-services/graphical-profile/templates/etc/pokelinux/apps.json": {
+      "bytes": 1484,
+      "sha256": "68bf537a88b322d8a41a6273d5fdb7f4fcae991698968efcc51b3e89bada65d9"
+    },
+    "tools/native-installed-services/graphical-profile/templates/etc/pokelinux/audio.env": {
+      "bytes": 419,
+      "sha256": "971974bb827389b56fa4c347a613bc2448810a010c621f75a0d8857e8959cbf8"
+    },
+    "tools/native-installed-services/graphical-profile/templates/etc/pokelinux/connectivity.json": {
+      "bytes": 141,
+      "sha256": "eb2b957d333c6d5c004da4fe07085a29573c1efb065bca1a51a06d86b681f976"
+    },
+    "tools/native-installed-services/graphical-profile/templates/etc/pokelinux/session.json": {
+      "bytes": 1137,
+      "sha256": "2df422c50743995332007f9bea5aee39d8c0f6a231a33c80ccbe12916a2410cc"
+    },
+    "tools/native-installed-services/graphical-profile/templates/etc/pokelinux/two-boot-hostapd.conf": {
+      "bytes": 266,
+      "sha256": "ae37fa348e5c65d9f2e9019a98e7b0b6643835955bbbe4923677ff91c407c58f"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pixel-sim.service.d/60-installed-wireless-consumer.conf": {
+      "bytes": 205,
+      "sha256": "43ed2c5179fbfc03b504c9dd825fc352462a19712a6832f33467b7c4adc074b0"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pokelinux-audio-backend.target": {
+      "bytes": 371,
+      "sha256": "6d95dc08f0de7796a7295d6ed6f492b5682eb62825c223de21e81e60b635bf05"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pokelinux-audio-backend.target.d/60-installed-wireless-test.conf": {
+      "bytes": 55,
+      "sha256": "8f1944eec31058e3ff2115ede6aeb65b57ebf5f08fa2b6af6e58b4cba0f30b6d"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pokelinux-connectivity.service.d/60-installed-wireless-test.conf": {
+      "bytes": 257,
+      "sha256": "99eab4b40938186da13895c0195cbdef662d384c3786f073879c5eadd2d9dcbe"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pokelinux-hwsim-provision.service": {
+      "bytes": 837,
+      "sha256": "2a5cac59396c5a6fb60a1a5ea25c0e5a43f0c64271e1cdf3a4d8d37cd251fd01"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pokelinux-installed-wireless-test.target": {
+      "bytes": 300,
+      "sha256": "939f0a8dd1535f511a7717c159e497317c90496e1fab2335539b0f033deff9e5"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pokelinux-installed-wireless-test.target.d/70-audio-backend.conf": {
+      "bytes": 84,
+      "sha256": "b5fc1004a83b2b93f319b0ed35a6911e6d5a0abacfa057f70e721d9ece5e6e09"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pokelinux-normal-appearance.service": {
+      "bytes": 392,
+      "sha256": "d0be3fe5b334cd24c56651036206ea550c41dead86a7737f165fc9fcccd28dff"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pokelinux-normal-appearance.service.d/60-installed-wireless-test.conf": {
+      "bytes": 173,
+      "sha256": "94d019c023eba12bfc3bc85e88492c00f505a799d39b188bfc7c2b31951f7cbd"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pokelinux-normal-audio.service.d/30-main-ready.conf": {
+      "bytes": 144,
+      "sha256": "8e83d5e6cac83b695e6303ab9f955e45371549f374d8ea20700e6236b4096925"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pokelinux-normal-audio.service.d/60-installed-wireless-test.conf": {
+      "bytes": 94,
+      "sha256": "ff45b69edce2a67f705606ee4a91a4f9fd01eb9c26bee43fcedea15d3cf6d986"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pokelinux-normal-session.target": {
+      "bytes": 326,
+      "sha256": "80f7790cc11f4d56db08aaf45f6ca0e133882cfae6c13be6d42f355017844105"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pokelinux-normal-session.target.d/60-installed-wireless-test.conf": {
+      "bytes": 55,
+      "sha256": "8f1944eec31058e3ff2115ede6aeb65b57ebf5f08fa2b6af6e58b4cba0f30b6d"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pokelinux-omarchy-shell.service": {
+      "bytes": 742,
+      "sha256": "d307ec3605aea1a20ae18c51db75cbe780e957edb3d85b6c12f37793d1f61611"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pokelinux-omarchy-shell.service.d/60-installed-wireless-test.conf": {
+      "bytes": 267,
+      "sha256": "1d7a09a3588f91c8c65b4805e032d26cbe79924d20bc253d1a0b7b9f9c0e5d3d"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pokelinux-omarchy-theme.service.d/60-installed-wireless-test.conf": {
+      "bytes": 55,
+      "sha256": "8f1944eec31058e3ff2115ede6aeb65b57ebf5f08fa2b6af6e58b4cba0f30b6d"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pokelinux-session-owner.service.d/60-installed-wireless-test.conf": {
+      "bytes": 481,
+      "sha256": "839faf569a02f7db51ac8d898107d8216e982cb816f431e3044a7812d8b3ec39"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pokelinux-session-owner.service.d/61-startup-event-ring.conf": {
+      "bytes": 164,
+      "sha256": "314f844e1a4b48ab79241f07591504ec2f39004bf15207716e1bbeb9c80ed001"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pokelinux-session-owner.service.d/62-user-session.conf": {
+      "bytes": 58,
+      "sha256": "c25ef2de2a5347f65e215ca2f6ab37933566e55d299cc4aae1f792a5cd083bdb"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/systemd/system/pokelinux-startup-event-ring.service": {
+      "bytes": 614,
+      "sha256": "60f90679a2aa7f91e862ff71231b211580cb4445ff3c479924b15de95ecb71cc"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/lib/tmpfiles.d/pokelinux-installed-wireless-test.conf": {
+      "bytes": 623,
+      "sha256": "5114daca34ef46b9ca83bc652ee204a24217f2277434a12a52dbe84436726bb1"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/libexec/pokelinux-test/hwsim/owner.py": {
+      "bytes": 44207,
+      "sha256": "6711629aa63f837405017535e78f39b93e886142395bd74beb8ffb4d8b0496ac"
+    },
+    "tools/native-installed-services/graphical-profile/templates/usr/libexec/pokelinux-test/prepare-startup-event-ring.py": {
+      "bytes": 3009,
+      "sha256": "cdb65f07d2c1be8e5f92f9bb773b8e5831b8f2396a131fb9e9ccc7ee76fc8f3e"
+    },
+    "tools/native-installed-services/graphical-profile/vm-display.lua": {
+      "bytes": 848,
+      "sha256": "bbe9354681d94a472ec49430f07603870ca9cd70aac890c9e668de2cb0d12981"
+    },
+    "tools/native-installed-services/stage_graphical.py": {
+      "bytes": 16389,
+      "sha256": "e5cf68efeed43579be37e81961640df872330ee4bdd019f8b7e9d634638101ed"
+    },
+    "tools/native-installed-services/tests/graphical_profile.py": {
+      "bytes": 8546,
+      "sha256": "fc432dc3be5f80446d03f3551e19562808e500e10d851824f0f6f85408629bd3"
+    }
+  },
+  "actual_source_closure_RED": {
+    "actual_control_wait_exit": 1,
+    "receipt": {
+      "bytes": 34864,
+      "sha256": "f91e199e839504632c24aba78c024a50146fa6102c0c073fd07546481c3bedd6"
+    },
+    "control_source_sha256": "169c9f6baad92236582462160a61f9fa9145fab2997661b9fa691a2dd90acb15",
+    "public_commit": "d2fc93194bc0016d458198bc2515a343b011dc55",
+    "all_public_stages_succeeded": true,
+    "missing_supplied_targets": [
+      "etc/pokelinux/appearance.json",
+      "etc/pokelinux/apps.json",
+      "etc/pokelinux/audio.env",
+      "etc/pokelinux/connectivity.json",
+      "etc/pokelinux/session.json",
+      "etc/pokelinux/two-boot-hostapd.conf",
+      "usr/bin/Hyprland",
+      "usr/lib/systemd/system/pixel-sim.service.d/60-installed-wireless-consumer.conf",
+      "usr/lib/systemd/system/pokelinux-audio-backend.target",
+      "usr/lib/systemd/system/pokelinux-audio-backend.target.d/60-installed-wireless-test.conf",
+      "usr/lib/systemd/system/pokelinux-connectivity.service.d/60-installed-wireless-test.conf",
+      "usr/lib/systemd/system/pokelinux-hwsim-provision.service",
+      "usr/lib/systemd/system/pokelinux-installed-wireless-test.target",
+      "usr/lib/systemd/system/pokelinux-installed-wireless-test.target.d/70-audio-backend.conf",
+      "usr/lib/systemd/system/pokelinux-normal-appearance.service",
+      "usr/lib/systemd/system/pokelinux-normal-appearance.service.d/60-installed-wireless-test.conf",
+      "usr/lib/systemd/system/pokelinux-normal-audio.service.d/30-main-ready.conf",
+      "usr/lib/systemd/system/pokelinux-normal-audio.service.d/60-installed-wireless-test.conf",
+      "usr/lib/systemd/system/pokelinux-normal-session.target",
+      "usr/lib/systemd/system/pokelinux-normal-session.target.d/60-installed-wireless-test.conf",
+      "usr/lib/systemd/system/pokelinux-omarchy-shell.service",
+      "usr/lib/systemd/system/pokelinux-omarchy-shell.service.d/60-installed-wireless-test.conf",
+      "usr/lib/systemd/system/pokelinux-omarchy-theme.service.d/60-installed-wireless-test.conf",
+      "usr/lib/systemd/system/pokelinux-session-owner.service.d/60-installed-wireless-test.conf",
+      "usr/lib/systemd/system/pokelinux-session-owner.service.d/61-startup-event-ring.conf",
+      "usr/lib/systemd/system/pokelinux-session-owner.service.d/62-user-session.conf",
+      "usr/lib/systemd/system/pokelinux-startup-event-ring.service",
+      "usr/lib/tmpfiles.d/pokelinux-installed-wireless-test.conf",
+      "usr/libexec/pokelinux-test/hwsim/owner.py",
+      "usr/libexec/pokelinux-test/prepare-startup-event-ring.py",
+      "usr/share/pokelinux/presentation/phone-windows.lua"
+    ],
+    "unexpected_public_stage_targets": [
+      "usr/lib/systemd/system/pokelinux-normal-appearance.service.d/theme.conf",
+      "usr/lib/systemd/system/pokelinux-normal-session.target.d/theme.conf",
+      "usr/lib/systemd/system/pokelinux-omarchy-shell.service.d/theme.conf",
+      "usr/lib/systemd/system/pokelinux-session-owner.service.d/theme.conf"
+    ],
+    "common_row_differences": [],
+    "build_definition_missing": [
+      "focus-observer"
+    ],
+    "historical_only": true
+  },
+  "composition_GREEN": {
+    "actual_test_wait_exit": 0,
+    "receipt": {
+      "bytes": 1682,
+      "sha256": "e870422dad6a4a3af6ab45107591505a1d13c21dc0bcf44af18de14cb1d54abe"
+    },
+    "passed": true,
+    "accounted_targets": 319,
+    "unchanged_historical_rows": 318,
+    "explicit_maintained_source_delta": {
+      "usr/share/pokelinux/presentation/phone-windows.lua": {
+        "historical": {
+          "bytes": 410,
+          "mode": 420,
+          "sha256": "a3e90c3c0c8fca1b63f2bd0eebf944a9221712f4652bcd00d3849823d3ddde00"
+        },
+        "maintained": {
+          "bytes": 419,
+          "sha256": "cbf32d6e92da830df4313e215d17fbcf2de33060134e01b28d2ecc7a71102b38",
+          "mode": 420
+        }
+      }
+    },
+    "Settings_rule_present_in_config_and_fragment": true,
+    "exact_single_close_fragment": true,
+    "layers": {
+      "graphical": {
+        "files": 241,
+        "bytes": 21511542
+      },
+      "services": {
+        "files": 77,
+        "bytes": 32208651
+      }
+    },
+    "generic_file_limit_bytes": 8388608,
+    "generic_layer_limit_bytes": 67108864,
+    "base_provider_verified_not_copied": true,
+    "named_artifact_roles": 17,
+    "artifact_index_sha256": "27f079eab32be736d65a787716103d14a63cd85216677ab1288672714a4a98e8",
+    "altered_index_refusals_before_output": {
+      "missing-role": "exact fixed artifact role set required",
+      "swapped-role": "named artifact role provenance required: permissions-ui",
+      "plugin-abi": "plugin ABI differs from base: focus-observer",
+      "declared-abi-pair": "ABI pair differs from the fixed public plugin build definition",
+      "base-provenance": "base provider provenance required",
+      "base-identity": "artifact bytes/hash mismatch: usr/bin/Hyprland"
+    },
+    "input_artifacts_and_base_unchanged": true
+  },
+  "authority_and_test_scope": {
+    "permissions": "Existing production actor/controller registration only; no grant or policy-store initialization.",
+    "test_only": "Hwsim keeper/AP, focus/ring observation, virtual audio and display selection remain explicitly VM test infrastructure.",
+    "helper_behavior": "Authored keeper/ring output bytes match the historical selected source; this patch does not execute their runtime behavior.",
+    "plugin_build_definition": "Public source paths for the existing two native modules; CMake/compilers were not run here."
+  },
+  "limits": [
+    "Binary inputs are actual retained historical image17 ELFs, not placeholder payloads or newly rebuilt providers.",
+    "Caller artifact provenance and ABI are recorded/validated as declarations; exact compiled-source/build-receipt provenance is not re-attested.",
+    "Only the maintained Settings policy delta is permitted against the historical reference. No obsolete policy profile or fallback is included.",
+    "Seven generated/retained guest rows, package/tool readback, service activation, actual authority, complete two-boot closure and matched-kernel/hardware gates remain separate.",
+    "These isolated host controls did not modify runtime images, activate services, or delete input artifacts."
+  ]
+}
