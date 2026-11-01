@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "scope": "Actual native x86_64 UnixStream diagnostic boundary; no installed journal, ARM runtime or GUI qualification.",
+  "baseline_commit": "f24ce54e54a290d423c0e44d58ee607f81701bee",
+  "baseline_production_unchanged": true,
+  "red": {
+    "compiler_control": {
+      "bytes": 1598515,
+      "sha256": "4aeb87ffcc9bc70d2626969c10e29eb4fbb4536a798ee9da50dbdf22b3b2a5ea"
+    },
+    "compiler_receipt": {
+      "bytes": 1630581,
+      "sha256": "b12b3af1cccc00a7671f62b497484ba233e71a21636d8b3d872fecbe8fc8454d"
+    },
+    "runtime_control": {
+      "bytes": 13539,
+      "sha256": "b5f5c0e947fb7797d69c85baf9874c67806da056842a692491d2713311fc740e"
+    },
+    "runtime_receipt": {
+      "bytes": 22579,
+      "sha256": "e004cc955a3f99b7ed798a7c49f7d692c18ff00d51b2dbc0918a335c1c2f238f"
+    },
+    "actual_test_exit": 101,
+    "assertion": "UNIX_STREAM_DIAGNOSTIC_REQUIRED",
+    "observed_record_bytes": 0,
+    "live_socket_and_alias_flags_unchanged": true,
+    "original_error_unchanged": true,
+    "sockets_closed_before_assertion": true,
+    "container_cleanup_verified": true
+  },
+  "excluded_setup_failure": {
+    "compiler_receipt": {
+      "bytes": 1617706,
+      "sha256": "b7ecc3aa3a7b75dce96800c98b84b83adc3a33e8bceb61abb89181fa2b22d4d2"
+    },
+    "reason": "Formatter could not write the read-only copied source; no behavioral test executed."
+  },
+  "green": {
+    "compiler_control": {
+      "bytes": 1599596,
+      "sha256": "972b9930b0e542fc46f93d75c05117aae63bc3e7abe629b292d07c85f7a2b128"
+    },
+    "compiler_receipt": {
+      "bytes": 1631790,
+      "sha256": "1292b8ad06780c938f6f8507f161ac21d1c4513de89de185c7e26df41b6220df"
+    },
+    "runtime_control": {
+      "bytes": 13411,
+      "sha256": "a0eb91d2e953b63219d0339f9a2b675590d20bf61568cc7cacac016c39569d2c"
+    },
+    "runtime_receipt": {
+      "bytes": 22660,
+      "sha256": "ff844e0ea970865a46653b78d53a8e09f650ed563c770b3962582ac5fb569beb"
+    },
+    "runtime_result": {
+      "bytes": 1861,
+      "sha256": "a7b4a78515166ef2aa2a19675a0b08538f653eb00376bf9789bef870307eb56c"
+    },
+    "actual_test_exit": 0,
+    "passed_tests": 7,
+    "actual_red_test_region_unchanged": true,
+    "compiled_source_matches_published_source": true,
+    "actual_socket_and_pipe_tests": true,
+    "full_closed_and_oversized_controls": true,
+    "regular_file_unchanged": true,
+    "loader_waits": 3,
+    "test_process_waits": 1,
+    "outer_waits": 14,
+    "all_waits_and_pipe_EOF_before_original_cutoffs": true,
+    "no_adopted_children": true,
+    "exact_container_absence": true,
+    "input_pins_unchanged": true,
+    "format_check": true,
+    "release_libtest_compilation": true,
+    "full_suite_or_clippy_claimed": false
+  },
+  "limits": [
+    "The configured journal transport motivates this change; Cold23 worker FD2 type was not directly sampled.",
+    "Unix stream sends may be partial; no atomicity, guaranteed delivery, waiting or retry is promised.",
+    "This does not repair or explain the inner radio refresh timeout."
+  ],
+  "production_source": {
+    "bytes": 15797,
+    "sha256": "416763de3c8b9217ab9049fd18201cdb6bab5664128d1759a81baa779f53732c"
+  }
+}

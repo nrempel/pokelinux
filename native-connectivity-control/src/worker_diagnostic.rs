@@ -2,10 +2,11 @@
 use rustix::{
     fd::{AsFd, AsRawFd},
     fs::{FileType, Mode, OFlags, fstat, open},
+    net::{self, AddressFamily, SendFlags, SocketType},
 };
 use std::{fmt, fmt::Write as _, io};
 
-// Linux PIPE_BUF: one nonblocking pipe write is all-or-nothing at this size.
+// Linux PIPE_BUF bounds FIFO writes. Streams have no atomic record guarantee.
 const LIMIT: usize = 4096;
 struct Buffer<const N: usize> {
     bytes: [u8; N],
@@ -27,7 +28,8 @@ pub(super) fn emit(error: &io::Error) {
 
 fn emit_to(sink: impl AsFd, error: &io::Error) {
     let Ok(original) = fstat(&sink) else { return };
-    if FileType::from_raw_mode(original.st_mode) != FileType::Fifo {
+    let sink_type = FileType::from_raw_mode(original.st_mode);
+    if sink_type != FileType::Fifo && sink_type != FileType::Socket {
         return;
     }
     let mut record = Buffer {
@@ -36,6 +38,21 @@ fn emit_to(sink: impl AsFd, error: &io::Error) {
     };
     if writeln!(&mut record, "connectivity_worker_failure_v1 {error:?}").is_err() {
         return; // A truncated formatter result is never emitted.
+    }
+    if sink_type == FileType::Socket {
+        if net::sockopt::socket_type(&sink) != Ok(SocketType::STREAM)
+            || net::sockopt::socket_domain(&sink) != Ok(AddressFamily::UNIX)
+        {
+            return;
+        }
+        // Per-call flags leave Main's shared open-file description unchanged.
+        // A stream may accept only a prefix; there is no retry/completeness claim.
+        let _ = net::send(
+            &sink,
+            &record.bytes[..record.used],
+            SendFlags::DONTWAIT | SendFlags::NOSIGNAL,
+        );
+        return;
     }
     // A dup shares O_NONBLOCK with Main's inherited stderr. Reopen the exact
     // pipe into an independent open-file description instead.
@@ -243,5 +260,156 @@ mod tests {
         emit_to(&file, &io::Error::from(io::ErrorKind::InvalidData));
         assert_eq!(fs::read(path).unwrap(), b"existing record\n");
         assert_eq!(fcntl_getfl(&file).unwrap(), flags);
+    }
+
+    fn stream_error() -> io::Error {
+        use super::super::{BackendFailure, WorkerFailure, WorkerStep};
+        io::Error::new(
+            io::ErrorKind::InvalidData,
+            WorkerFailure {
+                stage: WorkerStep::RefreshBackend,
+                original_until_ns: Some(123),
+                detected_at_ns: 99,
+                source: io::Error::new(
+                    io::ErrorKind::InvalidData,
+                    BackendFailure {
+                        operation: "refresh_wireless",
+                        source: crate::kernel::Error::Observation(
+                            pokelinux_network_state::ObserveError::InvalidData,
+                        ),
+                    },
+                ),
+            },
+        )
+    }
+
+    fn drain_stream(peer: &std::os::unix::net::UnixStream) -> Vec<u8> {
+        let mut bytes = Vec::new();
+        for _ in 0..512 {
+            let mut block = [0; LIMIT];
+            match rustix::net::recv(peer, &mut block, rustix::net::RecvFlags::DONTWAIT) {
+                Ok((n, _)) if n > 0 => bytes.extend_from_slice(&block[..n]),
+                Ok((0, _)) | Err(Errno::AGAIN) => return bytes,
+                other => panic!("actual stream drain: {other:?}"),
+            }
+        }
+        panic!("actual stream drain bound");
+    }
+
+    #[test]
+    fn unix_stream_emits_complete_nested_error_before_sink_teardown_without_flag_change() {
+        use std::os::unix::net::UnixStream;
+        let (writer, peer) = UnixStream::pair().unwrap();
+        let alias = writer.try_clone().unwrap();
+        let flags = fcntl_getfl(&writer).unwrap();
+        assert!(!flags.contains(OFlags::NONBLOCK));
+        assert_eq!(
+            FileType::from_raw_mode(fstat(&writer).unwrap().st_mode),
+            FileType::Socket
+        );
+        let error = stream_error();
+        let original_error = (error.kind(), error.raw_os_error(), format!("{error:?}"));
+        let expected = format!("connectivity_worker_failure_v1 {error:?}\n");
+        assert!(expected.len() <= LIMIT);
+        emit_to(&writer, &error);
+        let actual = drain_stream(&peer);
+        let still_open = rustix::net::recv(&peer, &mut [0; 1], rustix::net::RecvFlags::DONTWAIT)
+            == Err(Errno::AGAIN);
+        let flags_after = (fcntl_getfl(&writer).unwrap(), fcntl_getfl(&alias).unwrap());
+        let error_after = (error.kind(), error.raw_os_error(), format!("{error:?}"));
+        // The record was sampled while both original inherited references were
+        // still alive. Close the actual sockets before any desired assertion.
+        drop(alias);
+        drop(writer);
+        drop(peer);
+        assert!(still_open);
+        assert_eq!(flags_after, (flags, flags));
+        assert_eq!(error_after, original_error);
+        assert_eq!(
+            actual,
+            expected.as_bytes(),
+            "UNIX_STREAM_DIAGNOSTIC_REQUIRED"
+        );
+    }
+
+    #[test]
+    fn full_unix_stream_returns_promptly_without_flag_or_error_change() {
+        use rustix::net::{SendFlags, send};
+        use std::os::unix::net::UnixStream;
+        let (writer, peer) = UnixStream::pair().unwrap();
+        let alias = writer.try_clone().unwrap();
+        let flags = fcntl_getfl(&writer).unwrap();
+        assert!(!flags.contains(OFlags::NONBLOCK));
+        let mut filled = 0;
+        let mut unavailable = false;
+        for _ in 0..256 {
+            match send(
+                &writer,
+                &[b'F'; LIMIT],
+                SendFlags::DONTWAIT | SendFlags::NOSIGNAL,
+            ) {
+                Ok(n) if n > 0 => filled += n,
+                Err(Errno::AGAIN) => {
+                    unavailable = true;
+                    break;
+                }
+                other => panic!("actual stream fill: {other:?}"),
+            }
+        }
+        assert!(filled > 0 && unavailable);
+        let error = stream_error();
+        let original_error = (error.kind(), error.raw_os_error(), format!("{error:?}"));
+        let expected = format!("connectivity_worker_failure_v1 {error:?}\n");
+        // Test-only watchdog follows the existing FIFO test: a blocking
+        // regression is released, measured and rejected rather than hanging.
+        let (elapsed, mut drained) = std::thread::scope(|scope| {
+            let drainer = scope.spawn(|| {
+                std::thread::park_timeout(Duration::from_millis(250));
+                drain_stream(&peer)
+            });
+            let start = Instant::now();
+            emit_to(&writer, &error);
+            let elapsed = start.elapsed();
+            drainer.thread().unpark();
+            (elapsed, drainer.join().unwrap())
+        });
+        drained.extend(drain_stream(&peer));
+        let flags_after = (fcntl_getfl(&writer).unwrap(), fcntl_getfl(&alias).unwrap());
+        let error_after = (error.kind(), error.raw_os_error(), format!("{error:?}"));
+        drop(alias);
+        drop(writer);
+        drop(peer);
+        assert!(
+            elapsed < Duration::from_millis(100),
+            "blocking stream diagnostic: {elapsed:?}"
+        );
+        assert_eq!(flags_after, (flags, flags));
+        assert_eq!(error_after, original_error);
+        assert!(drained.starts_with(&vec![b'F'; filled]));
+        // A stream send is not atomic. Any best-effort tail must be a prefix
+        // of this one bounded record; no retry/completeness is inferred here.
+        assert!(expected.as_bytes().starts_with(&drained[filled..]));
+    }
+
+    #[test]
+    fn closed_unix_stream_and_oversized_record_are_best_effort() {
+        use std::os::unix::net::UnixStream;
+        let (writer, peer) = UnixStream::pair().unwrap();
+        let flags = fcntl_getfl(&writer).unwrap();
+        emit_to(&writer, &io::Error::other("x".repeat(LIMIT * 2)));
+        let oversized = drain_stream(&peer);
+        drop(peer);
+        let error = io::Error::from_raw_os_error(110);
+        let original_error = (error.kind(), error.raw_os_error(), format!("{error:?}"));
+        let start = Instant::now();
+        emit_to(&writer, &error);
+        let elapsed = start.elapsed();
+        let flags_after = fcntl_getfl(&writer).unwrap();
+        let error_after = (error.kind(), error.raw_os_error(), format!("{error:?}"));
+        drop(writer);
+        assert!(oversized.is_empty());
+        assert!(elapsed < Duration::from_millis(100));
+        assert_eq!(flags_after, flags);
+        assert_eq!(error_after, original_error);
     }
 }

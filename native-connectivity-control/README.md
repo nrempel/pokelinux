@@ -1,9 +1,11 @@
 # Rust connectivity control
 
-Worker failures attempt one complete, bounded nonblocking FIFO diagnostic before
-error propagation drops the parent connection. Unsupported/full sinks are skipped
-and the original error is retained. Actual host pipe and normal-worker CLI checks
-pass; the failed ARM graphical wireless cause remains unknown.
+Worker failures attempt a bounded diagnostic before error propagation drops the
+parent connection. FIFO output uses one independent nonblocking write; Unix stream
+output uses one nonblocking, signal-suppressed send without changing shared flags.
+Stream delivery may be partial. Seven actual host pipe/socket controls pass after
+a missing-stream-record RED. Installed journal delivery and the precise ARM radio
+refresh failure remain unqualified; original errors and cutoffs are unchanged.
 [Diagnostic scope and evidence](../docs/native-connectivity-worker-error-context.md).
 
 This component separates short-lived fixed-profile commands from background

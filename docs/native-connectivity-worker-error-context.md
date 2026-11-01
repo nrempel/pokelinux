@@ -1,5 +1,24 @@
 # Native worker error context
 
+## Journal stream diagnostic
+
+The diagnostic sink now also accepts verified AF_UNIX/SOCK_STREAM descriptors,
+using one `send(DONTWAIT | NOSIGNAL)` before error propagation releases the parent
+channel. It preserves shared descriptor flags and the original error. There is
+no retry, wait or new production thread. The 4096-byte formatting bound remains;
+streams may accept only a prefix, so delivery and record atomicity are not promised.
+
+An actual native x86_64 UnixStream pair produces the missing-record RED with the
+FIFO-only implementation. The unchanged test then passes with six other controls:
+full/closed streams, oversized records, existing FIFO behavior and regular-file
+refusal. Formatting and Release libtest compilation pass. All selected test,
+loader and container waits/closure qualify. The first compiler attempt stopped
+on read-only source formatting and is excluded from behavioral evidence.
+
+This matches the configured journal transport, but Cold 23 did not directly sample
+worker FD2. No installed journal, ARM runtime or refresh recovery is qualified by
+these host controls. [Evidence](evidence/native-connectivity-journal-stream.json).
+
 ## Complete early pipe diagnostic
 
 A failed graphical ARM wireless run lost its `RefreshBackend` error during

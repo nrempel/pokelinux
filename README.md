@@ -34,6 +34,10 @@ deadline expires. The connection milestone is not yet repeatable; the host-teste
 capture-name fix has not been reached in GUI.
 [Latest progress](docs/evidence/native-installed-consent-close-progress.json).
 [Capture-name host evidence](docs/evidence/native-installed-menu-capture-ordinal.json).
+Worker error reporting now passes seven actual host pipe/socket checks after a
+missing-record RED. Installed journal delivery and precise refresh diagnostics
+remain the next integration gate.
+[Diagnostic scope](docs/native-connectivity-worker-error-context.md#journal-stream-diagnostic).
 
 A host-tested correction preserves the original connection deadline while
 retaining permission checks; its installed ARM run reaches the milestone above,

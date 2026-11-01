@@ -16,8 +16,12 @@ is subsequent evidence, not a credential diagnosis. Cold 23 has qualified guest
 closure, normal poweroff, actual QEMU wait 0 and outer cleanup; its functional
 aggregate remains failed. [Current installed evidence](evidence/native-installed-consent-close-progress.json).
 
-Next qualify precise stage/transaction diagnostics and one bounded error record
-for the normal journal sink, keeping existing cutoffs and no operation retry.
+The bounded journal-stream diagnostic now passes actual host RED→GREEN and all
+seven selected pipe/socket controls. It adds one nonblocking Unix stream send,
+with no delivery guarantee or lifecycle change. Installed journal delivery is
+still unexecuted. [Diagnostic evidence](evidence/native-connectivity-journal-stream.json).
+Next qualify precise stage/transaction diagnostics, then rebuild the affected
+worker and verify the installed error path with existing cutoffs and no retry.
 Complete boot 1 before admitting boot 2 on the same disk. After the two-boot tracer,
 qualify the current Main/worker virtual pair and packet contract on the matched
 Google kernel. Its controller must account for `PROC_CHILDREN=n`; existing native
