@@ -16,7 +16,10 @@ network control while preserving audio permissions. The normal consent screen no
 passes host tests for both audio and network permissions, including actual button
 presses. The ARM consent app and session owner also pass build and loader checks;
 Sounds and the current audio/theme helpers also pass ARM build and loader checks.
-Joining these components in the installed session and connection flow is next.
+Installed theme startup now passes after fixing a missing runtime-directory
+dependency. The combined ARM session is still blocked by simulated-wireless
+startup; installed UI consent and reboot persistence remain open.
+[Cold-boot status](docs/native-installed-wireless-coldboot.md).
 [Permission progress](docs/native-network-permission-authority.md).
 
 The Rust connection service now resolves its configured interface at startup,

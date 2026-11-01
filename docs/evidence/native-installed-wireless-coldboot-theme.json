@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "scope": "Generic ARM64/QEMU corrected installed startup; partial theme integration GREEN, complete acceptance RED",
+  "selection_sha256": "469327b47b74135ece67ad982353f42784d593afb909ca5897f3b44899201ce6",
+  "passed": false,
+  "theme_unit_sha256": "90065d0f4892720d9401a35397ba196460596b08bc5c245d8855fd1e6c1e1449",
+  "theme_provisioning_finished_by_PID1": true,
+  "selected_normal_appearance_service_started": true,
+  "hwsim_startup_failed": true,
+  "observer_started": true,
+  "failure_journals_collected": false,
+  "viewer_fence": {
+    "no_future_host_writes": true,
+    "operational_success": false,
+    "client_transport_observed": false
+  },
+  "remaining_observer_defect": "Functional viewer success incorrectly required before unit diagnostics/Stop and normal poweroff, despite an authenticated no-future-writes fence",
+  "closure": {
+    "cleanup_qualified": true,
+    "exact_CID_absent": true,
+    "all_handles_closed": true,
+    "selected_inputs_unchanged": true
+  },
+  "normal_guest_shutdown_qualified": false,
+  "native_cleanup_qualified": false,
+  "normal_ui_qualified": false,
+  "phone_accessed": false,
+  "receipt_sha256": {
+    "result.json": "639ac759dde1faa9c7489da9b34580eb75ba0d921ea7b7ea6e5853672addae2c",
+    "guest-bootstrap-result.json": "d2113c637ca3ecd71661cee4915975b19430a5871c74c6b355d422b7abd71348",
+    "boot-result.json": "965c00fc46b4f87fa4e319dc25636de94a57977533c6f35935baa53d8e8ed2e0",
+    "run/receipt.json": "f5d5aa89c9c5496532382ba415e15da5533645c048472d08d52cb46865943226",
+    "console.log": "b5b8237007fedd69ce70fd7bf0abaa783ff802316486a8540c6523a10baa10b8"
+  }
+}

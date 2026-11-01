@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "scope": "Generic ARM64/QEMU first installed wireless coldboot; actual startup RED, no physical device",
+  "base_commit": "28229f09c2ef7bcf09d850e0606fdcd19c37c128",
+  "passed": false,
+  "selection_sha256": "76891dfb57a8326dde64e54377cf1eb21021600fabee9274e8d11351b2d2aaf1",
+  "receipt_sha256": {
+    "boot-result.json": "d7f04a1a4c8b8ac298c28f80a1ad79d0477c7d30c0b327c8ab4207f2eecff6b9",
+    "run/receipt.json": "a9f1649b2938f2f79f9c95845afd15f404a1f77fe521a532cd1964d58065be2e",
+    "Root-failed-startup-stop.json": "855d6c4d644a622d8afef56971943c46b82c5a56e423319ca7ab47aae95e5043"
+  },
+  "guest_vcpus": 16,
+  "guest_memory_mib": 6144,
+  "failed_units": [
+    "pokelinux-omarchy-theme.service",
+    "pokelinux-hwsim-provision.service"
+  ],
+  "observer_started": false,
+  "normal_ui_actions": 0,
+  "findings": {
+    "missing_required_ipv6_boot_argument": true,
+    "theme_missing_user_runtime_ordering": true,
+    "old_appearance_service_still_enabled_on_selected_socket": true,
+    "observer_requires_failed_target": true
+  },
+  "termination": "Explicit SIGTERM through verified QEMU pidfd after observed startup failure; existing parents retained/reaped children",
+  "closure": {
+    "cleanup_qualified": true,
+    "exact_CID_absent": true,
+    "all_handles_closed": true,
+    "selected_inputs_unchanged": true
+  },
+  "qemu_actual_parent_wait": true,
+  "qemu_returncode_after_signal": 0,
+  "failed_disk_preserved_sha256": "64b271145d8cbc593e06ff95e118b37c052ce3f3477f76668b5c256df0a3b00e",
+  "not_qualified": [
+    "Exact first failing syscall/assertion",
+    "Normal guest shutdown",
+    "Native service or vendor cleanup",
+    "UI consent",
+    "Connection flow",
+    "Second boot persistence",
+    "Pixel kernel or phone hardware"
+  ]
+}

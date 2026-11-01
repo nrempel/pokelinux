@@ -42,6 +42,16 @@ now pass build/staging/loader inspection with full VM/container closure. Plugin
 host imports are checked against the selected compositor/dependencies; runtime
 loading, normal UI actions and installed two-boot persistence remain untested.
 [Desktop build evidence](evidence/native-arm-desktop-build.json).
+The first combined installed ARM boot now has actual startup RED: theme and
+hwsim provisioning fail before the desktop/observer starts. Its failed disk is
+preserved and the VM/container owners close. No normal guest shutdown, native
+cleanup, consent or persistence result is claimed. A missing required IPv6 boot
+setting, missing theme/runtime-directory ordering and failure-blocked diagnostic
+dispatch are identified. The corrected theme unit subsequently completes in an
+actual ARM/PID1 boot; wireless startup still fails. The observer now starts but
+incorrectly gates failure diagnostics/Stop on viewer functional success despite
+a verified no-future-writes fence. Full acceptance and native cleanup stay open;
+see [cold-boot status](native-installed-wireless-coldboot.md).
 
 The normal Main empty-idle regression now passes the unchanged host consumer
 after qualified RED. A source-qualified zero-readiness hint defers starting an

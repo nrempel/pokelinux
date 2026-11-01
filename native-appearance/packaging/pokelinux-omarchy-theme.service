@@ -1,5 +1,7 @@
 [Unit]
 Description=Provision the selected desktop home from pinned genuine Omarchy theme assets
+Requires=user-runtime-dir@1000.service
+After=user-runtime-dir@1000.service
 Before=pokelinux-session-owner.service pokelinux-normal-appearance.service pokelinux-omarchy-shell.service
 
 [Service]
