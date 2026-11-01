@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "scope": "Generic ARM image preparation: original font discovery by UID1000, no graphical rendering or physical-phone execution.",
+  "staging_commit": "4d23e781ffe881e3eaa3c78bd26be231653bf905",
+  "selection_sha256": "9677ac2d44c7938d6c511b6d80833065168db16d6c6848bf425cf3074d55dd4c",
+  "image": {
+    "bytes": 143654912,
+    "sha256": "8841c2a25d9bdfd5f02d4ee0712dc2af39c3cb22cd55e678b37fc388a3a7a231"
+  },
+  "receipts": {
+    "result.json": {
+      "bytes": 326211,
+      "sha256": "2d733aa5241987b31d1b5a441467ff0e1d36a31060000d9da5afa8baddec6b9d"
+    },
+    "boot-result.json": {
+      "bytes": 16698,
+      "sha256": "81a196517e44ace14a6634c13ac056b95995fb0f313f0f8c75f5ed500672a8c8"
+    },
+    "run/receipt.json": {
+      "bytes": 125665,
+      "sha256": "172cc8692d5e94bd3e86b640b0d414d813631ac1957d7defb5cdc6b9ca151294"
+    }
+  },
+  "actual_discovery": {
+    "font": {
+      "bytes": 5412,
+      "sha256": "de860dce13dda83739a32eea787c422cb81e8a30f1b0bdc2cfc8829ee944e0ff",
+      "mode": 420,
+      "path": "/usr/share/fonts/omarchy/omarchy.ttf"
+    },
+    "tools": {
+      "usr/bin/fc-cache": {
+        "bytes": 67800,
+        "sha256": "da933a499be26319eca9738e1e207c01621cbde2ac992ed6766ddcccc764eb0e",
+        "ELF_machine": 183,
+        "resolved_path": "/usr/bin/fc-cache",
+        "loader_sha256": "29eec60211afe750a31105dcbaba06ede9f618280574bbf866dd58623eea13e4"
+      },
+      "usr/bin/fc-match": {
+        "bytes": 67800,
+        "sha256": "c24f0cbb4d4d324b9e1c063cec318d918bf871a7129b64e752c2f2d9300e43ee",
+        "ELF_machine": 183,
+        "resolved_path": "/usr/bin/fc-match",
+        "loader_sha256": "d32216e6db86867c05b0ae2bd608e3bacafdf93a62d3011ece2759ed4be74592"
+      },
+      "usr/bin/fc-query": {
+        "bytes": 67800,
+        "sha256": "3fa488078ffa020d5fed7df779017cf1c1f19dce8aabdb8ab2decf6991574006",
+        "ELF_machine": 183,
+        "resolved_path": "/usr/bin/fc-query",
+        "loader_sha256": "c2729b76e4bc07ac1a47fc25c78c3276dc5a759ab3e5123a4382e1507ec1fd94"
+      }
+    },
+    "Popen_identity": {
+      "user": 1000,
+      "group": 1000,
+      "extra_groups": [],
+      "umask": 18
+    },
+    "HOME": "/home/alarm",
+    "font_configuration_override": false,
+    "query_family": "omarchy",
+    "query_charset": "61 63 68 6d 6f 72 79 e900-e908 e90a-e90d",
+    "query_contains_E900": true,
+    "matched_family": "omarchy",
+    "matched_file": "/usr/share/fonts/omarchy/omarchy.ttf",
+    "matched_pin": {
+      "bytes": 5412,
+      "sha256": "de860dce13dda83739a32eea787c422cb81e8a30f1b0bdc2cfc8829ee944e0ff"
+    },
+    "font_discovery_passed": true,
+    "probe_cache_removed": true,
+    "rendering_executed": false
+  },
+  "prior_failed_preparation": "The cache inventory rejected an existing non-regular entry before fontconfig refresh/query. That failed run remains retained; no discovery was claimed.",
+  "observer_repair": "Record symlinks with lstat/readlink without following targets; other unsupported inode types still refuse. Actual local filesystem RED/GREEN precedes this ARM run.",
+  "actual_existing_cache_entry": {
+    "mode": 511,
+    "uid": 0,
+    "gid": 0,
+    "kind": "symlink",
+    "target": "3830d5c3ddfd5cd38a049b759396e72e-le64.cache-12"
+  },
+  "actual_QEMU_wait_exit": 0,
+  "cleanup_errors": [],
+  "limits": [
+    "No menu or app frame was rendered in this preparation.",
+    "The current navigation cohort continues to use image10, excluding these font assets.",
+    "General icon fonts and monospace selection remain separate work.",
+    "No Pixel hardware is qualified."
+  ]
+}

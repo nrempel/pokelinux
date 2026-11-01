@@ -33,6 +33,11 @@
       "sha256": "add9154d012c12b5628128d71efcf216ed62024cef2370e3c5c470378c06d45f",
       "mode": 493
     },
+    "default/omarchy/omarchy-menu.jsonc": {
+      "bytes": 52910,
+      "sha256": "8c791cfc457d6c50b90a6636a6f28c9415a2fa6e4edf84826906457b75649689",
+      "mode": 420
+    },
     "default/themed/alacritty.toml.tpl": {
       "bytes": 1047,
       "sha256": "02489f97737108e8a19d4c04d8251c8f3ee0bc896dbf0660b6ecaded91a61ade",

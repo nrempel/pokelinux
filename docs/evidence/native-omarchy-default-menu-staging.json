@@ -1,0 +1,123 @@
+{
+  "schema": 1,
+  "scope": "Actual host file-staging RED/GREEN and existing staging regressions; no GUI or menu action executed",
+  "base_commit": "4d23e781ffe881e3eaa3c78bd26be231653bf905",
+  "upstream_commit": "c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+  "production_change": "Add one original default-menu source pin to assets.json files; stage.py unchanged",
+  "source_before_RED": {
+    "assets": {
+      "bytes": 8144,
+      "sha256": "b3164633f46cbce8685540481f3285e751c15f9314c62ac2cadee5f0b3419184"
+    },
+    "frozen_test": {
+      "bytes": 2493,
+      "sha256": "81ce96dd52252c5d82c757f9b77f4dd59e020e8c1d917c37eb19459432df8a7e"
+    }
+  },
+  "source_after_GREEN": {
+    "tools/native-omarchy-theme/stage.py": {
+      "bytes": 4681,
+      "sha256": "698ee9f29dc15016c0093b1663377e61bd95ad38fa7c197b33e918b68298679e"
+    },
+    "tools/native-omarchy-theme/assets.json": {
+      "bytes": 8319,
+      "sha256": "68ab0474f90314984670bf9eb9e474c8546431407a1a116adea3e99343da98da"
+    },
+    "tools/native-omarchy-theme/tests/default_menu.py": {
+      "bytes": 2493,
+      "sha256": "81ce96dd52252c5d82c757f9b77f4dd59e020e8c1d917c37eb19459432df8a7e"
+    },
+    "tools/native-omarchy-theme/tests/menu_helper.py": {
+      "bytes": 3409,
+      "sha256": "43bee62261228078d020055f14c17a9a70f63656b4cec1cb1bda102303147fc4"
+    },
+    "tools/native-omarchy-theme/tests/font_resources.py": {
+      "bytes": 2830,
+      "sha256": "35e102b913a7de77f1f2af2cd0db5a84bba1b265fdbc78a6988fb0052b0934e9"
+    }
+  },
+  "inputs": {
+    "archive": {
+      "path": "/tmp/pokelinux-default-theme-green-sol-3/omarchy-public.tar.gz",
+      "bytes": 124800959,
+      "sha256": "8cc6b1d9d903c606600395e3b3d80ad9f15bd3ab78f0f19b0f49041b1df82013"
+    },
+    "unexecuted_provisioner": {
+      "path": "/tmp/pokelinux-current-arm-audio-theme-rust-build-sol-1/rust-output/providers/omarchy-theme-provision",
+      "bytes": 728016,
+      "sha256": "19301aac32f84beeb4091cc2c111969c3342f4454aa88fd67fa2ea9ac3a04cc0",
+      "ELF_machine": 183
+    }
+  },
+  "frozen_test_unchanged": true,
+  "receipts": {
+    "red": {
+      "path": "/tmp/pokelinux-menu-default-staging-evidence-sol-1/red/result.json",
+      "bytes": 254,
+      "sha256": "2db45fae706f0295319b3d284cead4a58cbc70d4634513971fe058ff8d8e6b0e",
+      "actual_exec_chunk": "c48284",
+      "actual_exit": 1,
+      "passed": false
+    },
+    "green": {
+      "path": "/tmp/pokelinux-menu-default-staging-evidence-sol-1/green/result.json",
+      "bytes": 395,
+      "sha256": "a64a30389830377d5ec428edfa4997370aa169092ac1b2203aac130d104db743",
+      "actual_exec_chunk": "7f3ab2",
+      "actual_exit": 0,
+      "passed": true
+    },
+    "menu-regression": {
+      "path": "/tmp/pokelinux-menu-default-staging-evidence-sol-1/menu-regression/result.json",
+      "bytes": 724,
+      "sha256": "edc26ff251db6e606443a8ff7411072d544999980b7370685a330f23e2bfb58c",
+      "actual_exec_chunk": "b39004",
+      "actual_exit": 0,
+      "passed": true
+    },
+    "font-regression": {
+      "path": "/tmp/pokelinux-menu-default-staging-evidence-sol-1/font-regression/result.json",
+      "bytes": 681,
+      "sha256": "a5d43ac6d72557ba50e2f139ceb2b1aeace0e05838781ca5615eb50bec298bb6",
+      "actual_exec_chunk": "ddfc16",
+      "actual_exit": 0,
+      "passed": true
+    }
+  },
+  "RED_error": "AssertionError: original default menu is not installed: usr/share/pokelinux/omarchy/default/omarchy/omarchy-menu.jsonc",
+  "GREEN_original_menu": {
+    "path": "usr/share/pokelinux/omarchy/default/omarchy/omarchy-menu.jsonc",
+    "bytes": 52910,
+    "sha256": "8c791cfc457d6c50b90a6636a6f28c9415a2fa6e4edf84826906457b75649689",
+    "mode": 420,
+    "uid": 0,
+    "gid": 0,
+    "nlink": 1
+  },
+  "actual_staged_comparison": {
+    "old_count": 50,
+    "new_count": 51,
+    "added": [
+      "usr/share/pokelinux/omarchy/default/omarchy/omarchy-menu.jsonc"
+    ],
+    "removed": [],
+    "all_50_prior_manifest_rows_unchanged": true,
+    "all_50_prior_files_original_bytes_modes_and_root_ownership_observed": true
+  },
+  "limits": [
+    "No replacement menu, PATH change, extra CLI helper or stager code change",
+    "No helper, provisioner ELF, menu action, font discovery or rendering executed by these host controls",
+    "No VM or image launch and no installed-menu GREEN claimed",
+    "The original menu retains other desktop actions whose dependencies are not qualified by file staging",
+    "README and prose documentation are owned separately by Root"
+  ],
+  "existing_public_menu_stager": {
+    "path": "tools/native-omarchy-menu/stage.py",
+    "bytes": 5886,
+    "sha256": "627db684c5ff1df7e40bbfc84b5fd4890bd6973094e02a7ad2f8ff2c0d722eab",
+    "already_provides_same_original_default_definition_and_public_helper": true,
+    "also_provides_existing_native_AppLibrary_adaptation": true,
+    "scope_distinction": "This change completes the theme stager selection; public menu staging support already existed in the separate native-menu overlay.",
+    "executed_by_this_control": false
+  }
+}

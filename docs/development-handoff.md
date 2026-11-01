@@ -88,10 +88,18 @@ stages at `/usr/bin/omarchy-shell` with actual host RED/GREEN; the installed
 rerun reaches a menu layer, then fails to observe painted items. Its first
 frame has no qualifying card; the diagnostic appears about 48.5 seconds after
 the original menu deadline. The detector loops over 2,116,000 pixels in Python;
-exact function duration was not instrumented. Optimize the same pixel oracle
-before another unchanged-image run. Guest closure and actual QEMU wait0 pass. Missing fonts remain a separate
+exact function duration was not instrumented. The optimized pixel oracle now
+matches retained frames and rejection controls on the host. A subsequent ARM run
+still fails its original 10-second navigation allowance. A separately declared
+30-second navigation cohort renders the menu, but shows “Nothing here yet”;
+the expected ten entries are absent. The image lacks the exact upstream
+`default/omarchy/omarchy-menu.jsonc`. That cohort remains failed, with guest
+closure and actual QEMU wait0 passing. Native action and aggregate deadlines were
+not increased; the longer navigation cohort does not qualify the old timing target.
+Missing fonts remain a separate
 visual packaging issue. The exact custom Omarchy font and attribution files now
-pass separate staging RED/GREEN; ARM discovery/rendering and general icon fonts
+pass separate staging RED/GREEN. Actual ARM fontconfig discovery now passes as
+UID1000 with the exact font and U+E900 coverage; rendering and general icon fonts
 remain open. The menu-helper image excludes that font change. [Current partial evidence](evidence/native-installed-menu-red.json).
 [Partial seat startup evidence](evidence/native-installed-vm-seat-startup.json).
 The earlier failed

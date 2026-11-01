@@ -153,5 +153,55 @@
         "sha256": "6c15311c7aae71a2f4f3fd6aab00f44b42c16bc420768ab873b42cc73c321da4"
       }
     }
+  },
+  "followup_painted_empty_menu": {
+    "scope": "New declared ARM-TCG navigation allowance; not original timing qualification",
+    "selection_sha256": "a0700e68c92e175758641b8be1874f900f06d4608acffa6f98fcc4ec8c7bd34d",
+    "image_sha256": "ca539dee570a1bf4b6fb0d9bb0890b45ae8a7d57996462a3a6d4f6d5e633803f",
+    "passed": false,
+    "ui_navigation_ns": 30000000000,
+    "menu_input_handoff_ns": 10000000000,
+    "old_10s_navigation_qualified": false,
+    "native_action_or_aggregate_deadlines_increased": false,
+    "manual_retained_frame_observation": "Go\u2026 / Nothing here yet",
+    "retained_frame_sha256": "448dc914ffff986df3b729c23d22783f91fc93684a84414f05ba3607f1b0e3bc",
+    "actual_label_bands": [
+      [
+        1206,
+        1260
+      ],
+      [
+        1310,
+        1345
+      ]
+    ],
+    "required_menu_entries": 10,
+    "missing_installed_resource": "usr/share/pokelinux/omarchy/default/omarchy/omarchy-menu.jsonc",
+    "guest_cleanup_errors": [],
+    "guest_case_closure_qualified": true,
+    "actual_QEMU_wait_exit": 0,
+    "guest_shutdown_custody_qualified": true,
+    "outer_cleanup_qualified": true,
+    "selected_inputs_unchanged": true,
+    "receipts": {
+      "result.json": {
+        "bytes": 357061,
+        "sha256": "5b71fe7856af76d7b32d642de3da194e29c0b911f2a160df5bde0e9f6e1f2a89"
+      },
+      "boot-result.json": {
+        "bytes": 26391,
+        "sha256": "374c5a06e1ce6c933e14772bff55eaa1a81cd37c7385dba60fe648d05ff85ac6"
+      },
+      "run/receipt.json": {
+        "bytes": 23330,
+        "sha256": "e66591bfe8456b78af6e1fe38ac02d3e19b7671bdc87549842be8497508b5232"
+      }
+    },
+    "limits": [
+      "No native app was selected or launched through this menu.",
+      "No consent, connection, packet or second-boot sequence passed.",
+      "Capture is retained diagnostic evidence, not a newly qualified public screenshot.",
+      "Missing native AppLibrary adaptation is a separate next-path prerequisite."
+    ]
   }
 }

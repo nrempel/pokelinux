@@ -62,9 +62,9 @@ rows, then use `native-session-owner/packaging/install_deployment.py` for the
 build-only DESTDIR copy. The stager does not initialize a host home, activate a
 unit, fetch sources, patch Qt namespaces or change the shell environment.
 
-The forty genuine theme files, public menu helper, native helper, oneshot unit,
+The 41 selected upstream files, public menu helper, native helper, oneshot unit,
 four normal profile dependency drop-ins and three font/attribution resources
-make fifty rows. The oneshot uses
+make 51 rows. The oneshot uses
 `/etc/pokelinux/appearance.json` and `/usr/share/pokelinux/omarchy`, with a 30 second
 Start limit, 5 second Stop limit, control-group cleanup and `Restart=no`.
 Both the normal target and the appearance, session-owner and shell services have
@@ -157,6 +157,16 @@ now passes with this helper, real Source, the actual native window, qualified
 Pixel10-profile capture and normal shutdown. It is one permission-withheld case;
 authorized flows, failed-provision PID1 propagation and phone hardware remain open.
 
+## Original default menu
+
+The stager also includes the exact upstream default menu definition at
+`/usr/share/pokelinux/omarchy/default/omarchy/omarchy-menu.jsonc`.
+Its file-boundary test fails before the asset pin and passes afterward, with all
+50 previous rows unchanged. The native-menu stager already supplies this same
+definition and the native app-launch adaptation; complete images must merge that
+overlay as well. This does not qualify arbitrary upstream desktop actions.
+[Default-menu staging evidence](evidence/native-omarchy-default-menu-staging.json).
+
 ## Original Omarchy icon font
 
 The stager now includes the selected upstream `omarchy.ttf` in
@@ -169,6 +179,16 @@ An actual file-staging RED reproduces the missing font. The identical control
 then passes with the exact original font and attribution bytes, root ownership,
 0644 modes and manifest entries. All 47 prior rows remain unchanged, and the
 existing menu-helper staging control still passes. This adds three rows.
-ARM font discovery and rendering, general icon coverage and monospace selection
-remain unverified; the current menu-helper ARM rerun excludes this change.
+Rendering, general icon coverage and monospace selection remain unverified;
+the file-staging control alone does not establish font discovery.
 [File-boundary evidence](evidence/native-omarchy-font-staging.json).
+
+A separate generic ARM image now passes real fontconfig loader checks, a
+UID1000 query of family `omarchy` and U+E900 coverage, and a match to the exact
+installed font. No font alias or configuration override is supplied. System
+cache changes are recorded; the fresh probe cache is removed after child waits.
+Preparation and shutdown pass. An earlier attempt stopped on an existing cache
+symlink; the read-only inventory now records such links without following them.
+This qualifies discovery, not rendering. The navigation cohort still uses its
+earlier image to keep that test separate.
+[ARM discovery evidence](evidence/native-omarchy-font-discovery.json).

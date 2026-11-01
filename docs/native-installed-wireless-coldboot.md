@@ -147,8 +147,14 @@ rows unchanged. Image preparation verifies the existing `qs` alias against the
 retained QuickShell ELF. The next boot reaches a menu layer, then fails to
 observe painted items in its first capture. The detector scans 2,116,000 pixels
 one at a time in Python; its failure is observed 48.5 seconds after the original
-menu deadline. Exact function duration was not instrumented. The next correction
-targets this observer cost while retaining the pixel predicates and deadline.
+menu deadline. Exact function duration was not instrumented. An optimized detector
+now passes host frame parity and rejection controls. The next ARM run still fails
+the original 10-second navigation allowance. A fresh, explicitly declared
+30-second navigation cohort shows the painted “Nothing here yet” state: the
+image omitted the original default menu definition. The expected ten-entry check
+still fails. Native action and aggregate deadlines remain unchanged; this is no
+pass of the old timing target. The existing native-menu staging overlay must also
+be merged so AppLibrary uses the published native launch adaptation.
 Guest cleanup remains empty, normal shutdown completes and actual QEMU wait0
 passes. The full installed flow remains failed. The captured bar also has missing glyphs; font resources require a
 separate correction. No new public screenshot is qualified.
