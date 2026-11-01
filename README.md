@@ -29,8 +29,9 @@ simulated-radio fixture qualifies the service lifecycle separately from the
 normal installed GUI and consent flow.
 [Headless service evidence](docs/native-connectivity-installed-selector.md).
 
-A narrow radio-observation change now passes separate ARM controls. Testing it
-through the normal installed service is next.
+The radio-observation change now builds and stages successfully in the ARM
+image. The latest installed run fails before Allow or Enable, so the complete
+installed flow remains unqualified.
 [Diagnostic and deferral scope](docs/native-wireless-refresh-diagnostics.md).
 
 ## See it running

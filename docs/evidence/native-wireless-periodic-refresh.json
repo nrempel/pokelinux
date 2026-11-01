@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "status": "Implemented guarded periodic deferral; qualified direct-radio RED/GREEN and host checks; normal-service and installed acceptance pending",
+  "status": "Published guarded deferral; public ARM build and image21 assembly qualified; Cold25 first-menu watcher failure; complete installed acceptance pending",
   "documentation_base_commit": "a2a31c428618c14f5f718ec656686a1073d00850",
   "baseline_RED": {
     "scope": "Direct radio-library test in a generic ARM VM with actual owned hwsim station/AP; no normal Main, SDK, GUI or phone.",
@@ -92,7 +92,8 @@
         "sha256": "02ba260b4aae5eac65e3b18e03cbf2aa5a01d0a779bc830a429b50bf5775954a"
       }
     },
-    "implementation_files_include_changes_beyond_base": true
+    "implementation_files_include_changes_beyond_base": true,
+    "published_implementation_commit": "9882af9a8f253d19d69da55b5cdfff1b386eb2f1"
   },
   "validation_build_and_host": {
     "qualified": true,
@@ -401,9 +402,163 @@
     "Rust_test_ELF_capabilities_and_original_cutoffs_unchanged": true
   },
   "pending_acceptance": {
-    "final_public_source_ARM_deploy_build": null,
     "normal_persistent_Main_worker_periodic_runtime": null,
     "installed_boot1": null,
     "installed_boot2_same_disk": null
+  },
+  "public_source_ARM_build": {
+    "qualified": true,
+    "source_commit": "9882af9a8f253d19d69da55b5cdfff1b386eb2f1",
+    "source_files": 65,
+    "all_selected_sources_equal_published_commit": true,
+    "connectivity_library_tests_passed": 61,
+    "owner_tests_passed": 8,
+    "ignored_library_fixtures": 1,
+    "overlaps_prior51_host_selection": true,
+    "cumulative_unique_total_claimed": false,
+    "normal_ARM_ELFs": {
+      "ARM/pokelinux-connectivity-main": {
+        "bytes": 1046592,
+        "sha256": "c746b281a4dfac5a7c3d2577f02b4d7e6f456e67fe2c39cb6cf1aebc2957dcb0",
+        "ELF_machine": 183
+      },
+      "ARM/pokelinux-connectivity-service": {
+        "bytes": 1028208,
+        "sha256": "bfebc4a4f9f89b85a5ea12508f82f040e261535ff91cb09d3664edd2d036140a",
+        "ELF_machine": 183
+      }
+    },
+    "ARM_or_VM_execution": false,
+    "actual_container_wait": 0,
+    "all_recorded_owned_waits_EOF_timely": true,
+    "compiler_regular_output_not_PIPE_EOF": true,
+    "closed_ECHILD_no_adoptees": true,
+    "owned_CID_removal_and_exact_name_absence_qualified": true,
+    "same_daemon_and_inputs_unchanged": true,
+    "original_receipts": {
+      "build_result": {
+        "bytes": 5988,
+        "sha256": "f54567b604ef1f958ac4236ba62249424e291fe92606077cbb3120820ad4d662"
+      },
+      "outer": {
+        "bytes": 970564,
+        "sha256": "a127b5d0137cde2350b81c8e67a2c29ee7da531586ce42ca2e5dc8a6c8e4bfb8"
+      }
+    }
+  },
+  "image21_assembly": {
+    "qualified": true,
+    "scope": "Assembly/readback/loader only; no normal app, network action, grant, GUI or phone execution.",
+    "image": {
+      "bytes": 144310272,
+      "sha256": "747c49d7c5bd79acad5bf67374033e59d144acc09a682a18efa386921526b037"
+    },
+    "manifest": {
+      "bytes": 65109,
+      "sha256": "8754357f6901020cdf52dc63bc08a8d150e4270f82f853b9f5afeca77e275424"
+    },
+    "baseline_image20_manifest": {
+      "bytes": 65109,
+      "sha256": "980db6c0b8bca8b742612715c229e20ce9c8bcd8c3295da43c10ce61bc93a6a0"
+    },
+    "manifest_paths": 326,
+    "changed_rows": {
+      "usr/libexec/pokelinux/pokelinux-connectivity-main": {
+        "before": {
+          "bytes": 1046360,
+          "mode": 493,
+          "sha256": "04d4bc27f805b307ce79a21bfab51f224b2d2accc505aa07c4a8e369bef1e22d"
+        },
+        "after": {
+          "bytes": 1046592,
+          "mode": 493,
+          "sha256": "c746b281a4dfac5a7c3d2577f02b4d7e6f456e67fe2c39cb6cf1aebc2957dcb0"
+        }
+      },
+      "usr/libexec/pokelinux/pokelinux-connectivity-service": {
+        "before": {
+          "bytes": 1026928,
+          "mode": 493,
+          "sha256": "14224c2c2df880b5f4c386f40b65dbc3eda76a3675ccd2f9916c5318e578c25c"
+        },
+        "after": {
+          "bytes": 1028208,
+          "mode": 493,
+          "sha256": "bfebc4a4f9f89b85a5ea12508f82f040e261535ff91cb09d3664edd2d036140a"
+        }
+      }
+    },
+    "other_rows_exact": 324,
+    "installed_manifest_readback_qualified": true,
+    "loaders_qualified": true,
+    "actual_QEMU_exit": 0,
+    "actual_container_wait": 0,
+    "all_recorded_owned_waits_EOF_timely": true,
+    "exact_CID_absence_same_daemon_inputs_unchanged": true,
+    "cleanup_errors": [],
+    "tool_terminal_exit_observed": null,
+    "tool_terminal_output_status": "Lost at compaction; session unavailable. Qualification uses actual guest/boot/outer receipts, not an observed terminal exit.",
+    "original_receipts": {
+      "guest": {
+        "bytes": 326484,
+        "sha256": "465d679897c04e30c89c9143454d7017c902aca2e17ef155d3a186cee9de2476"
+      },
+      "boot": {
+        "bytes": 16698,
+        "sha256": "3afb9dd13ee8aa786a6ac79521e7a59dd11d7dd7eed5ef75a4fe5bbf971a8b55"
+      },
+      "outer": {
+        "bytes": 181897,
+        "sha256": "3b55ece8d1599f52bae29292b705b06887a7cc1a66f626935ff6f2cce67c5624"
+      }
+    }
+  },
+  "Cold25_boot1_failure": {
+    "installed_manifest_exact_image21": true,
+    "first_failure": {
+      "stage": "first Permissions-menu rendering",
+      "function": "installed_guest.watch",
+      "operation": "read proc task children",
+      "error": "ProcessLookupError / ESRCH",
+      "task_identity_and_exit_cause_not_established": true
+    },
+    "Allow_or_Enable": false,
+    "packets_qualified": 0,
+    "functional32s_clock_started": false,
+    "boot2_admitted": false,
+    "normal_service_recovery_qualified": false,
+    "functional_guest_boot_outer_passed": false,
+    "guest_strict_closure_qualified": true,
+    "all_recorded_direct_child_wait_EOF_observations_timely": true,
+    "bootstrap_shutdown_custody_qualified": true,
+    "actual_QEMU_wait_exit": 0,
+    "peer_attach_container_exits": [
+      1,
+      1,
+      1
+    ],
+    "outer_cleanup_qualified": true,
+    "exact_CID_and_name_absence_same_daemon_inputs_unchanged": true,
+    "ECHILD": true,
+    "adopted_waits": [],
+    "cleanup_errors": [],
+    "original_receipts": {
+      "guest": {
+        "bytes": 350350,
+        "sha256": "a10b03e71e3ea743bc958572784992743409d6c739224930a0585c0c030cc0dd"
+      },
+      "boot": {
+        "bytes": 26391,
+        "sha256": "05e1085df963bb4e0444bd7dbdd19c3a886b315230fb19969e780769982cfbf4"
+      },
+      "outer": {
+        "bytes": 23329,
+        "sha256": "2d1b77fafc8e0832a16a68e86f3d7fce851390b2dbe0d0983d5d1c0ac27b127b"
+      },
+      "first_failure": {
+        "bytes": 2184,
+        "sha256": "c9d057ad18d7e1635434df33e2f6223c1d19a8f418594ccd7480f9827c29bf1f"
+      }
+    }
   }
 }

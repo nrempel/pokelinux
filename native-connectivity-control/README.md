@@ -4,8 +4,10 @@ Periodic read-only refresh now supports typed `Deferred` at the guarded final
 quiet boundary: completed command framing and no consumed-but-unvalidated event
 datagram. It returns no partial fact or lease renewal; startup and explicit
 actions stay strict. Selected host tests and five actual ARM/hwsim direct-radio
-controls pass. Normal persistent-service recovery, the final public-source build
-and installed GUI/two-boot acceptance remain pending.
+controls pass. The public-source ARM build and image 21 assembly/readback now
+qualify. Normal persistent-service deferral/recovery and installed GUI/two-boot
+acceptance remain pending; Cold 25 fails at a guest process-watch boundary before
+Allow or Enable.
 [Scope and evidence](../docs/native-wireless-refresh-diagnostics.md#periodic-only-deferral).
 
 Worker failures attempt a bounded diagnostic before error propagation drops the

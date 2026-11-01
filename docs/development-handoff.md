@@ -2,7 +2,7 @@
 
 ## Immediate integration order
 
-Current installed checkpoint: image 20. Cold 22's real connection,
+Current assembly checkpoint: image 21; Cold 25 boot 1 failed before Allow or Enable. Cold 22's real connection,
 one cap0 UDP roundtrip and connection retention after normal Settings close remain
 a bounded milestone. Its reopen capture failure and Cold 23's initial Inspect
 failure remain preserved. The [capture-name correction](evidence/native-installed-menu-capture-ordinal.json)
@@ -52,17 +52,36 @@ radio/namespace, QEMU and outer custody qualify. Each guest actually waits its 3
 terminal adoptees and reaches ECHILD; no adopted-child PIPE EOF is claimed. The
 two EACCES gate-handshake attempts are excluded; their successors move only gate
 storage to guest tmpfs, preserving Rust, ELF, capabilities and original cutoffs.
-Candidate-validation ARM libtests/Main/worker compile, but the final public-source
-deployment build and normal persistent Main/worker execution remain pending.
-Cold24's failed installed outcome is unchanged. Next qualify the public-source
-build and existing installed consumer, preserving image 20's other providers and
-the original acceptance bounds.
+The subsequent build from public `9882af9` now qualifies normal ARM Main/worker,
+61 connectivity-library and eight owner tests, with one ignored fixture. That
+selection overlaps the earlier 51 host checks; these are not cumulative unique
+test counts. All 65 build sources match the published commit and custody closes.
+Image 21 assembly, installed readback and loaders qualify with only those two
+provider rows changed; the other 324 rows equal image 20. No normal app executes
+during assembly. Actual QEMU/container exits are 0 in retained receipts; the
+unavailable image-owner tool terminal output supplies no observed terminal exit.
+
+Cold 25's installed manifest matches image 21. It fails in the first Permissions
+menu while the guest process watcher reads a task's proc children: ESRCH. No
+Allow, Enable, packets or boot 2 follows. The process identity/cause is not inferred.
+All recorded direct-child waits/EOF are timely; guest strict closure, actual
+QEMU 0/guest shutdown and outer cleanup qualify. Peer/attach/container exits are 1
+and the functional aggregate stays failed. This does not qualify normal-service
+deferral/recovery. Correct and test the observer boundary separately before a
+fresh installed run; retain native providers and original acceptance bounds.
+Cold 24 and all earlier failures keep their original scope.
 [Qualified controls, exclusions and remaining gates](evidence/native-wireless-periodic-refresh.json).
 
-Complete boot 1 before admitting boot 2 on the same disk. After the two-boot tracer,
-qualify the current Main/worker virtual pair and packet contract on the matched
-Google kernel. Its controller must account for `PROC_CHILDREN=n`; existing native
-prerequisite boot coverage does not need repeating. [Google-kernel scope](native-google-kernel-services.md).
+Complete boot 1 before admitting boot 2 on the same disk, then freeze that passing
+selection for a publicly reproducible installed preview. Keep public packaging
+and the current Main/worker virtual-pair packet gate on the matched Google kernel
+moving independently of private GUI-observer repairs. Its controller must account
+for `PROC_CHILDREN=n`; existing native prerequisite boot coverage does not need
+repeating. [Google-kernel scope](native-google-kernel-services.md).
+
+For each demonstrated observer defect, make one focused correction, verify its
+boundary locally and resume the same installed acceptance. Do not expand this
+into another diagnostic or resource campaign after the complete two-boot pass.
 
 ### Historical checkpoints
 

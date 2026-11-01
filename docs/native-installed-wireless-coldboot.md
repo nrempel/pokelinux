@@ -386,6 +386,34 @@ and all earlier failed runs keep their original scope.
 The separate [periodic-only deferral](native-wireless-refresh-diagnostics.md#periodic-only-deferral)
 now passes selected host checks and five actual generic ARM/hwsim direct-radio
 controls after qualified baseline RED. This does not execute the normal Main,
-SDK or GUI. The final public-source ARM deployment build, normal-service recovery
-and the installed two-boot tracer remain pending. Image 20 and Cold24's failed
-receipt are unchanged; no phone is accessed.
+SDK or GUI. The later public-source ARM build and image 21 assembly now qualify;
+normal-service recovery and the installed two-boot tracer remain pending.
+Image 20 and Cold 24's failed receipt are unchanged; no phone is accessed.
+
+
+## Public ARM build and image 21; first-menu observation fails
+
+The build from public `9882af9` passes 61 connectivity-library and eight owner
+tests with one ignored fixture, then exports the normal ARM Main/worker binaries.
+Its host selection overlaps the earlier 51 checks; no cumulative unique-test
+total is claimed. This build executes no ARM binary or VM.
+
+Image 21 assembly, actual installed-file readback and loader checks pass. Only
+Main/worker change among 326 manifest paths; the other 324 rows equal image 20.
+All three assembly receipts qualify, with actual QEMU 0/container 0 and unchanged
+inputs. No normal app executes during assembly. The image-owner tool terminal
+output is unavailable; receipt qualification supplies no observed tool exit 0.
+
+Cold 25 selects this exact manifest. During the first Permissions-menu render,
+the guest process watcher gets `ProcessLookupError / ESRCH` reading a task's proc
+children. Initial disconnected inspections precede failure; no Allow, Enable,
+packet or functional 32-second clock occurs, and boot 2 is not admitted. The task
+identity and reason for disappearing are not established by this record. The
+sought complete wireless-recovery flow has not been exercised.
+
+All recorded direct-child waits/EOF are timely. Guest strict closure and
+bootstrap shutdown qualify; QEMU actually exits 0 and outer cleanup reports exact
+container absence, same daemon, unchanged inputs, ECHILD and empty cleanup errors.
+Peer/attach/container exits remain 1, while functional/guest/boot/outer success
+remain false. Earlier milestones and failures retain their own scope.
+[Curated build, image and failed-tracer receipts](evidence/native-wireless-periodic-refresh.json).

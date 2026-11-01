@@ -76,7 +76,7 @@ host tests: 17 composed checks and 34 radio checks. Five hwsim tests are ignored
 that host invocation; 45 other connectivity tests are filtered out. All 65 selected
 sources match its formatted snapshot. Host/ARM libtests and normal ARM validation
 binaries compile. The artifacts remain explicitly candidate-validation outputs,
-separate from the pending final public-source deployment build.
+separate from the subsequent public-source deployment build below.
 
 All five frozen direct-radio tests then pass on actual generic ARM/hwsim:
 
@@ -97,8 +97,18 @@ adoptees with actual bounded waits and ECHILD; their PIPE EOF is not claimed.
 The two initial EACCES gate-handshake runs are excluded. Their corrected runs
 use guest tmpfs gates with unchanged Rust, ELF, capabilities and cutoffs.
 
-These execute the direct radio library, not normal Main, SDK or GUI. Normal
-periodic-worker scheduling/publication, installed recovery and the full two-boot
-flow remain unqualified. Cold24's complete diagnostic and failed outcome retain
-their original scope; these controls do not diagnose its scheduling cause.
+These controls execute the direct radio library, not normal Main, SDK or GUI.
+The subsequent public `9882af9` build passes 61 connectivity-library and eight
+owner tests with one ignored fixture and produces both normal ARM binaries.
+Those counts overlap the earlier 51 host checks. Image 21 assembly/readback and
+loaders pass; only Main/worker change among 326 installed rows. Assembly executes
+no normal app. Actual QEMU/container exits 0 come from retained receipts; no
+image-owner tool terminal exit is asserted.
+
+Cold 25 then fails during first Permissions-menu rendering when the guest watcher
+gets ESRCH reading a task's proc children. It reaches no Allow/Enable or packet
+flow. Guest/QEMU/outer cleanup qualifies independently of functional failure.
+Normal-service deferral/recovery and the full installed two-boot flow remain
+unqualified. Cold 24's complete diagnostic and failed outcome retain their
+original scope; no process identity or radio cause is inferred for Cold 25.
 [Qualified RED, host/ARM controls and pending gates](evidence/native-wireless-periodic-refresh.json).
