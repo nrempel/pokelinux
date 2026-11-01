@@ -56,5 +56,5 @@
     }
   },
   "limits": "Inherited destinations may backpressure the compositor/bootstrap; launcher controls routing; owner creates no new pipe/file/drainer and does not interpret streams as Source protocol. Original deadlines/custody/authority unchanged.",
-  "ARM_startup_cause": "Unresolved; no ARM build or compositor execution is qualified by these host tests"
+  "ARM_startup_cause": "These host tests qualify no ARM execution. Subsequent ARM build, original compositor execution and missing-seat diagnosis are recorded separately in native-installed-display-seat-red.json."
 }

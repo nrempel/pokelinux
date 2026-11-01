@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "scope": "Generic ARM installed image; original selected Hyprland execution and read-only post-shutdown crash-report extraction. No physical phone evidence.",
+  "published_logging_fix": "30b278085939c944cd58e6b7527451dbc2710756",
+  "arm_build": {
+    "passed": true,
+    "receipt": {
+      "bytes": 1695748,
+      "sha256": "e0729b7ce5ace40c1b72d47ee917deef632f434205c430e3c435b72ed38c7b6f"
+    },
+    "artifact": {
+      "bytes": 3368656,
+      "sha256": "45ab18f28d4fffe8c3062fbe9d0df102e0e3bc01e60abdcc35449fa18f77b191"
+    },
+    "source_base_commit": "377f63e7ec6f992d1588f803adbf6befba936a11",
+    "candidate_patch_sha256": "c4dd3e76e665279e4ddcb32118e4b4bb7aa567bc33ddf0402cfcf3834f9016fc",
+    "source_matches_published_logging_fix": true
+  },
+  "image_preparation": {
+    "passed": true,
+    "outer_receipt": {
+      "bytes": 123537,
+      "sha256": "38d035d93cace981f2914ca0aafeebfade89c569859af592164ea1dff503352b"
+    },
+    "manifest": {
+      "bytes": 63645,
+      "sha256": "e16f7e1c8056e2128a3242a260936948099878500c423c76fcb562ecce79c7da"
+    },
+    "image_sha256": "81bc5084ec3b7296b500602f4b468633b3bc6429838ab4139dffcef57b118408"
+  },
+  "cold_boot": {
+    "passed": false,
+    "selection_sha256": "e40e64c8c9334c5e45f93aaea137ae63184cd811cc1176c63f7c99d1d935b04e",
+    "result": {
+      "bytes": 304432,
+      "sha256": "397daf2f5d900d0df7d607d79e3f82228e340f51d6a0cec851e5d752ee0ebc51"
+    },
+    "boot_receipt": {
+      "bytes": 20836,
+      "sha256": "238ef50acf32f3372d4c4742788218a3ce1fd6d4e51fca2a0944d9bcf62e8a2a"
+    },
+    "outer_receipt": {
+      "bytes": 23180,
+      "sha256": "ba4ea17abeb0c7014dfccae105918bcb646ce1f8bb04d88af4dd554b742f9915"
+    },
+    "startup_journal": {
+      "bytes": 5273,
+      "sha256": "e0d5dc55f82b23096edf26d17d0b3222eb17dc265b9245391141bda30251c4b4"
+    },
+    "observed_failure": "Hyprland aborts during CBackend::create(); owner later reports TimedOut at its original readiness deadline.",
+    "guest_case_closure_qualified": true,
+    "actual_QEMU_waited": true,
+    "QEMU_exit_code": 0,
+    "guest_shutdown_custody_qualified": true,
+    "outer_cleanup_qualified": true,
+    "exact_CID_absent": true
+  },
+  "crash_report_extraction": {
+    "passed": true,
+    "receipt": {
+      "bytes": 26831,
+      "sha256": "c2b62d46bc4580260ef5cd4991b26ad3787a1c09abac0509f526027eb05cf4a8"
+    },
+    "named_report": {
+      "bytes": 5687,
+      "sha256": "0c25aa3f93ac266c7e04da624f7a93555821bc8efaf90bc083ff32f344fff6dc"
+    },
+    "VM_executed": false,
+    "original_inputs_unchanged": true,
+    "original_COW_inode_unchanged": true,
+    "actual_container_wait": 0,
+    "exact_CID_absent": true,
+    "observations": [
+      "seatd socket /run/seatd.sock does not exist",
+      "logind cannot find a primary session for the compositor user",
+      "libseat cannot open a seat; the DRM backend fails",
+      "Wayland fallback cannot connect; no allocator is available"
+    ]
+  },
+  "prior_working_ARM_fixture": {
+    "source": {
+      "bytes": 18926,
+      "sha256": "e7f20701589496bd8ac610ef49c02280718b90e1395290af5c2f04f3e5e801a6"
+    },
+    "seatd_log": {
+      "bytes": 618,
+      "sha256": "3c9a16ee0197c04636e428115013887414c7460c463e8e383139b37e8c3911af"
+    },
+    "explicit_prerequisite": "Root seatd -g alarm with SEATD_VTBOUND=0 before UID/GID1000 Hyprland",
+    "observed_seat_open": true,
+    "scope": "Earlier authored graphical fixture; not an installed profile pass"
+  },
+  "remaining": [
+    "Install an explicit owned VM seat dependency and prove startup/readiness/Stop in the same installed flow",
+    "Normal UI consent, connection flow and two-boot persistence",
+    "Matched Pixel display and every physical-phone gate"
+  ]
+}

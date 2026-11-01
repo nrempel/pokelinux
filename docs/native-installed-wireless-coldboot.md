@@ -99,7 +99,33 @@ stderr, then passes for both streams alongside valid authored Source frames and
 actual child/actor closure. All 29 relevant tests, formatting and targeted Clippy
 pass. This is host process-boundary evidence, not original compositor execution.
 Inherited destinations can backpressure the child; the owner adds no pipe reader
-or log-file lifecycle, and existing deadlines remain unchanged. The next ARM
-build and installed run must still expose the original startup failure.
+or log-file lifecycle, and existing deadlines remain unchanged. A subsequent
+ARM build and installed run now expose the original compositor's startup failure,
+as described below.
 
 [Host logging RED/GREEN evidence](evidence/native-compositor-inherited-diagnostics.json).
+
+## Missing display seat in the installed VM profile
+
+The next ARM build and image preparation pass. In the following cold boot,
+inherited diagnostics reach the journal: Hyprland reaches backend creation and
+aborts at about 25.3 seconds. The owner later reports `TimedOut` under its original
+readiness deadline. The boot completes normal guest shutdown and actual QEMU
+wait0, with qualified outer cleanup; the full functional result remains failed.
+
+A read-only extraction from that closed disk recovers the exact named crash
+report without another VM execution. Its log tail records a missing seatd socket,
+no logind primary session for the compositor user, failure to open a seat, and
+DRM backend failure. The Wayland fallback also has no server to connect to.
+Original disks and their recorded identities remain unchanged. The corresponding
+compositor log is empty; raw reports remain private.
+
+The earlier working ARM graphical fixture explicitly launched `seatd -g alarm`
+with `SEATD_VTBOUND=0` before UID/GID1000 Hyprland and observed seat0 opening.
+The installed profile omitted that prerequisite. The next repair must select an
+owned VM-only seat service, wait for its actual socket readiness before starting
+the compositor, and stop the compositor before the seat service. This supplies
+Linux display-device access beneath the Rust owner; it qualifies no Pixel display
+backend. Full installed UI/consent/connection and two-boot persistence remain open.
+
+[Curated ARM startup and extraction evidence](evidence/native-installed-display-seat-red.json).

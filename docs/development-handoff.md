@@ -63,8 +63,17 @@ The next unchanged-image diagnostic run retained a header-only startup ring and
 an empty compositor log. A production logging repair now inherits compositor
 stdout/stderr and explicitly routes the installed owner to the journal. Actual
 child-exec RED precedes 29 host regression passes; no new pipe or logging worker
-is added. ARM rebuild/installed execution and the original timeout cause remain
-open. [Logging regression](evidence/native-compositor-inherited-diagnostics.json).
+is added. ARM compilation and the next installed execution now pass the logging
+boundary: the journal exposes Hyprland's early backend abort. A read-only extract
+of the closed disk's named crash report records missing `/run/seatd.sock`, no
+logind primary session, and failed DRM seat initialization. The earlier working
+ARM fixture explicitly started seatd; the installed profile omitted it. Add an
+explicit owned VM seat dependency, with actual socket readiness before the owner
+and reverse shutdown ordering, then repeat the same installed flow. The failed
+boot has normal guest shutdown, actual QEMU wait0 and qualified outer cleanup;
+UI consent/connection and persistence remain unqualified.
+[Logging regression](evidence/native-compositor-inherited-diagnostics.json) and
+[installed missing-seat RED](evidence/native-installed-display-seat-red.json).
 
 The normal Main empty-idle regression now passes the unchanged host consumer
 after qualified RED. A source-qualified zero-readiness hint defers starting an
