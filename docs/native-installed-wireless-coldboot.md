@@ -344,3 +344,40 @@ is not claimed. Peer/attach/container exits remain 1 and functional acceptance
 stays failed. No Connect, packets, capture-fix GUI result or boot 2 follows.
 
 [Cold 23 diagnostics and closure pins](evidence/native-installed-consent-close-progress.json).
+
+## Installed journal locates the refresh expiry
+
+Qualified image 20 replaces only normal connectivity Main and worker with the
+combined diagnostic build; the other 324 installed rows equal image 19. All
+assembly receipts pass, including actual QEMU wait 0 and unchanged selected inputs.
+Cold 24 retains the GUI consumer and its original resources, cutoffs and oracles.
+
+Initial inspection finds the original worker available and disconnected. Genuine
+menu input opens Permissions; Allow commits Settings network control with other
+grants unchanged, and normal Super+W closes Permissions. Settings maps inside the
+workarea, but five first-Enable view attempts observe both controls disabled and
+never become ready. The original view cutoff expires before any Enable click,
+Connect, packet or functional 32-second clock. Boot 2 is not admitted.
+
+The early journal retains a complete `connectivity_worker_failure_v1` record:
+`RefreshBackend / refresh_wireless`, Deadline, radio Refresh `Failed(Expired)`,
+`BeforeProfile / QuietAfter / Completed`. Its original cutoff is 56.588398454
+seconds and detection is 56.641191671 seconds, 52.793217 ms later. This precedes
+the Allow action. `Completed` describes correlated terminal framing; it proves
+neither a valid fresh observation nor safe retry or recovery.
+
+Main subsequently records `readiness_failure / message_ready / PermissionDenied`,
+without establishing a credential cause. At Stop, Main exits 0 and reports the
+original worker reaped with output EOF and signal 9. A separate late Termination
+`Error:` line is partial; the earlier complete record remains available. No
+vendor/radio cleanup is inferred from worker retirement.
+
+All recorded actual guest, boot and outer child waits/EOF are timely. Guest
+strict closure passes with no adoptees or cleanup errors; bootstrap shutdown, actual
+QEMU wait 0, exact container absence, same daemon and unchanged inputs qualify.
+Peer, attach and container exits remain 1, and functional/guest/boot/outer success
+remain false. The full native-closure validator was not reached; selected-unit
+operational shutdown success does not replace it. Cold 22's connection milestone
+and all earlier failed runs keep their original scope.
+
+[Curated image, diagnostic and closure receipt hashes](evidence/native-installed-wireless-refresh-cold24.json).

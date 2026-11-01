@@ -1,0 +1,176 @@
+{
+  "schema": 1,
+  "scope": "Installed generic ARM VM failure and diagnostic delivery; no recovery, completed GUI lifecycle, second boot or phone qualification.",
+  "documentation_base_commit": "951c6fd84d45487a1cb93b79133e6ef5f4d43d98",
+  "connectivity_source_commit": "9a40f26a56de8d5f6fe028867ad2bc61a7ba3a09",
+  "image20": {
+    "all_three_assembly_reports_passed": true,
+    "image": {
+      "bytes": 144637952,
+      "sha256": "49540dcc71c204a507cdf61b892a8cf548d7e6584189847679bf790ee33792a6"
+    },
+    "manifest": {
+      "bytes": 65109,
+      "sha256": "980db6c0b8bca8b742612715c229e20ce9c8bcd8c3295da43c10ce61bc93a6a0"
+    },
+    "baseline_image19_manifest": {
+      "bytes": 65108,
+      "sha256": "3c3aed75adfe19ec6a9abeb22e596258f9d9509b6bb4537590ca56f591dc0f64"
+    },
+    "installed_paths": 326,
+    "changed_rows": {
+      "usr/libexec/pokelinux/pokelinux-connectivity-main": {
+        "before": {
+          "bytes": 1046504,
+          "mode": 493,
+          "sha256": "812fe9cf331d1d5d0851d9ae0f3e058f37108db7e406f8c58ec8850608a32843"
+        },
+        "after": {
+          "bytes": 1046360,
+          "mode": 493,
+          "sha256": "04d4bc27f805b307ce79a21bfab51f224b2d2accc505aa07c4a8e369bef1e22d"
+        }
+      },
+      "usr/libexec/pokelinux/pokelinux-connectivity-service": {
+        "before": {
+          "bytes": 958720,
+          "mode": 493,
+          "sha256": "d69138e2981f473876a6a34af88c49a21d8b1a759e201302b7f741476c75fc02"
+        },
+        "after": {
+          "bytes": 1026928,
+          "mode": 493,
+          "sha256": "14224c2c2df880b5f4c386f40b65dbc3eda76a3675ccd2f9916c5318e578c25c"
+        }
+      }
+    },
+    "other_rows_exact": 324,
+    "original_receipts": {
+      "guest": {
+        "bytes": 326516,
+        "sha256": "c58bec4395d65ae6ed1029ae6e3773759d02ede8d15128ad4a3a6e91a3e1b02a"
+      },
+      "boot": {
+        "bytes": 16698,
+        "sha256": "1dc8cc413bb2a08c2d9590e91fa5535eb5f3bd9466774e4c66bc4e1a80722a41"
+      },
+      "outer": {
+        "bytes": 159953,
+        "sha256": "19a6941a3b064059daa8e719b50357e295dc103e111be6773452eb2b55e8da6c"
+      }
+    },
+    "QEMU_wait_exit": 0,
+    "container_wait_exit": 0,
+    "selected_inputs_unchanged": true,
+    "cleanup_errors": [],
+    "all_recorded_actual_waits_and_EOF_timely": true
+  },
+  "cold24": {
+    "boot_index": 1,
+    "selection_sha256": "4cb78b9c1a34f185c3ff09c2b3c186d4c21d93a868d022c467eedbe71080a435",
+    "installed_manifest_exact_image20": true,
+    "observed_progress": [
+      "initial available/disconnected original worker",
+      "genuine menu to normal Permissions",
+      "real Allow commits Settings network control; other grants unchanged",
+      "normal Permissions close",
+      "genuine menu to normal Settings; workarea predicate passes"
+    ],
+    "first_functional_failure": {
+      "operation": "settings_view(False, first-Enable, deadline(20))",
+      "error": "original installed guest observation cutoff",
+      "attempts": 5,
+      "both_controls_observed_disabled_in_all_attempts": true,
+      "functional_32_second_clock_started": false
+    },
+    "Enable_clicked": false,
+    "Connect_admitted": false,
+    "packets_qualified": 0,
+    "boot2_executed": false,
+    "early_diagnostic": {
+      "complete_record_retained": true,
+      "stage": "RefreshBackend",
+      "operation": "refresh_wireless",
+      "classification": "Deadline",
+      "radio_operation": "Refresh",
+      "radio_error": "Failed(Expired)",
+      "bracket": "BeforeProfile",
+      "phase": "QuietAfter",
+      "transaction": "Completed",
+      "original_until_ns": 56588398454,
+      "detected_at_ns": 56641191671,
+      "detection_past_cutoff_ns": 52793217,
+      "original_journal": {
+        "bytes": 594,
+        "sha256": "52154a0a55f740ea4f00a722dc83ffc3eb5df7792e1a6b1573ce420bffa8a64b"
+      }
+    },
+    "later_output": {
+      "Termination_error_partial": true,
+      "earlier_complete_record_still_retained": true,
+      "original_journal": {
+        "bytes": 1495,
+        "sha256": "07801a651f79c571317d878acaea3d4021f26012fe896af97c6354dcc239beea"
+      }
+    },
+    "Main_first_retirement": {
+      "reason": "readiness_failure",
+      "operation": "message_ready",
+      "io_kind": "PermissionDenied",
+      "detected_at_ns": 56648573233,
+      "credential_cause_proven": false
+    },
+    "Main_exit": 0,
+    "original_worker_reaped": true,
+    "worker_output_EOF": true,
+    "worker_exit_code": null,
+    "worker_exit_signal": 9,
+    "worker_retirement_not_vendor_or_radio_cleanup_proof": true,
+    "functional_passed": false,
+    "guest_passed": false,
+    "boot_passed": false,
+    "outer_passed": false,
+    "guest_strict_closure_qualified": true,
+    "native_full_closure_validator_checked": false,
+    "selected_unit_operational_shutdown_success": true,
+    "guest_shutdown_custody_qualified": true,
+    "actual_guest_SHUTDOWN": true,
+    "QEMU_wait_exit": 0,
+    "external_peer_exit": 1,
+    "attach_exit": 1,
+    "container_wait_exit": 1,
+    "outer_cleanup_qualified": true,
+    "exact_name_and_CID_absent": true,
+    "same_daemon": true,
+    "selected_inputs_unchanged": true,
+    "ECHILD": true,
+    "adoptees": 0,
+    "cleanup_errors": [],
+    "fresh_QWindow_DPR_qualified": false,
+    "published_screenshot_qualified": false,
+    "original_receipts": {
+      "guest": {
+        "bytes": 784942,
+        "sha256": "5df10d4d4891a3d39130edd7279497a56cc1e439a608be021491823e87a3913f"
+      },
+      "boot": {
+        "bytes": 26392,
+        "sha256": "3be92382da9f7be70a9de862c0d967f47da40fa744d04d4d7b0b3372c54b5722"
+      },
+      "outer": {
+        "bytes": 23330,
+        "sha256": "39caefff67f8e888562a6da87d6322511eadd0978f17e4c7efb8e52e8c1d2a07"
+      },
+      "first_failure": {
+        "bytes": 1101,
+        "sha256": "dace3feae9aa6ad807df31df77c05a664c2e773baa26adde32a601305c39d2c8"
+      }
+    },
+    "all_recorded_actual_waits_and_EOF_timely": true
+  },
+  "limits": [
+    "Completed is terminal framing evidence, not fresh valid radio state or authority to recover/retry.",
+    "Earlier milestones and failures retain their original cohort scope.",
+    "No deadline relaxation, retry, recovery implementation, new execution or hardware claim in this checkpoint."
+  ]
+}

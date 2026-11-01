@@ -2,24 +2,36 @@
 
 ## Immediate integration order
 
-Current checkpoint: published `f24ce54`, runtime image 19. Cold 22's real connection,
+Current checkpoint: published `951c6fd`, runtime image 20. Cold 22's real connection,
 one cap0 UDP roundtrip and connection retention after normal Settings close remain
-a bounded milestone. Its aggregate and strict guest closure failed on reopen
-capture exit 7. The [capture-name correction](evidence/native-installed-menu-capture-ordinal.json)
-passes separate host controls, but Cold 23 fails initial Inspect with
-`terminal_uncertain` before any menu; GUI integration and repeatability remain open.
+a bounded milestone. Its reopen capture failure and Cold 23's initial Inspect
+failure remain preserved. The [capture-name correction](evidence/native-installed-menu-capture-ordinal.json)
+has separate host evidence; the complete GUI lifecycle remains unqualified.
 
-The worker reports `RefreshBackend / refresh_wireless`, Deadline with radio Refresh
-Expired, against its fixed 100 ms cutoff; exact inner stage/transaction status is
-not retained. Main's later `readiness_failure / message_ready / PermissionDenied`
-is subsequent evidence, not a credential diagnosis. Cold 23 has qualified guest
-closure, normal poweroff, actual QEMU wait 0 and outer cleanup; its functional
-aggregate remains failed. [Current installed evidence](evidence/native-installed-consent-close-progress.json).
+Image 20 changes only normal Main/worker; the other 324 installed rows equal image
+19. Cold 24 reaches genuine Permissions, records Allow with other grants unchanged,
+closes Permissions normally and maps Settings in the workarea. The first Enable
+view times out with both observed controls disabled. No Enable click, Connect,
+packet or boot 2 occurs; the functional 32-second clock has not started.
+
+The complete early journal record locates `RefreshBackend / refresh_wireless`,
+Deadline and radio Refresh `Failed(Expired)` at `BeforeProfile / QuietAfter /
+Completed`. Its original cutoff is 56.588398454 seconds; detection is
+56.641191671 seconds. Main subsequently records `readiness_failure / message_ready /
+PermissionDenied`; that does not diagnose a credential fault. The later partial
+Termination output does not replace the full early record. Completion denotes
+terminal framing, not safe recovery or permission to retry.
+
+All actual guest/boot/outer waits and EOF are timely. Guest strict closure,
+normal poweroff, QEMU wait 0 and outer cleanup qualify; the functional aggregate
+and full native-closure validator do not. Main exits 0 with its original worker
+reaped, output EOF and final signal 9.
+[Cold 24 and image 20 evidence](evidence/native-installed-wireless-refresh-cold24.json).
 
 The bounded journal-stream diagnostic now passes actual host RED→GREEN and all
 seven selected pipe/socket controls. It adds one nonblocking Unix stream send,
-with no delivery guarantee or lifecycle change. Installed journal delivery is
-still unexecuted. [Diagnostic evidence](evidence/native-connectivity-journal-stream.json).
+with no delivery guarantee or lifecycle change. The separate Cold 24 installed
+run now retains a complete early record while functional acceptance still fails. [Diagnostic evidence](evidence/native-connectivity-journal-stream.json).
 Precise stage/transaction diagnostics now pass the unchanged three real-kernel
 RED controls and 44 additional wireless/backend checks. Both crates pass strict
 Clippy and Release libtest compilation. [Diagnostic scope](native-wireless-refresh-diagnostics.md).
@@ -27,8 +39,9 @@ Normal ARM Main/worker now build from combined commit `9a40f26`; 57 library
 and eight owner tests pass with one ignored fixture. Actual artifacts and full
 compiler closure are qualified; no ARM execution occurred in that case.
 [Build evidence](evidence/native-connectivity-radio-diagnostics-arm-build.json).
-Next assemble image 20 with only those two provider rows changed, then verify
-the installed error path with existing cutoffs and no retry.
+Image 20 assembly and installed diagnostic delivery now qualify separately from
+the failed functional run. Define any recovery contract separately; this trace
+does not authorize retry or relax existing cutoffs.
 Complete boot 1 before admitting boot 2 on the same disk. After the two-boot tracer,
 qualify the current Main/worker virtual pair and packet contract on the matched
 Google kernel. Its controller must account for `PROC_CHILDREN=n`; existing native

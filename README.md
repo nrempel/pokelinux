@@ -29,15 +29,20 @@ A real Enable click now connects over simulated Wi-Fi and exchanges one UDP
 roundtrip. The connection remains after normal Settings close. Reopening then
 fails a native capture check; Disconnect, quiet and reboot persistence remain
 unverified.
-The following run fails its first inspection before any menu after a radio-refresh
-deadline expires. The connection milestone is not yet repeatable; the host-tested
-capture-name fix has not been reached in GUI.
+Cold 23 then fails its first inspection before any menu after a radio-refresh
+deadline expires. Cold 24 reaches Settings but times out before its first Enable
+view. The connection milestone is not yet repeatable; capture-fix GUI integration
+and the complete two-boot flow remain unqualified.
 [Latest progress](docs/evidence/native-installed-consent-close-progress.json).
 [Capture-name host evidence](docs/evidence/native-installed-menu-capture-ordinal.json).
 Worker error reporting now passes seven actual host pipe/socket checks after a
 missing-record RED. Precise refresh diagnostics now also pass 47 selected host checks.
-Both normal ARM binaries now build with 65 passing host regressions and one
-ignored fixture. Installed diagnostic delivery remains unverified.
+Both normal ARM binaries build with 65 passing host regressions and one ignored
+fixture. Image 20 changes only those two binaries. Cold 24 retains the complete
+early journal error: radio-refresh expiry at `BeforeProfile / QuietAfter`, with
+transaction `Completed`. Diagnostic delivery and guest/QEMU/outer cleanup qualify;
+recovery and connection success do not.
+[Installed diagnostic evidence](docs/evidence/native-installed-wireless-refresh-cold24.json).
 [ARM build scope](docs/evidence/native-connectivity-radio-diagnostics-arm-build.json).
 [Diagnostic scope](docs/native-connectivity-worker-error-context.md#journal-stream-diagnostic).
 

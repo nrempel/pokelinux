@@ -34,6 +34,11 @@ These are native x86_64 host results. The precise Cold 23 radio phase remains
 unknown. Both normal ARM Main/worker binaries now compile from the combined
 published source, with 65 passing host regressions and one ignored fixture.
 [ARM build evidence](evidence/native-connectivity-radio-diagnostics-arm-build.json).
-An installed ARM run must still qualify these diagnostics together with the
-[journal-stream sink](native-connectivity-worker-error-context.md#journal-stream-diagnostic).
-[Retained evidence](evidence/native-wireless-refresh-diagnostics.json).
+Cold 24 now retains a complete early record through the installed
+[journal-stream sink](native-connectivity-worker-error-context.md#journal-stream-diagnostic):
+radio Refresh `Failed(Expired)` at `BeforeProfile / QuietAfter / Completed`.
+The later Termination output is partial. The run reaches Settings but fails before
+Enable-ready; cleanup qualifies separately. No safe recovery, retry or completed
+connection lifecycle follows from the framing state.
+[Installed evidence](evidence/native-installed-wireless-refresh-cold24.json).
+[Retained host evidence](evidence/native-wireless-refresh-diagnostics.json).

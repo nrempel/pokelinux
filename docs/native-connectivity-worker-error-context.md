@@ -19,6 +19,14 @@ This matches the configured journal transport, but Cold 23 did not directly samp
 worker FD2. No installed journal, ARM runtime or refresh recovery is qualified by
 these host controls. [Evidence](evidence/native-connectivity-journal-stream.json).
 
+Separately, Cold 24 retains a complete early `RefreshBackend` failure in the
+installed ARM journal, including `BeforeProfile / QuietAfter / Completed`.
+The later Termination output is partial. This qualifies that observed delivery,
+without an FD2 type sample, stream atomicity guarantee or recovery claim. The GUI
+run fails before Enable-ready and closes with Main exit 0, original worker signal
+9 and qualified guest/QEMU/outer cleanup.
+[Installed evidence](evidence/native-installed-wireless-refresh-cold24.json).
+
 ## Complete early pipe diagnostic
 
 A failed graphical ARM wireless run lost its `RefreshBackend` error during
