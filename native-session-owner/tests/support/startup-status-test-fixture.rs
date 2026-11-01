@@ -41,7 +41,7 @@ impl Custody {
         if !self.reported {
             self.reported = true;
             println!(
-                "SOURCE_STATUS_ACTUAL_WAIT pid={} status={status:?} actual_wait_observed_at_boottime_ns={} original_until_ns={} stdout=DEVNULL stderr=DEVNULL",
+                "SOURCE_STATUS_ACTUAL_WAIT pid={} status={status:?} actual_wait_observed_at_boottime_ns={} original_until_ns={} stdout=INHERITED stderr=INHERITED",
                 self.source.pid().as_raw_nonzero(),
                 boottime_ns(),
                 self.until

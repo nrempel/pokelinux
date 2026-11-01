@@ -22,7 +22,7 @@ impl Custody {
         if !self.reported {
             self.reported = true;
             println!(
-                "SOURCE_STATUS_ACTUAL_WAIT pid={} status={status:?} actual_wait_observed_at_boottime_ns={} original_until_ns={} stdout=DEVNULL stderr=DEVNULL",
+                "SOURCE_STATUS_ACTUAL_WAIT pid={} status={status:?} actual_wait_observed_at_boottime_ns={} original_until_ns={} stdout=INHERITED stderr=INHERITED",
                 self.source.pid().as_raw_nonzero(),
                 boottime_ns(),
                 self.until
@@ -58,7 +58,7 @@ fn main() -> io::Result<()> {
     let mut custody = if mode == "none" {
         None
     } else {
-        if !matches!(mode, "valid" | "quiet" | "diagnostic") {
+        if !matches!(mode, "valid" | "quiet" | "diagnostic" | "logging") {
             return Err(io::ErrorKind::InvalidInput.into());
         }
         let spec = Compositor {

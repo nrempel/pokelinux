@@ -2,7 +2,7 @@
 use pokelinux_lifecycle::{boottime_ns, ipc};
 use pokelinux_session::{Frame, Locker};
 use rustix::fd::{AsFd, FromRawFd, OwnedFd};
-use std::{io, os::unix::process::CommandExt, process::Command, time::Duration};
+use std::{io, io::Write, os::unix::process::CommandExt, process::Command, time::Duration};
 fn main() -> io::Result<()> {
     let mode = std::env::args().nth(1).ok_or(io::ErrorKind::InvalidInput)?;
     if mode == "--compositor-bootstrap" {
@@ -24,6 +24,14 @@ fn main() -> io::Result<()> {
     }
     assert_eq!(rustix::process::getuid().as_raw(), 1000);
     rustix::process::set_parent_process_death_signal(Some(rustix::process::Signal::KILL))?;
+    if mode == "logging" {
+        let pid = std::process::id();
+        let uid = rustix::process::getuid().as_raw();
+        let gid = rustix::process::getgid().as_raw();
+        println!("SOURCE_FIXTURE_STDOUT pid={pid} uid={uid} gid={gid}");
+        io::stdout().flush()?;
+        eprintln!("SOURCE_FIXTURE_STDERR pid={pid} uid={uid} gid={gid}");
+    }
     if mode == "quiet" {
         loop {
             std::thread::sleep(Duration::from_millis(10));

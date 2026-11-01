@@ -33,6 +33,21 @@ occupancy aborts. This does not stop or reap the background Messages daemon. Exi
 storage/actor fail-stop aborts are not graceful-return cleanup.
 No production poll writes to a potentially blocked logging stream.
 
+Compositor bootstrap stdout and stderr inherit the owner's existing descriptors.
+The installed unit explicitly routes both to the journal; other launchers choose
+their own destinations. These streams carry diagnostics, never the private Source
+protocol. SourceOwner adds no pipe, log file or output-draining worker. A slow or
+full destination can backpressure the compositor/bootstrap itself; startup,
+sampling and cleanup deadlines remain unchanged.
+
+The isolated host regression runs an authored UID1000 Source through the actual
+bootstrap exec, accepts its valid Source frames, then checks both PID-bound stream
+markers after the Source wait and actor wait/PIPE EOFs. The original DEVNULL
+implementation reaches the missing-stderr assertion. The inherited-stream change
+passes that case and the relevant Source, actor-status, cleanup and startup suites
+(29 tests), formatting and targeted Clippy. The ARM compositor startup cause
+remains unresolved.
+
 The existing root-admin Snapshot reports bounded [Source observation history](../docs/native-source-observation.md):
 state, last actually accepted sample metadata and first categorized actor-observed
 failure, including a typed first Observer rejection when available. Its bounded

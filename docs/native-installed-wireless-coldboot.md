@@ -85,3 +85,21 @@ to prioritize primary receipts before optional logs exhaust its existing bounds.
 [Current startup evidence](evidence/native-installed-wireless-startup-progress.json).
 No rendered UI, consent, connection flow, two-boot persistence or phone hardware
 is qualified by this checkpoint.
+
+## Preserve early compositor diagnostics
+
+The next boot retains the original 4096-byte startup ring with only its header,
+an empty Hyprland log, and no applied/ordered display-profile receipts. These
+observations do not identify the timeout cause. The child stdout/stderr were
+explicitly discarded, so errors before compositor file logging could be lost.
+
+The native owner now inherits those streams; its installed unit explicitly routes
+both to the journal. A real host child-exec regression first fails on missing
+stderr, then passes for both streams alongside valid authored Source frames and
+actual child/actor closure. All 29 relevant tests, formatting and targeted Clippy
+pass. This is host process-boundary evidence, not original compositor execution.
+Inherited destinations can backpressure the child; the owner adds no pipe reader
+or log-file lifecycle, and existing deadlines remain unchanged. The next ARM
+build and installed run must still expose the original startup failure.
+
+[Host logging RED/GREEN evidence](evidence/native-compositor-inherited-diagnostics.json).

@@ -271,6 +271,34 @@ fn source(v: &Value) -> &Value {
     assert!(v["source"].is_object(), "MISSING_OBSERVED_SOURCE_STATUS");
     &v["source"]
 }
+#[test]
+#[ignore = "isolated root, UID transitions, built actor/Source helpers"]
+fn compositor_streams_reach_owner_after_actual_bootstrap_exec() {
+    let mut c = Case::new("logging");
+    let observed = c.observed();
+    assert_eq!(source(&observed)["state"], "observed");
+    c.close();
+    let stdout = String::from_utf8_lossy(&c.stdout);
+    let stderr = String::from_utf8_lossy(&c.stderr);
+    let pid = stdout
+        .lines()
+        .find_map(|line| line.strip_prefix("SOURCE_STATUS_ACTUAL_CHILD pid="))
+        .expect("actual owned Source child PID");
+    assert!(stdout.contains(&format!("SOURCE_STATUS_ACTUAL_WAIT pid={pid} ")));
+    let expected_err = format!("SOURCE_FIXTURE_STDERR pid={pid} uid=1000 gid=1000");
+    assert_eq!(
+        stderr.lines().filter(|line| *line == expected_err).count(),
+        1,
+        "COMPOSITOR_STDERR_MISSING_FROM_OWNER_STREAM"
+    );
+    let expected_out = format!("SOURCE_FIXTURE_STDOUT pid={pid} uid=1000 gid=1000");
+    assert_eq!(
+        stdout.lines().filter(|line| *line == expected_out).count(),
+        1
+    );
+    assert!(!stderr.contains("SOURCE_FIXTURE_STDOUT"));
+    assert!(!stdout.contains("SOURCE_FIXTURE_STDERR"));
+}
 fn failure(v: &Value, kind: &str, before: u64, after: u64) {
     let s = source(v);
     assert_eq!(s["state"], "failed");

@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "scope": "Actual isolated Linux host SourceOwner/bootstrap/UID1000 fixture logging RED then GREEN; no original compositor/ARM/VM/hardware execution",
+  "base_commit": "377f63e7ec6f992d1588f803adbf6befba936a11",
+  "red": {
+    "test": "compositor_streams_reach_owner_after_actual_bootstrap_exec",
+    "actual_test_exit": 101,
+    "assertion": "COMPOSITOR_STDERR_MISSING_FROM_OWNER_STREAM",
+    "assertion_actual": 0,
+    "assertion_expected": 1,
+    "log_sha256": "fe3a65099d19679e6fe5624a2703769c87ff688fbadd69413cc401f8a7a5fe74",
+    "frozen_test_and_producer_identical_in_GREEN": true,
+    "source_original_sha256": "84c41606e8e4820473702413a5c7565202feab6a3115cd563528e42bd1cf58e2"
+  },
+  "green": {
+    "test_summaries": {
+      "source_status": [
+        "test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.94s"
+      ],
+      "source": [
+        "test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.31s"
+      ],
+      "cleanup": [
+        "test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s"
+      ],
+      "startup_status": [
+        "test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.52s"
+      ]
+    },
+    "total_tests": 29,
+    "cargo_fmt_check": true,
+    "targeted_Clippy_D_warnings": true,
+    "installed_unit_journal_properties_static_check": true,
+    "startup_stop_restart_kill_properties_unchanged": true,
+    "code_and_test_bytes_match_test_epoch": true,
+    "component_README_updated_after_epoch": true
+  },
+  "source_sha256": "28bceb850fe3e4dd62c2360216d758de3e07673f801c6308bc5c7ca173a6a7de",
+  "unit_sha256": "4e7dc361a70bb70c8342aeb1899be25f33cdcba9c7ed2dec0144a904aa444089",
+  "host_receipts": {
+    "red-2": {
+      "sha256": "7540ac6ce38f37fddaac3e08f6fbace1ed217356879110838af9e8a6f80c3be8",
+      "actual_container_wait": 0,
+      "exact_CID_absent": true,
+      "same_daemon": true,
+      "source_unchanged": true,
+      "owned_CLI_waits": 10
+    },
+    "green": {
+      "sha256": "c6729c61804cfec55cf168695d6f27b6652e25658dad656cbfb2314f036306a6",
+      "actual_container_wait": 0,
+      "exact_CID_absent": true,
+      "same_daemon": true,
+      "source_unchanged": true,
+      "owned_CLI_waits": 10
+    }
+  },
+  "limits": "Inherited destinations may backpressure the compositor/bootstrap; launcher controls routing; owner creates no new pipe/file/drainer and does not interpret streams as Source protocol. Original deadlines/custody/authority unchanged.",
+  "ARM_startup_cause": "Unresolved; no ARM build or compositor execution is qualified by these host tests"
+}

@@ -107,8 +107,9 @@ impl SourceOwner {
             .env_clear()
             .current_dir("/")
             .stdin(Stdio::from(send))
-            .stdout(Stdio::null())
-            .stderr(Stdio::null())
+            // Diagnostics follow the owner; Source uses only its private channel.
+            .stdout(Stdio::inherit())
+            .stderr(Stdio::inherit())
             .spawn()?;
         // Custody is installed before pidfd acquisition, send, or Observer setup.
         let mut owner = Self {

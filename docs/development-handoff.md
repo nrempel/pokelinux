@@ -59,6 +59,12 @@ returns `Kind(TimedOut)` under its existing 120-second readiness deadline.
 Collect compositor logs and the existing startup ring next; neither the exact
 Source/Wayland cause nor normal UI/connection/persistence is qualified.
 [Current startup evidence](evidence/native-installed-wireless-startup-progress.json).
+The next unchanged-image diagnostic run retained a header-only startup ring and
+an empty compositor log. A production logging repair now inherits compositor
+stdout/stderr and explicitly routes the installed owner to the journal. Actual
+child-exec RED precedes 29 host regression passes; no new pipe or logging worker
+is added. ARM rebuild/installed execution and the original timeout cause remain
+open. [Logging regression](evidence/native-compositor-inherited-diagnostics.json).
 
 The normal Main empty-idle regression now passes the unchanged host consumer
 after qualified RED. A source-qualified zero-readiness hint defers starting an
