@@ -11,16 +11,15 @@ modules and firmware provide the initial device-support baseline.
 **Current status: working VM prototypes and installed ARM service checkpoints.
 No physical phone has been tested, and there is no verified bootable phone image.**
 
-In one installed ARM VM run, the genuine Omarchy menu opens Permissions, the
-real Allow action grants Settings network control while leaving other grants
-unchanged, and Enable in normal Settings connects to a fixed open access point
-using simulated Wi-Fi. One UDP roundtrip succeeds, and closing Settings normally
-leaves the connection active.
-[Installed milestone](docs/evidence/native-installed-consent-close-progress.json).
+The installed ARM VM flow now reaches genuine Permissions Allow, Settings
+Enable, a UDP roundtrip, normal Settings close, reopen on the same service worker,
+a second UDP roundtrip and explicit Disable with independent disconnected
+readback. It uses a fixed open access point over simulated Wi-Fi.
+[Latest partial milestone](docs/evidence/native-installed-wireless-cold26-partial.json).
 
-Reopening, explicit disconnection and persistence across two boots remain
-unqualified. Newer installed boots failed before Enable, so the connection
-milestone is not yet repeatable.
+The full run still fails: its original clock cannot admit the final quiet check,
+and guest diagnostic cleanup hits open-file exhaustion. Quiet, complete guest
+closure and persistence across two boots remain unqualified.
 [Current status and retained failures](docs/native-installed-wireless-coldboot.md).
 
 Separately, a headless ARM service test passes connection, packet exchange across
@@ -29,15 +28,22 @@ simulated-radio fixture qualifies the service lifecycle separately from the
 normal installed GUI and consent flow.
 [Headless service evidence](docs/native-connectivity-installed-selector.md).
 
-The radio-observation change now builds and stages successfully in the ARM
-image. The latest installed run fails before Allow or Enable, so the complete
-installed flow remains unqualified.
+The radio-observation change passes separate ARM controls and public build/image
+checks. These remain distinct from the incomplete installed flow.
 [Diagnostic and deferral scope](docs/native-wireless-refresh-diagnostics.md).
 
 ## See it running
 
-The installed ARM milestone reaches Permissions through the genuine menu and
-records the Allow action. These two raw frames show the visible status change.
+Settings reopened while the connection remained enabled, before the second
+packet and Disable:
+
+<img src="docs/assets/installed-arm-settings-reopened-connected.png" width="320" alt="Reopened Settings showing local connection enabled" />
+
+This unaltered 1080 × 2424 capture is from a generic ARM VM configured for the
+Pixel 10 profile. The partial run fails final quiet admission and guest diagnostic
+closure. Phone hardware and app display scaling remain unverified.
+
+Earlier consent milestone: these two raw ARM frames show the Allow status change.
 
 | Before Allow | After Allow |
 | --- | --- |
@@ -47,8 +53,9 @@ These unaltered captures come from an ARM VM configured for the 1080 × 2424
 Pixel 10 profile. App display scaling and phone hardware remain unverified.
 These frames retain the earlier post-Allow deadline miss. Later runs pass the
 timed Allow check, normal close and Settings layout. A later run confirms one
-connection, packet roundtrip and retention after close; reopening and the complete
-Disconnect/reboot flow remain unqualified.
+connection, packet roundtrip and retention after close. Cold 26 also reaches reopen,
+packet 2 and Disable; final quiet, complete closure and the two-boot flow remain
+unqualified.
 [Milestone and limits](docs/evidence/native-installed-network-consent-partial.json).
 
 The earlier captures below are real, unedited x86 VM captures at the

@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "scope": "Actual local filesystem/stager-input writer/unchanged generic installer; authored unexecuted provider/header and kernel/tool metadata. Not original archive composition or real-provider compilation/runtime evidence.",
+  "source_base_commit": "9882af9a8f253d19d69da55b5cdfff1b386eb2f1",
+  "source_pins": {
+    "tools/native-installed-services/complete_graphical.py": {
+      "bytes": 13640,
+      "sha256": "0b7baf3db57b8b0fc8a35c33c8e9419ce5cfee87d0a6d6bdc7fd08e254a15abc"
+    },
+    "tools/native-installed-services/tests/graphical_completion.py": {
+      "bytes": 13519,
+      "sha256": "0bf9481ac0696e9d52a7e005a9072ad3a94f14d863e9e62850ce60efe26c5a4d"
+    }
+  },
+  "same_consumer_RED_and_GREEN": true,
+  "baseline": {
+    "exit_code": 1,
+    "desired_assertion": "missing seven image-completion rows",
+    "source_bounded_layers": [
+      241,
+      77
+    ],
+    "result_sha256": "3f13cd377c23dff879adac0eb1db8a71db3f163afa39f3fb08bded77e6fc7bac"
+  },
+  "candidate": {
+    "exit_code": 0,
+    "accounted_rows": 326,
+    "completion_rows": 7,
+    "original319_rows_unchanged": true,
+    "same_seven_row_layer_installs_with_unchanged_generic_installer": true,
+    "entire_generated_hwsim_object_equal": true,
+    "original_selected_inputs_unchanged": true,
+    "negative_cases_refuse_before_output": [
+      "escaped-template",
+      "existing-output",
+      "extra-installed-source",
+      "extra-provider",
+      "host-alias-escape",
+      "input-output-overlap",
+      "missing-provider",
+      "missing-tool",
+      "wrong-ELF",
+      "wrong-canonical-tool",
+      "wrong-declared-link",
+      "wrong-index-hash",
+      "wrong-profile-hash",
+      "wrong-protected-profile",
+      "wrong-provider-hash",
+      "wrong-provider-mode",
+      "wrong-source-pin",
+      "wrong-template-hash"
+    ],
+    "result_sha256": "f0ca9048abd803d17eac17244b55cfa785b0cc53dadb33af29a2eb021b6980d8"
+  },
+  "unchanged_contracts": {
+    "tools/native-installed-services/stage_graphical.py": "e5cf68efeed43579be37e81961640df872330ee4bdd019f8b7e9d634638101ed",
+    "native-session-owner/packaging/install_deployment.py": "42a6daacdde7c6c0fcbec7316b50e21f753d67df917de33bf991d42999b82482"
+  },
+  "excluded_setup": {
+    "classification": "initial candidate import failed before adapter execution; explicit sibling import repaired",
+    "not_behavioral_RED": true
+  },
+  "provider_scope": {
+    "positive_input_ELFs": "authored byte/header fixtures only; never executed",
+    "ABI_declarations_are_compiler_attestation": false,
+    "retained_actual_provider_control_executed": false,
+    "authored_provider_pins": {
+      "usr/bin/quickshell": {
+        "bytes": 38,
+        "sha256": "f5c6226d90a1e5d4cef302906d9461834e30316688d7fe70abd2278c5c235ee7",
+        "mode": 493
+      },
+      "usr/bin/seatd": {
+        "bytes": 33,
+        "sha256": "e79b9b2933b6a92e822cdef6d5ca713b5aa5ef3aa723941b48435cba49ca1f13",
+        "mode": 493
+      },
+      "usr/libexec/pokelinux-fixture/pixel10-output-discovery": {
+        "bytes": 74,
+        "sha256": "6f36e1fd829b5382e18fb31f747e31aa244ed7dce18132416d2408367aaa438d",
+        "mode": 493
+      },
+      "usr/libexec/pokelinux-fixture/pixel10-physical-size-adapter.so": {
+        "bytes": 82,
+        "sha256": "4a8a336e18082bf56a048059d3ce78488192314c8544fb1399acc786a7cab345",
+        "mode": 493
+      },
+      "usr/libexec/pokelinux-fixture/profile-ready-bootstrap.so": {
+        "bytes": 76,
+        "sha256": "31bd4d9a5eeae3bfb4f04fb8de49596f34aff720da1878be299ff5696afe316f",
+        "mode": 493
+      },
+      "usr/libexec/pokelinux-fixture/settings-layout-metrics": {
+        "bytes": 73,
+        "sha256": "22fc75cbb7bbebea81b9bab909623e736300e93c50b4f268c3efda9f448bd534",
+        "mode": 493
+      }
+    }
+  },
+  "policy_or_grant_initialization": false,
+  "service_activation": false,
+  "container_or_VM_launch": false,
+  "physical_phone_access": false,
+  "retained_provider_file_control": {
+    "passed": true,
+    "scope": "Seven actual retained image21 ELF file inputs; remaining profile/kernel/tool fixture authored. No ELF execution, compiler, loader, service, VM or hardware qualification.",
+    "actual_completed_rows": 326,
+    "six_completion_provider_rows_and_retained_Hyprland_exact": true,
+    "original_input_files_unchanged": true,
+    "receipt": {
+      "bytes": 3960,
+      "sha256": "1a3a2bb8c1b0751748f0d53725d315b2993a570293e26e8264c10798ca2e8b53"
+    },
+    "selection_sha256": "cca5f93a5c419855164e0ace36a2aa7e7baf1b411405ff3fc081a14e11b1f937",
+    "control_sha256": "183ad6083a611a04927275e0652fef7d77716c4ffa46b1177f23b41febb1ddb1"
+  }
+}

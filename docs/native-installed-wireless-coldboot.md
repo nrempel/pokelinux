@@ -417,3 +417,38 @@ container absence, same daemon, unchanged inputs, ECHILD and empty cleanup error
 Peer/attach/container exits remain 1, while functional/guest/boot/outer success
 remain false. Earlier milestones and failures retain their own scope.
 [Curated build, image and failed-tracer receipts](evidence/native-wireless-periodic-refresh.json).
+
+
+## Reopen, second packet and Disable; final quiet not admitted
+
+Cold 26 uses the same image 21 native providers. Actual GUI input grants Settings
+network control with other grants unchanged, enables the connection, closes the
+first Settings process normally, reopens a distinct Settings process and disables
+the connection. All seven Main inspections retain the same worker identifier.
+Independent radio/IPv4 observations retain the connection after close and report
+unassociated/no IPv4/no subnet route after Disable. Two distinct 37-byte nonce
+payloads each get an exact 41-byte `ACK1` reply from the AP peer; both actual cap0/
+NNP1 clients exit 0 with timely waits/EOF under their original 1 s bounds.
+
+This is a failed aggregate. The original 32 s functional clock runs from
+114.749548807s to 146.749548807s. Reopen navigation/readiness occupies 28.990907724s
+of its separately declared 30 s allowance. Disconnected readback finishes at
+146.538917048s, leaving 0.210631759s; quiet() rejects the required 800 ms window
+before publishing its request. Quiet is not armed or qualified, and boot 2 is not
+admitted. No Internet, WPA, DHCP or phone result is implied.
+
+Eight final unit-journal diagnostics fail with `EMFILE / Too many open files`.
+Recorded owned waits/EOF remain timely, but guest strict closure is false and the
+full native-closure validator is unchecked. Selected-unit operational Stop
+statuses succeed; that does not replace missing diagnostic/closure acceptance.
+QEMU exits 0 after guest shutdown and outer cleanup qualifies with exact container
+absence, same daemon and unchanged inputs. Peer/attach/container exits remain 1;
+functional/guest/boot/outer success remain false. FD-exhaustion causality is not
+established by this run.
+
+The reopened Settings frame is an unaltered 1080×2424 native capture matching its
+PNG/native-buffer receipt and actual configured output. App QWindow DPR is still
+unsampled, so it is a scoped ARM-VM illustration rather than complete display or
+hardware acceptance. A separate 102 s installed-UI time allowance is prepared;
+it has no runtime result and changes no native lease/action/packet/quiet/Stop bound.
+[Original receipts and scoped frame metadata](evidence/native-installed-wireless-cold26-partial.json).

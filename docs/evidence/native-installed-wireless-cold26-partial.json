@@ -1,0 +1,151 @@
+{
+  "schema": 1,
+  "scope": "Partial installed generic ARM GUI/network milestone; full aggregate failed, no quiet or boot2 acceptance.",
+  "documentation_base_commit": "485d3e83b248a8038cc8b65691fee1b28e4a676b",
+  "native_provider_source_commit": "9882af9a8f253d19d69da55b5cdfff1b386eb2f1",
+  "image21_native_providers_unchanged": true,
+  "completed_prefix": {
+    "actual_RFB_Allow_Enable_normal_close_reopen_Disable": true,
+    "grant_changed_false_to_true_other_grants_unchanged": true,
+    "distinct_reopened_Settings_process": true,
+    "same_worker_in_all_seven_Main_readbacks": true,
+    "background_independent_association_and_fixed_IPv4_retained": true,
+    "actual_Enable_and_Disable_handoffs_sent_once": true,
+    "two_distinct_nonce_payloads_exact_ACK_verified": true,
+    "packets": [
+      {
+        "sequence": 1,
+        "sent_bytes": 37,
+        "reply_bytes": 41,
+        "exact_ACK1_plus_payload_verified": true,
+        "capabilities_zero_NNP1": true,
+        "completed_at_ns": 115686632169,
+        "original_until_ns": 116289276297,
+        "actual_child_exit": 0,
+        "actual_wait_and_EOF_before_original_cutoff": true
+      },
+      {
+        "sequence": 2,
+        "sent_bytes": 37,
+        "reply_bytes": 41,
+        "exact_ACK1_plus_payload_verified": true,
+        "capabilities_zero_NNP1": true,
+        "completed_at_ns": 145814661546,
+        "original_until_ns": 146413837553,
+        "actual_child_exit": 0,
+        "actual_wait_and_EOF_before_original_cutoff": true
+      }
+    ],
+    "independent_after_Disable": {
+      "associated": false,
+      "IPv4": [],
+      "subnet_route_absent": true,
+      "default_route_absent": true,
+      "observed_at_ns": 146538917048
+    }
+  },
+  "functional_failure": {
+    "operation": "installed_wireless_io.quiet, original until < functional_until admission",
+    "functional_clock": {
+      "start_ns": 114749548807,
+      "until_ns": 146749548807,
+      "ARM_root5_functional_ns": 32000000000
+    },
+    "reopen_navigation_ready_span_ns": 28990907724,
+    "reopen_navigation_original_allowance_ns": 30000000000,
+    "remaining_at_disconnected_readback_ns": 210631759,
+    "required_quiet_budget_ns": 800000000,
+    "quiet_armed": false,
+    "boot2_admitted": false
+  },
+  "closure": {
+    "functional_guest_boot_outer_passed": false,
+    "guest_case_closure_qualified": false,
+    "native_full_closure_validator_checked": false,
+    "journal_diagnostics_EMFILE_errors": 8,
+    "recorded_owned_direct_wait_and_EOF_observations_timely": true,
+    "selected_unit_operational_Stop_success": true,
+    "actual_QEMU_wait_exit": 0,
+    "guest_shutdown_custody_qualified": true,
+    "outer_cleanup_qualified": true,
+    "peer_attach_container_exits": [
+      1,
+      1,
+      1
+    ],
+    "exact_name_and_CID_absent_same_daemon_inputs_unchanged": true,
+    "outer_cleanup_errors": [],
+    "EMFILE_causality_unclaimed": true
+  },
+  "original_receipts": {
+    "guest": {
+      "bytes": 862805,
+      "sha256": "2781c7fbb47500788599abd95000cc1c3a92fcc6078e8cce6beaa96317795c92"
+    },
+    "boot": {
+      "bytes": 26390,
+      "sha256": "36c32cd4611b97beec13a6ee5b0310450db62b996d1de6c9810a9fd1506c9372"
+    },
+    "outer": {
+      "bytes": 23331,
+      "sha256": "a32ef3cff136c3d2af8a8385cf3146260b2ed00ce6d25e363e1cc3cb8bd1024e"
+    },
+    "first_failure": {
+      "bytes": 870,
+      "sha256": "f5468d1eb2c0df84366d20a257e53da9d9cb5761812da47e70b8b38c0e383f64"
+    }
+  },
+  "reopened_frame": {
+    "asset_path": "docs/assets/installed-arm-settings-reopened-connected.png",
+    "bytes": 643795,
+    "sha256": "01592dbc906bcd9c566f768922c19420ec6499d3395018516c96b97f42266333",
+    "unaltered_original_PNG": true,
+    "PNG_header_dimensions": [
+      1080,
+      2424
+    ],
+    "output": "Virtual-1",
+    "native_capture_dimensions": [
+      1080,
+      2424
+    ],
+    "receipt_reports_decoded_pixels_match_native_buffer": true,
+    "capture_receipt": {
+      "bytes": 832,
+      "sha256": "b7f4f0857f39353b98c6d19a9bd1ac8c2b7635030bf683ebe43758048526ba9e"
+    },
+    "profile_output": {
+      "configured_profile_sha256": "aa04d5fe8be3a257e644e9cebd36e3642fe288f1fb549b9efc7eed61bbac6272",
+      "native_dimensions": [
+        1080,
+        2424
+      ],
+      "scale": 2.625,
+      "physical_mm": {
+        "width": 65,
+        "height": 146
+      },
+      "applied_receipt": {
+        "bytes": 643,
+        "sha256": "827dfe88f71cbbb91841f6ed10536a159856e10343d6d396ed9d85c58d9c87e1"
+      },
+      "discovery_receipt": {
+        "bytes": 2194,
+        "sha256": "4e002e1c3fa7be4cf16f6515aa1ccc0bdfdd079636ab2bde206b4f983db1c124"
+      }
+    },
+    "Root_visual_review_publishable": true,
+    "fresh_app_QWindow_DPR_qualified": false,
+    "full_screenshot_profile_acceptance": false,
+    "phone_hardware_qualified": false
+  },
+  "next_prepared_controls": {
+    "installed_UI_aggregate_ns": 102000000000,
+    "runtime_result": null,
+    "native_lease_action_packet_quiet_Stop_bounds_unchanged": true,
+    "FD_retirement_control_in_progress_not_runtime_repair_proof": true,
+    "FD_limit_raise": false
+  },
+  "phone_accessed": false,
+  "normal_SSID_WPA_DHCP_Internet_qualified": false
+}

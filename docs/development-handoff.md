@@ -2,7 +2,27 @@
 
 ## Immediate integration order
 
-Current assembly checkpoint: image 21; Cold 25 boot 1 failed before Allow or Enable. Cold 22's real connection,
+Latest installed milestone: Cold 26 reaches real Allow/Enable, packet 1, normal
+Settings close, a distinct reopened Settings process with the same service worker,
+packet 2 and explicit Disable. Independent readback confirms association/fixed
+IPv4 through close/reopen, then no association, IPv4 or subnet route after Disable.
+Both actual cap0/NNP1 UDP clients send 37 bytes, receive exact 41-byte ACK replies,
+exit 0 and complete actual waits/EOF within their original 1 s cutoffs.
+
+The aggregate remains failed. Reopen navigation/readiness takes about 29 s; after
+disconnected readback only 0.211 s remains in the original 32 s clock. The 800 ms quiet
+window is refused before arming. Eight journal diagnostics then fail EMFILE;
+guest strict closure is false despite timely recorded waits/EOF. QEMU 0/guest
+shutdown and outer cleanup qualify separately; peer/attach/container exits are 1.
+The full native-closure validator is unchecked, and boot 2 is not admitted.
+
+A separate declared 102 s installed-UI time allowance is prepared, not run;
+native leases, action/packet 1 s limits, quiet 800 ms and Stop bounds stay unchanged.
+FD-pressure retirement is being tested separately; no FD-limit raise or causal
+repair for Cold 26 is claimed. Preserve the actual failed run and image 21 providers.
+[Curated actions, timing, closure and original frame](evidence/native-installed-wireless-cold26-partial.json).
+
+Previous assembly checkpoint: image 21; Cold 25 boot 1 failed before Allow or Enable. Cold 22's real connection,
 one cap0 UDP roundtrip and connection retention after normal Settings close remain
 a bounded milestone. Its reopen capture failure and Cold 23's initial Inspect
 failure remain preserved. The [capture-name correction](evidence/native-installed-menu-capture-ordinal.json)

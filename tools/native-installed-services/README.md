@@ -199,3 +199,9 @@ profile from an explicit named artifact index and verified base compositor.
 It reuses the existing stagers/composer and emits two bounded layers without
 building, activating services or booting an image. See the
 [recipe, index contract and scope](graphical-profile/README.md).
+
+`complete_graphical.py` accounts for the seven generated/retained rows using an
+explicit authenticated base/template/tool index. It emits one separate bounded
+completion layer and a 326-row accounting manifest, without builds, activation or
+policy initialization. Its filesystem RED/GREEN uses authored unexecuted
+providers; [completion contract](graphical-profile/README.md#complete-the-seven-image-rows).
