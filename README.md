@@ -25,13 +25,15 @@ assets and the native launch adapter. The genuine menu now opens the normal
 Permissions window, and a real Allow click records Settings network control while
 preserving other grants. The timed allowed-state check and normal Permissions
 close now pass, and Settings has the correct app identity and workarea layout.
-Enable is now available, and a real click reaches the connection service. Its
-action then expires before a connection is confirmed. Packet flow and reboot
-persistence remain unverified.
+A real Enable click now connects over simulated Wi-Fi and exchanges one UDP
+roundtrip. The connection remains after normal Settings close. Reopening then
+fails a native capture check; Disconnect, quiet and reboot persistence remain
+unverified.
 [Latest progress](docs/evidence/native-installed-consent-close-progress.json).
 
-A host-tested correction now preserves the original connection deadline while
-retaining permission checks; an installed ARM rerun is pending.
+A host-tested correction preserves the original connection deadline while
+retaining permission checks; its installed ARM run reaches the milestone above,
+while the complete flow remains failed.
 [Host lifetime evidence](docs/evidence/native-connectivity-authority-action-lifetimes.json).
 The original Omarchy icon font now stages with its attribution files and passes
 ARM discovery checks. Rendering remains unverified.
@@ -60,8 +62,9 @@ records the Allow action. These two raw frames show the visible status change.
 These unaltered captures come from an ARM VM configured for the 1080 × 2424
 Pixel 10 profile. App display scaling and phone hardware remain unverified.
 These frames retain the earlier post-Allow deadline miss. Later runs pass the
-timed Allow check, normal close and Settings layout. Enable is now available,
-but its real action expires before connection, packet or reboot acceptance.
+timed Allow check, normal close and Settings layout. A later run confirms one
+connection, packet roundtrip and retention after close; reopening and the complete
+Disconnect/reboot flow remain unqualified.
 [Milestone and limits](docs/evidence/native-installed-network-consent-partial.json).
 
 The earlier captures below are real, unedited x86 VM captures at the

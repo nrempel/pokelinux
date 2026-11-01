@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "scope": "Actual generic ARM/QEMU TCG installed consent and normal-close progress; aggregate GUI acceptance remains failed. Simulated radios, no phone or Pixel hardware qualification.",
+  "scope": "Actual generic ARM/QEMU TCG installed consent, connection, one UDP roundtrip and normal-close progress; aggregate GUI acceptance remains failed. Simulated radios, no phone or Pixel hardware qualification.",
   "documentation_base": "eb686bbfb26c69b14124028d16219d7a07b50bca",
   "prior_partial_evidence": "native-installed-network-consent-partial.json",
   "host_controls_separate": {
@@ -286,7 +286,7 @@
     "all_original_app_and_owner_closure_limits": true
   },
   "next_production_correction": {
-    "status": "Settings identity/workarea passes; cold21 reaches an available Enable control and a real click reaches the service, then its native action expires. No connected readback follows.",
+    "status": "Cold22 connects, passes one cap0 UDP roundtrip and retains the connection after normal Settings close; fresh menu capture exits7, so reopen/Disconnect/quiet/boot2 remain unqualified.",
     "Settings_desktop_file_name": "org.omarchy.Settings",
     "phone_window_profile": "Add Settings to the normal available-area rule; retain mode1/1 and workarea containment predicate"
   },
@@ -295,7 +295,8 @@
     "Cold19 fails Settings layout; cold20 passes that layout but Main had already retired its worker on receive_message / TimedOut. Neither reaches Connect, packets or boot2.",
     "Cold21 reaches the actual Enable input but returns terminal_uncertain; its native action cutoff origin is not logged. No general receive-timeout fix or Source-lease provenance is established.",
     "The earlier two published screenshots retain their original cold17 scope and timing failure.",
-    "No new screenshot, physical phone, deadline relaxation or numerical native-parent wait claim."
+    "No new screenshot, physical phone, deadline relaxation or numerical native-parent wait claim.",
+    "Cold22 confirms one real packet and background connection readback, not the full GUI/native-closure or two-boot contract."
   ],
   "settings_identity_ARM_build": {
     "scope": "Normal CMake Settings target only in generic ARM VM; no application, service or layout execution",
@@ -589,6 +590,186 @@
       "run/receipt.json": {
         "bytes": 23330,
         "sha256": "7a7f05184f7d0974da4e2d9a6e964de07dd03439fa068e39fdd365af6f0fa783"
+      }
+    }
+  },
+  "image19": {
+    "changed_session_owner_runtime_source_matches_commit": "1928d4e31750708c8b396412e3e45b2f024aa6fd",
+    "image": {
+      "bytes": 144375808,
+      "sha256": "11b899e8ed75148007d6e607529c6c1ed0f0faef6302c5d4764077a5b1e9a8e7"
+    },
+    "installed_manifest": {
+      "bytes": 65108,
+      "sha256": "3c3aed75adfe19ec6a9abeb22e596258f9d9509b6bb4537590ca56f591dc0f64"
+    },
+    "rows": 326,
+    "only_changed_row_vs_image18": "usr/libexec/pokelinux/pokelinux-session-owner",
+    "session_owner": {
+      "bytes": 3368576,
+      "mode": 493,
+      "sha256": "df8a8bc6e4b336c516e3a09c6eea15258711799ccfd5858b73825ec17252ad39"
+    },
+    "Main_and_worker_unchanged": true,
+    "other325_rows_unchanged": true,
+    "preparation_guest_boot_outer_passed": true,
+    "all162_actual_waits_EOF_timely": true,
+    "receipts": {
+      "result.json": {
+        "bytes": 326478,
+        "sha256": "6d34a0a14b41134608d9ff7b01a971cbd067faa54c2e150176e482a8852d46e2"
+      },
+      "boot-result.json": {
+        "bytes": 16698,
+        "sha256": "65757ae97a4bc302d72e672b104291b3b83007da144234c8b19423307d22772b"
+      },
+      "run/receipt.json": {
+        "bytes": 137919,
+        "sha256": "b65a8640d03ef664827e236fe3a2ac7cea11c61a593ecb0ae09a0d43c501b08b"
+      }
+    }
+  },
+  "cold22": {
+    "source_commit": "1928d4e31750708c8b396412e3e45b2f024aa6fd",
+    "selection_sha256": "78be92f9bb5ab1019c2508727de2d463a74ecc023b6584167b886077d6d53c7c",
+    "passed": false,
+    "functional_passed": false,
+    "same_driver12_owner_oracles_limits_as_cold21": true,
+    "actual_Enable": {
+      "outcome": "sent_once",
+      "completed_guest_ns": 117582508457,
+      "original_outer_until_ns": 118342428343
+    },
+    "Main_connected_state": {
+      "available": true,
+      "configured": true,
+      "observed_at_ns": "117751751244",
+      "until_ns": "118001751244",
+      "pending": false,
+      "terminal_uncertain": false
+    },
+    "connected_independent_readback": {
+      "station_associated": true,
+      "same_station_identity": true,
+      "IPv4": "192.0.2.1/30",
+      "station_subnet_route": "192.0.2.0/30",
+      "default_route_absent": true,
+      "observed_at_ns": 117950716301,
+      "root_guest_independent_readonly_observer": true
+    },
+    "first_packet": {
+      "passed": true,
+      "mode": "roundtrip",
+      "payload_bytes": 37,
+      "payload_sha256": "7fab783146a9dd5dcaab499d86124516d6b6598e5385aed6142e96724f9c70fa",
+      "exact_ACK1_plus_nonce_verified": true,
+      "all_client_capability_sets_zero": true,
+      "NoNewPrivs": "1",
+      "completed_at_ns": 118356192791,
+      "original_until_ns": 118950749413,
+      "actual_client_wait_EOF_timely": true,
+      "AP_peer_packets_on_actual_Stop": 1,
+      "AP_peer_actual_wait_EOF": true
+    },
+    "normal_Settings_close": {
+      "actual_RFB_Super_W": true,
+      "outcome": "sent_once",
+      "retained_pidfd_terminal": true,
+      "process_absent": true,
+      "private_listener_absent": true,
+      "observed_at_ns": 118881140210,
+      "guest_claims_native_parent_wait": false
+    },
+    "background_independent_readback": {
+      "station_associated": true,
+      "same_station_identity": true,
+      "IPv4": "192.0.2.1/30",
+      "station_subnet_route": "192.0.2.0/30",
+      "default_route_absent": true,
+      "observed_at_ns": 119019949077,
+      "root_guest_independent_readonly_observer": true
+    },
+    "background_Main_state": {
+      "available": true,
+      "configured": true,
+      "observed_at_ns": "118991562584",
+      "until_ns": "119241562584",
+      "pending": false,
+      "terminal_uncertain": false
+    },
+    "same_worker_through_connection_and_background": true,
+    "first_failure": {
+      "stage": "fresh-menu-reopen-Settings",
+      "boundary": "Native output capture before fresh Settings menu reopen",
+      "helper_returncode": 7,
+      "error": "native output capture boundary failed:7",
+      "output_basename": "accept-settings-before-bar",
+      "actual_wait_EOF_timely": true,
+      "source_collision_triage": "The menu reuses the prior capture basename; strict new-file output opening is under separate control review.",
+      "no_retry_or_oracle_relaxation": true
+    },
+    "reopened_Settings_window_qualified": false,
+    "second_packet_reached": false,
+    "Disconnect_reached": false,
+    "quiet_qualified": false,
+    "boot2_executed": false,
+    "raw_Main_first_retirement": {
+      "detected_at_ns": 122977149403,
+      "errno": null,
+      "io_kind": null,
+      "observation_age_ns": null,
+      "observation_at_ns": null,
+      "operation": null,
+      "original_until_ns": null,
+      "reason": "external_stop",
+      "record_length": null,
+      "record_type": null
+    },
+    "closure": {
+      "guest_strict_qualified": false,
+      "guest_actual_wait_EOF_and_allowed_exit_gate": false,
+      "unexpected_capture_exit7": true,
+      "all219_guest_helper_waits_EOF_timely": true,
+      "guest_cleanup_errors": [],
+      "native_closure_checked_flag": false,
+      "completed_native_closure_claimed": false,
+      "raw_Main_and_session_owner_PID1_exit0": {
+        "pokelinux-connectivity.service": true,
+        "pokelinux-session-owner.service": true
+      },
+      "bootstrap_custody_closed": true,
+      "normal_poweroff_command_closed": true,
+      "actual_QEMU_waited": true,
+      "QEMU_exit_code": 0,
+      "guest_shutdown_custody_qualified": true,
+      "outer_cleanup_qualified": true,
+      "outer_errors": [],
+      "external_peer_exit": 1,
+      "attach_exit": 1,
+      "container_exit": 1,
+      "exact_CID_and_name_absent": true,
+      "same_daemon": true,
+      "inputs_unchanged": true,
+      "all_handles_closed": true,
+      "ECHILD": true,
+      "adopted_waits": []
+    },
+    "receipts": {
+      "result.json": {
+        "bytes": 737659,
+        "sha256": "023772c11e20e8ee0722b5d6b9538715dc9da7111b3dc42f19d08c6c4f531635"
+      },
+      "boot-result.json": {
+        "bytes": 26391,
+        "sha256": "e66f3ff8632f6be626267ad39eaf2937616d29ab41d2625eb464b72cb1f8b365"
+      },
+      "run/receipt.json": {
+        "bytes": 23330,
+        "sha256": "0b1745f420d2d851c34314e8f9eede800f965232ee07c377e0e132597048dac5"
+      },
+      "first-failure-diagnostic.json": {
+        "bytes": 2366,
+        "sha256": "acb370b3654896210ef83e6e475473a6345e69c25604105cd97abb2b852c5ba3"
       }
     }
   }

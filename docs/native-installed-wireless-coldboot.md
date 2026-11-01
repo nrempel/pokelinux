@@ -293,3 +293,31 @@ container exits remain 1. Cold 20's earlier receive retirement and late-capture
 closure failure remain separate historical results.
 
 [Image 18 and cold 21 action/closure receipts](evidence/native-installed-consent-close-progress.json).
+
+## Connected packet and persistence through close; reopen capture fails
+
+Image 19 replaces only normal session-owner with the deadline-lifetime correction
+and published same-descriptor read optimization. The other 325 installed rows, including Main/worker,
+equal image 18; all 162 assembly waits/EOF and closures qualify.
+Cold 22 retains the original driver 12, oracles, input cap, resources and deadlines.
+
+The real Enable click now yields fresh connected Main state and independent
+station association, `192.0.2.1/30`, the station subnet route and no default route.
+An actual cap0 client completes the exact UDP nonce/ACK roundtrip within its
+original one-second cutoff. Genuine Super+W closes Settings, after which Main
+and independent radio/address observations still show the connection retained.
+This supplies no post-close packet or completed two-boot claim.
+
+Fresh-menu reopen then fails `accept-settings-before-bar-native-capture.log`
+with exit 7. The reused capture basename and strict new-file output opening are
+under separate control review. No second Settings window, packet 2, Disconnect,
+quiet or boot 2 is qualified. Main's raw first-retirement reason is external Stop.
+The full native-closure validator is not completed.
+
+All actual helper waits/EOF are timely, but unexpected capture exit 7 makes the
+guest's allowed-exit/strict-closure gate false. Cleanup errors are empty; bootstrap
+custody, normal poweroff, actual QEMU wait 0/guest shutdown and outer cleanup
+qualify separately. External peer/attach/container exits stay 1 and the aggregate
+remains failed. Earlier cold 20/21 failures keep their own scopes.
+
+[Image 19 and cold 22 milestone/closure receipts](evidence/native-installed-consent-close-progress.json).

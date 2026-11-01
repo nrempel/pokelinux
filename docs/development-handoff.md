@@ -2,6 +2,27 @@
 
 ## Immediate integration order
 
+Current checkpoint: runtime correction published as `1928d4e` and qualified image 19. Only the
+normal session-owner changes from image 18; the other 325 installed records,
+including Main/worker, stay fixed. Cold 22 confirms genuine Permissions Allow,
+Settings Enable, connected Main state plus independent radio/fixed-IP readback,
+one cap0 UDP roundtrip, and connection retention after normal Settings close.
+Fresh-menu reopen then fails native capture exit 7. The aggregate and guest
+strict closure remain false; normal poweroff, actual QEMU wait 0 and outer cleanup
+qualify separately. No second packet, Disconnect/quiet, completed native closure
+or boot 2 is claimed. [Current installed evidence](evidence/native-installed-consent-close-progress.json).
+
+Next qualify the capture-name correction with unchanged oracles and limits, then
+complete boot 1 before admitting boot 2 on the same disk. After the two-boot tracer,
+qualify the current Main/worker virtual pair and packet contract on the matched
+Google kernel. Its controller must account for `PROC_CHILDREN=n`; existing native
+prerequisite boot coverage does not need repeating. [Google-kernel scope](native-google-kernel-services.md).
+
+### Historical checkpoints
+
+The accumulated results below retain their original provider and execution
+scope. Their old provider selections and next-step statements are historical.
+
 The isolated normal Main now passes the same frozen static-startup CLI pair
 after actual paired RED. It accepts four paths and captures one fixed three-second
 BOOTTIME cutoff before argument collection; the old fifth argument is refused.
