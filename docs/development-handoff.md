@@ -83,7 +83,9 @@ The first failure is preserved before cleanup, and the final guest report agrees
 menu-layer observation times out. Guest cleanup is empty and QEMU exits0 after
 guest shutdown. The complete installed UI sequence remains failed. Investigate
 the original menu helper installation before changing native services; the shell
-journal also reports missing command helpers. Missing fonts remain a separate
+journal also reports missing command helpers. The exact original helper now
+stages at `/usr/bin/omarchy-shell` with actual host RED/GREEN; the installed
+menu rerun is still pending. Missing fonts remain a separate
 visual packaging issue. [Current partial evidence](evidence/native-installed-menu-red.json).
 [Partial seat startup evidence](evidence/native-installed-vm-seat-startup.json).
 The earlier failed

@@ -141,8 +141,9 @@ click still fails to open the menu. An early diagnostic and final guest report
 agree on the menu-layer timeout. Guest cleanup is empty, guest shutdown finishes,
 and the actual QEMU wait returns0. Full UI acceptance remains failed.
 The menu helper is staged under the upstream data directory, while the bar calls
-it by command name. Its installed command path is the next packaging boundary
-to test. The captured bar also has missing glyphs; font resources require a
+it by command name. The stager now exports the exact original helper to
+`/usr/bin/omarchy-shell`; actual file-boundary RED/GREEN passes with all prior
+rows unchanged. The installed rerun remains pending. The captured bar also has missing glyphs; font resources require a
 separate correction. No new public screenshot is qualified.
 [Current partial evidence](evidence/native-installed-menu-red.json).
 [Partial installed startup evidence](evidence/native-installed-vm-seat-startup.json).

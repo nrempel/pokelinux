@@ -30,12 +30,20 @@ reference; its unrelated Pi/btop setup is not executed. The setter, template
 renderer and color command are copied without modifications. The base image must
 supply Bash, GNU coreutils, findutils, awk, grep, sed and util-linux `flock`.
 
+The stager also exports the exact pinned original `bin/omarchy-shell` at
+`/usr/bin/omarchy-shell`, mode `0755`. The genuine bar invokes this bare command
+through `bash -lc`; its availability must not depend on a login profile adding
+the source tree's `bin` directory to PATH. This is one explicit command export;
+no other Omarchy helpers or PATH changes are installed. The original helper
+requires coreutils `timeout` and the maintained Quickshell `qs` entry point.
+
 The source is Omarchy commit `c668141e9c42b13c80c9ca4ea108e11708c5e8a5`;
 the public archive SHA256 is
 `8cc6b1d9d903c606600395e3b3d80ad9f15bd3ab78f0f19b0f49041b1df82013`.
 `assets.json` records every selected file's size, mode and SHA256. The largest
 asset is 4,445,106 bytes; the complete genuine selection is 19,818,545 bytes, within
 the unchanged generic installer's 8 MiB per-file and 64 MiB bundle limits.
+The public menu helper adds 2,766 bytes of original source.
 
 Build the normal native Rust binary with the retained target toolchain and export
 an unlinked copy of the Cargo output before staging. Cargo may hard-link its
@@ -54,14 +62,41 @@ rows, then use `native-session-owner/packaging/install_deployment.py` for the
 build-only DESTDIR copy. The stager does not initialize a host home, activate a
 unit, fetch sources, patch Qt namespaces or change the shell environment.
 
-The forty genuine files plus the native helper, oneshot unit and four normal
-profile dependency drop-ins make forty-six rows. The oneshot uses
+The forty genuine theme files, public menu helper, native helper, oneshot unit
+and four normal profile dependency drop-ins make forty-seven rows. The oneshot uses
 `/etc/pokelinux/appearance.json` and `/usr/share/pokelinux/omarchy`, with a 30 second
 Start limit, 5 second Stop limit, control-group cleanup and `Restart=no`.
 Both the normal target and the appearance, session-owner and shell services have
 `Requires=` plus `After=` on provisioning. This makes provisioning failure a
 startup dependency failure for each selected consumer. These drop-ins belong to
 the normal graphical profile; standalone owner packaging gains no theme dependency.
+
+### Public menu helper staging control
+
+`tools/native-omarchy-theme/tests/menu_helper.py` exercises the actual stager and
+generic installer in a private root-owned host directory. With the same frozen
+consumer, the original stager emits 46 rows and fails because
+`/usr/bin/omarchy-shell` is absent. The candidate emits 47 rows, preserves all 46
+existing manifest rows, and passes exact original-byte, regular single-link
+file, UID/GID0, mode `0755`, manifest and public-bin-only resolution assertions.
+An earlier test attempt stopped on an incorrect tar-header mode assumption
+before invoking staging; it is retained separately and is not the behavioral RED.
+
+For a fresh private absolute output path, run the file-only control as root:
+
+```sh
+sudo -n env PYTHONDONTWRITEBYTECODE=1 python3 tools/native-omarchy-theme/tests/menu_helper.py --stage /absolute/repository/tools/native-omarchy-theme/stage.py --archive /absolute/public/omarchy-public.tar.gz --provisioner /absolute/output/omarchy-theme-provision --output /absolute/private/menu-helper-control
+```
+
+The retained ARM Quickshell package mtree declares `/usr/bin/qs` as a symlink to
+`/usr/bin/quickshell`, whose hash matches image9's retained current provider.
+Upstream v0.3.2 installs that relation in `CMakeLists.txt:163–167`. This is provider
+provenance; the next installed image must still read back the actual alias and
+canonical ELF identity rather than create a new alias. The host control executes
+neither the menu script nor the provisioner ELF, and establishes no guest menu
+success or unique cause for the earlier menu timeout. Fonts and background state
+are separate prerequisites. [Focused hash-only evidence](evidence/native-omarchy-menu-helper-staging.json)
+records the host RED/GREEN and retained provider pins.
 
 ## Actual boundary qualification
 

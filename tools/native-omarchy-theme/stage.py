@@ -29,15 +29,19 @@ def stage(archive, provisioner, root, manifest):
         raise ValueError('normal x86_64 or ARM64 native provisioner ELF required')
     prefix = 'omarchy-' + pins['commit'] + '/'
     plan = {}
+    selected = {'usr/share/pokelinux/omarchy/' + name: (name, row)
+                for name, row in pins['files'].items()}
+    helper = pins['menu_helper']
+    selected['usr/bin/omarchy-shell'] = (helper['source'], helper)
     with tarfile.open(archive) as source:
-        for name, row in pins['files'].items():
+        for target, (name, row) in selected.items():
             item = source.getmember(prefix + name)
             if not item.isfile() or item.size != row['bytes']:
                 raise ValueError('pinned regular theme asset required')
             body = source.extractfile(item).read(row['bytes'] + 1)
             if len(body) != row['bytes'] or hashlib.sha256(body).hexdigest() != row['sha256']:
                 raise ValueError('theme source pin differs')
-            plan['usr/share/pokelinux/omarchy/' + name] = (body, row['mode'])
+            plan[target] = (body, row['mode'])
         reference = pins['default_policy_reference']
         if hashlib.sha256(source.extractfile(prefix + reference['path']).read()).hexdigest() != reference['sha256']:
             raise ValueError('upstream initial-home policy reference differs')
