@@ -96,11 +96,21 @@ the expected ten entries are absent. The image lacks the exact upstream
 `default/omarchy/omarchy-menu.jsonc`. That cohort remains failed, with guest
 closure and actual QEMU wait0 passing. Native action and aggregate deadlines were
 not increased; the longer navigation cohort does not qualify the old timing target.
+The next image includes the existing native-menu overlay and now renders all ten
+root entries and opens Apps. Its actual catalog has 15 entries, while the viewport
+shows nine full rows and a faded tenth. The observer incorrectly requires all 15
+to be visible, so the aggregate still fails before app launch. A capture helper's
+late wait also leaves guest closure unqualified; QEMU exits0 and outer cleanup
+passes. Source-bound viewport checks and genuine keyboard navigation are next.
+The three needed key actions now pass actual host socket RED/GREEN and an
+abort-during-hold release control, separately from GUI execution.
+[Socket evidence](evidence/native-menu-keyboard-socket.json).
 Missing fonts remain a separate
 visual packaging issue. The exact custom Omarchy font and attribution files now
 pass separate staging RED/GREEN. Actual ARM fontconfig discovery now passes as
 UID1000 with the exact font and U+E900 coverage; rendering and general icon fonts
-remain open. The menu-helper image excludes that font change. [Current partial evidence](evidence/native-installed-menu-red.json).
+remain open. The latest menu image includes those font assets.
+[Current partial evidence](evidence/native-installed-menu-red.json).
 [Partial seat startup evidence](evidence/native-installed-vm-seat-startup.json).
 The earlier failed
 boot has normal guest shutdown, actual QEMU wait0 and qualified outer cleanup;

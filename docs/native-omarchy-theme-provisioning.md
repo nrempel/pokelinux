@@ -189,6 +189,6 @@ installed font. No font alias or configuration override is supplied. System
 cache changes are recorded; the fresh probe cache is removed after child waits.
 Preparation and shutdown pass. An earlier attempt stopped on an existing cache
 symlink; the read-only inventory now records such links without following them.
-This qualifies discovery, not rendering. The navigation cohort still uses its
-earlier image to keep that test separate.
+This qualifies discovery, not rendering. The subsequent menu image includes
+these assets; its navigation result is recorded separately.
 [ARM discovery evidence](evidence/native-omarchy-font-discovery.json).

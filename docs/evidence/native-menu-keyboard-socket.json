@@ -1,0 +1,175 @@
+{
+  "schema": 1,
+  "scope": "Host actual Unix socket and real acceptance peer/guest handoff; authored RFB server and pixels. No GUI, ARM or phone execution.",
+  "test": {
+    "bytes": 8306,
+    "sha256": "267e5a960d9df74a06338be3fc057db8783b801b34860bd8249190d6fedd7cd8"
+  },
+  "sources": {
+    "rfb_input_packets.py": {
+      "bytes": 1107,
+      "sha256": "668f60c49e9cb3f39d32108c99b1496ec993b95ed31c872e0566d024626462fa"
+    },
+    "permissions_acceptance_viewer.py": {
+      "bytes": 6649,
+      "sha256": "95778b9973651262e63d658f8e4cfd51a01593cb21e28a5edffa801940aa75e3"
+    },
+    "permissions_acceptance_input.py": {
+      "bytes": 2994,
+      "sha256": "54f64cf2e53adf1feac8ada56ad9ccfa5990e2a87509e2194dec182270d286d3"
+    },
+    "rfb_navigation_packets.py": {
+      "bytes": 443,
+      "sha256": "b928b3ec44a1d397616380594336ea9a27b6cc66c527921eb6c7b25400ea5b23"
+    }
+  },
+  "cases": {
+    "baseline": {
+      "receipt": {
+        "bytes": 889,
+        "sha256": "b48fe8cddfaf7c445394bd470a4704b043f50b529bd2ec31bf9a82654c1b3154"
+      },
+      "passed": false,
+      "phase": "perform:page-down",
+      "peer_actual_wait": -15,
+      "server": {
+        "socket_EOF": true,
+        "authored_frames_sent": 1
+      },
+      "actual_events": []
+    },
+    "normal": {
+      "receipt": {
+        "bytes": 1145,
+        "sha256": "bd9b1cb1ad88fba58bf637063a8724db18cc742355d8892d5a24d067f78186dc"
+      },
+      "passed": true,
+      "phase": "retirement",
+      "peer_actual_wait": 0,
+      "server": {
+        "socket_EOF": true,
+        "authored_frames_sent": 2
+      },
+      "actual_events": [
+        [
+          "key",
+          1,
+          65366
+        ],
+        [
+          "key",
+          0,
+          65366
+        ],
+        [
+          "key",
+          1,
+          65364
+        ],
+        [
+          "key",
+          0,
+          65364
+        ],
+        [
+          "key",
+          1,
+          65293
+        ],
+        [
+          "key",
+          0,
+          65293
+        ],
+        [
+          "key",
+          1,
+          65513
+        ],
+        [
+          "key",
+          1,
+          65289
+        ],
+        [
+          "key",
+          0,
+          65289
+        ],
+        [
+          "key",
+          0,
+          65513
+        ],
+        [
+          "key",
+          1,
+          65515
+        ],
+        [
+          "key",
+          1,
+          119
+        ],
+        [
+          "key",
+          0,
+          119
+        ],
+        [
+          "key",
+          0,
+          65515
+        ],
+        [
+          "pointer",
+          0,
+          540,
+          646
+        ],
+        [
+          "pointer",
+          1,
+          540,
+          646
+        ],
+        [
+          "pointer",
+          0,
+          540,
+          646
+        ]
+      ]
+    },
+    "abort": {
+      "receipt": {
+        "bytes": 379,
+        "sha256": "71e82b93b7066d216380e414f8787e95639915249f803cf7d2210a4f80c741e1"
+      },
+      "passed": true,
+      "peer_actual_wait": 1,
+      "server": {
+        "socket_EOF": true,
+        "authored_frames_sent": 1
+      },
+      "actual_events": [
+        [
+          "key",
+          1,
+          65366
+        ],
+        [
+          "key",
+          0,
+          65366
+        ]
+      ]
+    }
+  },
+  "prior_controls": "Earlier controls rejected an already-successful peer during normal retirement; those failures remain retained. The final identical control permits normal peer exit during retirement while still requiring the retirement receipt, stream EOF and actual wait.",
+  "limits": [
+    "Sent-once key packets do not establish which menu item the GUI selected.",
+    "The installed flow must still verify the actual launched native service and window.",
+    "No navigation or native deadline was increased."
+  ]
+}

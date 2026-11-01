@@ -203,5 +203,41 @@
       "Capture is retained diagnostic evidence, not a newly qualified public screenshot.",
       "Missing native AppLibrary adaptation is a separate next-path prerequisite."
     ]
+  },
+  "followup_menu_and_apps_visible": {
+    "selection_sha256": "d5970f256f211c21d4631a76efcf6d03764286b27855f1e797d3d6bfdf1fd0aa",
+    "image_sha256": "6f9288e4cfcda9deb82f1da926662306b8d77b6b745adf1a154177d6c9acb8f4",
+    "passed": false,
+    "root_menu_entries_observed": 10,
+    "Apps_opened_by_actual_RFB": true,
+    "actual_catalog_entries": 15,
+    "visible_label_bands": 10,
+    "manual_frame_observation": "Nine full rows and a faded tenth-row peek; remaining apps require navigation.",
+    "native_app_launched": false,
+    "failure": "Observer required all15 catalog entries to be simultaneously visible.",
+    "guest_case_closure_qualified": false,
+    "guest_cleanup_errors": [
+      "owned helper: AssertionError('034-accept-permissions-apps-3-native-capture.log actual wait observed late')"
+    ],
+    "actual_QEMU_wait_exit": 0,
+    "outer_cleanup_qualified": true,
+    "receipts": {
+      "result.json": {
+        "bytes": 399167,
+        "sha256": "5e55d1e912a60910fd2aae6a79e1ee6ba72470c82a9fe04ac6fe35ddf8a8b597"
+      },
+      "boot-result.json": {
+        "bytes": 26391,
+        "sha256": "9ca135ddff65149f43952e354bf3608d2937856567492fe072dae6ae30c380b2"
+      },
+      "run/receipt.json": {
+        "bytes": 23329,
+        "sha256": "01db5bdf9eab31637208680439b05c9f58fd883ed6dc14f7069e9684732894c7"
+      }
+    },
+    "limits": [
+      "Full consent/connection/packet and second-boot sequence remain unverified.",
+      "No new public screenshot qualification or phone evidence."
+    ]
   }
 }

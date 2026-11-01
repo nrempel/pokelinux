@@ -78,3 +78,30 @@ viewer pass, but its outer result fails on that count. Exact actual-result
 RED→GREEN and five altered-result refusal controls pass. A ninth fresh VM run
 now passes the repaired checker, guest PCM sequence, final frame/EOF and complete
 outer closure. Historical failed results remain unchanged.
+
+### Installed-menu keyboard navigation
+
+The separate `permissions_acceptance_viewer.py` and
+`permissions_acceptance_input.py` support the bounded installed-app input flow.
+They permit Page Down, Down and Return alongside click, Alt+Tab and normal close.
+Each key has one down/up pair; held-key cleanup follows the packet's down bit,
+including cancellation during the hold. Requests keep the existing sequence cap,
+deadline handoff and no-retry behavior. These helpers do not establish which app
+the menu selected; the installed test must verify its actual service/window.
+
+`test_acceptance_navigation.py` runs the real peer subprocess and guest handoff
+over a UID1000 Unix socket. Its RFB server and black pixels are authored test
+inputs. Normal completion checks exact packets, both frames, EOF and process
+wait0. Cancellation checks a matching key-up, failed peer wait1 and no replay.
+This is host socket evidence, not GUI, ARM or phone evidence.
+
+From the repository root, as UID/GID1000:
+
+```sh
+menu_input_source=$(mktemp -d)
+menu_input_checks=$(mktemp -d)
+cp tools/native-omarchy-viewer/permissions_acceptance_*.py tools/native-omarchy-viewer/rfb_*.py tools/native-omarchy-viewer/viewer_protocol.py tools/native-omarchy-viewer/viewer_guest.py "$menu_input_source/"
+cp tools/native-omarchy-human-preview/human_guest.py tools/native-installed-services/owned.py "$menu_input_source/"
+python3 -B tools/native-omarchy-viewer/test_acceptance_navigation.py --host "$menu_input_source" --guest "$menu_input_source" --output "$menu_input_checks/normal"
+python3 -B tools/native-omarchy-viewer/test_acceptance_navigation.py --host "$menu_input_source" --guest "$menu_input_source" --output "$menu_input_checks/abort" --abort
+```

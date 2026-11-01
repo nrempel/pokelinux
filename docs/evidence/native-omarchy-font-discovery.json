@@ -85,7 +85,7 @@
   "cleanup_errors": [],
   "limits": [
     "No menu or app frame was rendered in this preparation.",
-    "The current navigation cohort continues to use image10, excluding these font assets.",
+    "The concurrent navigation cohort used image10 without these assets; later integration is recorded separately.",
     "General icon fonts and monospace selection remain separate work.",
     "No Pixel hardware is qualified."
   ]

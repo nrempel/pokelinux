@@ -159,6 +159,13 @@ Guest cleanup remains empty, normal shutdown completes and actual QEMU wait0
 passes. The full installed flow remains failed. The captured bar also has missing glyphs; font resources require a
 separate correction. No new public screenshot is qualified.
 [Current partial evidence](evidence/native-installed-menu-red.json).
+The subsequent corrected image renders the ten-entry root menu and opens Apps.
+Its catalog has 15 entries, but the menu folds the list into nine complete rows
+and a faded tenth-row peek. The current observer rejects this legitimate
+scrolling viewport; no app launch, consent or packet flow passed. Guest closure
+is unqualified because a capture helper's actual wait was observed late, while
+QEMU exits0 and outer cleanup passes. The next test uses the genuine menu's
+keyboard navigation and retains full catalog/desktop identity checks.
 [Partial installed startup evidence](evidence/native-installed-vm-seat-startup.json).
 This supplies
 Linux display-device access beneath the Rust owner; it qualifies no Pixel display
