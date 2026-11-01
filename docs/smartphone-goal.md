@@ -1,5 +1,32 @@
 # Omarchy smartphone goal
 
+## Current delivery checkpoint
+
+The user-facing target is Omarchy on Pixel 10 with working phone functionality.
+A desktop preview alone does not satisfy it. Release evidence must include
+incoming/outgoing calls with two-way audio, incoming/outgoing SMS, cellular data,
+and receiving behavior while locked and after reboot. Suspend wake and recovery
+remain explicit requirements, not implications of screen-off ringing. None of
+these Pixel 10 hardware gates is qualified; physical-phone access remains
+prohibited until the user authorizes it separately. Upstream Pixel 7 reports are
+references for implementation, not transferable Pixel 10 evidence.
+
+The experimental installed ARM human preview is the immediate delivery priority.
+Its launcher must demonstrate bounded startup, usable viewer input and cleanup;
+full automated two-boot acceptance separately gates reboot-persistence claims.
+The selected image remains an explicit prerequisite, not a fresh-host installer.
+
+Cold 26 reaches normal Allow/Enable, two packet exchanges across Settings
+close/reopen, and explicit Disable with independent network readback. Its aggregate
+and guest cleanup fail. Cold 27 reaches the first packet and background connection
+with qualified cleanup, but the expected reopened Settings window is not observed;
+Foot appears in the shell journal near activation. These are separate failed
+cohorts, not one passing lifecycle. See the [current handoff](development-handoff.md),
+[installed evidence](native-installed-wireless-coldboot.md) and original screenshot
+on the [main page](../README.md). Pixel boot, phone hardware and full IMS remain open.
+
+## Component evidence history
+
 The [fixed NetworkControl permission authority](native-network-permission-authority.md)
 now passes actual three-case RED→GREEN, two unchanged audio controls and all 24
 affected permission regressions on native x86_64. Scope comes only from the
