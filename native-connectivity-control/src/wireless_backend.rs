@@ -1,6 +1,7 @@
 //! Retained open-radio and fixed-IPv4 ownership for one exclusive worker epoch.
 //! Dropping this object releases descriptors; only an explicit successful
-//! Disconnect removes the profile and association. No recovery or retry is run.
+//! Disconnect removes the profile and association. Periodic read-only deferral
+//! never renews a fact or retries a mutation.
 use crate::{
     fixed_address::{ExistingIpv4Profile, ExistingLinkIdentity, ProfileFact},
     kernel::{self, Error},
@@ -240,6 +241,29 @@ impl WirelessBackend {
         result.map_err(|classification| diagnostic.finish(classification))
     }
 
+    /// A periodic observation may defer only when the retained radio explicitly
+    /// proves its read-only boundary reusable. No partial combined fact escapes.
+    /// Startup and every mutation continue to use strict observations.
+    pub fn refresh_periodic(
+        &mut self,
+        until: u64,
+    ) -> Result<PeriodicRefresh<WirelessFact>, Failure> {
+        self.active()?;
+        let mut diagnostic = Diagnostic::default();
+        let result = refresh_periodic_parts(
+            &mut Retained {
+                radio: &mut self.radio,
+                profile: &mut self.profile,
+                diagnostic: &mut diagnostic,
+            },
+            &self.expected,
+            self.connected,
+            &mut self.terminal,
+            until,
+        );
+        result.map_err(|classification| diagnostic.finish(classification))
+    }
+
     /// Connect confirms the exact radio association before adding the profile.
     /// Disconnect confirms profile removal before submitting radio Disconnect.
     /// Every stage and the final bracketed read use this unchanged cutoff.
@@ -289,10 +313,22 @@ fn retained_radio_error(error: wireless::Error) -> Error {
     }
 }
 
+/// A deferred read supplies no observation and grants no new lease or action.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum PeriodicRefresh<T> {
+    Observed(T),
+    Deferred,
+}
+
 // This private seam exercises only sequencing and composed uncertainty. The
 // production implementation always delegates to the two retained primitives.
 trait Components {
     fn radio_refresh(&mut self, bracket: RadioBracket, until: u64) -> Result<RadioFact, Error>;
+    fn radio_refresh_periodic(
+        &mut self,
+        bracket: RadioBracket,
+        until: u64,
+    ) -> Result<PeriodicRefresh<RadioFact>, Error>;
     fn profile_refresh(&mut self, until: u64) -> Result<ProfileFact, Error>;
     fn associate(&mut self, value: bool, until: u64) -> Result<RadioFact, Error>;
     fn configure(&mut self, value: bool, until: u64) -> Result<ProfileFact, Error>;
@@ -309,6 +345,22 @@ impl Components for Retained<'_> {
             let observation = self.radio.refresh_failure_context();
             retained_radio_error(self.diagnostic.radio_refresh(bracket, observation, error))
         })
+    }
+    fn radio_refresh_periodic(
+        &mut self,
+        bracket: RadioBracket,
+        until: u64,
+    ) -> Result<PeriodicRefresh<RadioFact>, Error> {
+        self.radio
+            .refresh_periodic(until)
+            .map(|outcome| match outcome {
+                wireless::PeriodicRefresh::Observed(fact) => PeriodicRefresh::Observed(fact),
+                wireless::PeriodicRefresh::Deferred => PeriodicRefresh::Deferred,
+            })
+            .map_err(|error| {
+                let observation = self.radio.refresh_failure_context();
+                retained_radio_error(self.diagnostic.radio_refresh(bracket, observation, error))
+            })
     }
     fn profile_refresh(&mut self, until: u64) -> Result<ProfileFact, Error> {
         self.profile
@@ -412,6 +464,37 @@ fn refresh_parts(
     observe(parts, expected, connected, until).inspect_err(|_| *terminal = true)
 }
 
+fn refresh_periodic_parts(
+    parts: &mut impl Components,
+    expected: &Expected,
+    connected: bool,
+    terminal: &mut bool,
+    until: u64,
+) -> Result<PeriodicRefresh<WirelessFact>, Error> {
+    if *terminal {
+        return Err(Error::Uncertain);
+    }
+    kernel::command_deadline(until)?;
+    let result = (|| {
+        let first = match parts.radio_refresh_periodic(RadioBracket::BeforeProfile, until)? {
+            PeriodicRefresh::Observed(fact) => fact,
+            PeriodicRefresh::Deferred => return Ok(PeriodicRefresh::Deferred),
+        };
+        // A later deferral must never hide a contradiction already observed.
+        check_radio(expected, connected, first)?;
+        let profile = parts.profile_refresh(until)?;
+        check_profile(expected, connected, &profile)?;
+        let last = match parts.radio_refresh_periodic(RadioBracket::AfterProfile, until)? {
+            PeriodicRefresh::Observed(fact) => fact,
+            PeriodicRefresh::Deferred => return Ok(PeriodicRefresh::Deferred),
+        };
+        let fact = combine(expected, connected, first, &profile, last)?;
+        parts.before(until)?;
+        Ok(PeriodicRefresh::Observed(fact))
+    })();
+    result.inspect_err(|_| *terminal = true)
+}
+
 #[derive(Default)]
 struct ActionProgress {
     changed: bool,
@@ -495,6 +578,118 @@ fn set_parts(
 mod tests {
     use super::*;
     use std::collections::VecDeque;
+
+    #[test]
+    fn periodic_deferral_withholds_both_partial_brackets_without_retirement() {
+        for defer_at in [1, 3] {
+            let mut fake = Fake::new(true);
+            fake.defer_at = Some(defer_at);
+            let mut terminal = false;
+            let cutoff = until();
+            assert_eq!(
+                refresh_periodic_parts(&mut fake, &expected(), true, &mut terminal, cutoff),
+                Ok(PeriodicRefresh::Deferred),
+                "periodic read-only deferral must not become terminal failure"
+            );
+            assert!(!terminal);
+            let expected_steps = if defer_at == 1 {
+                vec![Step::PeriodicRadio]
+            } else {
+                vec![Step::PeriodicRadio, Step::Profile, Step::PeriodicRadio]
+            };
+            assert_eq!(
+                fake.calls,
+                expected_steps
+                    .into_iter()
+                    .map(|s| (s, cutoff))
+                    .collect::<Vec<_>>()
+            );
+            assert!(fake.associated && fake.configured);
+
+            // A later observation repeats the whole bracket, not a remainder.
+            fake.calls.clear();
+            fake.brackets.clear();
+            fake.defer_at = None;
+            fake.radio_times = [800, 1000].into();
+            fake.profile_times = [900].into();
+            let next_cutoff = until();
+            let PeriodicRefresh::Observed(fact) =
+                refresh_periodic_parts(&mut fake, &expected(), true, &mut terminal, next_cutoff)
+                    .unwrap()
+            else {
+                panic!("later full bracket must produce its own observation")
+            };
+            assert_eq!(fact.observed_at_ns, 800);
+            assert!(!terminal);
+            assert_eq!(
+                fake.calls,
+                [
+                    Step::PeriodicRadio,
+                    Step::Profile,
+                    Step::PeriodicRadio,
+                    Step::Check
+                ]
+                .into_iter()
+                .map(|s| (s, next_cutoff))
+                .collect::<Vec<_>>()
+            );
+        }
+    }
+
+    #[test]
+    fn periodic_deferral_cannot_hide_an_already_observed_contradiction() {
+        for contradict_at in [1, 2] {
+            let mut fake = Fake::new(true);
+            fake.contradict_at = Some(contradict_at);
+            fake.defer_at = Some(3);
+            let mut terminal = false;
+            assert_eq!(
+                refresh_periodic_parts(&mut fake, &expected(), true, &mut terminal, until()),
+                Err(Error::Conflict)
+            );
+            assert!(terminal);
+            assert_eq!(fake.calls.len(), contradict_at);
+        }
+    }
+
+    #[test]
+    fn periodic_component_errors_still_retire_without_mutating() {
+        for fail_at in [1, 2, 3, 4] {
+            let mut fake = Fake::new(true);
+            fake.fail_at = Some((fail_at, Error::Deadline));
+            let mut terminal = false;
+            assert_eq!(
+                refresh_periodic_parts(&mut fake, &expected(), true, &mut terminal, until()),
+                Err(Error::Deadline)
+            );
+            assert!(terminal);
+            assert!(fake.associated && fake.configured);
+            assert_eq!(fake.calls.len(), fail_at);
+        }
+    }
+
+    #[test]
+    fn mutation_prior_readback_never_uses_periodic_deferral() {
+        let mut fake = Fake::new(false);
+        fake.defer_at = Some(1);
+        let mut terminal = false;
+        let mut connected = false;
+        let cutoff = until();
+        assert_eq!(
+            set_parts(
+                &mut fake,
+                &expected(),
+                &mut connected,
+                &mut terminal,
+                true,
+                cutoff
+            ),
+            Err(Error::Deadline)
+        );
+        assert!(terminal);
+        assert!(!connected && !fake.associated && !fake.configured);
+        assert_eq!(fake.calls, [(Step::Radio, cutoff)]);
+    }
 
     #[test]
     fn diagnostic_retains_raw_radio_detail_and_composed_classification() {
@@ -618,6 +813,7 @@ mod tests {
     #[derive(Clone, Copy, Debug, PartialEq, Eq)]
     enum Step {
         Radio,
+        PeriodicRadio,
         Profile,
         Check,
         Associate(bool),
@@ -634,6 +830,7 @@ mod tests {
         brackets: Vec<RadioBracket>,
         fail_at: Option<(usize, Error)>,
         contradict_at: Option<usize>,
+        defer_at: Option<usize>,
         radio_times: VecDeque<u64>,
         profile_times: VecDeque<u64>,
     }
@@ -647,6 +844,7 @@ mod tests {
                 brackets: vec![],
                 fail_at: None,
                 contradict_at: None,
+                defer_at: None,
                 radio_times: [100, 300, 400, 600].into(),
                 profile_times: [200, 500].into(),
             }
@@ -681,7 +879,23 @@ mod tests {
         fn radio_refresh(&mut self, bracket: RadioBracket, until: u64) -> Result<RadioFact, Error> {
             self.brackets.push(bracket);
             self.call(Step::Radio, until)?;
+            if self.defer_at == Some(self.calls.len()) {
+                return Err(Error::Deadline);
+            }
             Ok(self.radio_fact())
+        }
+        fn radio_refresh_periodic(
+            &mut self,
+            bracket: RadioBracket,
+            until: u64,
+        ) -> Result<PeriodicRefresh<RadioFact>, Error> {
+            self.brackets.push(bracket);
+            self.call(Step::PeriodicRadio, until)?;
+            if self.defer_at == Some(self.calls.len()) {
+                Ok(PeriodicRefresh::Deferred)
+            } else {
+                Ok(PeriodicRefresh::Observed(self.radio_fact()))
+            }
         }
         fn profile_refresh(&mut self, until: u64) -> Result<ProfileFact, Error> {
             self.call(Step::Profile, until)?;

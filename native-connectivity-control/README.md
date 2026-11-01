@@ -1,11 +1,12 @@
 # Rust connectivity control
 
-Retained radio refresh failures now include the observation phase, command
-transaction state and composed before/after-profile position. The first error,
-retirement and deadlines are preserved; completed framing does not authorize
-recovery. Actual host controls pass; Cold24 now retains the complete early
-installed ARM diagnostic. Recovery and the full GUI lifecycle remain unqualified.
-[Scope and evidence](../docs/native-wireless-refresh-diagnostics.md).
+Periodic read-only refresh now supports typed `Deferred` at the guarded final
+quiet boundary: completed command framing and no consumed-but-unvalidated event
+datagram. It returns no partial fact or lease renewal; startup and explicit
+actions stay strict. Selected host tests and five actual ARM/hwsim direct-radio
+controls pass. Normal persistent-service recovery, the final public-source build
+and installed GUI/two-boot acceptance remain pending.
+[Scope and evidence](../docs/native-wireless-refresh-diagnostics.md#periodic-only-deferral).
 
 Worker failures attempt a bounded diagnostic before error propagation drops the
 parent connection. FIFO output uses one independent nonblocking write; Unix stream
@@ -104,7 +105,8 @@ with code1 and source EPERM. Only `ReduceCapabilities` is executed by that contr
 the original seven contexts compile. The readiness hint adds a separate
 `CheckCommandReady` context without a command cutoff. See
 [error-context evidence](../docs/native-connectivity-worker-error-context.md).
-No payload, guard, deadline, retry or retirement policy changes.
+Those diagnostic additions leave payloads, guards, deadlines, retry and
+retirement policy unchanged.
 
 The separate `main_service` and nonblocking `client` now pass the unchanged
 normal-Main packet consumer against the final source after an actual typed-refusal

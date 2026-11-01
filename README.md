@@ -11,63 +11,27 @@ modules and firmware provide the initial device-support baseline.
 **Current status: working VM prototypes and installed ARM service checkpoints.
 No physical phone has been tested, and there is no verified bootable phone image.**
 
-The shared Rust permission service now supports granting and revoking Settings
-network control while preserving audio permissions. The normal consent screen now
-passes host tests for both audio and network permissions, including actual button
-presses. The ARM consent app and session owner also pass build and loader checks;
-Sounds and the current audio/theme helpers also pass ARM build and loader checks.
-Installed theme startup now passes after fixing a missing runtime-directory
-dependency. Simulated-radio provisioning now starts and stops successfully. The
-combined ARM boot now starts the desktop session after adding an explicit VM
-seat service. Its identity, socket and normal shutdown checks now pass. The
-installed menu and application list now render after restoring omitted menu
-assets and the native launch adapter. The genuine menu now opens the normal
-Permissions window, and a real Allow click records Settings network control while
-preserving other grants. The timed allowed-state check and normal Permissions
-close now pass, and Settings has the correct app identity and workarea layout.
-A real Enable click now connects over simulated Wi-Fi and exchanges one UDP
-roundtrip. The connection remains after normal Settings close. Reopening then
-fails a native capture check; Disconnect, quiet and reboot persistence remain
-unverified.
-Cold 23 then fails its first inspection before any menu after a radio-refresh
-deadline expires. Cold 24 reaches Settings but times out before its first Enable
-view. The connection milestone is not yet repeatable; capture-fix GUI integration
-and the complete two-boot flow remain unqualified.
-[Latest progress](docs/evidence/native-installed-consent-close-progress.json).
-[Capture-name host evidence](docs/evidence/native-installed-menu-capture-ordinal.json).
-Worker error reporting now passes seven actual host pipe/socket checks after a
-missing-record RED. Precise refresh diagnostics now also pass 47 selected host checks.
-Both normal ARM binaries build with 65 passing host regressions and one ignored
-fixture. Image 20 changes only those two binaries. Cold 24 retains the complete
-early journal error: radio-refresh expiry at `BeforeProfile / QuietAfter`, with
-transaction `Completed`. Diagnostic delivery and guest/QEMU/outer cleanup qualify;
-recovery and connection success do not.
-[Installed diagnostic evidence](docs/evidence/native-installed-wireless-refresh-cold24.json).
-[ARM build scope](docs/evidence/native-connectivity-radio-diagnostics-arm-build.json).
-[Diagnostic scope](docs/native-connectivity-worker-error-context.md#journal-stream-diagnostic).
+In one installed ARM VM run, the genuine Omarchy menu opens Permissions, the
+real Allow action grants Settings network control while leaving other grants
+unchanged, and Enable in normal Settings connects to a fixed open access point
+using simulated Wi-Fi. One UDP roundtrip succeeds, and closing Settings normally
+leaves the connection active.
+[Installed milestone](docs/evidence/native-installed-consent-close-progress.json).
 
-A host-tested correction preserves the original connection deadline while
-retaining permission checks; its installed ARM run reaches the milestone above,
-while the complete flow remains failed.
-[Host lifetime evidence](docs/evidence/native-connectivity-authority-action-lifetimes.json).
-The original Omarchy icon font now stages with its attribution files and passes
-ARM discovery checks. Rendering remains unverified.
-[Cold-boot status](docs/native-installed-wireless-coldboot.md).
-[Permission progress](docs/native-network-permission-authority.md).
-A graphical-only [bundle composer](tools/native-omarchy-menu/README.md) now
-refuses omitted or unadapted native-menu components in actual host staging
-checks and composes the standard close binding once into the explicit normal
-compositor config; this adds no GUI or boot qualification.
-A fixed [installed-profile recipe](tools/native-installed-services/graphical-profile/README.md)
-now accounts for all319 supplied targets in host staging, using a named artifact
-index and two bounded layers. It preserves the maintained Settings rule and
-requires the existing base compositor; builds and boot acceptance remain separate.
+Reopening, explicit disconnection and persistence across two boots remain
+unqualified. Newer installed boots failed before Enable, so the connection
+milestone is not yet repeatable.
+[Current status and retained failures](docs/native-installed-wireless-coldboot.md).
 
-The Rust connection service now resolves its configured interface at startup,
-without saving boot-specific kernel IDs. An ARM simulation passes connection,
-packet exchange across client close/reopen, and explicit disconnection. Installed
-boot and phone Wi-Fi remain unverified.
-[Startup and connection evidence](docs/native-connectivity-installed-selector.md).
+Separately, a headless ARM service test passes connection, packet exchange across
+actual client close/reopen, explicit Disconnect and quiet checks. Its controlled
+simulated-radio fixture qualifies the service lifecycle separately from the
+normal installed GUI and consent flow.
+[Headless service evidence](docs/native-connectivity-installed-selector.md).
+
+A narrow radio-observation change now passes separate ARM controls. Testing it
+through the normal installed service is next.
+[Diagnostic and deferral scope](docs/native-wireless-refresh-diagnostics.md).
 
 ## See it running
 

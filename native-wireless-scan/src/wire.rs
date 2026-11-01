@@ -256,6 +256,7 @@ struct Connection {
     port: u32,
     sequence: u32,
     transaction: std::cell::Cell<CommandTransaction>,
+    unvalidated_datagram: std::cell::Cell<bool>,
     request_flags: Option<u16>,
 }
 impl Connection {
@@ -274,6 +275,7 @@ impl Connection {
             port,
             sequence: 0,
             transaction: std::cell::Cell::new(CommandTransaction::NotSent),
+            unvalidated_datagram: std::cell::Cell::new(false),
             request_flags: Some(0),
         })
     }
@@ -318,6 +320,8 @@ impl Connection {
             &net::netlink::SocketAddrNetlink::new(0, 0),
         )
         .map_err(errno)?;
+        #[cfg(test)]
+        periodic_hwsim_tests::after_send(self, request, n, budget);
         budget.fence()?;
         if n != request.len() {
             return Err(Failure::Loss);
@@ -343,6 +347,10 @@ impl Connection {
             Err(Errno::NOBUFS) => return Err(Failure::Loss),
             Err(e) => return Err(errno(e)),
         };
+        // A post-receive expiry must not hide event bytes already consumed.
+        self.unvalidated_datagram.set(true);
+        #[cfg(test)]
+        periodic_hwsim_tests::after_receive(self, msg.bytes, budget);
         budget.fence()?;
         if msg
             .flags
@@ -958,6 +966,7 @@ fn quiet_mlme(
                         return Err(Failure::Contended);
                     }
                 }
+                events.unvalidated_datagram.set(false);
             }
         }
     }
@@ -988,6 +997,7 @@ fn await_mlme(
                 completed = true;
             }
         }
+        events.unvalidated_datagram.set(false);
         if completed {
             return Ok(());
         }
@@ -1310,6 +1320,8 @@ impl RadioEpoch {
         self.phase = RadioObservationPhase::InterfaceAfter;
         self.check_interface(budget)?;
         self.phase = RadioObservationPhase::QuietAfter;
+        #[cfg(test)]
+        periodic_hwsim_tests::before_final_quiet(self, budget);
         self.quiet(expected, budget)?;
         self.phase = RadioObservationPhase::NamespaceAfter;
         self.namespace.check()?;
@@ -1349,6 +1361,32 @@ impl RadioEpoch {
     /// failures may have no context. This grants no freshness or retry authority.
     pub fn refresh_failure_context(&self) -> Option<RadioRefreshDiagnostic> {
         self.state.refresh_failure_context
+    }
+    /// Observe without mutating the radio. Only an expiry at the final event
+    /// check, after command completion and without unvalidated consumed events,
+    /// may defer. Deferral preserves the epoch but publishes no fresh fact.
+    pub fn refresh_periodic(
+        &mut self,
+        until: u64,
+    ) -> std::result::Result<crate::PeriodicRefresh, Error> {
+        let mut budget = self.budget(until)?;
+        match self.observe(self.state.associated, &mut budget) {
+            Ok(fact) => Ok(crate::PeriodicRefresh::Observed(fact)),
+            Err(Failure::Expired)
+                if self.phase == RadioObservationPhase::QuietAfter
+                    && self.command.transaction.get() == CommandTransaction::Completed
+                    && !self.events.unvalidated_datagram.get() =>
+            {
+                Ok(crate::PeriodicRefresh::Deferred)
+            }
+            Err(failure) => Err(self.state.fail_refresh(
+                failure,
+                RadioRefreshDiagnostic {
+                    phase: self.phase,
+                    transaction: self.command.transaction.get(),
+                },
+            )),
+        }
     }
     /// Make at most one explicitly requested CONNECT or DISCONNECT. A repeated
     /// request for the confirmed state only refreshes readback. No retry, rollback,
@@ -1583,6 +1621,10 @@ pub(crate) fn disconnect(
         completed_boottime_ns,
     })
 }
+
+#[cfg(test)]
+#[path = "periodic_hwsim_tests.rs"]
+mod periodic_hwsim_tests;
 
 #[cfg(test)]
 mod tests {

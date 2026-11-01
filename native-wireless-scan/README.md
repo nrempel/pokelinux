@@ -1,11 +1,12 @@
 # Native one-shot wireless operations
 
-Retained radio refresh failures now include the observation phase, command
-transaction state and composed before/after-profile position. The first error,
-retirement and deadlines are preserved; completed framing does not authorize
-recovery. Actual host controls pass; Cold24 now retains the complete early
-installed ARM diagnostic. Recovery and the full GUI lifecycle remain unqualified.
-[Scope and evidence](../docs/native-wireless-refresh-diagnostics.md).
+Periodic read-only refresh now supports typed `Deferred` at the guarded final
+quiet boundary: completed command framing and no consumed-but-unvalidated event
+datagram. It returns no partial fact or lease renewal; startup and explicit
+actions stay strict. Selected host tests and five actual ARM/hwsim direct-radio
+controls pass. Normal persistent-service recovery, the final public-source build
+and installed GUI/two-boot acceptance remain pending.
+[Scope and evidence](../docs/native-wireless-refresh-diagnostics.md#periodic-only-deferral).
 
 Rust Linux `nl80211` operations for a newly created, exclusively administered
 radio epoch: discovery, explicit open association and explicit Disconnect.

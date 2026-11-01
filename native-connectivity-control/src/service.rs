@@ -5,7 +5,7 @@ use crate::{
     owner::{self, Action, Authority, Finish, Id, Principal, Reject, Reply},
     service_fact::{Fact, LinkIdentity, decode_record, record},
     startup::{Namespace, Profile},
-    wireless_backend::WirelessBackend,
+    wireless_backend::{PeriodicRefresh, WirelessBackend},
 };
 use pokelinux_network_state::{NamespaceIdentity, boot_time_ns};
 use pokelinux_process_owner::{
@@ -151,6 +151,20 @@ impl Link {
             Self::Wireless(link) => backend_result(
                 "refresh_wireless",
                 link.refresh(until).map(Self::wireless_fact),
+            ),
+        }
+    }
+    fn refresh_periodic(&mut self, until: u64) -> io::Result<PeriodicRefresh<(Fact, u64)>> {
+        match self {
+            Self::Virtual(_) => self.refresh(until).map(PeriodicRefresh::Observed),
+            Self::Wireless(link) => backend_result(
+                "refresh_wireless",
+                link.refresh_periodic(until).map(|outcome| match outcome {
+                    PeriodicRefresh::Observed(value) => {
+                        PeriodicRefresh::Observed(Self::wireless_fact(value))
+                    }
+                    PeriodicRefresh::Deferred => PeriodicRefresh::Deferred,
+                }),
             ),
         }
     }
@@ -892,6 +906,7 @@ pub fn worker(arguments: &[String]) -> io::Result<()> {
         parent.send_message(cutoff(until), &record(1, 0, fact, refreshed_at)),
     )?;
     let mut last_seen_id = 0;
+    let mut next_refresh_at = refreshed_at.saturating_add(50_000_000);
     loop {
         if worker_step(WorkerStep::CheckCommandReady, None, parent.message_ready())? {
             let envelope = boot_time_ns().saturating_add(ENVELOPE);
@@ -929,6 +944,7 @@ pub fn worker(arguments: &[String]) -> io::Result<()> {
                         Some(original_until),
                         link.set_connected(bytes[18] != 0, original_until),
                     )?;
+                    next_refresh_at = refreshed_at.saturating_add(50_000_000);
                     worker_step(
                         WorkerStep::PublishCompletion,
                         Some(original_until),
@@ -941,18 +957,28 @@ pub fn worker(arguments: &[String]) -> io::Result<()> {
             }
         }
         let sampled = boot_time_ns();
-        if sampled.saturating_sub(refreshed_at) >= 50_000_000 {
+        if sampled >= next_refresh_at {
             let read_until = sampled.saturating_add(100_000_000);
-            (fact, refreshed_at) = worker_step(
+            match worker_step(
                 WorkerStep::RefreshBackend,
                 Some(read_until),
-                link.refresh(read_until),
-            )?;
-            worker_step(
-                WorkerStep::PublishObservation,
-                Some(read_until),
-                parent.send_message(cutoff(read_until), &record(1, 0, fact, refreshed_at)),
-            )?;
+                link.refresh_periodic(read_until),
+            )? {
+                PeriodicRefresh::Observed(observation) => {
+                    (fact, refreshed_at) = observation;
+                    next_refresh_at = refreshed_at.saturating_add(50_000_000);
+                    worker_step(
+                        WorkerStep::PublishObservation,
+                        Some(read_until),
+                        parent.send_message(cutoff(read_until), &record(1, 0, fact, refreshed_at)),
+                    )?;
+                }
+                PeriodicRefresh::Deferred => {
+                    // Publish nothing. The old fact retains its original lease;
+                    // a later independent observation gets its own fixed cutoff.
+                    next_refresh_at = boot_time_ns().saturating_add(50_000_000);
+                }
+            }
         }
         std::thread::sleep(Duration::from_millis(2));
     }

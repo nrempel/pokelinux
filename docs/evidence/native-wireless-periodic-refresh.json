@@ -1,0 +1,409 @@
+{
+  "schema": 1,
+  "status": "Implemented guarded periodic deferral; qualified direct-radio RED/GREEN and host checks; normal-service and installed acceptance pending",
+  "documentation_base_commit": "a2a31c428618c14f5f718ec656686a1073d00850",
+  "baseline_RED": {
+    "scope": "Direct radio-library test in a generic ARM VM with actual owned hwsim station/AP; no normal Main, SDK, GUI or phone.",
+    "test": "wire::periodic_hwsim_tests::periodic_final_quiet_defers_then_same_epoch_observes",
+    "desired_passed": false,
+    "behavior_RED_qualified": true,
+    "actual_libtest_exit": 101,
+    "phase": "QuietAfter",
+    "transaction": "Completed",
+    "consumed_event_bytes": 0,
+    "CONNECT_sends": 0,
+    "original_until_ns": 68433936733,
+    "expired_at_ns": 68434289323,
+    "fixture_prerequisites_and_custody_qualified": true,
+    "actual_QEMU_wait_exit": 0,
+    "expected_RED_boot_and_outer_qualification": true,
+    "actual_container_wait_exit": 1,
+    "radio_and_namespace_cleanup_qualified": true,
+    "same_daemon": true,
+    "exact_CID_absence": true,
+    "selected_inputs_unchanged": true,
+    "cleanup_errors": [],
+    "original_receipts": {
+      "guest": {
+        "bytes": 135444,
+        "sha256": "2572b3e73f9f5faee1746e8aee3c381f4270fd8939b013ed22bc9eaf436d9e61"
+      },
+      "boot": {
+        "bytes": 14536,
+        "sha256": "275c1429a4389fa5f826e32dacc8b6b592afd6c645bb75b244d7cdbdf41027e2"
+      },
+      "outer": {
+        "bytes": 33832,
+        "sha256": "d1b55e99c7c20e0fa897a80a7f8059474c4672bf9b1ab4c3c00dce2b249152c9"
+      }
+    },
+    "earlier_failed_cohorts_preserved": true
+  },
+  "Cold24_installed_failure_unchanged": true,
+  "installed_image20_unchanged": true,
+  "full_two_boot_tracer_qualified": false,
+  "phone_accessed": false,
+  "limits": [
+    "Direct-radio ARM and selected host controls do not qualify normal-service scheduling/publication or installed recovery.",
+    "Completed alone never authorizes deferral or recovery.",
+    "Cold24 and all prior failures retain their original scope; no timing-cause or installed-repair inference."
+  ],
+  "implementation_contract": {
+    "typed_outcomes": [
+      "Observed",
+      "Deferred"
+    ],
+    "periodic_read_only_only": true,
+    "requires": [
+      "expiry at final QuietAfter",
+      "completed command framing",
+      "no consumed-but-unvalidated event datagram"
+    ],
+    "no_partial_fact_or_publication": true,
+    "no_lease_renewal": true,
+    "next_independent_attempt_after_deferral_completion_ns": 50000000,
+    "normal_worker_next_attempt_budget_ns": 100000000,
+    "existing_fact_lease_ns": 250000000,
+    "strict_startup_and_explicit_actions": true,
+    "consumed_event_obligation_guard_required": true,
+    "observed_contradictions_and_other_errors_still_retire": true
+  },
+  "implementation_source": {
+    "base_commit": "a2a31c428618c14f5f718ec656686a1073d00850",
+    "selected_Rust_files_equal_qualified_validation_snapshot": {
+      "native-connectivity-control/src/service.rs": {
+        "bytes": 36117,
+        "sha256": "86780092f1b69535f565cceb538dfa97afdec5455846829c279a02366a82a0e4"
+      },
+      "native-connectivity-control/src/wireless_backend.rs": {
+        "bytes": 42010,
+        "sha256": "d34af7f1582c99774301e97690c0de1c1a590bd451a0b84d1d39ee25063a8a64"
+      },
+      "native-wireless-scan/src/lib.rs": {
+        "bytes": 4977,
+        "sha256": "c23e3160521316c2e2eb9c5414c91afa01ea9e7972a601f2b0893be4d78ae652"
+      },
+      "native-wireless-scan/src/wire.rs": {
+        "bytes": 81292,
+        "sha256": "b290b67a1a890cdb81e56b1e786dd2760d424a97efd03916c6d4dd756922d8f7"
+      },
+      "native-wireless-scan/src/periodic_hwsim_tests.rs": {
+        "bytes": 14263,
+        "sha256": "02ba260b4aae5eac65e3b18e03cbf2aa5a01d0a779bc830a429b50bf5775954a"
+      }
+    },
+    "implementation_files_include_changes_beyond_base": true
+  },
+  "validation_build_and_host": {
+    "qualified": true,
+    "candidate_validation_only": true,
+    "final_public_source_deploy_build": false,
+    "source_base_commit": "a2a31c428618c14f5f718ec656686a1073d00850",
+    "compiled_source_files": 65,
+    "compiled_source_files_and_original_locks_unchanged": true,
+    "fmt_and_strict_all_target_Clippy_passed": true,
+    "host_composed_tests_passed": 17,
+    "other_connectivity_tests_filtered_out": 45,
+    "radio_host_tests_passed": 34,
+    "hwsim_tests_ignored": 5,
+    "host_and_ARM_cfg_test_artifacts_compiled": true,
+    "normal_ARM_candidate_binaries_compiled": true,
+    "actual_ARM_or_hwsim_execution": false,
+    "normal_ARM_candidate_binaries": {
+      "Main_ARM": {
+        "bytes": 1046568,
+        "sha256": "04fc7c8cfa16150d9474d64fb398cc09695c730f7723f9e6c95bf958784d6ef7",
+        "ELF_machine": 183
+      },
+      "worker_ARM": {
+        "bytes": 1028128,
+        "sha256": "8f63d044e379296c8a729e879f1fa018f1ad96a3af5920cd6b7545ac71126f3c",
+        "ELF_machine": 183
+      }
+    },
+    "actual_compiler_container_wait": 0,
+    "all_owned_receipt_records_have_timely_actual_wait_and_PIPE_EOF": true,
+    "compiler_regular_output_not_PIPE_EOF": true,
+    "closure_closed_and_ECHILD": true,
+    "no_adopted_children": true,
+    "exact_name_and_CID_absent": true,
+    "same_daemon": true,
+    "selected_input_hash_entries": 6166,
+    "selected_inputs_unchanged": true,
+    "original_artifact": {
+      "bytes": 22563,
+      "sha256": "e2fd065c6615d130528a939bc058011157de891a7caeeb907277d8a52dc044ed"
+    },
+    "original_owner_receipt": {
+      "bytes": 1641763,
+      "sha256": "0c00e44acd218cfcc3b87da08d4d4766d7760cf8c76a1f4471f94115ee7b32ae"
+    },
+    "all_source_files_equal_formatted_validation_snapshot": true
+  },
+  "actual_ARM_hwsim_controls": {
+    "all_five_desired_tests_passed": true,
+    "same_frozen_test_source_sha256": "02ba260b4aae5eac65e3b18e03cbf2aa5a01d0a779bc830a429b50bf5775954a",
+    "same_ARM_libtest_ELF": {
+      "bytes": 1381864,
+      "sha256": "a8a36e5422c680a9a58aeab30542a2a0002d6efd0d1587317c3828b852a3932e"
+    },
+    "cases": {
+      "positive-sol-1": {
+        "test": "wire::periodic_hwsim_tests::periodic_final_quiet_defers_then_same_epoch_observes",
+        "outcome": "Deferred, then a fresh full observation on the same epoch and command/event descriptors",
+        "actual_test_exit": 0,
+        "hook": {
+          "point": "BeforeFinalReceive",
+          "phase": "Some(QuietAfter)",
+          "transaction": "Some(Completed)",
+          "original_until_ns": 76418137120,
+          "expired_at_ns": 76418344071,
+          "consumed_event_bytes": 0,
+          "connect_sends": 0
+        },
+        "original_receipts": {
+          "guest": {
+            "bytes": 135030,
+            "sha256": "73078912556e41a3f8ba9b1ae4ebc20a3a122f08e4571e6351c264d2791f9258"
+          },
+          "boot": {
+            "bytes": 14535,
+            "sha256": "5042e31d995985376094c3b5531fa6660331813941bc32ba93b89ec0b9e3c423"
+          },
+          "outer": {
+            "bytes": 33945,
+            "sha256": "c675778ed1650729d05ae9692c8f77a4596841ccadde5e4eafe7bef027d2a591"
+          }
+        }
+      },
+      "strict-refresh-sol-1": {
+        "test": "wire::periodic_hwsim_tests::strict_refresh_final_quiet_expiry_stays_terminal",
+        "outcome": "Strict refresh expiry remains terminal",
+        "actual_test_exit": 0,
+        "hook": {
+          "point": "BeforeFinalReceive",
+          "phase": "Some(QuietAfter)",
+          "transaction": "Some(Completed)",
+          "original_until_ns": 75638670242,
+          "expired_at_ns": 75638968497,
+          "consumed_event_bytes": 0,
+          "connect_sends": 0
+        },
+        "original_receipts": {
+          "guest": {
+            "bytes": 150187,
+            "sha256": "9304a0dc7f3dd2f6742b8c20e92e6094e75f0151dbb3ffbcf40eb5f853874885"
+          },
+          "boot": {
+            "bytes": 14535,
+            "sha256": "201d57c288a64388d267db171afb674672179ae3612f3156717321add4fbd079"
+          },
+          "outer": {
+            "bytes": 34257,
+            "sha256": "da9869a7b31d395992ff399bfccfad365d120362f98108380c9fbc6558b6184e"
+          }
+        }
+      },
+      "dispatched-connect-sol-1": {
+        "test": "wire::periodic_hwsim_tests::dispatched_connect_expiry_stays_uncertain",
+        "outcome": "One dispatched CONNECT expires uncertain; later observation refuses without another command",
+        "actual_test_exit": 0,
+        "hook": {
+          "point": "AfterConnectSend",
+          "phase": "None",
+          "transaction": "None",
+          "original_until_ns": 69089172598,
+          "expired_at_ns": 69089388464,
+          "consumed_event_bytes": 0,
+          "connect_sends": 1
+        },
+        "original_receipts": {
+          "guest": {
+            "bytes": 151134,
+            "sha256": "5e2791e5af168c1ae9a02bc7a5e9b8e3e95c4ca567dcfeb8d491473ec6d3ce32"
+          },
+          "boot": {
+            "bytes": 14535,
+            "sha256": "02c892c33b4d285f0c3fc5f94bef162d7363f5ba67a712fa41843a158f3157e9"
+          },
+          "outer": {
+            "bytes": 34316,
+            "sha256": "48b6fff5c91af6ab3aea63b9ada44929614c1fc6e988f182fa59da78fc85d6e8"
+          }
+        }
+      },
+      "consumed-event-sol-2": {
+        "test": "wire::periodic_hwsim_tests::consumed_mlme_then_expiry_stays_terminal",
+        "outcome": "Consumed event bytes then expiry remain terminal Expired",
+        "actual_test_exit": 0,
+        "hook": {
+          "point": "AfterEventReceive",
+          "phase": "Some(QuietAfter)",
+          "transaction": "Some(Completed)",
+          "original_until_ns": 76912116054,
+          "expired_at_ns": 76912396298,
+          "consumed_event_bytes": 2384,
+          "connect_sends": 0
+        },
+        "original_receipts": {
+          "guest": {
+            "bytes": 167807,
+            "sha256": "9e6132a4a51084eff0940e14a365a09683070a1a5abc098ef1e8e5cfe3b2d237"
+          },
+          "boot": {
+            "bytes": 14535,
+            "sha256": "efb1155899d134523b5bf1b8250b3d5c5a0920d316a70a9a16d935452e12eb58"
+          },
+          "outer": {
+            "bytes": 34257,
+            "sha256": "1f1782d862d865dcc71e49a101721212ddb7f0e28afc8f3b5c864df7b94729c9"
+          }
+        },
+        "AP_loss": {
+          "one_deauthenticate_command": true,
+          "independent_loss_readback_before_original_1s_gate": true,
+          "requested_at_ns": 76115880556,
+          "original_until_ns": 76912116054,
+          "loss_observed_at_ns": 76218648127
+        }
+      },
+      "queued-ap-loss-sol-2": {
+        "test": "wire::periodic_hwsim_tests::queued_ap_loss_during_deferral_stays_terminal",
+        "outcome": "Queued AP loss after Deferred remains terminal Contended",
+        "actual_test_exit": 0,
+        "hook": {
+          "point": "BeforeFinalReceive",
+          "phase": "Some(QuietAfter)",
+          "transaction": "Some(Completed)",
+          "original_until_ns": 75685347449,
+          "expired_at_ns": 75685540429,
+          "consumed_event_bytes": 0,
+          "connect_sends": 0
+        },
+        "original_receipts": {
+          "guest": {
+            "bytes": 167815,
+            "sha256": "c94f6abb866a88bd56a173d4117382baafafd776c30d9ae2b998a1691e91f470"
+          },
+          "boot": {
+            "bytes": 14535,
+            "sha256": "7a8b01133865f1ea59b8fc98ee129502578ac13580909e29e1fc3d5f58e2baef"
+          },
+          "outer": {
+            "bytes": 34256,
+            "sha256": "390863ffbe1b21355f4b7f17b67e100380ef29bf73d767e7f3034936175ec723"
+          }
+        },
+        "AP_loss": {
+          "one_deauthenticate_command": true,
+          "independent_loss_readback_before_original_1s_gate": true,
+          "requested_at_ns": 75890108824,
+          "original_until_ns": 76686359399,
+          "loss_observed_at_ns": 76001207122
+        }
+      }
+    },
+    "shared_qualification": {
+      "scope": "Direct radio library only; no normal Main, SDK, GUI, IP-profile packet flow or phone.",
+      "all_fixture_contract_and_custody_passed": true,
+      "all_recorded_owned_direct_child_wait_and_EOF_observations_timely": true,
+      "each_guest_terminal_adopted_wait_records": 33,
+      "adopted_children_actual_bounded_waits_qualified": true,
+      "adopted_child_PIPE_EOF_claimed": false,
+      "all_guests_ECHILD": true,
+      "all_QEMU_and_container_exits": 0,
+      "all_radio_namespace_cleanup_qualified": true,
+      "all_exact_CID_absence_same_daemon_and_selected_inputs_unchanged": true,
+      "cleanup_errors": [],
+      "timing_hook_counter_scope": "Counters describe the armed timing hook, not a complete count of fixture setup or all kernel operations."
+    }
+  },
+  "excluded_fixture_attempts": [
+    {
+      "cohort": "pokelinux-radio-periodic-hwsim-red-sol-1",
+      "excluded_from_behavioral_evidence": true,
+      "reason": "Fixture/prerequisite failure; no qualified behavioral RED",
+      "original_receipts": {
+        "guest": {
+          "bytes": 104933,
+          "sha256": "37ae648d3a0e605a130ba152c794542c2df3cbb5d113c2bf2eda902709f958d3"
+        },
+        "boot": {
+          "bytes": 14574,
+          "sha256": "ceadadf6f89167386f3f9d9b41992258dcca1bc756fd109cf8a9eebec3383a24"
+        },
+        "outer": {
+          "bytes": 33807,
+          "sha256": "5ddf3058f085fc4b20321d46709c48f60a36af5071a42117bcea33485d5b7a3c"
+        }
+      }
+    },
+    {
+      "cohort": "pokelinux-radio-periodic-hwsim-red-sol-2",
+      "excluded_from_behavioral_evidence": true,
+      "reason": "Fixture/prerequisite failure; no qualified behavioral RED",
+      "original_receipts": {
+        "guest": {
+          "bytes": 113089,
+          "sha256": "30c05ef6e902d7f60db3d00c13f0dd286c49953b2506355dc0d7c6f3691f8753"
+        },
+        "boot": {
+          "bytes": 14574,
+          "sha256": "34351896cc8a98c1c2a90d20e2e18e3bda4b9436bd71d448cd966ec02dce343a"
+        },
+        "outer": {
+          "bytes": 33807,
+          "sha256": "d843062999b83aacf6c717c5a72300398627fac5cb09716155d2ef01f286c48b"
+        }
+      }
+    },
+    {
+      "cohort": "pokelinux-radio-periodic-hwsim-green-consumed-event-sol-1",
+      "excluded_from_behavioral_evidence": true,
+      "reason": "EACCES in fixture gate handshake before desired boundary assertion",
+      "original_receipts": {
+        "guest": {
+          "bytes": 106236,
+          "sha256": "2e0cec57cd917885bdc4f86ddeaa860ce72714977f022a537b63918653f3421c"
+        },
+        "boot": {
+          "bytes": 14574,
+          "sha256": "aecafba246a7603f1700d0d2fb97d92cc423a0b42476a28384e082adda6560cd"
+        },
+        "outer": {
+          "bytes": 34260,
+          "sha256": "6c1f8e731bdb6c87eae37336fd1c9d6eb600a60be13fb9cb1d5d7bc608171122"
+        }
+      }
+    },
+    {
+      "cohort": "pokelinux-radio-periodic-hwsim-green-queued-ap-loss-sol-1",
+      "excluded_from_behavioral_evidence": true,
+      "reason": "EACCES in fixture gate handshake before desired boundary assertion",
+      "original_receipts": {
+        "guest": {
+          "bytes": 106806,
+          "sha256": "e96afe2e9e2ca56e14a0146a6a5382322a11e7e2688c5e8fba3717846ce189d7"
+        },
+        "boot": {
+          "bytes": 14574,
+          "sha256": "f004e2ab2a845af04bfcbf89e39801affd2127e65f0412bdef67b6463639c2aa"
+        },
+        "outer": {
+          "bytes": 34261,
+          "sha256": "bb7bad172c42f669d445981df724dbaadb1680d3f82af763f4cc110f2d44e44d"
+        }
+      }
+    }
+  ],
+  "negative_fixture_gate_correction": {
+    "only_gate_storage_moved_to_owned_guest_tmpfs": true,
+    "Rust_test_ELF_capabilities_and_original_cutoffs_unchanged": true
+  },
+  "pending_acceptance": {
+    "final_public_source_ARM_deploy_build": null,
+    "normal_persistent_Main_worker_periodic_runtime": null,
+    "installed_boot1": null,
+    "installed_boot2_same_disk": null
+  }
+}

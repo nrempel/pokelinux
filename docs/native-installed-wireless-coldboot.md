@@ -381,3 +381,11 @@ operational shutdown success does not replace it. Cold 22's connection milestone
 and all earlier failed runs keep their original scope.
 
 [Curated image, diagnostic and closure receipt hashes](evidence/native-installed-wireless-refresh-cold24.json).
+
+
+The separate [periodic-only deferral](native-wireless-refresh-diagnostics.md#periodic-only-deferral)
+now passes selected host checks and five actual generic ARM/hwsim direct-radio
+controls after qualified baseline RED. This does not execute the normal Main,
+SDK or GUI. The final public-source ARM deployment build, normal-service recovery
+and the installed two-boot tracer remain pending. Image 20 and Cold24's failed
+receipt are unchanged; no phone is accessed.

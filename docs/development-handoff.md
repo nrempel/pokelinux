@@ -2,7 +2,7 @@
 
 ## Immediate integration order
 
-Current checkpoint: published `951c6fd`, runtime image 20. Cold 22's real connection,
+Current installed checkpoint: image 20. Cold 22's real connection,
 one cap0 UDP roundtrip and connection retention after normal Settings close remain
 a bounded milestone. Its reopen capture failure and Cold 23's initial Inspect
 failure remain preserved. The [capture-name correction](evidence/native-installed-menu-capture-ordinal.json)
@@ -39,9 +39,26 @@ Normal ARM Main/worker now build from combined commit `9a40f26`; 57 library
 and eight owner tests pass with one ignored fixture. Actual artifacts and full
 compiler closure are qualified; no ARM execution occurred in that case.
 [Build evidence](evidence/native-connectivity-radio-diagnostics-arm-build.json).
-Image 20 assembly and installed diagnostic delivery now qualify separately from
-the failed functional run. Define any recovery contract separately; this trace
-does not authorize retry or relax existing cutoffs.
+Image 20 assembly and installed diagnostic delivery qualify separately from its
+failed functional run. The periodic read-only deferral boundary now passes 51
+selected host tests and five actual generic ARM/hwsim direct-radio controls after
+qualified baseline RED. `Deferred` publishes no partial fact and renews no lease;
+the next independent attempt is scheduled after completion +50 ms. Startup and
+explicit actions stay strict. Consumed-but-unvalidated events forbid deferral;
+queued AP loss and dispatched CONNECT expiry remain terminal/uncertain.
+
+All five cases use the same frozen Rust control and ARM libtest ELF. Fixture,
+radio/namespace, QEMU and outer custody qualify. Each guest actually waits its 33
+terminal adoptees and reaches ECHILD; no adopted-child PIPE EOF is claimed. The
+two EACCES gate-handshake attempts are excluded; their successors move only gate
+storage to guest tmpfs, preserving Rust, ELF, capabilities and original cutoffs.
+Candidate-validation ARM libtests/Main/worker compile, but the final public-source
+deployment build and normal persistent Main/worker execution remain pending.
+Cold24's failed installed outcome is unchanged. Next qualify the public-source
+build and existing installed consumer, preserving image 20's other providers and
+the original acceptance bounds.
+[Qualified controls, exclusions and remaining gates](evidence/native-wireless-periodic-refresh.json).
+
 Complete boot 1 before admitting boot 2 on the same disk. After the two-boot tracer,
 qualify the current Main/worker virtual pair and packet contract on the matched
 Google kernel. Its controller must account for `PROC_CHILDREN=n`; existing native

@@ -32,6 +32,14 @@ pub struct RadioFact {
     pub wdev: u64,
 }
 
+/// Outcome of a read-only periodic observation. Deferred publishes no fact and
+/// grants no freshness; a later observation must use its own deadline.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum PeriodicRefresh {
+    Observed(RadioFact),
+    Deferred,
+}
+
 /// Framing progress for the retained command socket's current transaction.
 /// Completed means its expected terminal reply was validated, not that radio
 /// identity, attributes or MLME checks passed. It grants no permission to retry.
