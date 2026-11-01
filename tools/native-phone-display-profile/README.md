@@ -174,6 +174,21 @@ font DPI. A capture or density failure remains failed. This tool's measurement
 surface is not a phone app preview; the joint guest must bind its actual UI and
 authority evidence separately.
 
+PNG encoding explicitly selects compression 11 on Qt's 0–100 PNG scale
+(zlib level 1). Native pixels and the decoded-pixel equality guard remain the
+same; encoded file bytes and size can differ. An actual x86_64 Qt 6.8.2 writer
+control on two retained native captures preserved every decoded RGBA hash.
+Five interleaved measurements per setting gave median encoding times of
+224–234 ms with the default and 65–67 ms with compression 11, with about 26%
+larger files. Both settings passed the pixel checks: this is a host encoder
+benchmark, not a functional RED→GREEN result or an ARM UI timing qualification.
+A fresh generic ARM build and Qt 6.12.0 replay now pass all 24 decoded-pixel
+comparisons, loader checks and owned shutdown. ARM-TCG median encoding elapsed
+time changes from 1.27–1.32 seconds to 0.66–0.67 seconds on those same two images.
+This still excludes capture setup, IPC and complete UI navigation. The exported
+helper must be installed and exercised in a new live-capture cohort.
+[Scoped evidence](../../docs/evidence/native-capture-png-encoder.json).
+
 After the guest's UI fixture finishes, the normal command
 `hyprctl plugin unload /tmp/pixel10-physical-size-adapter.so` restores the saved
 physical extent only for the same retained output identity. Do not unload it

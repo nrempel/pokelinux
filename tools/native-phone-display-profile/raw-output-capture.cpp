@@ -148,6 +148,7 @@ int main(int argc, char** argv) {
         if (!file.open(QIODevice::WriteOnly | QIODevice::NewOnly)) status = 7;
         else {
             QImageWriter writer(&file, "PNG");
+            writer.setCompression(11); // Qt's 0..100 PNG scale selects lossless zlib level 1.
             if (!writer.write(oriented)) status = 8;
             file.close();
         }

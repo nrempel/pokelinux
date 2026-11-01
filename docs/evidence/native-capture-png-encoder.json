@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "scope": "Actual generic ARM Qt encoder replay of retained native pixels; no new live capture, GUI navigation or phone evidence.",
+  "selection_sha256": "995c0e0dba718dc3395a3d99c4404e2ca2ab766f4c8ce9f774bb92ae5ff743b7",
+  "source_sha256": "392f3726631789d9838c2db47e8ef109bc7631bfddb85cfc6705b1a812e76188",
+  "Qt_version": "6.12.0",
+  "build_CPU_architecture": "arm64",
+  "capture_helper": {
+    "bytes": 104920,
+    "sha256": "8142196de27171563f26c5d9c4d581534fabed67007ff631bc750bbbe6f6962f"
+  },
+  "receipts": {
+    "result.json": {
+      "bytes": 109650,
+      "sha256": "51d27239959902f445cbefaef3342433193a0acac77d3f3c80565f4d56446bec"
+    },
+    "boot-result.json": {
+      "bytes": 18552,
+      "sha256": "8dd3d84e76e8f8e9c4c0dbad8ab1ca42607928fd0662ffc73a27d33a22b418e3"
+    },
+    "run/receipt.json": {
+      "bytes": 30314,
+      "sha256": "8442b3ee092fe0a6f62bf343d5cb992d447a98ec70b9faa8b133eae94d53411f"
+    },
+    "replay-png/result.json": {
+      "bytes": 18553,
+      "sha256": "b5347c19900d3f022765983ba82f2744a51e358e7099fa5630fbd19dfa80be7d"
+    }
+  },
+  "cases": [
+    {
+      "input_png_sha256": "9ca7799a94efa92a8406963693d141c65c9cf910aa0d1a04181eca89873f2641",
+      "oriented_rgba_pixels_sha256": "5468e9d7a6e53a6cb02cbaffc327de44f4e8b1b7290c569f7784fa83218f4efb",
+      "all12_decodes_match_retained_native_pixels": true,
+      "modes": {
+        "-1": {
+          "measured_samples": 5,
+          "median_encode_monotonic_ns": 1270939433,
+          "median_encode_process_cpu_ns": 1127967365,
+          "png_bytes": 1196681
+        },
+        "11": {
+          "measured_samples": 5,
+          "median_encode_monotonic_ns": 662505389,
+          "median_encode_process_cpu_ns": 526649461,
+          "png_bytes": 1512375
+        }
+      }
+    },
+    {
+      "input_png_sha256": "3468b9944b5ca28a96f804f80e6d2bee86347a4c8efa2e30fcdeeb35441a6820",
+      "oriented_rgba_pixels_sha256": "ac54413540c5023c0c6c2bae4993cb6b35c871ba8bbe5774a8991d696df5aa95",
+      "all12_decodes_match_retained_native_pixels": true,
+      "modes": {
+        "-1": {
+          "measured_samples": 5,
+          "median_encode_monotonic_ns": 1320398872,
+          "median_encode_process_cpu_ns": 1175867720,
+          "png_bytes": 1266572
+        },
+        "11": {
+          "measured_samples": 5,
+          "median_encode_monotonic_ns": 673535347,
+          "median_encode_process_cpu_ns": 534984192,
+          "png_bytes": 1598699
+        }
+      }
+    }
+  ],
+  "functional_baseline_and_candidate_both_pass": true,
+  "functional_RED_claimed": false,
+  "actual_QEMU_wait_exit": 0,
+  "cleanup_errors": [],
+  "host_benchmark_separate": {
+    "Qt_version": "6.8.2",
+    "architecture": "x86_64",
+    "median_default_ms_range": [
+      223.6,
+      234.06
+    ],
+    "median_compression11_ms_range": [
+      65.25,
+      67.09
+    ],
+    "all24_decoded_pixels_match": true
+  },
+  "limits": [
+    "Encoding timings exclude capture setup, IPC, pixel analysis and complete UI navigation.",
+    "Both settings preserve pixels; this is a performance comparison, not a functional RED/GREEN.",
+    "The exported helper requires a new installed image and live-capture rerun before UI timing claims."
+  ]
+}
