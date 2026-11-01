@@ -1,0 +1,123 @@
+{
+  "schema": 1,
+  "scope": "Failed installed ARM validation; first packet/background connection pass, original reopen-window gate fails.",
+  "documentation_base_commit": "c4d02f6699038d1e54e58b63eb55ec2b521a313c",
+  "native_image21_manifest": {
+    "bytes": 65109,
+    "sha256": "8754357f6901020cdf52dc63bc08a8d150e4270f82f853b9f5afeca77e275424"
+  },
+  "native_providers_unchanged_from_Cold26": true,
+  "runtime_source_delta": {
+    "files": 29,
+    "changed": {
+      "owned.py": {
+        "before": {
+          "bytes": 5960,
+          "sha256": "266024c425f92732c53c4b4ea1f06e90f4cd30cbc5cca0d19b8385e63921ae3f"
+        },
+        "after": {
+          "bytes": 6331,
+          "sha256": "3fae9b005a90879560f6386975b0e62c5771355d6524cb3adf19f34993e31395"
+        }
+      },
+      "installed_wireless_acceptance.py": {
+        "before": {
+          "bytes": 29197,
+          "sha256": "31e695e9ba38a5e892d9aff998f5966980c5cb4e83e007b957d4272d5cf40242"
+        },
+        "after": {
+          "bytes": 29504,
+          "sha256": "ac61d8a0d8e43178862c92b04ecc592f1fcfc7def5a19917b4deb2633297876a"
+        }
+      }
+    },
+    "other_files_exact": 27
+  },
+  "completed_prefix": {
+    "actual_Allow_Enable_and_first_UDP_packet": true,
+    "exact_37byte_send_41byte_ACK1_reply_verified": true,
+    "packet_client_cap0_NNP1_exit0_and_timely_wait_EOF": true,
+    "normal_Settings_close_input_and_terminal_proc_absence_verified": true,
+    "independent_background_association_fixed_IPv4_retained": true,
+    "same_worker_through_all_five_Main_readbacks": true
+  },
+  "first_failure": {
+    "operation": "normal reopened Settings window wait",
+    "error": "TimeoutError at original installed observation cutoff",
+    "original_menu_until_ns": 145422582090,
+    "original_menu_budget_ns": 30000000000,
+    "first_failure_recorded_at_ns": 145598551546,
+    "reopen_window_gate_qualified": false,
+    "non_target_application_observation": {
+      "journal": {
+        "bytes": 6285,
+        "sha256": "c91e42f97468f82be7c2ba4645201cadd13815088b54d11efc0446ac2b300234"
+      },
+      "line": 35,
+      "process": "foot",
+      "PID": 3679,
+      "journal_timestamp_seconds": 137.834464,
+      "reopened_Settings_instance_observed": false,
+      "Settings_readiness_or_service_failure_diagnosed": false,
+      "pointer_hover_cause_proved": false
+    }
+  },
+  "not_reached": [
+    "second packet",
+    "Disable",
+    "quiet",
+    "boot2"
+  ],
+  "configured_functional_clock": {
+    "start_ns": 113769865177,
+    "until_ns": 215769865177,
+    "installed_ui_functional_ns": 102000000000,
+    "allowance_components_ns": {
+      "retained_service_packet_allowance": 32000000000,
+      "one_reopen_navigation": 30000000000,
+      "two_Settings_views": 20000000000,
+      "two_normal_Settings_closes": 20000000000
+    },
+    "historical_ARM32s_aggregate_qualified": false
+  },
+  "full_102s_protocol_qualified": false,
+  "historical_32s_protocol_qualified": false,
+  "closure": {
+    "functional_guest_boot_outer_passed": false,
+    "guest_strict_closure_qualified": true,
+    "all_recorded_actual_owned_waits_and_EOF_timely": true,
+    "guest_boot_outer_ECHILD": true,
+    "cleanup_errors": [],
+    "actual_QEMU_wait_exit": 0,
+    "guest_shutdown_custody_qualified": true,
+    "outer_cleanup_qualified": true,
+    "exact_CID_name_absence_same_daemon_inputs_unchanged": true,
+    "peer_attach_container_exits": [
+      1,
+      1,
+      1
+    ],
+    "cause_or_repair_for_Cold26_EMFILE_claimed": false
+  },
+  "original_receipts": {
+    "guest": {
+      "bytes": 859143,
+      "sha256": "6beed32fc5016ce9a2a0df3da5cff46be9335d2a1362e6eb3e0640d3a2a78252"
+    },
+    "boot": {
+      "bytes": 26392,
+      "sha256": "8ce95f553966740c2ba0104683fa06ca288bda5f39813c5e1f5c0da62275e865"
+    },
+    "outer": {
+      "bytes": 23330,
+      "sha256": "b6f2c72a51aba1c08c6da58d3fa1bc7b9f54e608a1d2f2556d63ea7b51a33eea"
+    },
+    "first_failure": {
+      "bytes": 1379,
+      "sha256": "38bde7a003003e332b53c5652c8d97283948c4988d69687dd0b24327a8348fca"
+    }
+  },
+  "Cold26_best_partial_milestone_and_screenshot_preserved": true,
+  "phone_accessed": false,
+  "new_VM_or_retry_performed_by_documentation": false
+}

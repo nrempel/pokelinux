@@ -2,7 +2,15 @@
 
 ## Immediate integration order
 
-Latest installed milestone: Cold 26 reaches real Allow/Enable, packet 1, normal
+Experimental human preview is now the delivery priority: finish the public ARM
+launcher with an explicit qualified-image prerequisite, a fresh writable overlay,
+normal consent and bounded viewer/start/stop ownership. Its own usable-input and
+cleanup evidence gates release. Full automated two-boot acceptance separately gates
+reboot-persistence claims; a menu-automation failure does not block the human
+preview. Do not combine Cold 26 functional progress and Cold 27 cleanup into one
+passing cohort. No fresh-host reproducibility or Pixel boot claim is established.
+
+Best completed installed prefix: Cold 26 reaches real Allow/Enable, packet 1, normal
 Settings close, a distinct reopened Settings process with the same service worker,
 packet 2 and explicit Disable. Independent readback confirms association/fixed
 IPv4 through close/reopen, then no association, IPv4 or subnet route after Disable.
@@ -16,14 +24,27 @@ guest strict closure is false despite timely recorded waits/EOF. QEMU 0/guest
 shutdown and outer cleanup qualify separately; peer/attach/container exits are 1.
 The full native-closure validator is unchecked, and boot 2 is not admitted.
 
-A separately declared 102 s installed-UI time allowance is selected for the next run;
-native leases, action/packet 1 s limits, quiet 800 ms and Stop bounds stay unchanged.
-The synchronous-command handle correction now passes real fixed-RLIMIT64
-RED/GREEN: 48 commands finish at constant descriptor use while an asynchronous
-child remains owned. Failed-command and asynchronous custody remain intact.
-[Descriptor controls](evidence/native-scope-run-fd-retirement.json). No FD limit
-is raised or causal repair for Cold 26 claimed; the installed successor remains
-unqualified. Preserve the actual failed run and image 21 providers.
+Cold 27 selects the explicit 102 s installed-UI allowance and qualified
+synchronous-command handle correction. It again reaches packet 1, normal Settings
+close and fresh background readback on the same worker. Reopen then times out
+waiting for the normal Settings window under the unchanged 30 s menu cutoff.
+The shell journal instead records Foot near activation; no reopened Settings
+instance is observed. This does not establish a Settings readiness failure.
+Packet 2, Disable, quiet and boot 2 are not reached; neither the full 102 s case
+nor the historical 32 s protocol is qualified.
+
+Guest strict closure now passes with timely recorded actual waits/EOF, ECHILD
+and no cleanup errors. QEMU 0/guest shutdown and outer cleanup qualify; the
+functional aggregate remains failed and peer/attach/container exits remain 1.
+This observed closure result establishes no cause or repair for Cold 26's EMFILE.
+Only two of 29 runtime files change: the qualified Scope.run retirement helper
+and explicit UI-allowance adapter. Image 21 native providers and other 27 runtime
+files remain exact; no native deadline or FD limit changes.
+[Cold 27 failure and exact source/receipt pins](evidence/native-installed-wireless-cold27-failure.json).
+
+The separate fixed-RLIMIT64 [descriptor controls](evidence/native-scope-run-fd-retirement.json)
+retain their own RED/GREEN scope. Cold 26's fuller prefix and original reopened
+frame remain valid historical evidence.
 [Curated actions, timing, closure and original frame](evidence/native-installed-wireless-cold26-partial.json).
 
 Previous assembly checkpoint: image 21; Cold 25 boot 1 failed before Allow or Enable. Cold 22's real connection,

@@ -449,6 +449,33 @@ established by this run.
 The reopened Settings frame is an unaltered 1080×2424 native capture matching its
 PNG/native-buffer receipt and actual configured output. App QWindow DPR is still
 unsampled, so it is a scoped ARM-VM illustration rather than complete display or
-hardware acceptance. A separate 102 s installed-UI time allowance is selected for the next run;
-it has no runtime result and changes no native lease/action/packet/quiet/Stop bound.
+hardware acceptance. At this checkpoint, a separate 102 s installed-UI allowance
+was selected for the next run without changing native lease/action/packet/quiet/Stop
+bounds. Cold 27 below records that subsequent failed validation.
 [Original receipts and scoped frame metadata](evidence/native-installed-wireless-cold26-partial.json).
+
+
+## Next validation reaches background connection; reopen times out
+
+Cold 27 keeps image 21 native providers and changes only two of 29 runtime files:
+the qualified synchronous-command handle-retirement helper and explicit 102 s
+UI-allowance adapter. The other 27 files, original 30 s menu bound and native
+lease/action/packet/quiet/Stop limits remain exact.
+
+Actual Allow/Enable, a cap0/NNP1 37-byte nonce/41-byte ACK roundtrip and normal
+Settings close complete. Independent association/IPv4 and fresh Main readback
+then show the retained background connection on the same worker. The reopened
+normal-window wait times out against its original 145.422582090 s cutoff. Its window gate
+does not qualify. The shell journal records Foot near activation, while no reopened
+Settings instance is observed; a Settings readiness failure is not diagnosed.
+Packet 2, Disable, quiet and boot 2 are not reached. Neither
+the full 102 s protocol nor historical 32 s acceptance is established.
+
+All recorded owned waits/EOF are timely. Guest strict closure passes with ECHILD
+and no cleanup errors; QEMU exits 0 after guest shutdown and outer cleanup
+qualifies exact container absence, same daemon and unchanged inputs. Functional,
+guest, boot and outer success remain false; peer/attach/container exits remain 1.
+The closure pass is an observation, not a causal diagnosis or retrospective
+repair of Cold 26's EMFILE failure. Cold 26 remains the best completed prefix;
+its original reopened screenshot and failed aggregate keep their recorded scope.
+[Curated Cold 27 evidence](evidence/native-installed-wireless-cold27-failure.json).
