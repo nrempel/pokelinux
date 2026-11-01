@@ -208,7 +208,9 @@ readbacks and explicitly Disconnects with independent removal and silence.
 entrypoints select none. App requests contain only desired state and the original
 absolute BOOTTIME deadline. A current app/policy/lifecycle/session/backend stamp
 fences submission and publication; withdrawal closes the requester connection
-without Disconnect, retry or Stop. Separate private wire IDs and transport/worker
+without Disconnect, retry or Stop. The captured Source lease bounds that stamp;
+transferred work keeps the app's original action cutoff, without renewing either
+lifetime. Separate private wire IDs and transport/worker
 incarnations prevent old intent reuse. Own Inspect occupancy permits reservation;
 remote pending effects block mutation. Readonly status refreshes preserve actual
 250ms timestamps and leases.

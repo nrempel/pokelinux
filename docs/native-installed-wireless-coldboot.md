@@ -268,3 +268,28 @@ exact container absence and no cleanup errors. External peer, attach and contain
 all exit 1; those cleanup facts do not make the aggregate pass.
 
 [Actual layout, retirement and closure receipt hashes](evidence/native-installed-consent-close-progress.json).
+
+## Enable reaches the service; the native action expires
+
+Qualified image 18 replaces only Main and worker with the published same-descriptor
+identity-read correction; the other 324 installed rows equal image 17. Its guest,
+QEMU and outer assembly receipts pass. The separate host syscall-count controls
+qualify that optimization, without establishing a general GUI receive-timeout fix.
+Cold 21 retains driver 12, keyboard input, all oracles, resources and deadlines.
+
+The same worker is available and disconnected at 113.165962647 seconds; the first
+Enable view is ready at 113.170828050 seconds. Genuine click 13 completes at
+113.427870351 seconds, before the outer click/Inspect cutoff of 114.191914930
+seconds. The action reaches the service, but Main then records `action_expired`
+at 113.486322356 seconds against its native cutoff of 113.483840591 seconds.
+The origin of that earlier cutoff is not logged. The incomplete ApplyBackend
+diagnostic does not identify the component cause. Inspect refuses the resulting
+`terminal_uncertain` state; no connected readback, packets or boot 2 occurs.
+
+The functional 32-second clock starts, but acceptance remains failed. All guest
+helper waits and EOF are timely; guest closure, bootstrap custody, normal poweroff,
+actual QEMU wait 0 and outer cleanup qualify. The failed external peer, attach and
+container exits remain 1. Cold 20's earlier receive retirement and late-capture
+closure failure remain separate historical results.
+
+[Image 18 and cold 21 action/closure receipts](evidence/native-installed-consent-close-progress.json).

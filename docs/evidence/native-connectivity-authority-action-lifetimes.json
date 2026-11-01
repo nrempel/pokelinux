@@ -1,0 +1,208 @@
+{
+  "schema": 1,
+  "scope": "Controlled host native-lifecycle deadline correction. Actual root-credentialed Unix SEQPACKET and production Owner/Client; Source, app registration and backend observations are authored. No Main, installed ARM UI, radio or phone execution.",
+  "source_base_commit": "d2fc93194bc0016d458198bc2515a343b011dc55",
+  "contract": {
+    "captured_Source_lease": "Admission and requester publication remain fenced; expiry refuses an unsent Apply and does not renew the old stamp.",
+    "transferred_intent": "Retains the exact original app absolute cutoff, bounded to one second. Source expiry after transfer withdraws the requester without shortening or renewing Main-owned work.",
+    "expired_requester": "Receives no late success; no implicit Disconnect or retry. A new authorized Inspect may observe eventual state."
+  },
+  "RED": {
+    "qualified_component_assertion": true,
+    "actual_Rust_exit": 101,
+    "authored_Source_lease_ns": 100000000,
+    "original_app_budget_ns": 1000000000,
+    "original_app_until_ns": 7462919025185708,
+    "captured_source_until_ns": 7462918125180959,
+    "forwarded_until_ns": 7462918125180959,
+    "test_cleans_up_before_deadline_assertion": true,
+    "forwarded_cutoff_equals_captured_Source": true,
+    "runtime_qualifier_passed": true,
+    "outer_passed": true,
+    "pins": {
+      "runtime-output/deadline-wire.stdout": {
+        "bytes": 1041,
+        "sha256": "c3b4f97ecf5ad7a4881a2440062adb530c2f4ec598b583f2deb84322a7ddf10e"
+      },
+      "runtime-output/runtime-result.json": {
+        "bytes": 2181,
+        "sha256": "ec7bc01db84778a5692a1a69593f6cf0fba153508d581d1bd121c23eed5ae8a5"
+      },
+      "runtime-owner/receipt.json": {
+        "bytes": 23732,
+        "sha256": "9b719ee22d6bbb07f8146c78efd136def2052936a612d3539e19a56c9e75b00a"
+      }
+    }
+  },
+  "candidate_compiler": {
+    "passed": true,
+    "fmt_passed": true,
+    "all_target_Clippy_passed": true,
+    "actual_Cargo_artifacts": true,
+    "compiled_sources_exact_unchanged": true,
+    "wire_function_exact_RED": true,
+    "source_files": 254,
+    "authority": {
+      "bytes": 108051,
+      "sha256": "9a144e39af1f1cd55b1d6081523752325e257b3c3fc789bf686262559f5794a6"
+    },
+    "scope_test_source": {
+      "bytes": 25530,
+      "sha256": "145d604f1fc8aec5f30ec7570aa2b1e26eda48a8c53cc69e61fa0012b49b2cf9"
+    },
+    "binaries": {
+      "helper": {
+        "bytes": 1741648,
+        "sha256": "f90889a028557772d0b14498e1e0b0e0c07947af31c3439465354056375f5f3a",
+        "ELF_machine": 62
+      },
+      "libtest": {
+        "bytes": 5274128,
+        "sha256": "5f3aa3854999583afd8928050ce0965695d23a59f61119845bef25d075e48ff7",
+        "ELF_machine": 62
+      }
+    },
+    "no_tests_executed_by_compiler": true,
+    "pins": {
+      "compiler-output/component-compiler-artifact.json": {
+        "bytes": 44165,
+        "sha256": "c50dac79b3977716466edd97f861472943f53118a11420fe1c937a90b70cca83"
+      },
+      "compiler-owner/receipt.json": {
+        "bytes": 1707736,
+        "sha256": "37db976b7c413b489e2edeb09bb64a2db11b921f267b591ed07e717f68dc90b0"
+      }
+    }
+  },
+  "candidate_actual_tests": {
+    "all_three_Rust_processes_exit0": true,
+    "actual_pass_counts": {
+      "real_deadline_wire": 1,
+      "scope_isolation": 6,
+      "connectivity_component": 8,
+      "total": 15
+    },
+    "actual_failed_tests": 0,
+    "wire": {
+      "original_app_until_ns": 7463487642946438,
+      "captured_source_until_ns": 7463486742941860,
+      "forwarded_until_ns": 7463487642946438,
+      "forwards_exact_original": true
+    },
+    "scope_controls": [
+      "permission_scope_captured_source_expiry_after_send_keeps_remote_custody",
+      "permission_scope_captured_source_expiry_before_send_keeps_current_inputs_unsent",
+      "permission_scope_established_connectivity_survives_revoke_until_new_explicit_action",
+      "permission_scope_network_grant_revoke_keeps_live_settled_audio_lease_and_transport",
+      "permission_scope_sent_connectivity_retains_remote_custody_without_publication_or_retry",
+      "permission_scope_unsent_connectivity_stays_unsent_after_revoke_and_regrant"
+    ],
+    "runtime_wrapper_passed": false,
+    "outer_passed": false,
+    "qualifier_failure": "Expected the test name and ok on one line; --nocapture cleanup diagnostics interleaved before the following standalone ok.",
+    "no_wrapper_GREEN_claim": true,
+    "pins": {
+      "runtime-output/deadline-wire.stdout": {
+        "bytes": 456,
+        "sha256": "dd28a19b02b4e53124d30b9ad93f7a3542586576c362e96797ba7d26ed7ca301"
+      },
+      "runtime-output/scope-isolation.stdout": {
+        "bytes": 1773,
+        "sha256": "2b90e01986ba39ffbd93a8e8e3ba7caeb925b7eff3c01c5784631e43eb59e2c7"
+      },
+      "runtime-output/connectivity-component.stdout": {
+        "bytes": 1046,
+        "sha256": "0ac0d3ef04dae9dc2e8596053cbaffef9a847e5aac9bbcea89ea90f63cfbfd73"
+      },
+      "runtime-output/runtime-result.json": {
+        "bytes": 4395,
+        "sha256": "31eadb7d5afafa13f88a7c4b7d11d24984decdb4c42107f552e89651da580c4d"
+      },
+      "runtime-owner/receipt.json": {
+        "bytes": 23235,
+        "sha256": "fc5239706c9e788aa67131ad8d84d28d6d9231b5c03280b423aaab0427f98ab6"
+      },
+      "runtime-output/loader-result.json": {
+        "bytes": 5076,
+        "sha256": "6960298310d33adf7b0853d6a4ec04fef85d3b2a7858259d89e46d7e4ef4a911"
+      }
+    }
+  },
+  "custody": {
+    "all_actual_direct_waits_EOF_within_original_cutoffs": true,
+    "exact_CID_and_name_absent": true,
+    "same_daemon_and_inputs_unchanged": true,
+    "errors_or_adoptees": false,
+    "candidate_runtime_container_exit": 1,
+    "candidate_runtime_failure_preserved": true,
+    "candidate_receipt_counts": {
+      "outer": 14,
+      "loader": 5,
+      "component_tests": 3
+    },
+    "baseline_runtime_compiler_and_candidate_runtime_closed": true
+  },
+  "supplemental_offline_parser_qualification": {
+    "passed": true,
+    "scope": "Offline qualification of retained output only; no runtime rerun or original wrapper relabelling.",
+    "actual_component_GREEN": true,
+    "exact_unique_source_derived_test_names_and_terminal_blocks": true,
+    "qualified_actual_Rust_tests": 15,
+    "negative_output_controls_refused": 8,
+    "original_runtime_wrapper_passed": false,
+    "original_outer_passed": false,
+    "original_container_exit": 1,
+    "pins": {
+      "FINAL.json": {
+        "bytes": 2196,
+        "sha256": "c112da884ff4f7f859abaff111ee44bb059e3643c96521f2f496a9d02e656e9f"
+      },
+      "GREEN.json": {
+        "bytes": 7990,
+        "sha256": "f7463112066a7da10626a968519baae5f601e07e3f69eee0dc5fb6ac6b5fa126"
+      },
+      "RED.json": {
+        "bytes": 343,
+        "sha256": "a782be9fca98fe5eaeb9822a87a4be73e2ce318663ae90a03d86c6a57f588371"
+      },
+      "qualify.py": {
+        "bytes": 3544,
+        "sha256": "287a9438b31b1cbe0c4666ced2d30fc0850729fab6e48b5535b7183f856f37cb"
+      },
+      "expected-tests.json": {
+        "bytes": 2571,
+        "sha256": "68c4232053fb71aec0e48c88f48f66aa68b74b978d869113a4e47dac32b3b380"
+      }
+    }
+  },
+  "limits": [
+    "The wire test proves the baseline forwarding clamp and candidate original cutoff for this controlled host boundary.",
+    "Authored Source/backend facts and scope/component controls do not qualify actual Main or radio completion.",
+    "Cold21 action cutoff provenance remains unlogged; this test does not retrospectively prove its exact Source lease origin.",
+    "Installed ARM execution, connected readback, packets, persistence and phone qualification remain open."
+  ],
+  "ARM_compilation_only": {
+    "qualified": true,
+    "provider": {
+      "role": "normal session-owner",
+      "bytes": 3368576,
+      "sha256": "df8a8bc6e4b336c516e3a09c6eea15258711799ccfd5858b73825ec17252ad39",
+      "mode": "0755",
+      "ELF_machine": 183
+    },
+    "runtime_source_deltas_vs_prior_installed_owner": [
+      "authority lifetime correction",
+      "published same-descriptor identity-read optimization"
+    ],
+    "Main_and_worker_changed": false,
+    "loader_or_ARM_runtime_executed": false,
+    "compiler_owner_receipt": {
+      "bytes": 1670769,
+      "sha256": "1a4c66c4daf0eb4793dfcd19335c85abaf529936e52408ad336fcae71af13203"
+    },
+    "Cargo_artifact_manifest": {
+      "bytes": 53962,
+      "sha256": "5f9cb43fc6918220f41ee8a9b2ea63801f5183f300ee1011087161d9ef1dfbfa"
+    }
+  }
+}

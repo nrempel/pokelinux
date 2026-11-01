@@ -35,9 +35,19 @@ NetworkControl cannot use the generic historical Prepare/Admit permission path.
 
 The actor captures current app generation, live pidfd, policy/lifecycle/session
 and backend incarnation in a nonserialized, noncloneable stamp. Shared admission
-rounds remaining milliseconds up, then clamps both authority and intent back to
-the original deadline and captured session lease. An explicit desired state does
-not require a compare-and-swap revision from an earlier status observation.
+rounds remaining milliseconds up, then clamps authority to the original deadline
+and captured session lease. The transferred intent retains the app's exact
+original absolute deadline, still bounded to one second; dispatch never starts a
+new budget. An explicit desired state does not require a compare-and-swap revision
+from an earlier status observation.
+
+This deliberately separates two lifetimes. The captured Source sample bounds
+admission and requester publication; it does not replace the deadline of work
+already transferred to Main. Expired authority still prevents an unsent Apply,
+and a fresh same-revision Source sample cannot renew the old stamp. After transfer,
+expiry withdraws the requester while Main retains the operation through its
+original cutoff. A newly authorized inspection may observe its eventual state;
+that observation is not an acknowledgment to the expired requester.
 
 Private wire sequence IDs differ from actor intent IDs. The backend incarnation
 binds local transport generation and actual worker identity. Only readonly

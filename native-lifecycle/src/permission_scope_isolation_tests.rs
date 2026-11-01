@@ -148,11 +148,116 @@ fn connected_case() -> (ServiceCase, crate::connectivity_session::Session, Backe
 }
 
 #[test]
+fn permission_scope_connectivity_forwards_original_deadline_over_private_channel() {
+    use pokelinux_connectivity_control::protocol;
+    use rustix::net::{self, AddressFamily, SocketAddrUnix, SocketFlags, SocketType};
+
+    // Real production Owner/Client and root credentialed channel. The Source,
+    // app registration and backend observations remain authored test facts.
+    let (mut c, mut session, _) = connected_case();
+    let path = c.case.root.join("conn.sock");
+    let listener = net::socket_with(
+        AddressFamily::UNIX,
+        SocketType::SEQPACKET,
+        SocketFlags::NONBLOCK | SocketFlags::CLOEXEC,
+        None,
+    )
+    .unwrap();
+    net::sockopt::set_socket_passcred(&listener, true).unwrap();
+    net::bind(&listener, &SocketAddrUnix::new(&path).unwrap()).unwrap();
+    fs::set_permissions(&path, fs::Permissions::from_mode(0o600)).unwrap();
+    net::listen(&listener, 1).unwrap();
+    let mut owner = crate::connectivity::Owner::new(&path).unwrap();
+    assert!(owner.inspect(boottime_ns() + protocol::SECOND).unwrap());
+    let peer = net::accept_with(&listener, SocketFlags::NONBLOCK | SocketFlags::CLOEXEC).unwrap();
+    let (bytes, credentials) = crate::ipc::receive(&peer).unwrap().unwrap();
+    assert_eq!(credentials.uid.as_raw(), 0);
+    assert_eq!(credentials.gid.as_raw(), 0);
+    assert_eq!(
+        credentials.pid.as_raw_nonzero().get() as u32,
+        std::process::id()
+    );
+    let inspect: protocol::Request = serde_json::from_slice(&bytes).unwrap();
+    assert!(matches!(inspect, protocol::Request::Inspect { .. }));
+    let at = boottime_ns();
+    let reply = protocol::Reply {
+        schema: 1,
+        id: inspect.id(),
+        status: protocol::Status::Observed,
+        state: protocol::State {
+            available: true,
+            configured: Some(false),
+            observed_at_ns: at.to_string(),
+            until_ns: (at + protocol::LEASE).to_string(),
+            pending: false,
+            terminal_uncertain: false,
+            worker: "1".repeat(32),
+        },
+    };
+    crate::ipc::send(&peer, &serde_json::to_vec(&reply).unwrap()).unwrap();
+    assert!(matches!(
+        owner.poll(),
+        Some(crate::connectivity::Event::Observed)
+    ));
+    c.case.refresh();
+    let captured_source_until = c.case.sample.until;
+    let original = boottime_ns() + protocol::SECOND;
+    session
+        .begin(
+            CONNECTION,
+            std::process::id(),
+            crate::connectivity::UID,
+            crate::connectivity::Request {
+                connected: true,
+                until_ns: original.to_string(),
+            },
+            &mut c.case.authority,
+            &owner,
+        )
+        .unwrap();
+    assert!(
+        session
+            .drive(CONNECTION, &c.case.authority, &mut owner)
+            .is_none()
+    );
+    let (bytes, _) = crate::ipc::receive(&peer).unwrap().unwrap();
+    let apply: protocol::Request = serde_json::from_slice(&bytes).unwrap();
+    let forwarded = match apply {
+        protocol::Request::Apply {
+            choice: protocol::Choice::Connect,
+            until_ns,
+            ..
+        } => protocol::decimal(&until_ns).unwrap(),
+        _ => panic!("expected one explicit Connect"),
+    };
+    session.retire(&mut owner);
+    // Withdrawal adds no implicit Disconnect/retry packet.
+    let mut trailing = [0; protocol::LIMIT];
+    assert!(matches!(
+        net::recv(&peer, &mut trailing, net::RecvFlags::DONTWAIT),
+        Ok((0, _)) | Err(rustix::io::Errno::AGAIN)
+    ));
+    drop(owner);
+    drop(peer);
+    drop(listener);
+    c.clean_reopen();
+    drop(c);
+    eprintln!(
+        "connectivity deadline wire: original={original} captured_source_until={captured_source_until} forwarded={forwarded}"
+    );
+    assert!(captured_source_until < original);
+    assert_eq!(
+        forwarded, original,
+        "transferred action must retain the original app cutoff"
+    );
+}
+
+#[test]
 fn permission_scope_unsent_connectivity_stays_unsent_after_revoke_and_regrant() {
     let (mut c, mut session, mut backend) = connected_case();
     let original = begin_network(&mut c, &mut session, &backend, true);
     assert!(session.pending() && backend.sent.is_empty());
-    assert!(original <= c.case.sample.until);
+    assert!(original > c.case.sample.until);
     write_network(&mut c, false, &mut None);
     assert_eq!(
         session.drive(CONNECTION, &c.case.authority, &mut backend),
@@ -437,4 +542,163 @@ fn permission_scope_network_grant_revoke_keeps_live_settled_audio_lease_and_tran
     c.clean_reopen();
     assert_eq!(owner.state(), initial);
     audio_quiet_and_open(&peer);
+}
+
+// Authored Source/backend controls only. The separate real Owner/SEQPACKET
+// test above qualifies deadline forwarding; these isolate old stamp expiry.
+fn refresh_past_captured_connectivity_source(
+    c: &mut ServiceCase,
+    captured_until: u64,
+    original_until: u64,
+) {
+    let source = c.case.sample.source.clone();
+    let revision = c.case.sample.revision;
+    let sequence = c.case.sample.sequence;
+    assert!(boottime_ns() < captured_until && captured_until < original_until);
+    while boottime_ns() < captured_until {
+        assert!(boottime_ns() < original_until);
+        c.case.refresh();
+        std::thread::sleep(std::time::Duration::from_millis(1));
+    }
+    // refresh() uses the actual Source SAMPLE_BUDGET_NS (100ms). Updating the
+    // current sample must not extend the authority captured by this action.
+    c.case.refresh();
+    let now = boottime_ns();
+    assert!(captured_until <= now && now < original_until);
+    assert!(c.case.sample.sampled_at_ns >= captured_until && now < c.case.sample.until);
+    assert_eq!(c.case.sample.source, source);
+    assert_eq!(c.case.sample.revision, revision);
+    assert!(c.case.sample.sequence > sequence);
+    assert_eq!(
+        c.case.sample.until,
+        c.case.sample.sampled_at_ns + crate::session::SAMPLE_BUDGET_NS
+    );
+}
+
+#[test]
+fn permission_scope_captured_source_expiry_before_send_keeps_current_inputs_unsent() {
+    let (mut c, mut session, mut backend) = connected_case();
+    c.case.refresh();
+    let captured_until = c.case.sample.until;
+    let original_until = boottime_ns() + 1_000_000_000;
+    assert_eq!(
+        session.begin(
+            CONNECTION,
+            std::process::id(),
+            crate::connectivity::UID,
+            crate::connectivity::Request {
+                connected: true,
+                until_ns: original_until.to_string(),
+            },
+            &mut c.case.authority,
+            &backend,
+        ),
+        Ok(original_until)
+    );
+    assert!(session.pending() && backend.sent.is_empty());
+    refresh_past_captured_connectivity_source(&mut c, captured_until, original_until);
+    backend.state = readback(false);
+    assert!(backend.state().is_current(boottime_ns()) && !backend.state().pending);
+    assert!(c.case.authority.connectivity_allowed(
+        std::process::id(),
+        crate::connectivity::UID,
+        backend.incarnation()
+    ));
+    assert_eq!(
+        session.drive(CONNECTION, &c.case.authority, &mut backend),
+        Some(Reply::Denied)
+    );
+    assert!(backend.sent.is_empty() && !backend.remote_pending);
+    assert_eq!(backend.withdrawals, 1);
+    assert!(!session.owns(CONNECTION) && !session.pending());
+    assert!(
+        session
+            .drive(CONNECTION, &c.case.authority, &mut backend)
+            .is_none()
+    );
+    assert!(
+        backend.sent.is_empty(),
+        "fresh current Source must not replay old intent"
+    );
+    assert!(boottime_ns() < original_until);
+    c.clean_reopen();
+}
+
+#[test]
+fn permission_scope_captured_source_expiry_after_send_keeps_remote_custody() {
+    let (mut c, mut session, mut backend) = connected_case();
+    c.case.refresh();
+    let captured_until = c.case.sample.until;
+    let original_until = boottime_ns() + 1_000_000_000;
+    assert_eq!(
+        session.begin(
+            CONNECTION,
+            std::process::id(),
+            crate::connectivity::UID,
+            crate::connectivity::Request {
+                connected: true,
+                until_ns: original_until.to_string(),
+            },
+            &mut c.case.authority,
+            &backend,
+        ),
+        Ok(original_until)
+    );
+    assert!(
+        session
+            .drive(CONNECTION, &c.case.authority, &mut backend)
+            .is_none()
+    );
+    assert_eq!(backend.sent.len(), 1);
+    let sent = backend.sent[0];
+    assert!(sent.1 && sent.2 == original_until && backend.remote_pending);
+    refresh_past_captured_connectivity_source(&mut c, captured_until, original_until);
+    backend.state = readback(false);
+    backend.state.pending = backend.remote_pending;
+    assert!(backend.state().is_current(boottime_ns()) && backend.state().pending);
+    assert!(c.case.authority.connectivity_allowed(
+        std::process::id(),
+        crate::connectivity::UID,
+        backend.incarnation()
+    ));
+    assert_eq!(
+        session.fence(&c.case.authority, &mut backend, false, |_| true),
+        Some((CONNECTION, Reply::Denied))
+    );
+    assert!(backend.remote_pending && !backend.remote_configured);
+    assert_eq!(backend.withdrawals, 1);
+    let late = backend.complete(true);
+    assert!(late.is_current(boottime_ns()));
+    assert!(
+        session
+            .observe(
+                crate::connectivity::Event::Completed {
+                    id: sent.0,
+                    state: late
+                },
+                &c.case.authority,
+                &mut backend,
+            )
+            .is_none()
+    );
+    assert!(
+        session
+            .revalidate_reply(CONNECTION, &c.case.authority, &mut backend, false)
+            .is_none()
+    );
+    session.published(CONNECTION);
+    assert!(!session.owns(CONNECTION) && !session.pending());
+    assert!(
+        session
+            .drive(CONNECTION, &c.case.authority, &mut backend)
+            .is_none()
+    );
+    assert_eq!(
+        backend.sent,
+        vec![sent],
+        "no Disconnect or retry after withdrawal"
+    );
+    assert!(backend.remote_configured && !backend.state().available);
+    assert!(boottime_ns() < original_until);
+    c.clean_reopen();
 }

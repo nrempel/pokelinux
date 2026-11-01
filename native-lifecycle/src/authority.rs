@@ -1516,8 +1516,8 @@ impl Authority {
         if backend.is_empty() || remaining == 0 || remaining > SECOND {
             return Err(Reply::Denied);
         }
-        // Round up only for shared admission, then clamp back to the app's
-        // original absolute deadline and the captured current session lease.
+        // Round up only for shared admission. Authority remains bounded by
+        // the original app deadline and the captured current session lease.
         let mut authority = self.begin_stamp(
             pid,
             uid,
@@ -1540,7 +1540,10 @@ impl Authority {
             return Err(Reply::Unavailable);
         };
         self.sequence = id;
-        let until_ns = authority.until;
+        // Admission/publication keep the captured authority fence. Once sent,
+        // Main owns the effect through the unchanged original app cutoff;
+        // losing the requester must not shorten or renew that transferred work.
+        let until_ns = original_until;
         let stamp = ConnectivityStamp {
             authority,
             intent: crate::connectivity::Intent {

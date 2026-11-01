@@ -172,16 +172,39 @@ opened. The UI remains Unavailable; no Connect, packets or boot 2 follow.
 The fifth capture exceeds its original cutoff, so guest strict closure is false.
 Bootstrap custody, normal poweroff, actual QEMU wait 0 and outer cleanup qualify
 separately.
-The receive latch does not identify an inner check or record consumption. Isolate
-that boundary keeping the existing receive duration and original action cutoffs.
-The next component correction removes redundant same-descriptor identity reads in
+The cold 20 receive latch does not identify an inner check or record consumption.
+The component correction removes redundant same-descriptor identity reads in
 Rust: actual host syscall RED 2 reads becomes GREEN 1, with distinct descriptors
 still read twice and final liveness checks retained. Host identity/exit controls
 pass. The offline build also passes 52 connectivity library and 8 owner tests
 and produces the two ARM service binaries with unchanged locks and qualified
-compiler closure. Installed ARM execution remains pending; this does not establish
-the timeout cause. [Host read-count evidence](evidence/native-kernel-identity-single-read.json).
-[Timed consent, layout and remaining receive gate](evidence/native-installed-consent-close-progress.json).
+compiler closure. [Host read-count evidence](evidence/native-kernel-identity-single-read.json)
+remains separate from ARM timing evidence. Image 18 installs only the new Main
+and worker; other 324 installed records equal image 17. Cold 21 keeps the same
+worker available through the initial Enable view and sends one genuine click.
+Main then retires on `action_expired` at 113.486 s against a 113.484 s native
+cutoff; the outer click/Inspect cutoff is 114.192 s. The earlier native cutoff's
+origin is not logged. Inspect correctly refuses `terminal_uncertain`; no connected
+readback, packets or boot 2 follows. Guest closure, normal shutdown, QEMU wait 0
+and outer cleanup qualify, while the aggregate remains failed. This does not
+establish a general receive-timeout fix. Next establish the native cutoff's
+provenance and backend outcome while retaining the existing limits.
+[Timed consent, layout and remaining native action gate](evidence/native-installed-consent-close-progress.json).
+
+A separate host wire regression now isolates a lifetime mismatch: a captured
+100 ms Source lease was forwarded instead of the app's original one-second
+cutoff. The baseline assertion exits 101 after clean socket closure; the candidate
+forwards the unchanged app cutoff. Captured authority still fences admission and
+publication; expiry refuses unsent work and withdraws a sent requester without
+retry or Disconnect. The compiler passes fmt, all-target Clippy and host build.
+All 15 actual Rust tests pass (one real wire, six scope and eight component
+controls), but the runtime wrapper remains false because its parser rejects
+interleaved nocapture diagnostics. A supplemental offline parser now qualifies
+those same outputs and refuses eight malformed-output controls; it neither reruns
+the tests nor relabels the original wrapper. ARM session-owner compilation also
+passes; no ARM loader/runtime result is claimed. The socket uses production
+Owner/Client with authored Source/backend facts, runs no Main, radio or installed
+UI, and does not establish Cold21's exact lease origin. [Controlled lifetime evidence](evidence/native-connectivity-authority-action-lifetimes.json).
 [Partial seat startup evidence](evidence/native-installed-vm-seat-startup.json).
 The earlier failed
 boot has normal guest shutdown, actual QEMU wait0 and qualified outer cleanup;

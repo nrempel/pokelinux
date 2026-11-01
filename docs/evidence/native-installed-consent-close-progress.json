@@ -286,13 +286,14 @@
     "all_original_app_and_owner_closure_limits": true
   },
   "next_production_correction": {
-    "status": "Actual ARM build/loader and cold20 Settings identity/workarea checks pass. The installed connection flow remains failed after earlier Main receive retirement.",
+    "status": "Settings identity/workarea passes; cold21 reaches an available Enable control and a real click reaches the service, then its native action expires. No connected readback follows.",
     "Settings_desktop_file_name": "org.omarchy.Settings",
     "phone_window_profile": "Add Settings to the normal available-area rule; retain mode1/1 and workarea containment predicate"
   },
   "limits": [
     "Timed Allow, normal Permissions close and Settings layout do not qualify the full installed flow.",
     "Cold19 fails Settings layout; cold20 passes that layout but Main had already retired its worker on receive_message / TimedOut. Neither reaches Connect, packets or boot2.",
+    "Cold21 reaches the actual Enable input but returns terminal_uncertain; its native action cutoff origin is not logged. No general receive-timeout fix or Source-lease provenance is established.",
     "The earlier two published screenshots retain their original cold17 scope and timing failure.",
     "No new screenshot, physical phone, deadline relaxation or numerical native-parent wait claim."
   ],
@@ -460,6 +461,134 @@
       "run/receipt.json": {
         "bytes": 23330,
         "sha256": "ab92c0d16224b40c1a80c5db827977a746213a3a5e94474ce9a8e61e2065c703"
+      }
+    }
+  },
+  "image18": {
+    "image": {
+      "bytes": 144703488,
+      "sha256": "4bc0ba6944ab821f29e0492ac34cdfb901a33d3b747335df0737a0952dfb73b0"
+    },
+    "installed_manifest": {
+      "bytes": 65108,
+      "sha256": "c2a2b1abf2b20bd9f2558e50e7586ea4a38bef554975e28b8f646dd3db0d73c9"
+    },
+    "rows": 326,
+    "only_changed_rows_vs_image17": {
+      "usr/libexec/pokelinux/pokelinux-connectivity-main": "812fe9cf331d1d5d0851d9ae0f3e058f37108db7e406f8c58ec8850608a32843",
+      "usr/libexec/pokelinux/pokelinux-connectivity-service": "d69138e2981f473876a6a34af88c49a21d8b1a759e201302b7f741476c75fc02"
+    },
+    "other324_rows_unchanged": true,
+    "guest_boot_outer_preparation_passed": true,
+    "preparation_QEMU_and_container_exit0": true,
+    "receipts": {
+      "result.json": {
+        "bytes": 326466,
+        "sha256": "9ebbdb95932e22e8140072fe9086926394739c3d9114f843695d38a26dff8579"
+      },
+      "boot-result.json": {
+        "bytes": 16698,
+        "sha256": "09804aaaa11375e02c1f2326674b04667b42e7aeb83169ad8d89ef333187fcc3"
+      },
+      "run/receipt.json": {
+        "bytes": 134811,
+        "sha256": "a0785d2b47649960661e585dc4b52a7bc8901a5e294671c2a8067b13dd474971"
+      }
+    },
+    "separate_host_optimization_evidence": "native-kernel-identity-single-read.json",
+    "host_syscall_count_controls_do_not_establish_general_GUI_timing_fix": true,
+    "changed_Main_worker_source_matches_commit": "d2fc93194bc0016d458198bc2515a343b011dc55"
+  },
+  "cold21": {
+    "selection_sha256": "31452eb7f8e46447b74e4d606b954f51b69b2c08d4cdd5af71a28b0ccff0d43f",
+    "passed": false,
+    "functional_passed": false,
+    "same_driver12_oracles_limits_and_outer_owner_as_cold20": true,
+    "pre_Enable": {
+      "available": true,
+      "configured": false,
+      "observed_at_ns": 113165962647,
+      "same_worker_as_initial": true,
+      "view_ready": true,
+      "view_observed_at_ns": 113170828050,
+      "control_states": [
+        "enabled",
+        "disabled"
+      ]
+    },
+    "actual_Enable_click": {
+      "actual_RFB": true,
+      "sequence": 13,
+      "outcome": "sent_once",
+      "completed_guest_BOOTTIME_ns": 113427870351,
+      "outer_click_and_Inspect_original_until_ns": 114191914930,
+      "native_service_action_reached": true
+    },
+    "native_retirement": {
+      "reason": "action_expired",
+      "operation": null,
+      "io_kind": null,
+      "original_until_ns": 113483840591,
+      "detected_at_ns": 113486322356,
+      "record_length": null,
+      "record_type": null,
+      "worker_exit_signal": 9,
+      "earlier_native_cutoff_origin_logged": false,
+      "Source_lease_origin_inferred": false,
+      "component_cause_known": false,
+      "worker_ApplyBackend_diagnostic_incomplete": true,
+      "inner_receive_stage_or_consumption_inferred": false,
+      "journal_pin": {
+        "bytes": 669,
+        "sha256": "0653ec9f6e53aa18018e84ff33a83f2bf5a9f29894e2831bb3fae2b95a0b077d"
+      }
+    },
+    "first_observer_failure": {
+      "stage": "explicit-Settings-Connect",
+      "error": "AssertionError()",
+      "Inspect_refused_terminal_uncertain": true
+    },
+    "functional_clock": {
+      "start_ns": 113191828218,
+      "until_ns": 145191828218,
+      "ARM_root5_functional_ns": 32000000000
+    },
+    "connected_readback_reached": false,
+    "packet_flow_reached": false,
+    "boot2_executed": false,
+    "closure": {
+      "guest_qualified": true,
+      "all_guest_waits_and_EOF_timely": true,
+      "guest_errors": [],
+      "bootstrap_custody_closed": true,
+      "normal_poweroff_command_closed": true,
+      "actual_QEMU_waited": true,
+      "QEMU_exit_code": 0,
+      "guest_shutdown_custody_qualified": true,
+      "outer_cleanup_qualified": true,
+      "outer_errors": [],
+      "external_peer_exit": 1,
+      "attach_exit": 1,
+      "container_exit": 1,
+      "exact_CID_and_name_absent": true,
+      "same_daemon": true,
+      "inputs_unchanged": true,
+      "all_handles_closed": true,
+      "ECHILD": true,
+      "adopted_waits": []
+    },
+    "receipts": {
+      "result.json": {
+        "bytes": 731954,
+        "sha256": "8730ac627f27c46a6c76c5a23ab1a63a74cc9b89290c023daf069a41edada264"
+      },
+      "boot-result.json": {
+        "bytes": 26391,
+        "sha256": "94d89ae4945c1ac3d06c3810cc978f8548051ea8e37a35e7513e0ff3576de43d"
+      },
+      "run/receipt.json": {
+        "bytes": 23330,
+        "sha256": "7a7f05184f7d0974da4e2d9a6e964de07dd03439fa068e39fdd365af6f0fa783"
       }
     }
   }
