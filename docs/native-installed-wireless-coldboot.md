@@ -56,3 +56,32 @@ VM/container infrastructure but does not qualify normal guest shutdown or native
 cleanup. No permission or connection action runs.
 
 [Corrected-startup receipt](evidence/native-installed-wireless-coldboot-theme.json).
+
+## Wireless provisioning advances; desktop readiness remains open
+
+Subsequent failed-startup runs separate the viewer cleanup fence from functional
+success. They collect service journals and Stop the selected services. An actual
+partial-read failure then identifies non-atomic bootstrap-report publication;
+publishing through a complete temporary file and rename preserves strict JSON
+validation and now records actual QEMU wait0 and guest-requested shutdown.
+
+The wireless fixture's exact initial failure is a missing `ExecStopPost` key in
+`systemctl show` output. Adding `--all` does not repair it: the empty complex
+command array is still omitted. A separate read-only host control observes an
+explicit empty array through the [typed systemd interface](https://www.freedesktop.org/software/systemd/man/262/org.freedesktop.systemd1.html).
+The fixture now requires that exact type and empty array through an authenticated
+ARM busctl dependency. The next actual ARM boot reaches fixture READY, starts the
+connectivity service, and later records the fixture's provisioning-only closure
+marker and PID1 exit0. This does not qualify a normal UI connection.
+
+That boot fails later: the session owner returns `Kind(TimedOut)` with exit1 under
+its original 120-second readiness deadline. This differs from PID1 classifying a
+start as a timeout. The bare error cannot distinguish an earlier rejected or
+expired compositor Source from missing authenticated Wayland readiness. Child
+stdout/stderr are discarded, and compositor logs/ring artifacts were not retained.
+The next run must retain those existing diagnostics. The hwsim capture also needs
+to prioritize primary receipts before optional logs exhaust its existing bounds.
+
+[Current startup evidence](evidence/native-installed-wireless-startup-progress.json).
+No rendered UI, consent, connection flow, two-boot persistence or phone hardware
+is qualified by this checkpoint.

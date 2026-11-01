@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "scope": "Generic ARM64/QEMU installed startup, simulated AP; no phone hardware",
+  "selection_sha256": "e0e0e62332170f77201884c5e9735b0fad9f69922d6c307a108b7005977d68fa",
+  "passed": false,
+  "wireless_fixture_READY_observed": true,
+  "connectivity_service_start_observed": true,
+  "provisioning_only_closed_marker_observed": true,
+  "session_owner_error": "Kind(TimedOut)",
+  "session_owner_deadline_seconds": 120,
+  "selected_final_PID1_states": {
+    "pokelinux-session-owner.service": {
+      "Result": "exit-code",
+      "ExecMainCode": 1,
+      "ExecMainStatus": 1,
+      "MainPID": 0,
+      "ActiveState": "failed"
+    },
+    "pokelinux-hwsim-provision.service": {
+      "Result": "success",
+      "ExecMainCode": 1,
+      "ExecMainStatus": 0,
+      "MainPID": 0,
+      "ActiveState": "inactive"
+    }
+  },
+  "actual_QEMU_waited": true,
+  "QEMU_exit_code": 0,
+  "actual_guest_shutdown": {
+    "guest": true,
+    "reason": "guest-shutdown"
+  },
+  "outer_cleanup_qualified": true,
+  "exact_CID_absent": true,
+  "native_cleanup_not_inferred_from_process_exit": true,
+  "UI_consent_or_connection_qualified": false,
+  "next_gate": "Capture compositor logs and existing startup ring to distinguish initial Source/lease failure from configured Wayland listener readiness failure",
+  "diagnostic_limit": "Optional hwsim log count exhausted the bounded pre-stop capture before primary files were copied; journal and PID1 evidence remain available",
+  "earlier_failed_repairs": [
+    "--all still omitted the empty complex ExecStopPost property",
+    "Non-atomic bootstrap report exposed a partial JSON read; later atomic publication records normal guest shutdown"
+  ],
+  "receipt_sha256": {
+    "result.json": "f029c6861d17f23266121941a898cadf7c3b03e20fd992194177a6a67e6f6477",
+    "boot-result.json": "505f109dd99305238b8533dc37692d9e9b28011854d303aaeb11f3c5edebe79c",
+    "run/receipt.json": "9a679e01517b3d443543ec4ee69e1a504842612cbed26d0297e0dc404375c018",
+    "unit-009-journal-pokelinux-session-owner.service.log": "e39e22a43950d3fd0eb5b9080b65f9b54015209e778b3a84bb9b25db67bd385f",
+    "unit-115-journal-pokelinux-hwsim-provision.service.log": "ad215ce126333704c88b8302d7c4b36dde990f24adefa8b6d89a32eb35db8403"
+  },
+  "host_property_control_receipt_sha256": "84535026057e86daa11d701db4615a9ded57075eb674c5e5db7c8c01e4e0c068",
+  "host_property_control_scope": "Separate read-only host systemd query; not ARM or physical evidence"
+}

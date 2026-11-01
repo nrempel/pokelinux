@@ -17,8 +17,9 @@ passes host tests for both audio and network permissions, including actual butto
 presses. The ARM consent app and session owner also pass build and loader checks;
 Sounds and the current audio/theme helpers also pass ARM build and loader checks.
 Installed theme startup now passes after fixing a missing runtime-directory
-dependency. The combined ARM session is still blocked by simulated-wireless
-startup; installed UI consent and reboot persistence remain open.
+dependency. Simulated-radio provisioning now starts and stops successfully; the
+combined ARM boot reaches a desktop-session readiness timeout. Installed UI
+consent and reboot persistence remain open.
 [Cold-boot status](docs/native-installed-wireless-coldboot.md).
 [Permission progress](docs/native-network-permission-authority.md).
 

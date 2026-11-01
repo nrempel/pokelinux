@@ -52,6 +52,13 @@ actual ARM/PID1 boot; wireless startup still fails. The observer now starts but
 incorrectly gates failure diagnostics/Stop on viewer functional success despite
 a verified no-future-writes fence. Full acceptance and native cleanup stay open;
 see [cold-boot status](native-installed-wireless-coldboot.md).
+Later runs repair the cleanup/function-success conflation and atomic report
+publication. A typed systemd property query now lets the simulated-radio fixture
+reach READY and report provisioning-only closure. The installed session owner
+returns `Kind(TimedOut)` under its existing 120-second readiness deadline.
+Collect compositor logs and the existing startup ring next; neither the exact
+Source/Wayland cause nor normal UI/connection/persistence is qualified.
+[Current startup evidence](evidence/native-installed-wireless-startup-progress.json).
 
 The normal Main empty-idle regression now passes the unchanged host consumer
 after qualified RED. A source-qualified zero-readiness hint defers starting an
