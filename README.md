@@ -19,8 +19,9 @@ Sounds and the current audio/theme helpers also pass ARM build and loader checks
 Installed theme startup now passes after fixing a missing runtime-directory
 dependency. Simulated-radio provisioning now starts and stops successfully. The
 combined ARM boot now starts the desktop session after adding an explicit VM
-seat service. The permission/connection flow is still blocked by a test-runner
-parsing error; installed UI consent and reboot persistence remain open.
+seat service. Its identity, socket and normal shutdown checks now pass. The
+installed menu does not yet open from the bar; UI consent, connection and reboot
+persistence remain unverified.
 [Cold-boot status](docs/native-installed-wireless-coldboot.md).
 [Permission progress](docs/native-network-permission-authority.md).
 

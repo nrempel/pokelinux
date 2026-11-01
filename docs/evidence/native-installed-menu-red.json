@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "scope": "Generic ARM installed VM, partial failed UI aggregate. No phone evidence.",
+  "prior_partial_evidence": "native-installed-vm-seat-startup.json",
+  "image_sha256": "90664d99eb173cc6e5c747db8813ccaa99cde37cd0f055e89885c3d870a4e3c4",
+  "selection_sha256": "a49dae8cda166811e1595057c6c8fbbd30a8a870cf47d0ebb0824c709863ab4b",
+  "receipts": {
+    "first-failure-diagnostic.json": {
+      "bytes": 1142,
+      "sha256": "944de7cb510acf4cca5edce218704ee96cd89e6d63a419d54a732f97fe153172"
+    },
+    "result.json": {
+      "bytes": 361260,
+      "sha256": "61c04e6bf541ace321cb14b6d67d9ec95ea6683a4c872676c594db04faa246bf"
+    },
+    "boot-result.json": {
+      "bytes": 26391,
+      "sha256": "70f7c0d0a174838d73f709f1160b60e77e11ae99c1d333378f5bc785ba07cc4c"
+    }
+  },
+  "seat_startup": {
+    "unit": "pokelinux-vm-seatd.service",
+    "actual_PID": 423,
+    "InvocationID": "8a5e6b94b06345ba8a3de179ab5eb24e",
+    "actual_identity": {
+      "PID": 423,
+      "UID": 0,
+      "GID": 0,
+      "PPid": 1,
+      "exe": "/usr/bin/seatd",
+      "exe_sha256": "20fbb79ec7633f7e0db4fb571853c73a050087f594ba8a2a9e989e59bf3b2bc3",
+      "argv": [
+        "/usr/bin/seatd",
+        "-g",
+        "alarm"
+      ],
+      "proc_starttime": "1636",
+      "InvocationID": "8a5e6b94b06345ba8a3de179ab5eb24e",
+      "ControlGroup": "/system.slice/pokelinux-vm-seatd.service",
+      "NRestarts": 0,
+      "observed_while_activating": false,
+      "startup_success_inferred_from_identity": false,
+      "guest_direct_parent_wait_claimed": false
+    },
+    "socket": {
+      "path": "/run/seatd.sock",
+      "UID": 0,
+      "GID": 1000,
+      "mode": 504,
+      "device": 27,
+      "inode": 1117
+    },
+    "actual_peer_PID_UID_GID": [
+      423,
+      0,
+      0
+    ],
+    "actual_connect_ex_result": 0,
+    "actual_SO_ERROR": 0,
+    "same_socket_completion_polled": false,
+    "same_retained_unit_pidfd_live": true,
+    "SEATD_VTBOUND": "0",
+    "NoNewPrivs": true,
+    "observed_boottime_ns": 44039753757,
+    "original_until_ns": 45034682908,
+    "seat_protocol_bytes_sent": 0,
+    "socket_existence_used_as_readiness": false,
+    "compositor_or_network_success_inferred": false
+  },
+  "seat_shutdown": {
+    "unit": "pokelinux-vm-seatd.service",
+    "matching_invocation_exit": {
+      "Id": "pokelinux-vm-seatd.service",
+      "LoadState": "loaded",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "Job": "",
+      "ConditionResult": "yes",
+      "InvocationID": "8a5e6b94b06345ba8a3de179ab5eb24e",
+      "Type": "exec",
+      "Restart": "no",
+      "NotifyAccess": "none",
+      "MainPID": 0,
+      "ControlPID": 0,
+      "Result": "success",
+      "NRestarts": 0,
+      "ExecMainPID": 423,
+      "ExecMainCode": 1,
+      "ExecMainStatus": 0,
+      "ControlGroup": "",
+      "KillMode": "control-group",
+      "observed_boottime_ns": 68757243725
+    },
+    "actual_unit_process_exit0": true,
+    "socket": "/run/seatd.sock",
+    "socket_absent_after_Stop": true,
+    "qualified": true,
+    "actual_service_wait_or_PIPE_EOF_claimed": false,
+    "socket_unlink_performed_by_guest": false,
+    "observed_boottime_ns": 68800576154
+  },
+  "aggregate": {
+    "passed": false,
+    "first_failed_action": "Open Omarchy menu from the bar, before selecting Permissions",
+    "error": "TimeoutError('original installed guest observation cutoff')",
+    "guest_cleanup_errors": [],
+    "guest_case_closure_qualified": true,
+    "actual_QEMU_wait_exit": 0,
+    "guest_shutdown_custody_qualified": true
+  },
+  "limits": [
+    "The menu layer did not appear after the first bar click.",
+    "The first diagnostic and final report preserve the same observation timeout.",
+    "Missing menu command installation is a candidate cause, not a verified repair.",
+    "No full consent, connection, packet or second-boot sequence passed in this cohort.",
+    "No new public screenshot is qualified.",
+    "The VM seat service is not a Pixel hardware backend."
+  ]
+}

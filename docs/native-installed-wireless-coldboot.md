@@ -133,8 +133,18 @@ matching PID1 exit0 observations and native seat socket absence after Stop. The
 observer then blocks the functional sequence: its strict INI parser rejects valid
 repeated `Environment=` lines. Complete seat identity/socket qualification remains
 false because binding never finished. Guest shutdown, actual QEMU wait0 and outer
-cleanup qualify separately. The next run must repair only that observer and use
-the same image; no normal UI or screenshot is qualified yet.
+cleanup qualify separately. The observer is subsequently repaired with actual
+selected-unit host RED/GREEN; unrelated repeated directives are permitted while
+the checked service contract remains strict. On the unchanged image, the later
+run qualifies seat identity, peer/socket checks and normal Stop. Its first bar
+click still fails to open the menu. An early diagnostic and final guest report
+agree on the menu-layer timeout. Guest cleanup is empty, guest shutdown finishes,
+and the actual QEMU wait returns0. Full UI acceptance remains failed.
+The menu helper is staged under the upstream data directory, while the bar calls
+it by command name. Its installed command path is the next packaging boundary
+to test. The captured bar also has missing glyphs; font resources require a
+separate correction. No new public screenshot is qualified.
+[Current partial evidence](evidence/native-installed-menu-red.json).
 [Partial installed startup evidence](evidence/native-installed-vm-seat-startup.json).
 This supplies
 Linux display-device access beneath the Rust owner; it qualifies no Pixel display

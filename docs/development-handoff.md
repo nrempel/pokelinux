@@ -74,8 +74,17 @@ and reverse shutdown ordering. The next actual installed boot reaches active
 seatd and session-owner units, both with matching PID1 normal exit0 observations
 after Stop. It then fails in the observer's strict INI parser on valid repeated
 `Environment=` directives, before normal UI actions. Full seat identity/socket
-qualification remains false because binding did not complete. Repair that
-observer and repeat on the unchanged image; no new backend change is indicated.
+qualification remains false in that historical run because binding did not complete.
+The observer now accepts unrelated repeatable directives while retaining strict
+checks for the service contract; actual file-boundary host RED/GREEN covers the
+selected units. A later run on the unchanged image completes the seat identity,
+peer/socket and normal Stop checks. Its first bar click does not open the menu.
+The first failure is preserved before cleanup, and the final guest report agrees:
+menu-layer observation times out. Guest cleanup is empty and QEMU exits0 after
+guest shutdown. The complete installed UI sequence remains failed. Investigate
+the original menu helper installation before changing native services; the shell
+journal also reports missing command helpers. Missing fonts remain a separate
+visual packaging issue. [Current partial evidence](evidence/native-installed-menu-red.json).
 [Partial seat startup evidence](evidence/native-installed-vm-seat-startup.json).
 The earlier failed
 boot has normal guest shutdown, actual QEMU wait0 and qualified outer cleanup;
