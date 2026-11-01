@@ -23,8 +23,12 @@ still unexecuted. [Diagnostic evidence](evidence/native-connectivity-journal-str
 Precise stage/transaction diagnostics now pass the unchanged three real-kernel
 RED controls and 44 additional wireless/backend checks. Both crates pass strict
 Clippy and Release libtest compilation. [Diagnostic scope](native-wireless-refresh-diagnostics.md).
-Next rebuild ARM Main/worker from the combined published sources and verify the
-installed error path with existing cutoffs and no retry.
+Normal ARM Main/worker now build from combined commit `9a40f26`; 57 library
+and eight owner tests pass with one ignored fixture. Actual artifacts and full
+compiler closure are qualified; no ARM execution occurred in that case.
+[Build evidence](evidence/native-connectivity-radio-diagnostics-arm-build.json).
+Next assemble image 20 with only those two provider rows changed, then verify
+the installed error path with existing cutoffs and no retry.
 Complete boot 1 before admitting boot 2 on the same disk. After the two-boot tracer,
 qualify the current Main/worker virtual pair and packet contract on the matched
 Google kernel. Its controller must account for `PROC_CHILDREN=n`; existing native

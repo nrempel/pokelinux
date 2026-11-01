@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "scope": "Actual native host regressions and normal ARM64 compiler artifacts; no ARM execution, installed service activation or GUI qualification.",
+  "source_commit": "9a40f26a56de8d5f6fe028867ad2bc61a7ba3a09",
+  "source_files": 64,
+  "original_lockfiles_unchanged": 5,
+  "offline_vendor_packages": 21,
+  "selection": {
+    "bytes": 478304,
+    "sha256": "72f68a546832a0ebcac7026275dfcaf8c89e6f0b949ede6aa1685b07c5731137"
+  },
+  "compiler_command": {
+    "bytes": 367,
+    "sha256": "bf7737dafd5e5a7b0b6a5f0bb31211cbf28e6aba4e96dccdefef5d2efef46310"
+  },
+  "source_manifest": {
+    "bytes": 21595,
+    "sha256": "b06c8f2483281253a2dd23291ec2d303ac2848ca6688e4e673bb4fae00ce6e09"
+  },
+  "build_result": {
+    "bytes": 5532,
+    "sha256": "060cda0b2478bb2e8bd18e6a91e81ae257085beb005447c572c9078b99702aeb"
+  },
+  "outer_receipt": {
+    "bytes": 971542,
+    "sha256": "aa67bfc6b6e2f4208ffc5ccff09b0509df7d5cf5024d686d36c6a0cb62f9ad79"
+  },
+  "actual_host_tests": {
+    "library_passed": 57,
+    "library_ignored": 1,
+    "owner_passed": 8,
+    "exact_inventory_verified": true,
+    "journal_tests_required": 7,
+    "new_backend_tests_required": 2
+  },
+  "ARM_artifacts": {
+    "ARM/pokelinux-connectivity-main": {
+      "bytes": 1046360,
+      "sha256": "04d4bc27f805b307ce79a21bfab51f224b2d2accc505aa07c4a8e369bef1e22d",
+      "ELF_machine": 183
+    },
+    "ARM/pokelinux-connectivity-service": {
+      "bytes": 1026928,
+      "sha256": "14224c2c2df880b5f4c386f40b65dbc3eda76a3675ccd2f9916c5318e578c25c",
+      "ELF_machine": 183
+    }
+  },
+  "closure": {
+    "actual_compiler_container_wait": 0,
+    "actual_qualification_exit": 0,
+    "owned_waits_and_pipe_EOF": 14,
+    "all_within_original_cutoffs": true,
+    "wait_all_ECHILD": true,
+    "adopted_children": 0,
+    "exact_CID_removed": true,
+    "exact_name_absent": true,
+    "same_daemon": true,
+    "inputs_unchanged": true
+  },
+  "limits": [
+    "Only Main and worker were rebuilt; other installed image19 providers retain their prior provenance.",
+    "No ARM execution or boot occurred in this compiler case.",
+    "The actual installed refresh phase and repeatability remain unknown."
+  ]
+}

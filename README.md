@@ -36,7 +36,9 @@ capture-name fix has not been reached in GUI.
 [Capture-name host evidence](docs/evidence/native-installed-menu-capture-ordinal.json).
 Worker error reporting now passes seven actual host pipe/socket checks after a
 missing-record RED. Precise refresh diagnostics now also pass 47 selected host checks.
-The combined ARM build and installed diagnostic delivery remain unverified.
+Both normal ARM binaries now build with 65 passing host regressions and one
+ignored fixture. Installed diagnostic delivery remains unverified.
+[ARM build scope](docs/evidence/native-connectivity-radio-diagnostics-arm-build.json).
 [Diagnostic scope](docs/native-connectivity-worker-error-context.md#journal-stream-diagnostic).
 
 A host-tested correction preserves the original connection deadline while

@@ -31,6 +31,9 @@ The initial formatter-only setup failure is excluded from behavioral RED.
 All selected executions close within their original bounds.
 
 These are native x86_64 host results. The precise Cold 23 radio phase remains
-unknown. A combined ARM Main/worker build and installed run must still qualify
-these diagnostics together with the [journal-stream sink](native-connectivity-worker-error-context.md#journal-stream-diagnostic).
+unknown. Both normal ARM Main/worker binaries now compile from the combined
+published source, with 65 passing host regressions and one ignored fixture.
+[ARM build evidence](evidence/native-connectivity-radio-diagnostics-arm-build.json).
+An installed ARM run must still qualify these diagnostics together with the
+[journal-stream sink](native-connectivity-worker-error-context.md#journal-stream-diagnostic).
 [Retained evidence](evidence/native-wireless-refresh-diagnostics.json).
