@@ -21,10 +21,11 @@ dependency. Simulated-radio provisioning now starts and stops successfully. The
 combined ARM boot now starts the desktop session after adding an explicit VM
 seat service. Its identity, socket and normal shutdown checks now pass. The
 installed menu and application list now render after restoring omitted menu
-assets and the native launch adapter. Genuine menu keyboard navigation now
-launches the installed Permissions process. Its normal window is not qualified
-before the observation cutoff; consent, connection and reboot persistence remain
-unverified. [Latest partial result](docs/evidence/native-installed-permissions-launch-partial.json).
+assets and the native launch adapter. The genuine menu now opens the normal
+Permissions window, and a real Allow click records Settings network control while
+preserving other grants. The post-Allow observation finishes after its original
+cutoff, so the complete flow still fails; connection and reboot persistence remain
+unverified. [Latest milestone](docs/evidence/native-installed-network-consent-partial.json).
 The original Omarchy icon font now stages with its attribution files and passes
 ARM discovery checks. Rendering remains unverified.
 [Cold-boot status](docs/native-installed-wireless-coldboot.md).
@@ -41,7 +42,20 @@ boot and phone Wi-Fi remain unverified.
 
 ## See it running
 
-These are real, unedited x86 VM captures at the
+The installed ARM milestone reaches Permissions through the genuine menu and
+records the Allow action. These two raw frames show the visible status change.
+
+| Before Allow | After Allow |
+| --- | --- |
+| ![Permissions shows network control not allowed](docs/assets/installed-arm-network-consent-before.png) | ![Permissions shows network control allowed](docs/assets/installed-arm-network-consent-allowed.png) |
+
+These unaltered captures come from an ARM VM configured for the 1080 × 2424
+Pixel 10 profile. App display scaling and phone hardware remain unverified.
+The automated post-Allow check missed its deadline, so the complete connection
+and reboot flow has not passed.
+[Milestone and limits](docs/evidence/native-installed-network-consent-partial.json).
+
+The earlier captures below are real, unedited x86 VM captures at the
 [Pixel 10 display profile](docs/native-phone-display-profile.md): 1080 × 2424
 pixels, 422 PPI and 420 logical density. Some captures retain upstream development notices.
 

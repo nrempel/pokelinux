@@ -1,0 +1,155 @@
+{
+  "schema": 1,
+  "scope": "Actual generic ARM/QEMU installed menu, Permissions window and Allow-policy milestone. Functional acceptance remains failed. The two raw captures are scoped illustrations, not a qualified phone preview.",
+  "documentation_base": "b4144fcea6207a82d3c25ef7eea51645f67ce9f7",
+  "selection_sha256": "e088357cf35f1ee5f121c211882bde1c475d1981545e5efef7c7e0abfaa3e4e3",
+  "installed_manifest": {
+    "bytes": 65108,
+    "sha256": "fd885411fc67c7f6f2f39e3a711eaf37f700ff8297b569933e7e653d8ba5e779"
+  },
+  "actual_menu_and_normal_window": {
+    "genuine_full_shell_executed": true,
+    "normal_Permissions_window_and_focus_observed": true,
+    "compositor_available_area_qualified": true,
+    "fresh_QWindow_DPR_qualified": false
+  },
+  "Allow_policy_milestone": {
+    "actual_RFB_input": true,
+    "single_handoff_outcome": "sent_once",
+    "fixture_admin_grant_selected": false,
+    "target_app": "org.omarchy.Settings",
+    "permission": "network_control",
+    "allowed_before": false,
+    "allowed_after": true,
+    "other_grants_before": [],
+    "other_grants_after": [],
+    "other_grants_unchanged": true,
+    "policy_readback_sha256": "f4077e1cfc620d8aa5110f6de6b5d9656fe7fdaeaa6d57fa5f84b986167aeca0",
+    "policy_commit_observed_guest_BOOTTIME_ns": 90381615561,
+    "wire_ACK_observed": false,
+    "public_controller_ACK_observed": false
+  },
+  "remaining_failure": {
+    "functional_passed": false,
+    "guest_passed": false,
+    "stage": "explicit-Allow-network-control",
+    "error": "AssertionError('actual observation completed after original cutoff')",
+    "post_Allow_native_capture_ready_guest_BOOTTIME_ns": 90638362910,
+    "original_observation_until_ns": 93498647528,
+    "observer_ready_guest_BOOTTIME_ns": 97633237338,
+    "observer_completed_before_cutoff": false,
+    "deadline_extended_or_result_accepted_late": false,
+    "Connect_or_packet_flow_executed": false,
+    "boot2_executed": false,
+    "full_screenshot_acceptance": false,
+    "published_screenshot_qualified_in_original_consumer": false
+  },
+  "configured_display_profile": {
+    "name": "Pixel10",
+    "native_pixels": [
+      1080,
+      2424
+    ],
+    "selected_scale": 2.625,
+    "selected_physical_mm": [
+      65,
+      146
+    ],
+    "simulation_only": true,
+    "fresh_QWindow_DPR_qualified": false,
+    "hardware_verified": false
+  },
+  "illustrations": [
+    {
+      "path": "docs/assets/installed-arm-network-consent-before.png",
+      "caption": "Before Allow: Network control not allowed",
+      "bytes": 611542,
+      "sha256": "276659248f68e5f9e28fdafc74a250c138a29091a838a570ce57df1e85698396",
+      "native_capture_receipt": {
+        "bytes": 832,
+        "sha256": "6b3cab9afe669768ce85cb65ef737b11e70fd2107a18f58a0ed22dbf08b1c4f9"
+      },
+      "protocol": "zwlr_screencopy_manager_v1.capture_output",
+      "output": "Virtual-1",
+      "native_pixels": [
+        1080,
+        2424
+      ],
+      "native_buffer_stride": 4320,
+      "oriented_rgba_pixels_sha256": "762c8d80e7a4e942564bf5f3e73a0f0a95aad39fba0960311b5b1e1b1e98c7fa",
+      "raw_native_buffer_sha256": "56c207f59dfc46f523ecf56b62899cd92ed33d3c5e57f326a091c35bc745645d",
+      "native_capture_ready_guest_BOOTTIME_ns": 76534718347,
+      "png_decode_pixel_hash_matches_native_buffer": true,
+      "resize_or_export_scale_used": false,
+      "raw_copy_byte_identical": true,
+      "fresh_QWindow_DPR_qualified": false,
+      "full_screenshot_acceptance": false,
+      "hardware_verified": false
+    },
+    {
+      "path": "docs/assets/installed-arm-network-consent-allowed.png",
+      "caption": "After Allow: Network control allowed",
+      "bytes": 611049,
+      "sha256": "09585dcfd9877df98e3313299cbcfdc346414a566a2a6167abc824ad4526a29f",
+      "native_capture_receipt": {
+        "bytes": 832,
+        "sha256": "42ceb25880b4b3194e9ecb303f80cbb2f2083da71db1dd314e426dbce378b7e3"
+      },
+      "protocol": "zwlr_screencopy_manager_v1.capture_output",
+      "output": "Virtual-1",
+      "native_pixels": [
+        1080,
+        2424
+      ],
+      "native_buffer_stride": 4320,
+      "oriented_rgba_pixels_sha256": "bc47f9c2f1459764011bea771a5ad145a218c4cf7456f1ab407ef910b8e81d15",
+      "raw_native_buffer_sha256": "8b390da2b6798e6b8308ea7b2c8b6c75e962c3e920674bad907202a67c900c69",
+      "native_capture_ready_guest_BOOTTIME_ns": 90638362910,
+      "png_decode_pixel_hash_matches_native_buffer": true,
+      "resize_or_export_scale_used": false,
+      "raw_copy_byte_identical": true,
+      "fresh_QWindow_DPR_qualified": false,
+      "full_screenshot_acceptance": false,
+      "hardware_verified": false
+    }
+  ],
+  "closure": {
+    "guest_case_closure_qualified": true,
+    "all_direct_children_actual_wait_and_EOF": true,
+    "guest_shutdown_custody_qualified": true,
+    "actual_guest_SHUTDOWN_observed": true,
+    "actual_QEMU_wait_exit": 0,
+    "outer_functional_exit": 1,
+    "outer_cleanup_qualified": true,
+    "exact_CID_and_name_absent": true,
+    "same_daemon": true,
+    "selected_inputs_unchanged": true,
+    "cleanup_errors": [],
+    "native_closure_receipts_checked": false
+  },
+  "receipts": {
+    "result.json": {
+      "bytes": 560801,
+      "sha256": "9b2c092697420a80ef5bbbb12ac2a4f09909ef9fed66b30eb2decc56020a01d6"
+    },
+    "boot-result.json": {
+      "bytes": 26391,
+      "sha256": "5771807efe23a9755e37a1ad360f1ad545fbc1d99536ae9179f2d3d2b762829e"
+    },
+    "run/receipt.json": {
+      "bytes": 23330,
+      "sha256": "3dc6ae2ecad18f9698b2a7a0346189a8938e1ba0344f371c2f92a2228c3fdcdd"
+    },
+    "guest-bootstrap-result.json": {
+      "bytes": 7038,
+      "sha256": "2ea0cf5af0ae3840e44e0bd46bcc5f9d75a6d130b930cd72c177bb518f034b9b"
+    }
+  },
+  "limits": [
+    "The policy commit and visible allowed state do not make the late observation pass.",
+    "The initial and after frames were copied unchanged, with native PNG/receipt hash matching; neither was generated, edited or resized.",
+    "Fresh QWindow DPR and full screenshot acceptance remain unqualified.",
+    "No installed Connect, packet flow, second-boot persistence or full end-to-end acceptance is claimed.",
+    "No physical phone or Pixel hardware qualification; earlier failed records remain separate."
+  ]
+}

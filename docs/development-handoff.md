@@ -136,6 +136,16 @@ No window qualification, consent, Connect or boot 2 follows. Guest custody close
 QEMU exits 0 after guest-requested shutdown and outer cleanup qualifies; the
 functional result remains failed with outer exit 1.
 [Latest partial launch and closure](evidence/native-installed-permissions-launch-partial.json).
+Cold 17 now reaches the genuine Permissions window and actual Allow input.
+Read-only policy evidence records Settings network control changing to allowed
+with all other grants unchanged; no fixture admin grant is selected. The after
+frame visibly shows allowed. Its native capture is ready at 90.638 s, while the
+observer reports ready at 97.633 s after the original 93.498 s cutoff. The strict
+functional result remains failed; Connect and boot 2 are not reached. Guest
+custody, normal shutdown, actual QEMU exit 0 and outer cleanup qualify separately.
+Two raw 1080 × 2424 ARM VM frames illustrate the milestone in README. Fresh
+QWindow DPR and full screenshot acceptance remain unqualified; no phone claim.
+[Allow milestone and image provenance](evidence/native-installed-network-consent-partial.json).
 [Partial seat startup evidence](evidence/native-installed-vm-seat-startup.json).
 The earlier failed
 boot has normal guest shutdown, actual QEMU wait0 and qualified outer cleanup;

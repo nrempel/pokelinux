@@ -198,3 +198,22 @@ and exact outer cleanup passes with no cleanup errors. Functional acceptance
 remains failed; the outer run retains exit 1. Earlier failures remain unchanged.
 
 [Curated image, host-control and partial-launch receipts](evidence/native-installed-permissions-launch-partial.json).
+
+
+## Allow reaches the policy; the observation cutoff still fails
+
+Cold 17 opens the normal Permissions window through the genuine menu. Actual
+Allow input commits Settings network control as allowed, with other grants
+unchanged. The post-Allow frame visibly shows the allowed state. Its native
+capture is ready at 90.638 s guest BOOTTIME, but the observer's ready result is
+recorded at 97.633 s after the original 93.498 s cutoff. Functional acceptance
+therefore remains failed; no deadline is extended, and Connect or boot 2 is not
+reached. Guest custody, normal guest shutdown, actual QEMU exit 0 and exact outer
+cleanup qualify independently.
+
+The two raw before/after frames in [README](../README.md#see-it-running) are copied
+unchanged from this generic ARM VM. They use the configured 1080 × 2424 Pixel 10
+profile and are illustrations of the milestone. Fresh QWindow DPR and full
+screenshot acceptance remain unqualified; they provide no phone hardware claim.
+
+[Policy, native capture hashes and closure receipts](evidence/native-installed-network-consent-partial.json).
