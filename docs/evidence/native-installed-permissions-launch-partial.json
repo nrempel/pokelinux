@@ -1,0 +1,216 @@
+{
+  "schema": 1,
+  "scope": "Actual generic ARM/QEMU installed partial functional run and independent closure; separate host Unix-socket fixture controls. No physical phone evidence.",
+  "image14_capture_only": {
+    "image": {
+      "bytes": 144506880,
+      "sha256": "78cc662346aed49df8321006c6fefc49a654432aba0f52b0da752bbf495fcf7a"
+    },
+    "installed_manifest": {
+      "bytes": 65108,
+      "sha256": "fd885411fc67c7f6f2f39e3a711eaf37f700ff8297b569933e7e653d8ba5e779"
+    },
+    "source_publication": "8be52a292e723210ad03f503c994164c4b810a56",
+    "only_changed_installed_path": "usr/libexec/pokelinux-fixture/pixel10-raw-output-capture",
+    "before": {
+      "bytes": 104848,
+      "mode": 493,
+      "sha256": "383a0a4448fa4a9dfd5202e57b8dd92cc46d93b52df7a127920d62517dcbe5c8"
+    },
+    "after": {
+      "bytes": 104920,
+      "mode": 493,
+      "sha256": "8142196de27171563f26c5d9c4d581534fabed67007ff631bc750bbbe6f6962f"
+    },
+    "all_other325_installed_rows_exact": true,
+    "installed_rows": 326,
+    "package_count": 396,
+    "general_font_packages_added": false,
+    "external_capture_provider_or_runtime_shadow": false,
+    "receipts": {
+      "result.json": {
+        "bytes": 326478,
+        "sha256": "fef0b10f69f699055e61b506e8f2dc085cb90518cf7c72e096d48fdf35da9c68"
+      },
+      "boot-result.json": {
+        "bytes": 16698,
+        "sha256": "c1be81c9f2bd9bfc5884b32a44829c273ff8105fef6f71ce667e2e05ec4ad14b"
+      },
+      "run/receipt.json": {
+        "bytes": 128973,
+        "sha256": "7b5d84c6e8f23b45e2c4dcb2c915d542addca812bb51da6a6072ea31c97ba826"
+      }
+    },
+    "qualification": "Installed source/loader/manifest and image closure. Encoder replay remains separately documented; no full UI timing pass follows."
+  },
+  "outer_action_count_control": {
+    "scope": "Actual closed host Unix-socket peer and extracted outer assertion; server pixels and bootstrap-success input are authored. This does not qualify ARM UI, app selection or either real boot.",
+    "original_boot1_boot2_expectations": [
+      15,
+      14
+    ],
+    "corrected_boot1_boot2_expectations": [
+      21,
+      20
+    ],
+    "source_plan_catalog_indices": {
+      "Permissions": 7,
+      "Settings": 12
+    },
+    "unchanged_action_cap": 24,
+    "only_owner_change": "One expected-count expression; all other assertion terms and owner AST unchanged.",
+    "owner_sources": {
+      "baseline": {
+        "bytes": 11745,
+        "sha256": "674f5024ecfc80b6eb5907a2c9bd562ab2d8a1a741fb27a0ee34fab0a3e0cd00"
+      },
+      "candidate": {
+        "bytes": 11745,
+        "sha256": "96350f75fb287f763413097734bebf8cab555a9030d5233d0d6611149f1d7a1b"
+      }
+    },
+    "RED": {
+      "bytes": 1527,
+      "sha256": "3733f71070e478d6234bc9c2b353521e37234940d30a8065349b755f1f217ed5",
+      "desired_assertion_failure": true,
+      "case": "Boot 1: actual 21-action receipt rejected by the original 15-action expectation."
+    },
+    "GREEN": {
+      "bytes": 2761,
+      "sha256": "e4d6a6ea7eb0586b8885d6d3b3b4bba269ffb8162ffc842d7cdb4e14f9f18976",
+      "all21_and20_gates_passed": true
+    },
+    "actual_host_peer_controls": {
+      "1": {
+        "action_count": 21,
+        "actual_peer_wait": 0,
+        "actual_socket_EOF": true,
+        "receipt": {
+          "bytes": 11855,
+          "sha256": "0340de475d78dc8aa88a7d1e2ed5e9fed1d4b914cf8ceafb4b204fa13faa2a57"
+        },
+        "control_result": {
+          "bytes": 3669,
+          "sha256": "c889c4f96b89c71180536b5fa9ad0f683db2e44f78df8c4d5145463488fe9fa0"
+        },
+        "negative_controls": {
+          "missing": "refused",
+          "extra": "refused",
+          "failed_outcome": "refused",
+          "selection_mismatch": "refused",
+          "peer_failed": "refused",
+          "bootstrap_failed": "refused"
+        }
+      },
+      "2": {
+        "action_count": 20,
+        "actual_peer_wait": 0,
+        "actual_socket_EOF": true,
+        "receipt": {
+          "bytes": 11382,
+          "sha256": "6a41188ef9c2b375834d0b1180332367b87a8983f1add8d462194b65cce79fa4"
+        },
+        "control_result": {
+          "bytes": 3476,
+          "sha256": "9b8121d637be3c72d81069d9789bff588888fc72f01dd1c515521da34812460e"
+        },
+        "negative_controls": {
+          "missing": "refused",
+          "extra": "refused",
+          "failed_outcome": "refused",
+          "selection_mismatch": "refused",
+          "peer_failed": "refused",
+          "bootstrap_failed": "refused"
+        }
+      }
+    },
+    "cap_or_deadlines_changed": false
+  },
+  "cold15_preflight": {
+    "selection": {
+      "bytes": 49683,
+      "sha256": "1584a64f51e4046bd427faf2f218d201df9137be48b22d36fbe54685352eb02c"
+    },
+    "frozen_unlaunched": true,
+    "reason": "The stale 15/14 outer expectation was caught before admission.",
+    "actual_runtime_RED_claimed": false
+  },
+  "cold16": {
+    "selection_sha256": "e1ecb4fda3dbb648438d8995808956dda08ae3e4fb72a90fccbd2945c4ef0db1",
+    "source_manifest_sha256": "2e9d5441f10e231e71fd9db1efad1209f761e2dffac9914463b9bd7108684227",
+    "image_sha256": "78cc662346aed49df8321006c6fefc49a654432aba0f52b0da752bbf495fcf7a",
+    "passed": false,
+    "functional_passed": false,
+    "actual_genuine_menu_handoffs": [
+      "bar click",
+      "Apps click",
+      "PageDown",
+      "Down",
+      "Return"
+    ],
+    "each_handoff_sent_once": true,
+    "actual_catalog_entries": 15,
+    "source_expected_catalog_index": 7,
+    "actual_widget_selection_state_readback": false,
+    "normal_app_process_observed": {
+      "desktop_id": "org.omarchy.Permissions",
+      "UID": 11045,
+      "executable_sha256": "25e903848f801333e7b605cdc865359c4c8bb2fbc41457b1aa75312c2ea30edb",
+      "observed_guest_BOOTTIME_ns": 80601293975
+    },
+    "original_navigation_budget_ns": 30000000000,
+    "original_navigation_until_ns": 81246674938,
+    "failed_gate": "normal_window() had not qualified Permissions before the original navigation cutoff.",
+    "error": "TimeoutError('original installed guest observation cutoff')",
+    "normal_window_qualified": false,
+    "fresh_QWindow_DPR_qualified": false,
+    "consent_reached": false,
+    "Connect_or_packet_flow_reached": false,
+    "boot2_executed": false,
+    "native_closure_receipts_checked": false,
+    "closure": {
+      "guest_case_closure_qualified": true,
+      "all_direct_children_actual_wait_and_EOF": true,
+      "guest_shutdown_custody_qualified": true,
+      "actual_QEMU_wait_exit": 0,
+      "actual_guest_SHUTDOWN_observed": true,
+      "outer_functional_exit": 1,
+      "outer_cleanup_container_wait": 1,
+      "exact_CID_and_name_absent": true,
+      "same_daemon": true,
+      "selected_inputs_unchanged": true,
+      "outer_cleanup_qualified": true,
+      "cleanup_errors": []
+    },
+    "receipts": {
+      "result.json": {
+        "bytes": 461607,
+        "sha256": "69ac2bab7cfb018b9c13ce60f69ebf4b71fdb0b114fd16342735db6fef503985"
+      },
+      "boot-result.json": {
+        "bytes": 26391,
+        "sha256": "40381fa61b7ddddb7feb353d3e7f87e2a20d89e01aef39b241303eb114b344fa"
+      },
+      "run/receipt.json": {
+        "bytes": 23329,
+        "sha256": "958690a79f95c12a2863b3fdbb42968bd024dcaad2105d69e3c27798a3f5c1f2"
+      },
+      "guest-bootstrap-result.json": {
+        "bytes": 7033,
+        "sha256": "d47ede2b33e526d0a141c8ac25ab8b7babee8e76a25444bd0b4739225fda098b"
+      },
+      "first-failure-diagnostic.json": {
+        "bytes": 1363,
+        "sha256": "e9b8d527e1d5a05d7c2263ee75dc6753a33ad28d008aedbfb937195e37b6bde5"
+      }
+    }
+  },
+  "limits": [
+    "The Permissions process launch is observed; its normal window and consent are unqualified.",
+    "The reason the normal window was not qualified before cutoff remains unresolved.",
+    "No connection, packet exchange, second-boot persistence or complete installed GUI acceptance follows.",
+    "The original 10-second navigation target is not qualified by the 30-second cohort.",
+    "No new public screenshot/QWindow or physical-phone qualification.",
+    "Earlier failed runtime records and the unlaunched cold15 source cohort remain separate."
+  ]
+}

@@ -101,16 +101,41 @@ root entries and opens Apps. Its actual catalog has 15 entries, while the viewpo
 shows nine full rows and a faded tenth. The observer incorrectly requires all 15
 to be visible, so the aggregate still fails before app launch. A capture helper's
 late wait also leaves guest closure unqualified; QEMU exits0 and outer cleanup
-passes. Source-bound viewport checks and genuine keyboard navigation are next.
+passes. That run predates the viewport/navigation correction.
 The three needed key actions now pass actual host socket RED/GREEN and an
 abort-during-hold release control, separately from GUI execution.
 [Socket evidence](evidence/native-menu-keyboard-socket.json).
+Graphical menu assembly now has a small public composer in
+`tools/native-omarchy-menu/compose.py`, replacing manual menu-overlay merging.
+Actual host staging records the generic installer's acceptance of three invalid
+graphical selections and the composer's refusal before output creation. Valid
+theme/shell/menu composition passes all235 file checks; the generic installer
+is unchanged. A deterministic changed-manifest control reproduces an earlier
+composer gap; the current prepared-plan comparison refuses that substitution
+before output creation. This supplies no GUI/ARM/VM result.
+[Composition evidence](evidence/native-omarchy-graphical-composition.json).
 Missing fonts remain a separate
 visual packaging issue. The exact custom Omarchy font and attribution files now
 pass separate staging RED/GREEN. Actual ARM fontconfig discovery now passes as
 UID1000 with the exact font and U+E900 coverage; rendering and general icon fonts
 remain open. The latest menu image includes those font assets.
 [Current partial evidence](evidence/native-installed-menu-red.json).
+Image 14 now installs the qualified ARM capture encoder at the existing helper
+path; all other 325 installed records and the baseline of 396 packages are unchanged.
+Cold 15 stays frozen and unlaunched: preflight caught the stale outer action count.
+The sole expected-count expression now requires 21/20 actions for boots 1/2;
+actual host Unix-socket RED/GREEN preserves the 24-action cap and every other
+assertion, with missing/extra/failed/mismatched receipts still refused. These
+fixture controls do not qualify a real GUI sequence.
+
+Cold 16 accepts the genuine scrolling viewport and PageDown/Down/Return launches
+normal Permissions under UID 11045 at 80.601 s guest BOOTTIME; its executable
+hash matches the installed manifest. `normal_window()` then times out at the
+original 30-second navigation cutoff, 81.247 s; the reason remains unresolved.
+No window qualification, consent, Connect or boot 2 follows. Guest custody closes,
+QEMU exits 0 after guest-requested shutdown and outer cleanup qualifies; the
+functional result remains failed with outer exit 1.
+[Latest partial launch and closure](evidence/native-installed-permissions-launch-partial.json).
 [Partial seat startup evidence](evidence/native-installed-vm-seat-startup.json).
 The earlier failed
 boot has normal guest shutdown, actual QEMU wait0 and qualified outer cleanup;

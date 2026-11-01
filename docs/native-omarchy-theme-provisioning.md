@@ -57,10 +57,13 @@ install -m0755 native-appearance/target/release/omarchy-theme-provision /absolut
 python3 tools/native-omarchy-theme/stage.py --archive /absolute/public/omarchy-public.tar.gz --provisioner /absolute/output/omarchy-theme-provision --root /absolute/normal-bundle --manifest /absolute/theme-manifest.json
 ```
 
-Merge the emitted manifest rows with the normal graphical profile's selected
-rows, then use `native-session-owner/packaging/install_deployment.py` for the
-build-only DESTDIR copy. The stager does not initialize a host home, activate a
-unit, fetch sources, patch Qt namespaces or change the shell environment.
+Include the emitted rows in the selected graphical base, then use the
+[native menu composer](../tools/native-omarchy-menu/README.md) with its required
+three-row menu component before passing the complete manifest to
+`native-session-owner/packaging/install_deployment.py` for the build-only DESTDIR
+copy. This replaces manual menu merging, which could omit both assets and their
+manifest rows. The stager does not initialize a host home, activate a unit, fetch
+sources, patch Qt namespaces or change the shell environment.
 
 The 41 selected upstream files, public menu helper, native helper, oneshot unit,
 four normal profile dependency drop-ins and three font/attribution resources

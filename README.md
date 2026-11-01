@@ -21,12 +21,17 @@ dependency. Simulated-radio provisioning now starts and stops successfully. The
 combined ARM boot now starts the desktop session after adding an explicit VM
 seat service. Its identity, socket and normal shutdown checks now pass. The
 installed menu and application list now render after restoring omitted menu
-assets and the native launch adapter. The UI test still needs to navigate the
-scrolling app list; consent, connection and reboot persistence remain unverified.
+assets and the native launch adapter. Genuine menu keyboard navigation now
+launches the installed Permissions process. Its normal window is not qualified
+before the observation cutoff; consent, connection and reboot persistence remain
+unverified. [Latest partial result](docs/evidence/native-installed-permissions-launch-partial.json).
 The original Omarchy icon font now stages with its attribution files and passes
 ARM discovery checks. Rendering remains unverified.
 [Cold-boot status](docs/native-installed-wireless-coldboot.md).
 [Permission progress](docs/native-network-permission-authority.md).
+A graphical-only [bundle composer](tools/native-omarchy-menu/README.md) now
+refuses omitted or unadapted native-menu components in actual host staging
+checks; this adds no GUI or boot qualification.
 
 The Rust connection service now resolves its configured interface at startup,
 without saving boot-specific kernel IDs. An ARM simulation passes connection,

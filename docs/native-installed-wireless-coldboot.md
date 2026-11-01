@@ -172,3 +172,29 @@ Linux display-device access beneath the Rust owner; it qualifies no Pixel displa
 backend. Full installed UI/consent/connection and two-boot persistence remain open.
 
 [Curated ARM startup and extraction evidence](evidence/native-installed-display-seat-red.json).
+
+
+## Permissions process launches; window qualification remains open
+
+Image 14 replaces only the installed capture helper with the ARM-compiled encoder.
+Its separate replay matched all 24 default/candidate decodes to two retained native
+captures. All other 325 installed rows, 396 packages and existing font assets
+remain exact. The installed call path is unchanged. Image preparation and full VM/container closure pass.
+
+Cold 15 was frozen but never launched: preflight found a stale outer expectation.
+A one-line correction changes the expected boot 1/boot 2 action counts from 15/14 to
+21/20. Actual closed host Unix-socket controls first fail the old count, then pass
+both corrected counts, while refusing missing, extra, failed and mismatched
+receipts. The 24-action cap and deadlines are unchanged. Authored server pixels
+and bootstrap-success input keep this control separate from real GUI acceptance.
+
+Cold 16 accepts the scrolling app viewport. Actual PageDown, Down and Return input
+launches normal Permissions under UID 11045; its selected executable is observed at
+80.601 s guest BOOTTIME. The normal-window predicate remains unmet at the original
+30-second navigation cutoff, 81.247 s. No window/QWindow qualification, consent,
+Connect, packet flow or boot 2 is reached, and the cause of the window timeout
+remains unresolved. Guest custody and normal guest shutdown qualify, QEMU exits 0,
+and exact outer cleanup passes with no cleanup errors. Functional acceptance
+remains failed; the outer run retains exit 1. Earlier failures remain unchanged.
+
+[Curated image, host-control and partial-launch receipts](evidence/native-installed-permissions-launch-partial.json).
