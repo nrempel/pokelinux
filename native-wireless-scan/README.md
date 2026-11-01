@@ -3,7 +3,8 @@
 Retained radio refresh failures now include the observation phase, command
 transaction state and composed before/after-profile position. The first error,
 retirement and deadlines are preserved; completed framing does not authorize
-recovery. Actual host controls pass; installed ARM diagnostics remain open.
+recovery. Actual host controls pass; Cold24 now retains the complete early
+installed ARM diagnostic. Recovery and the full GUI lifecycle remain unqualified.
 [Scope and evidence](../docs/native-wireless-refresh-diagnostics.md).
 
 Rust Linux `nl80211` operations for a newly created, exclusively administered

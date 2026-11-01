@@ -3,15 +3,17 @@
 Retained radio refresh failures now include the observation phase, command
 transaction state and composed before/after-profile position. The first error,
 retirement and deadlines are preserved; completed framing does not authorize
-recovery. Actual host controls pass; installed ARM diagnostics remain open.
+recovery. Actual host controls pass; Cold24 now retains the complete early
+installed ARM diagnostic. Recovery and the full GUI lifecycle remain unqualified.
 [Scope and evidence](../docs/native-wireless-refresh-diagnostics.md).
 
 Worker failures attempt a bounded diagnostic before error propagation drops the
 parent connection. FIFO output uses one independent nonblocking write; Unix stream
 output uses one nonblocking, signal-suppressed send without changing shared flags.
 Stream delivery may be partial. Seven actual host pipe/socket controls pass after
-a missing-stream-record RED. Installed journal delivery and the precise ARM radio
-refresh failure remain unqualified; original errors and cutoffs are unchanged.
+a missing-stream-record RED. Cold24's complete early journal record locates the
+expiry at `BeforeProfile / QuietAfter / Completed`; later Termination output is
+partial. Original errors and cutoffs are unchanged.
 [Diagnostic scope and evidence](../docs/native-connectivity-worker-error-context.md).
 
 This component separates short-lived fixed-profile commands from background
