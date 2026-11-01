@@ -1,0 +1,111 @@
+{
+  "schema": 1,
+  "classification": "ARM_DESKTOP_BUILD_AND_LOADER_PREREQUISITE",
+  "passed": true,
+  "source_commit": "f6c5eb283379b409aa9acec56294d05998103c52",
+  "scope": "AArch64 Rust crossbuild and native Sounds/selected compositor MODULE builds in generic full-system ARM TCG",
+  "normal_app_service_or_plugin_entrypoints_executed": false,
+  "installed_coldboot_qualified": false,
+  "phone_accessed": false,
+  "normal_ARM_exports": {
+    "audio-focus-observer.so": {
+      "bytes": 89464,
+      "sha256": "c5994bac10bb8bb4e4973ecae2d13c29cb00b09457a8aef5869e5ad6a94e08bd"
+    },
+    "pokelinux-sounds": {
+      "bytes": 6447400,
+      "sha256": "2822850c7cebf8c43fd1f77d815002965da2ce50d3f8bef4ce8184d521115108"
+    },
+    "session-source.so": {
+      "bytes": 159320,
+      "sha256": "07ef4a752cce0b454bb29f8ddcd7974709fa4b7368f29dd83096a6b91c350112"
+    }
+  },
+  "Rust_outputs": {
+    "audio_owner": {
+      "bytes": 1342024,
+      "sha256": "7eb4741177db147befa1a458be172a51a5824746dfe32265380fa653cfa17a56"
+    },
+    "audio_backend_ready": {
+      "bytes": 544280,
+      "sha256": "f5875cd9aa021ae17fd4094436ca5d941cc17d7c58e4a6c7c3adaaa5f6e226ae"
+    },
+    "sounds_core": {
+      "bytes": 24910848,
+      "sha256": "dbed4e5823b690517307b53947be34756209d124d86d9054a11211936d77f883"
+    },
+    "theme_provisioner": {
+      "bytes": 728016,
+      "sha256": "19301aac32f84beeb4091cc2c111969c3342f4454aa88fd67fa2ea9ac3a04cc0"
+    }
+  },
+  "Rust_executable_loaders": {
+    "audio_owner": {
+      "output_sha256": "188fbedea2616d3bbc5ef56db80ace581a613fe386b82ded2255c066fc525b21",
+      "entrypoint_executed": false
+    },
+    "audio_backend_ready": {
+      "output_sha256": "602423e448e6b661d524daee68f0a4045186c18241099725df5825c0985fede5",
+      "entrypoint_executed": false
+    },
+    "theme_provisioner": {
+      "output_sha256": "5402a35d49a60d890c5fbdcd3797df90228e55129e6cf6609920663b1579c936",
+      "entrypoint_executed": false
+    }
+  },
+  "plugin_boundary": {
+    "matching_compositor_sha256": "49087490cd11253b8098211c20319e40dbcf092d484b42fd297602d03a77e57f",
+    "matching_SDK_files": 498,
+    "host_imports_checked_against_actual_dynamic_exports": true,
+    "runtime_loading_not_qualified": true,
+    "focus_observer_and_event_ring": "Existing authored private diagnostic fixtures; not claimed as current public production sources"
+  },
+  "closure": {
+    "guest_ECHILD": true,
+    "actual_guest_command_waits_and_EOF": true,
+    "guest_handles_closed": true,
+    "QEMU_wait_exit": 0,
+    "container_wait_exit": 0,
+    "exact_container_absence": true,
+    "selected_inputs_unchanged": true
+  },
+  "receipt_pins": {
+    "Rust_artifacts": {
+      "bytes": 23788,
+      "sha256": "ca6d1e01417ce680066e451e166696cb37aae303e8d9f46b5645468b42a173dd"
+    },
+    "guest": {
+      "bytes": 118240,
+      "sha256": "298441cb59c85c26c958bd5c98bfed8f927885c8fe05a4a134c45ead08dd15d9"
+    },
+    "boot": {
+      "bytes": 14618,
+      "sha256": "21dffe5525fb453c9f71a66d34b64e8a3f5e9da2a52818e066934f2bc416ee74"
+    }
+  },
+  "original_native_bounds_seconds": {
+    "host": [
+      810,
+      840
+    ],
+    "QEMU": [
+      780,
+      800
+    ],
+    "guest": [
+      660,
+      700
+    ]
+  },
+  "remaining": [
+    "installed PID1/session/Source and UI interaction",
+    "persistent consent across two coldboots with explicit Connect",
+    "normal audio/backend behavior and full native shutdown",
+    "physical phone behavior"
+  ],
+  "owner_receipt_sha256": {
+    "Rust": "6cff99c2443c386f420a8e825b84e02eebccb1d48fa7332f3d757066c044303f",
+    "native_ARM": "3d9c9d8feb49ebfddf281fab72737294f4bc6e3482053836c06e16aef209262b"
+  },
+  "preflight_note": "Initial native build admission lacked a required boolean and failed before output/container creation; corrected admission used unchanged selected sources and command."
+}

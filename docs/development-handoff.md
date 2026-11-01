@@ -37,6 +37,11 @@ and loader checks now pass; three fixed launchers and the presentation helper
 also crossbuild, without entrypoint execution. See
 [consent evidence](native-permissions-ui.md) and
 [ARM build limits](evidence/native-network-consent-arm-build.json).
+Current ARM Sounds, audio/readiness/theme helpers and matching compositor plugins
+now pass build/staging/loader inspection with full VM/container closure. Plugin
+host imports are checked against the selected compositor/dependencies; runtime
+loading, normal UI actions and installed two-boot persistence remain untested.
+[Desktop build evidence](evidence/native-arm-desktop-build.json).
 
 The normal Main empty-idle regression now passes the unchanged host consumer
 after qualified RED. A source-qualified zero-readiness hint defers starting an
