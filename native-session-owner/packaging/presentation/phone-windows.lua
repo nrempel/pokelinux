@@ -9,6 +9,6 @@ hl.config({
 
 hl.window_rule({
   name = "phone-app-available-area",
-  match = { class = "^org[.]omarchy[.](Sounds|Permissions)$" },
+  match = { class = "^org[.]omarchy[.](Sounds|Permissions|Settings)$" },
   fullscreen_state = "1 1",
 })

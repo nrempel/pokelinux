@@ -33,9 +33,22 @@ the operation. Their procfs links must have the exact kernel pidfd type name,
 `anon_inode:[pidfd]`; scalar device/inode equality is unused. Each bounded fdinfo
 read must contain exactly one canonical positive `Pid` within the signed Linux
 PID range. Missing, duplicate, malformed, oversized, invisible0 and reaped-1
-records fail closed. Both reads precede a final joint nonblocking poll; any
+records fail closed. Each distinct descriptor is read before a final joint nonblocking poll; any
 readiness or error flag refuses a match. Every temporary read descriptor drops on
-success or error. The new comparison module forbids unsafe code.
+success or error. Passing the same safely borrowed descriptor twice now reuses
+its one identity read; the final two-slot poll remains unchanged. Raw descriptor
+equality establishes this alias only, never process identity. The comparison
+module forbids unsafe code.
+
+The actual host syscall regression observes two fdinfo opens before the alias
+optimization and one afterward, while distinct duplicated descriptors retain two
+opens. Actual child exit between identity reads and the final poll is refused for
+both same and distinct handles. Build `--test pidfd_read_probe --no-run`, then run
+`python3 tests/pidfd_read_count.py /absolute/path/to/pidfd_read_probe-<hash>` with
+the built executable and `strace` installed. Run descriptor-table tests with
+`RUST_TEST_THREADS=1` to prevent unrelated tests reusing a closed numeric slot.
+This is host evidence; it does not yet resolve the installed ARM receive timeout.
+[Read-count evidence and limits](../docs/evidence/native-kernel-identity-single-read.json).
 
 Deployment must protect the procfs mount and qualify **one common PID namespace**
 for the source's actual credentials, registered app PID, expected PID and pinned

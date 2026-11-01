@@ -18,3 +18,8 @@ rustix = { version = "=1.1.5", features = ["net", "event", "process"] }
 name = "termination_control"
 path = "tests/termination_control.rs"
 harness = false
+
+[[test]]
+name = "pidfd_read_probe"
+path = "tests/pidfd_read_probe.rs"
+harness = false

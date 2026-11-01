@@ -1,0 +1,466 @@
+{
+  "schema": 1,
+  "scope": "Actual generic ARM/QEMU TCG installed consent and normal-close progress; aggregate GUI acceptance remains failed. Simulated radios, no phone or Pixel hardware qualification.",
+  "documentation_base": "eb686bbfb26c69b14124028d16219d7a07b50bca",
+  "prior_partial_evidence": "native-installed-network-consent-partial.json",
+  "host_controls_separate": {
+    "path_probe_batch": {
+      "scope": "Actual host subprocess/pidfd/PIPE controls with authored responses; no genuine qs or ARM GUI timing claim",
+      "baseline_max_live": 1,
+      "candidate_max_live": 4,
+      "ordered_outputs_identical": true,
+      "failed_and_blocked_probes_rethrow": true,
+      "actual_wait_EOF_closed_handles_ECHILD": true,
+      "receipts": {
+        "baseline": {
+          "bytes": 14108,
+          "sha256": "fdff2c47728398905ce324f89134fbbce8b641b11f1ecae1528a2fb47a16d328"
+        },
+        "normal": {
+          "bytes": 14047,
+          "sha256": "967657981ecfb910e0f0b3fc5fca4806c73269d66c38b1798c8bb7ae4d341823"
+        },
+        "failed": {
+          "bytes": 4060,
+          "sha256": "befc91de04444dd165d34a3e5d3e76db99c2ae6929b50a334af22d62d809904a"
+        },
+        "blocked": {
+          "bytes": 4049,
+          "sha256": "1d30f29e5ce6ada9353f01f2e1879bde337b1648a0467f7450bcbd9dcf0dfaad"
+        }
+      }
+    },
+    "pixel_observation": {
+      "scope": "Host parity on three retained native PNGs/six label regions; host timings do not establish ARM performance",
+      "complete_label_dictionaries_geometry_and_histogram_order_equal": true,
+      "threshold_tie_bounds_and_refusal_controls": true,
+      "duplicate_decode_removed_only_by_reusing_same_validated_RGB_image": true,
+      "proof": {
+        "bytes": 3958,
+        "sha256": "129b471912b20e07088d5d928c27313f9bfb287a8987a514a196a9bc5ea1a41a"
+      },
+      "parity": {
+        "bytes": 6233,
+        "sha256": "f501382ccf6e8c7add60fd1ff5d23582a30cc7d1a31f785b0fbbe315a909343a"
+      },
+      "patch": {
+        "bytes": 3606,
+        "sha256": "97f21875ca0ba8ffe1cdafcc9990574b846236b8b00af94cf48ed3fd6df0e0fb"
+      },
+      "runtime_entry_sha256": "73da7b2fc92fc6db2a49677c7450b3f3a9a6a60e621befc124f5a72859f0ad8c",
+      "runtime_acceptance_sha256": "06819dccb0dc95b31895c82676ea20bd92f99e7fb2e0112a522dc37ca9f8fe2c"
+    }
+  },
+  "cold18": {
+    "selection_sha256": "1fade0483347fd1f429b417b310655c021158cfa91ab1f407df75579fe1c71a8",
+    "functional_passed": false,
+    "passed": false,
+    "actions_completed": 7,
+    "Allow": {
+      "actual_RFB": true,
+      "fixture_admin_grant_selected": false,
+      "policy_allowed": true,
+      "other_grants_unchanged": true,
+      "policy_sha256": "f4077e1cfc620d8aa5110f6de6b5d9656fe7fdaeaa6d57fa5f84b986167aeca0",
+      "policy_readback_BOOTTIME_ns": 81211992932,
+      "post_observation_readiness": "ready",
+      "post_observation_enabled": [
+        false,
+        true
+      ],
+      "post_observation_BOOTTIME_ns": 83687183477,
+      "original_until_ns": 88309194058,
+      "completed_before_cutoff": true,
+      "wire_ACK_observed": false
+    },
+    "remaining_failure": {
+      "stage": "explicit-Allow-network-control",
+      "error": "TimeoutError('original installed guest observation cutoff')"
+    },
+    "Connect_reached": false,
+    "packet_flow_reached": false,
+    "functional_32s_clock_started": false,
+    "boot2_executed": false,
+    "closure": {
+      "guest_qualified": true,
+      "guest_errors": [],
+      "actual_guest_shutdown": true,
+      "actual_QEMU_waited": true,
+      "QEMU_exit_code": 0,
+      "outer_exit": 1,
+      "external_peer_exit": 1,
+      "outer_cleanup_qualified": true,
+      "exact_CID_and_name_absent": true,
+      "same_daemon": true,
+      "inputs_unchanged": true,
+      "all_handles_closed": true,
+      "ECHILD": true,
+      "adopted_waits": [],
+      "errors": [],
+      "native_closure_receipts_checked": false
+    },
+    "receipts": {
+      "result.json": {
+        "bytes": 614490,
+        "sha256": "369fd5dde074de3b6694ed4f9dc388aec8c5dbade2c0c3b8e7b44da5d7fec8fd"
+      },
+      "boot-result.json": {
+        "bytes": 26391,
+        "sha256": "366c1f5bf6fa4eb269db18215f888358a8b8b1e2c1c5ab39ecc4a1bed800b7b1"
+      },
+      "guest-bootstrap-result.json": {
+        "bytes": 7038,
+        "sha256": "67b62a7609b385d39787ec37315bbe61922ffd4ee078625747d4fbe2b8019cee"
+      },
+      "permissions-viewer-result.json": {
+        "bytes": 4529,
+        "sha256": "b5a7e793d52cc3f93c8890ff3cd50ef5a6e822f5a394d6859691ab8e554b101b"
+      },
+      "run/receipt.json": {
+        "bytes": 23330,
+        "sha256": "8899cfcf7e8ee8650789684d3cbc826a3427be40463851f85095f8f01d6b3f07"
+      },
+      "first-failure-diagnostic.json": {
+        "bytes": 1219,
+        "sha256": "4f249c3a21db575fe0ce3ec8cb94c7882ac37967c21e963a51c971fd31c294f0"
+      }
+    },
+    "normal_Permissions_close": {
+      "passed": false,
+      "reason": "Selected explicit compositor config supplied no Super+W binding; process-retirement observation timed out",
+      "native_app_lifecycle_cause_claimed": false
+    }
+  },
+  "image15_config_only": {
+    "image": {
+      "bytes": 144506880,
+      "sha256": "7245bc3ccce01cd09a172d75acb434ca77075e52a4b41e39be1b8e6f37def5f5"
+    },
+    "installed_manifest": {
+      "bytes": 65108,
+      "sha256": "e0b63bc7973369ddc84c0bd00cdebc21bcce4536cd4c9f7410ade0092260a98f"
+    },
+    "rows": 326,
+    "only_changed_row": "etc/pokelinux/normal-hypr.lua",
+    "old_bytes": 1519,
+    "old_sha256": "3c250824c6f88502a6a93c01340eb7d652dbad51fed174ebcd66acc8c7199d7a",
+    "new_bytes": 1634,
+    "new_sha256": "ae1d982045e6f6ef42b9f3b33f9e9e1b240ebc4c97af8d3dac94cd6671be5dcd",
+    "exact_old_prefix_preserved": true,
+    "fragment": {
+      "source": "tools/native-omarchy-menu/window-bindings.lua",
+      "bytes": 115,
+      "sha256": "1b3974c261ff467aca2289c4caf3f1bd0e112547e9ea97f0ffd9a080c9f58934",
+      "copies": 1
+    },
+    "other325_rows_and_native_ELFs_unchanged": true,
+    "preparation_passed": true,
+    "receipts": {
+      "result.json": {
+        "bytes": 326456,
+        "sha256": "88ee0d231e3ee81d0a6e8ec07c938c4a5e830514c983dad0b113ac3d80224c54"
+      },
+      "boot-result.json": {
+        "bytes": 16698,
+        "sha256": "f1fe7e725516a824064947450a409f35f2331f9f61742783ce5b1b4f2a42b4eb"
+      },
+      "run/receipt.json": {
+        "bytes": 129749,
+        "sha256": "b269036ba2f02b30dcaeb32f265aab2ff5ddf6a710d8a587501a9db1a334ba0b"
+      }
+    }
+  },
+  "cold19": {
+    "selection_sha256": "994d2854b31bd132192f999e185fa1a9149264112ec723e297c890ad6e1ee007",
+    "functional_passed": false,
+    "passed": false,
+    "actions_completed": 12,
+    "Allow": {
+      "actual_RFB": true,
+      "fixture_admin_grant_selected": false,
+      "policy_allowed": true,
+      "other_grants_unchanged": true,
+      "policy_sha256": "f4077e1cfc620d8aa5110f6de6b5d9656fe7fdaeaa6d57fa5f84b986167aeca0",
+      "policy_readback_BOOTTIME_ns": 81352803870,
+      "post_observation_readiness": "ready",
+      "post_observation_enabled": [
+        false,
+        true
+      ],
+      "post_observation_BOOTTIME_ns": 83915918501,
+      "original_until_ns": 88496796679,
+      "completed_before_cutoff": true,
+      "wire_ACK_observed": false
+    },
+    "remaining_failure": {
+      "stage": "first-menu-Settings",
+      "error": "TimeoutError('original installed guest observation cutoff')"
+    },
+    "Connect_reached": false,
+    "packet_flow_reached": false,
+    "functional_32s_clock_started": false,
+    "boot2_executed": false,
+    "closure": {
+      "guest_qualified": true,
+      "guest_errors": [],
+      "actual_guest_shutdown": true,
+      "actual_QEMU_waited": true,
+      "QEMU_exit_code": 0,
+      "outer_exit": 1,
+      "external_peer_exit": 1,
+      "outer_cleanup_qualified": true,
+      "exact_CID_and_name_absent": true,
+      "same_daemon": true,
+      "inputs_unchanged": true,
+      "all_handles_closed": true,
+      "ECHILD": true,
+      "adopted_waits": [],
+      "errors": [],
+      "native_closure_receipts_checked": false
+    },
+    "receipts": {
+      "result.json": {
+        "bytes": 769256,
+        "sha256": "b7e07cb4b11749dac552ba87303af1491141d5710c0c416b21af41bef734eeed"
+      },
+      "boot-result.json": {
+        "bytes": 26391,
+        "sha256": "505ee2c5309f791222af0450d233b1f7eadba74d4c2861770dd850cce94cc0a3"
+      },
+      "guest-bootstrap-result.json": {
+        "bytes": 7038,
+        "sha256": "84deb3412e6699f421670a1633d89c7190bcb4b7db3301446b7aa3ad183d92d4"
+      },
+      "permissions-viewer-result.json": {
+        "bytes": 6809,
+        "sha256": "96698648f5483a03ff2b9ebdc56c27d8b72a6b1b8d95c76448e9c0ab7be2de63"
+      },
+      "run/receipt.json": {
+        "bytes": 23330,
+        "sha256": "2edae88f8c32f3623e52e37250b5683b04f1026cf6514d5e84f623c625ca8470"
+      },
+      "first-failure-diagnostic.json": {
+        "bytes": 1429,
+        "sha256": "bfefd73bf40cf3d11ad33b29b21995f194ff7e053ec3e76265208688f9876ad2"
+      }
+    },
+    "normal_Permissions_close": {
+      "actual_RFB_Super_W": true,
+      "handoff_outcome": "sent_once",
+      "retained_pidfd_dead": true,
+      "proc_absent": true,
+      "private_display_listener_absent": true,
+      "completed_BOOTTIME_ns": 84439963569,
+      "original_until_ns": 93939652099,
+      "guest_claims_native_parent_wait": false
+    },
+    "Settings_layout": {
+      "native_executable_identity_verified": true,
+      "mapped_native_nonfloating": true,
+      "actual_app_id": "pokelinux-settings",
+      "fullscreen": 2,
+      "fullscreenClient": 2,
+      "client_rect": [
+        0,
+        0,
+        411,
+        923
+      ],
+      "required_workarea": [
+        0,
+        26,
+        411.42857142857144,
+        923.4285714285714
+      ],
+      "contained": false,
+      "qualified": false
+    }
+  },
+  "unchanged_limits": {
+    "navigation_ns": 30000000000,
+    "input_handoff_ns": 10000000000,
+    "functional_aggregate_ns": 32000000000,
+    "action_cap": 24,
+    "native_action_and_packet_ns": 1000000000,
+    "quiet_ns": 800000000,
+    "all_original_app_and_owner_closure_limits": true
+  },
+  "next_production_correction": {
+    "status": "Actual ARM build/loader and cold20 Settings identity/workarea checks pass. The installed connection flow remains failed after earlier Main receive retirement.",
+    "Settings_desktop_file_name": "org.omarchy.Settings",
+    "phone_window_profile": "Add Settings to the normal available-area rule; retain mode1/1 and workarea containment predicate"
+  },
+  "limits": [
+    "Timed Allow, normal Permissions close and Settings layout do not qualify the full installed flow.",
+    "Cold19 fails Settings layout; cold20 passes that layout but Main had already retired its worker on receive_message / TimedOut. Neither reaches Connect, packets or boot2.",
+    "The earlier two published screenshots retain their original cold17 scope and timing failure.",
+    "No new screenshot, physical phone, deadline relaxation or numerical native-parent wait claim."
+  ],
+  "settings_identity_ARM_build": {
+    "scope": "Normal CMake Settings target only in generic ARM VM; no application, service or layout execution",
+    "main_cpp": {
+      "bytes": 3645,
+      "sha256": "dc2af988e00fa3e65f9221dd3f3d408a16069a537e8850333e29053a136f6306"
+    },
+    "source_delta": "Only the desktop identity line changes among the 26 selected files",
+    "Qt_version": "6.12.0",
+    "three_frozen_Rust_archives_unchanged": true,
+    "Rust_rebuilt": false,
+    "ELF": {
+      "bytes": 6458320,
+      "sha256": "97ab2005d53cf1e579fafe3d082d6d9aeba61ff31e99fa8012fc8b13cd228e3a"
+    },
+    "ELF_machine": 183,
+    "build_only_resources": {
+      "guest_vCPUs": 16,
+      "guest_MiB": 8192,
+      "outer_CPUs": 16,
+      "outer_memory": "10GiB",
+      "parallel_jobs": 8
+    },
+    "selection": {
+      "bytes": 27268,
+      "sha256": "9755f1821db2d52d334bd66c27393f556cfe786e783ec5590cacce490f7444f0"
+    },
+    "command": {
+      "bytes": 2706,
+      "sha256": "5ecedab728d2b757d7001613bec653a48d463b1c60b147a2cf48fc4e3e0a2320"
+    },
+    "receipts": {
+      "result.json": {
+        "bytes": 129558,
+        "sha256": "651e9539585e50507268a75947f80be8d6cfa60eb56cdd4c5f9a68b9e0debf99"
+      },
+      "boot-result.json": {
+        "bytes": 17897,
+        "sha256": "af43c3a55d5082fe05f1e43e3b2f3657b3f2517db99bf66f5d86be075c80110d"
+      },
+      "run/receipt.json": {
+        "bytes": 34427,
+        "sha256": "e1d3451e9c4be71a728bf9de4750211ada2a8f8afad613e18be0f3ec44b4c924"
+      }
+    },
+    "actual_QEMU_exit": 0,
+    "cleanup_errors": [],
+    "installed_layout_qualified": false
+  },
+  "cold20": {
+    "selection_sha256": "680e7d0dec05dc039b696acfa22fd49fc4d0524fbfba348b2efc2f719e52936f",
+    "functional_passed": false,
+    "passed": false,
+    "source_status": "The selected Settings identity and normal phone-window sources differ from documentation_base; actual compiled and installed identities are pinned.",
+    "image17": {
+      "image": {
+        "bytes": 144441344,
+        "sha256": "5f809198cc28758cd8bce61713608417dc2923e10e204fb209faf8830e0605fb"
+      },
+      "installed_manifest": {
+        "bytes": 65108,
+        "sha256": "66fe59152f986cce24d87f7cd730f6580137a0f78148fc53992df3998e08c076"
+      },
+      "rows": 326,
+      "only_changed_rows_vs_image15": [
+        "usr/libexec/pokelinux/pokelinux-settings",
+        "etc/pokelinux/normal-hypr.lua"
+      ],
+      "Settings_ELF_sha256": "97ab2005d53cf1e579fafe3d082d6d9aeba61ff31e99fa8012fc8b13cd228e3a",
+      "normal_config_sha256": "452e0bd641ec18a289099439a9a6bd3e5dcdb92bb8ef8a7181bc6f5ea7fe41e0",
+      "other324_rows_unchanged": true
+    },
+    "Settings_layout": {
+      "actual_app_id": "org.omarchy.Settings",
+      "native_mapped": true,
+      "fullscreen": 1,
+      "fullscreenClient": 1,
+      "client_rect": [
+        21,
+        47,
+        390,
+        902
+      ],
+      "required_workarea": [
+        0,
+        26,
+        411.42857142857144,
+        923.4285714285714
+      ],
+      "contained": true,
+      "qualified": true,
+      "exact_workarea_fill_claimed": false,
+      "observed_BOOTTIME_ns": 123391744724,
+      "original_until_ns": 124497477146
+    },
+    "earlier_Main_retirement": {
+      "reason": "receive_failure",
+      "operation": "receive_message",
+      "io_kind": "TimedOut",
+      "original_until_ns": 51995246469,
+      "detected_at_ns": 52009320140,
+      "record_length": null,
+      "record_type": null,
+      "worker_exit_signal": 9,
+      "before_Settings_launch": true,
+      "inner_receive_stage_or_record_consumption_inferred": false,
+      "journal_pin": {
+        "bytes": 528,
+        "sha256": "ef0bc3a55a60694ade506b790aec7e56998ac8a41f84323998a683f86035f2c2"
+      }
+    },
+    "Settings_initial_view": {
+      "rendered_status_reviewed": "Local connection: Unavailable",
+      "completed_observations": 4,
+      "all_observed_controls_disabled": true,
+      "first_failure": "AssertionError('097-first-Enable-5-native-capture.log original direct-wait cutoff')",
+      "late_capture": {
+        "returncode": 0,
+        "actual_direct_parent_wait": true,
+        "waited_at_boottime_ns": 132661239163,
+        "original_cutoff_ns": 124497477146,
+        "wait_before_original_cutoff": false,
+        "stdout_EOF": true,
+        "stdout_EOF_at_ns": 124783358466,
+        "EOF_before_original_cutoff": false
+      }
+    },
+    "Connect_reached": false,
+    "packet_flow_reached": false,
+    "functional_32s_clock_started": false,
+    "boot2_executed": false,
+    "closure": {
+      "guest_qualified": false,
+      "guest_errors": [
+        "owned helper: AssertionError('097-first-Enable-5-native-capture.log actual wait observed late')"
+      ],
+      "bootstrap_custody_closed": true,
+      "normal_poweroff_command_closed": true,
+      "actual_QEMU_waited": true,
+      "QEMU_exit_code": 0,
+      "guest_shutdown_custody_qualified": true,
+      "outer_cleanup_qualified": true,
+      "outer_errors": [],
+      "external_peer_exit": 1,
+      "attach_exit": 1,
+      "container_exit": 1,
+      "exact_CID_and_name_absent": true,
+      "same_daemon": true,
+      "inputs_unchanged": true,
+      "all_handles_closed": true,
+      "ECHILD": true,
+      "adopted_waits": []
+    },
+    "receipts": {
+      "result.json": {
+        "bytes": 780603,
+        "sha256": "3d13baa83242616d2234f21c6fa18b4202320c1db0d9922ebc080ace2c818ac3"
+      },
+      "boot-result.json": {
+        "bytes": 26391,
+        "sha256": "bc05f69fded31d0c935e487ed6030e7b893e2b5c2015325aca535cf78d7b3a5f"
+      },
+      "run/receipt.json": {
+        "bytes": 23330,
+        "sha256": "ab92c0d16224b40c1a80c5db827977a746213a3a5e94474ce9a8e61e2065c703"
+      }
+    }
+  }
+}

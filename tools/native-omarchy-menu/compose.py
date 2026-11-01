@@ -9,6 +9,8 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+import re
+import stat
 import tempfile
 
 HERE = Path(__file__).resolve().parent
@@ -17,6 +19,7 @@ menu = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(menu)
 deployment = menu.deployment
 APP_LIBRARY = 'usr/share/pokelinux/omarchy/shell/services/AppLibrary.qml'
+NORMAL_CONFIG = 'etc/pokelinux/normal-hypr.lua'
 
 
 def compose(archive, base_root, base_manifest, menu_root, menu_manifest,
@@ -72,6 +75,28 @@ def compose(archive, base_root, base_manifest, menu_root, menu_manifest,
                 else:
                     raise ValueError('unexpected graphical composition collision: ' + name)
             combined[name] = incoming
+        if NORMAL_CONFIG not in combined or combined[NORMAL_CONFIG][1] != 0o644:
+            raise ValueError('explicit normal compositor config row mode0644 required')
+        config, config_mode = combined[NORMAL_CONFIG]
+        fragment, fragment_info = deployment.regular(HERE / 'window-bindings.lua', deployment.MAX_FILE)
+        fragment_mode = stat.S_IMODE(fragment_info.st_mode)
+        if not fragment or fragment_mode != 0o644:
+            raise ValueError('nonempty source-owned window bindings mode0644 required')
+        copies = config.count(fragment)
+        if copies > 1:
+            raise ValueError('duplicate standard close fragment')
+        # Deliberately a literal-profile check, not an arbitrary Lua parser.
+        other = config.replace(fragment, b'')
+        if re.search(rb"""hl\.bind\s*\(\s*(['"])SUPER\s*\+\s*W\1""", other):
+            raise ValueError('conflicting literal Super+W binding')
+        compositor = {'path': NORMAL_CONFIG, 'input': {
+            'bytes': len(config), 'sha256': hashlib.sha256(config).hexdigest(), 'mode': config_mode},
+            'window_bindings': {'source': 'tools/native-omarchy-menu/window-bindings.lua',
+                'bytes': len(fragment), 'sha256': hashlib.sha256(fragment).hexdigest(), 'mode': fragment_mode},
+            'fragment_appended': copies == 0}
+        if copies == 0:
+            config += (b'' if config.endswith(b'\n') else b'\n') + fragment
+        combined[NORMAL_CONFIG] = (config, config_mode)
         # Keep the source-path recheck used by the generic installer across both
         # authenticated selections, before constructing any public output.
         for _, _, _, source, identity in [*base, *overlay]:
@@ -88,7 +113,8 @@ def compose(archive, base_root, base_manifest, menu_root, menu_manifest,
             target.chmod(mode)
         document = {'schema': 1, 'files': rows, 'composition': {
             'native_menu': json.loads(expected_manifest.read_text())['source'],
-            'equal_collisions': equal, 'replaced_original_app_library': replaced}}
+            'equal_collisions': equal, 'replaced_original_app_library': replaced,
+            'normal_compositor': compositor}}
         complete = private / 'complete.json'
         complete.write_text(json.dumps(document, indent=2) + '\n')
         # This validates the combined byte/file/path bounds before root.mkdir.

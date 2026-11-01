@@ -114,6 +114,13 @@ is unchanged. A deterministic changed-manifest control reproduces an earlier
 composer gap; the current prepared-plan comparison refuses that substitution
 before output creation. This supplies no GUI/ARM/VM result.
 [Composition evidence](evidence/native-omarchy-graphical-composition.json).
+The composer now also requires the normal compositor-config row and composes
+the existing public standard-close fragment once. Actual host staging first
+records missing-config/duplicate/literal-conflict acceptance and an unchanged
+missing-binding config, then passes all nine controls with the repair. The two
+positive compositions verify all236 files; an existing exact fragment remains
+byte-identical. This does not qualify GUI close behavior.
+[Close-composition evidence](evidence/native-omarchy-close-composition.json).
 Missing fonts remain a separate
 visual packaging issue. The exact custom Omarchy font and attribution files now
 pass separate staging RED/GREEN. Actual ARM fontconfig discovery now passes as
@@ -146,6 +153,35 @@ custody, normal shutdown, actual QEMU exit 0 and outer cleanup qualify separatel
 Two raw 1080 × 2424 ARM VM frames illustrate the milestone in README. Fresh
 QWindow DPR and full screenshot acceptance remain unqualified; no phone claim.
 [Allow milestone and image provenance](evidence/native-installed-network-consent-partial.json).
+
+Cold 18 subsequently passes the timed allowed-state check, then normal close
+stalls: its selected Lua config omitted the existing public Super+W binding.
+Image 15 appends only that exact fragment; every other installed row is unchanged.
+Cold 19 now observes the retained Permissions pidfd as terminal, with the process
+and private listener absent after genuine Super+W. It next launches Settings, whose
+actual app ID is `pokelinux-settings` and mode is fullscreen 2/2, overlapping the reserved bar.
+The strict available-area predicate correctly rejects it. No Connect, packet flow
+or boot 2 occurs; both failed aggregates have qualified guest/VM/container cleanup.
+Host process-batch and retained-pixel controls remain separate from ARM evidence.
+The corrected Settings desktop identity passes the matched ARM CMake build,
+loader checks and cold 20 actual layout check: `org.omarchy.Settings`, mode 1/1,
+contained within the reserved workarea. Image 17 changes only Settings and the
+normal config; its other 324 installed records equal image 15. Main had already
+retired its worker at 52.009 s on `receive_message / TimedOut`, before Settings
+opened. The UI remains Unavailable; no Connect, packets or boot 2 follow.
+The fifth capture exceeds its original cutoff, so guest strict closure is false.
+Bootstrap custody, normal poweroff, actual QEMU wait 0 and outer cleanup qualify
+separately.
+The receive latch does not identify an inner check or record consumption. Isolate
+that boundary keeping the existing receive duration and original action cutoffs.
+The next component correction removes redundant same-descriptor identity reads in
+Rust: actual host syscall RED 2 reads becomes GREEN 1, with distinct descriptors
+still read twice and final liveness checks retained. Host identity/exit controls
+pass. The offline build also passes 52 connectivity library and 8 owner tests
+and produces the two ARM service binaries with unchanged locks and qualified
+compiler closure. Installed ARM execution remains pending; this does not establish
+the timeout cause. [Host read-count evidence](evidence/native-kernel-identity-single-read.json).
+[Timed consent, layout and remaining receive gate](evidence/native-installed-consent-close-progress.json).
 [Partial seat startup evidence](evidence/native-installed-vm-seat-startup.json).
 The earlier failed
 boot has normal guest shutdown, actual QEMU wait0 and qualified outer cleanup;

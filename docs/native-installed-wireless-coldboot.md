@@ -217,3 +217,54 @@ profile and are illustrations of the milestone. Fresh QWindow DPR and full
 screenshot acceptance remain unqualified; they provide no phone hardware claim.
 
 [Policy, native capture hashes and closure receipts](evidence/native-installed-network-consent-partial.json).
+
+## Timed Allow and normal close (cold18/19)
+
+Cold 18 passes the allowed-state observation at 83.687 seconds, before its
+88.309-second cutoff. It then fails normal Permissions close. The selected Lua
+config contained no Super+W binding; this did not establish an app lifecycle bug.
+Image 15 preserves its entire prefix and appends the exact existing public
+`window-bindings.lua` once. That config is the only changed installed row; the
+other 325 records, native binaries and all deadlines remain unchanged.
+
+Cold 19 passes genuine Super+W close: the retained Permissions pidfd is terminal,
+with its process and private display listener absent before the original cutoff.
+Settings then launches as a mapped native window, but advertises `pokelinux-settings` and
+uses fullscreen mode 2/2. Its top edge is 0 while the bar reserves the first 26
+logical pixels. The existing phone profile covers Sounds and Permissions only;
+the unchanged mode 1/1 and workarea-containment predicate therefore rejects
+Settings. No Connect, packets or second boot is reached. Guest cleanup is empty,
+normal guest shutdown and actual QEMU exit 0 pass, and outer custody qualifies;
+both functional aggregates remain failed.
+
+The path-probe batch has separate actual host process controls, including failed
+and blocked children with owned waits/EOF and closure. The pixel optimization has
+exact retained-frame histogram/geometry parity and host measurements. Neither
+host result alone qualifies ARM timing; cold 18 supplies the subsequent timed
+Allow result. The Settings desktop-identity and phone-window correction then
+passes the matched ARM build, loader and cold 20 layout checks below.
+
+[Curated consent/close progression and receipt hashes](evidence/native-installed-consent-close-progress.json).
+
+## Settings layout passes; Main receive retirement blocks connection
+
+Cold 20 uses qualified image 17, changing only the Settings executable and normal
+phone-window config; the other 324 installed rows equal image 15. Actual Settings
+now advertises `org.omarchy.Settings`, uses mode 1/1 and fits inside the reserved
+workarea. Its observed rectangle is `[21,47,390,902]`; exact workarea fill is not
+claimed. The unchanged layout predicate passes before its original cutoff.
+
+Main had already retired its worker on `receive_message / TimedOut` at
+52.009320140 seconds, with an original cutoff of 51.995246469 seconds. Settings
+opens later and truthfully displays Unavailable with both controls disabled. This
+retirement record does not establish record consumption or which inner receive
+check failed. No Connect, packet flow, functional 32-second clock or boot 2 occurs.
+
+The initial-view observation fails on the fifth capture's original direct-wait
+cutoff. Its actual exit 0, wait and EOF are retained but late, so guest strict
+closure is false. Bootstrap custody and normal poweroff close, QEMU actually exits 0 after
+guest-requested shutdown, and outer cleanup qualifies with unchanged inputs,
+exact container absence and no cleanup errors. External peer, attach and container
+all exit 1; those cleanup facts do not make the aggregate pass.
+
+[Actual layout, retirement and closure receipt hashes](evidence/native-installed-consent-close-progress.json).

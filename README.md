@@ -23,16 +23,19 @@ seat service. Its identity, socket and normal shutdown checks now pass. The
 installed menu and application list now render after restoring omitted menu
 assets and the native launch adapter. The genuine menu now opens the normal
 Permissions window, and a real Allow click records Settings network control while
-preserving other grants. The post-Allow observation finishes after its original
-cutoff, so the complete flow still fails; connection and reboot persistence remain
-unverified. [Latest milestone](docs/evidence/native-installed-network-consent-partial.json).
+preserving other grants. The timed allowed-state check and normal Permissions
+close now pass, and Settings has the correct app identity and workarea layout.
+In the latest run, the connection service had stopped after a receive timeout;
+Settings stays Unavailable. Connection and reboot persistence remain unverified.
+[Latest progress](docs/evidence/native-installed-consent-close-progress.json).
 The original Omarchy icon font now stages with its attribution files and passes
 ARM discovery checks. Rendering remains unverified.
 [Cold-boot status](docs/native-installed-wireless-coldboot.md).
 [Permission progress](docs/native-network-permission-authority.md).
 A graphical-only [bundle composer](tools/native-omarchy-menu/README.md) now
 refuses omitted or unadapted native-menu components in actual host staging
-checks; this adds no GUI or boot qualification.
+checks and composes the standard close binding once into the explicit normal
+compositor config; this adds no GUI or boot qualification.
 
 The Rust connection service now resolves its configured interface at startup,
 without saving boot-specific kernel IDs. An ARM simulation passes connection,
@@ -51,8 +54,9 @@ records the Allow action. These two raw frames show the visible status change.
 
 These unaltered captures come from an ARM VM configured for the 1080 × 2424
 Pixel 10 profile. App display scaling and phone hardware remain unverified.
-The automated post-Allow check missed its deadline, so the complete connection
-and reboot flow has not passed.
+These frames retain the earlier post-Allow deadline miss. Later runs pass the
+timed Allow check, normal close and Settings layout. The connection-service timeout
+still blocks the complete connection and reboot flow.
 [Milestone and limits](docs/evidence/native-installed-network-consent-partial.json).
 
 The earlier captures below are real, unedited x86 VM captures at the

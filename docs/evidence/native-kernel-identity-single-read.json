@@ -1,0 +1,139 @@
+{
+  "schema": 1,
+  "evidence_class": "actual Harbour host Linux process/syscall tests; not ARM or phone execution",
+  "change": "Read one safely borrowed pidfd once when it is passed as both arguments; distinct descriptors retain two identity reads and the final joint liveness poll remains unchanged.",
+  "source_files": {
+    "native-kernel-identity/src/pidfd.rs": {
+      "bytes": 10529,
+      "sha256": "d76a9b69b39be7fb2133cd513d666110db5ebcc2f8e79f18d9743243fa97da2f"
+    },
+    "native-kernel-identity/tests/pidfd_read_probe.rs": {
+      "bytes": 1254,
+      "sha256": "27179d3b47907ddf6d54571c8da3c93604fe8375f4333f619a629fab3fcb3e50"
+    },
+    "native-kernel-identity/tests/pidfd_read_count.py": {
+      "bytes": 1279,
+      "sha256": "5c913028af86b857cf30b3e7af0cbd421e85c0f635522922b2f0bb221c952f11"
+    },
+    "native-kernel-identity/Cargo.toml": {
+      "bytes": 508,
+      "sha256": "1c0202c6928f56dda37edcd540d392a89f29fbeb81eed5f28c4a5f8e0d5d3bef"
+    }
+  },
+  "actual_syscall_red": {
+    "same_descriptor_fdinfo_opens": 2,
+    "required": 1,
+    "distinct_descriptor_fdinfo_opens": 2,
+    "probe_assertion_exit": 1,
+    "record": {
+      "bytes": 899,
+      "sha256": "6019d9ec752309174d74095d0bdb8abb4ddd661cc48395631708971a7b85bea3"
+    }
+  },
+  "actual_syscall_green": {
+    "same_descriptor_fdinfo_opens": 1,
+    "distinct_descriptor_fdinfo_opens": 2,
+    "probe_assertion_exit": 0,
+    "record": {
+      "bytes": 432,
+      "sha256": "98f12ab36b0f696a938b9da3d84e1ee9d29a21e61177458aa261bf85ddf497e1"
+    }
+  },
+  "unchanged_checks": [
+    "creator process and expected PID range",
+    "kernel pidfd type and canonical positive PID",
+    "final joint two-slot live-process poll",
+    "transport pre/post owner, credential and deadline checks",
+    "terminal retirement and no implicit receive retry"
+  ],
+  "regressions": {
+    "kernel_identity_library": {
+      "passed": 5,
+      "record": {
+        "bytes": 537,
+        "sha256": "e2835f3c642c8182e28295177464eac06facbe4ffea0840dc675f453c0feee2e"
+      }
+    },
+    "actual_owned_pidfd_groups": {
+      "passed": 7,
+      "record": {
+        "bytes": 963,
+        "sha256": "ed01f2a3cf88663baab109f985f3999677ff22ed0ce45c4715acc6653a1669a2"
+      }
+    },
+    "actual_socket_groups": {
+      "passed": 2,
+      "record": {
+        "bytes": 358,
+        "sha256": "839e260f8854181528e5fef4590c1836faa85ccac14faff57b60538c1639a4df"
+      }
+    },
+    "actual_termination_groups": {
+      "passed": 5,
+      "record": {
+        "bytes": 560,
+        "sha256": "86d3f1d9446b35909333ec06aa2e36e16a3a4ebe6ef310838a180f010e88abbc"
+      }
+    },
+    "actual_same_and_distinct_live_probe": {
+      "passed": true,
+      "record": {
+        "bytes": 18,
+        "sha256": "edab303958c88e72da3b9648bd5863d898020127fc1c7638faed82304932f756"
+      }
+    },
+    "process_owner_library_mixed_authored_and_process_cases": {
+      "passed": 11,
+      "record": {
+        "bytes": 1114,
+        "sha256": "fcef913fae17edcc7e3a5ccbc1b6f23f0197d2bbbaeb8c21cf16e42d5b56bd91"
+      }
+    },
+    "clippy_all_kernel_identity_targets_warnings_denied": true
+  },
+  "qualification_conditions": {
+    "RUST_TEST_THREADS": "1",
+    "initial_trace_observer": "Corrected to count fdinfo record opens only, excluding the directory open; initial observer attempt is not production RED.",
+    "initial_parallel_library_run": "Failed a pre-existing numeric closed-fd slot assertion while tests shared the descriptor table. Serial suite passes; no parallel-suite pass is claimed."
+  },
+  "limits": [
+    "The Cold20 timeout cause is not isolated by this optimization.",
+    "No reduced ARM receive duration or installed connection-flow pass is claimed.",
+    "No action, observation, receive or cleanup deadline was increased.",
+    "No physical phone or matched Google kernel execution."
+  ],
+  "ARM_compiler_and_host_consumer_validation": {
+    "selection_sha256": "bdfab06aa2f6d095b4bc8752135938d1d0c1366cbc374906759e1a5fbfa165d3",
+    "host_connectivity_library_passed": 52,
+    "host_connectivity_library_ignored": 1,
+    "host_connectivity_owner_passed": 8,
+    "all_original_locks_unchanged": true,
+    "ARM_ELFs": {
+      "ARM/pokelinux-connectivity-main": {
+        "bytes": 1046504,
+        "sha256": "812fe9cf331d1d5d0851d9ae0f3e058f37108db7e406f8c58ec8850608a32843",
+        "ELF_machine": 183
+      },
+      "ARM/pokelinux-connectivity-service": {
+        "bytes": 958720,
+        "sha256": "d69138e2981f473876a6a34af88c49a21d8b1a759e201302b7f741476c75fc02",
+        "ELF_machine": 183
+      }
+    },
+    "build_result": {
+      "bytes": 4911,
+      "sha256": "caffbba893dc5b0d99c5862708999a9aadfd3fb7b63a098b49631e53d873f643"
+    },
+    "outer_receipt": {
+      "bytes": 967436,
+      "sha256": "0797a4623a84267030d98ba5336740a41d63ba6f93f7979b265703c4dde04e88"
+    },
+    "actual_container_wait": 0,
+    "all_owned_waits_and_EOF_before_original_cutoffs": true,
+    "closure_errors": [],
+    "adopted_children": [],
+    "inputs_unchanged": true,
+    "ARM_runtime_executed": false,
+    "installed_flow_passed": false
+  }
+}

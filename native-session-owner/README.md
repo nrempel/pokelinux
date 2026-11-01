@@ -97,12 +97,16 @@ device graphics remain separate from a minimal Source composition.
 ### Phone app presentation
 
 `packaging/presentation/phone-windows.lua` selects available-area maximization for
-the exact Sounds and Permissions app classes. Append it once to the selected
+the exact Sounds, Permissions and Settings app classes. Append it once to the selected
 normal Hyprland configuration before startup, then update that file's explicit
 deployment manifest bytes/hash. Copying an unused Lua file does not activate it.
 The focus-transfer and close-retention settings apply to the compositor; the
-initial maximization rule matches only those two apps. No service permission is
-granted by this profile. A genuine x86 VM now qualifies both apps' focused layout,
+initial maximization rule matches only those three apps. Settings now declares
+the matching desktop ID; its corrected installed ARM layout passes in cold20.
+That run still fails the connection flow after an earlier Main receive timeout;
+[layout and full-flow evidence remain separate](../docs/evidence/native-installed-consent-close-progress.json).
+No service permission is granted by this profile. A genuine x86 VM qualifies
+Sounds and Permissions' focused layout,
 consent, measured playback/revocation and normal closes; its final external-viewer
 message check remains failed. See [the bounded evidence](../docs/native-permissions-ui.md).
 

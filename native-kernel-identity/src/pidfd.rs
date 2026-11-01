@@ -101,9 +101,15 @@ impl ProcessView {
             return Err(io::ErrorKind::InvalidInput.into());
         }
         let left_pid = self.pid(left)?;
-        let right_pid = self.pid(right)?;
+        // Identical safely borrowed descriptors cannot retarget between these
+        // reads. This tests reference aliasing, not scalar process identity.
+        let right_pid = if left.as_raw_fd() == right.as_raw_fd() {
+            left_pid
+        } else {
+            self.pid(right)?
+        };
         after_reads();
-        // Both reads precede this joint final poll. A zombie can still have a
+        // Identity reads precede this joint final poll. A zombie can still have a
         // positive Pid; polling refuses it. Reaped/invisible Pid values already
         // fail parsing. Any readiness/error flag, including NVAL, fails closed.
         let mut fds = [
@@ -248,24 +254,27 @@ mod tests {
     }
     #[test]
     fn actual_exit_after_identity_reads_is_refused_by_final_liveness_poll() {
-        let mut child = Command::new("/bin/sleep").arg("30").spawn().unwrap();
-        let pid = child.id();
-        let owned = rustix::process::pidfd_open(
-            rustix::process::Pid::from_raw(pid as i32).unwrap(),
-            rustix::process::PidfdFlags::empty(),
-        )
-        .unwrap();
-        let duplicate = rustix::io::fcntl_dupfd_cloexec(&owned, 3).unwrap();
-        let result =
-            ProcessView::open()
-                .unwrap()
-                .matches_after_reads(&owned, &duplicate, pid, || {
-                    child.kill().unwrap();
-                    child.wait().unwrap();
-                });
-        assert!(!result.unwrap_or(false));
-        assert!(rustix::io::fcntl_getfd(&owned).is_ok());
-        assert!(rustix::io::fcntl_getfd(&duplicate).is_ok());
-        assert!(owned.as_raw_fd() >= 0);
+        for same_reference in [false, true] {
+            let mut child = Command::new("/bin/sleep").arg("30").spawn().unwrap();
+            let pid = child.id();
+            let owned = rustix::process::pidfd_open(
+                rustix::process::Pid::from_raw(pid as i32).unwrap(),
+                rustix::process::PidfdFlags::empty(),
+            )
+            .unwrap();
+            let duplicate = rustix::io::fcntl_dupfd_cloexec(&owned, 3).unwrap();
+            let right = if same_reference { &owned } else { &duplicate };
+            let result =
+                ProcessView::open()
+                    .unwrap()
+                    .matches_after_reads(&owned, right, pid, || {
+                        child.kill().unwrap();
+                        child.wait().unwrap();
+                    });
+            assert!(!result.unwrap_or(false));
+            assert!(rustix::io::fcntl_getfd(&owned).is_ok());
+            assert!(rustix::io::fcntl_getfd(&duplicate).is_ok());
+            assert!(owned.as_raw_fd() >= 0);
+        }
     }
 }

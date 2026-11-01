@@ -33,7 +33,7 @@ def manifest(path, rows):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    for name in ['archive', 'provisioner', 'output']:
+    for name in ['archive', 'provisioner', 'normal-config', 'output']:
         parser.add_argument('--' + name, required=True, type=Path)
     parser.add_argument('--baseline', action='store_true',
                         help='exercise the existing manual merge and generic installer')
@@ -45,7 +45,8 @@ def main():
     composer = None if args.baseline else load('composer_test', REPO / 'tools/native-omarchy-menu/compose.py')
     report = {'passed': False, 'baseline': args.baseline, 'cases': {},
               'scope': 'actual host file staging; no build, services, GUI, ARM execution or VM',
-              'inputs': {'archive': pin(args.archive), 'provisioner': pin(args.provisioner)}}
+              'inputs': {'archive': pin(args.archive), 'provisioner': pin(args.provisioner),
+                         'normal_config': pin(args.normal_config)}}
     try:
         base = args.output / 'base'
         rows = theme.stage(args.archive, args.provisioner, base, args.output / 'theme.json')
@@ -66,6 +67,18 @@ def main():
                 path.write_bytes(data)
                 path.chmod(int(lock['modes'][name][-3:], 8))
                 rows[target] = pin(path)
+        normal = 'etc/pokelinux/normal-hypr.lua'
+        config = args.normal_config.read_bytes()
+        fragment_file = REPO / 'tools/native-omarchy-menu/window-bindings.lua'
+        fragment = fragment_file.read_bytes()
+        assert fragment not in config, 'the supplied actual missing-binding control must lack the fragment'
+        assert pin(args.normal_config)['mode'] == pin(fragment_file)['mode'] == 0o644
+        closed = config + (b'' if config.endswith(b'\n') else b'\n') + fragment
+        (base / normal).parent.mkdir(parents=True, exist_ok=True)
+        (base / normal).write_bytes(config)
+        (base / normal).chmod(0o644)
+        rows[normal] = pin(base / normal)
+        report['inputs']['window_bindings'] = pin(fragment_file)
         manifest(args.output / 'base.json', rows)
         menu_root = args.output / 'native-menu'
         menu_rows = menu.stage(args.archive, menu_root, args.output / 'native-menu.json')
@@ -76,7 +89,8 @@ def main():
         report['required_menu_rows'] = menu_rows
         cases = ['omitted-three', 'unadapted-app-library', 'unexpected-collision']
         if not args.baseline:
-            cases.append('changed-manifest-between-reads')
+            cases.extend(['changed-manifest-between-reads', 'omitted-normal-config',
+                          'duplicate-close-fragment', 'conflicting-literal-close', 'already-closed'])
         for case in [*cases, 'valid']:
             folder = args.output / case
             folder.mkdir(mode=0o700)
@@ -97,12 +111,23 @@ def main():
                 wrapper = candidate_base / 'usr/bin/omarchy-shell'
                 wrapper.write_text('#!/bin/sh\nexit 0\n')
                 base_rows['usr/bin/omarchy-shell'] = pin(wrapper)
+            elif case == 'omitted-normal-config':
+                (candidate_base / normal).unlink()
+                base_rows.pop(normal)
+            elif case in ('duplicate-close-fragment', 'conflicting-literal-close', 'already-closed'):
+                body = closed
+                if case == 'duplicate-close-fragment':
+                    body += fragment
+                elif case == 'conflicting-literal-close':
+                    body = config + b'\nhl.bind("SUPER + W", hl.dsp.window.maximize())\n'
+                (candidate_base / normal).write_bytes(body)
+                base_rows[normal] = pin(candidate_base / normal)
             base_manifest, menu_manifest = folder / 'base.json', folder / 'menu.json'
             manifest(base_manifest, base_rows)
             manifest(menu_manifest, component_rows)
             dest, output_manifest = folder / 'composed', folder / 'composed.json'
             before = {name: pin(candidate_base / name) for name in base_rows}
-            entry = {'desired_refusal': case != 'valid', 'refused': False}
+            entry = {'desired_refusal': case not in ('valid', 'already-closed'), 'refused': False}
             try:
                 if args.baseline:
                     # The documented pre-guard procedure merges selected rows;
@@ -160,10 +185,19 @@ def main():
                 entry['actual_installed_files'] = len(list(p for p in dest.rglob('*') if p.is_file()))
                 entry['installed_menu_rows'] = {
                     name: pin(dest / name) for name in menu_rows if (dest / name).is_file()}
-            if case == 'valid' and not entry['refused']:
-                assert entry['installed_menu_rows'] == menu_rows
-                assert all(pin(dest / name) == row for name, row in {**base_rows, **menu_rows}.items())
             entry['passed'] = entry['refused'] == entry['desired_refusal']
+            if case in ('valid', 'already-closed') and not entry['refused']:
+                assert entry['installed_menu_rows'] == menu_rows
+                expected_rows = {**base_rows, **menu_rows}
+                if not args.baseline:
+                    expected_rows[normal] = {'bytes': len(closed), 'sha256': hashlib.sha256(closed).hexdigest(), 'mode': 0o644}
+                    body = (dest / normal).read_bytes()
+                    entry['exact_single_close_fragment'] = body == closed and body.count(fragment) == 1
+                    entry['close_fragment_idempotent'] = case == 'already-closed' and body == (candidate_base / normal).read_bytes()
+                    entry['normal_config_row'] = pin(dest / normal)
+                    entry['passed'] &= entry['exact_single_close_fragment']
+                entry['all_selected_byte_hash_mode_checks_passed'] = all(pin(dest / name) == row for name, row in expected_rows.items())
+                entry['passed'] &= entry['all_selected_byte_hash_mode_checks_passed']
             report['cases'][case] = entry
         report['passed'] = all(row['passed'] for row in report['cases'].values())
     except BaseException as error:

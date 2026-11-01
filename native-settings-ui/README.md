@@ -45,11 +45,18 @@ The normal installed profile supplies six absolute arguments:
 |6|Protected installed appearance-QML directory|
 
 Main requires exactly those six arguments and real/effective UID11050. Its Qt
-application name and desktop `StartupWMClass` are `pokelinux-settings`. The desktop
+application name and desktop `StartupWMClass` are `pokelinux-settings`. Its Wayland
+desktop ID is `org.omarchy.Settings`, matching the installed entry and phone window
+profile. The desktop
 entry calls fixed `settings-launch` at
 `/run/pokelinux/session/launch-settings.sock`; session configuration and launcher
 admission are separate from this application. The normal phone window requests
-full screen, without capture or test-control arguments.
+full screen, without capture or test-control arguments. The selected phone profile
+places it in the available work area, preserving the shell bar. The corrected
+identity and profile pass the actual installed ARM workarea check in cold20.
+The connection flow remains unverified: Main had already retired its worker and
+Settings correctly displayed Unavailable. See the
+[recorded layout and service failure](../docs/evidence/native-installed-consent-close-progress.json).
 
 ```sh
 cmake -S native-settings-ui -B settings-build -DCMAKE_BUILD_TYPE=Release

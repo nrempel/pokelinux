@@ -15,7 +15,8 @@ python3 -B tools/native-omarchy-menu/stage.py \
 
 For graphical profiles, use `compose.py` in place of manually merging this
 overlay. The base selects the original shell, staged theme and independent
-deployment files. Both output paths must be fresh, with existing parent
+deployment files, including an explicit mode0644
+`etc/pokelinux/normal-hypr.lua` row. Both output paths must be fresh, with existing parent
 directories, and separate from every input:
 
 ```sh
@@ -42,7 +43,8 @@ other differing collision, omitted component or unadapted menu component is
 refused before output creation. It reuses the generic installer's file/path and
 aggregate bounds. The generic installer remains unchanged and cannot identify
 assets omitted from both a selected tree and its manifest. The composer checks
-this menu component; other base selections remain the caller's responsibility.
+this menu component and the normal compositor's standard close fragment; other
+base selections remain the caller's responsibility.
 Neither the overlay nor the composer is a system image or a preview installer.
 
 `tests/composition.py` exercises actual theme, original-shell and native-menu
@@ -53,21 +55,27 @@ reproduces an earlier composer's acceptance of an unadapted AppLibrary after
 checking a different manifest. The current composer refuses all four invalid
 selections before output creation. The test substitutes only its private copy,
 triggers once at the actual preparation boundary, and restores the hook.
-Valid composition
-installs all 235 selected files, including equal wrapper/menu collisions and the
-explicit AppLibrary replacement. These are host staging checks without service,
-GUI, ARM or VM execution. [Hash-only results](../../docs/evidence/native-omarchy-graphical-composition.json).
+The earlier menu-only composition installed235 selected files.
+[Historical results](../../docs/evidence/native-omarchy-graphical-composition.json).
+The current normal-profile controls add the explicit compositor row and verify
+all236 files. Nine cases retain the menu checks, reproduce the missing close
+fragment, reject omitted config/duplicate/conflicting literal binding, and
+verify an already-composed config stays byte-identical. These are host staging
+checks without service, GUI, ARM or VM execution.
+[Close-composition results](../../docs/evidence/native-omarchy-close-composition.json).
 
 ```sh
 # Expected exit1: three graphical admission assertions fail with the generic installer.
 python3 -B tools/native-omarchy-menu/tests/composition.py \
   --archive /absolute/path/to/omarchy-public.tar.gz \
   --provisioner /absolute/path/to/omarchy-theme-provision \
+  --normal-config /absolute/path/to/missing-binding-normal-hypr.lua \
   --output /absolute/path/to/fresh-baseline-check --baseline
-# Expected exit0: all five cases and the explicit-replacement refusal pass.
+# Expected exit0: all nine cases and the explicit-replacement refusal pass.
 python3 -B tools/native-omarchy-menu/tests/composition.py \
   --archive /absolute/path/to/omarchy-public.tar.gz \
   --provisioner /absolute/path/to/omarchy-theme-provision \
+  --normal-config /absolute/path/to/missing-binding-normal-hypr.lua \
   --output /absolute/path/to/fresh-guarded-check
 ```
 
@@ -88,9 +96,13 @@ and output geometry; menu-only captures do not inherit that window qualification
 ## Standard close gesture
 
 `window-bindings.lua` supplies the standard Omarchy Super+W close action through
-the matched Hyprland Lua API. Append its bytes once to the selected compositor
-configuration when assembling the preview bundle, then regenerate that manifest
-row. The three-row menu overlay itself is unchanged.
+the matched Hyprland Lua API. The composer appends its exact source bytes once
+to the authenticated normal config and regenerates that manifest row. One exact
+existing fragment is kept unchanged; duplicates and another literal
+`hl.bind` for `SUPER + W` are refused before output creation. This is a check of
+the selected literal profile, not an arbitrary Lua parser or proof that a
+runtime executed the binding. The emitted provenance pins the config input and
+fragment bytes/hash/mode. The three-row menu overlay itself is unchanged.
 
 `close-reopen-consumer-pins.json` and its two patches reconstruct the later
 permission-withheld close/reopen consumers directly from the named public cold

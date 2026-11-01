@@ -34,6 +34,7 @@ int main(int argc, char **argv) {
     QGuiApplication::setApplicationName(QStringLiteral("pokelinux-settings"));
     QGuiApplication app(argc, argv);
     app.setQuitOnLastWindowClosed(false);
+    QGuiApplication::setDesktopFileName(QStringLiteral("org.omarchy.Settings"));
     QQuickStyle::setStyle("Basic");
     PhoneAppearanceClient appearance(QString::fromLocal8Bit(argv[4]));
     QQuickView view;
