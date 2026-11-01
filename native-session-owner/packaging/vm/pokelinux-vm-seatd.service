@@ -1,0 +1,25 @@
+[Unit]
+Description=VM-only seatd for the selected native compositor
+Before=pokelinux-session-owner.service
+PartOf=pokelinux-normal-session.target
+AssertPathExists=!/run/seatd.sock
+
+[Service]
+Type=exec
+User=root
+Group=root
+Environment=SEATD_VTBOUND=0
+ExecStart=/usr/bin/seatd -g alarm
+ExecStartPost=/usr/libexec/pokelinux/pokelinux-audio-backend-ready /run/seatd.sock $MAINPID 0
+Restart=no
+KillMode=control-group
+TimeoutStartSec=15s
+TimeoutStopSec=5s
+SendSIGKILL=yes
+NoNewPrivileges=yes
+StandardOutput=journal
+StandardError=journal
+UMask=0077
+
+[Install]
+WantedBy=pokelinux-normal-session.target

@@ -122,9 +122,21 @@ compositor log is empty; raw reports remain private.
 
 The earlier working ARM graphical fixture explicitly launched `seatd -g alarm`
 with `SEATD_VTBOUND=0` before UID/GID1000 Hyprland and observed seat0 opening.
-The installed profile omitted that prerequisite. The next repair must select an
-owned VM-only seat service, wait for its actual socket readiness before starting
-the compositor, and stop the compositor before the seat service. This supplies
+The installed profile omitted that prerequisite. The
+[optional VM seat profile](../native-session-owner/packaging/vm/README.md) now
+packages an owned seatd unit and owner dependency. It reuses the existing Rust
+helper to check the socket's MainPID/UID/GID before startup, orders compositor
+Stop before seatd, and refuses a pre-existing socket. Automatic restart is off;
+native socket removal must be observed, without a cleanup command deleting it.
+The next installed run reaches active seatd and session-owner units, followed by
+matching PID1 exit0 observations and native seat socket absence after Stop. The
+observer then blocks the functional sequence: its strict INI parser rejects valid
+repeated `Environment=` lines. Complete seat identity/socket qualification remains
+false because binding never finished. Guest shutdown, actual QEMU wait0 and outer
+cleanup qualify separately. The next run must repair only that observer and use
+the same image; no normal UI or screenshot is qualified yet.
+[Partial installed startup evidence](evidence/native-installed-vm-seat-startup.json).
+This supplies
 Linux display-device access beneath the Rust owner; it qualifies no Pixel display
 backend. Full installed UI/consent/connection and two-boot persistence remain open.
 

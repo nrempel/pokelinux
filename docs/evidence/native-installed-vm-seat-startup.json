@@ -1,0 +1,100 @@
+{
+  "schema": 1,
+  "scope": "Generic ARM installed VM seat startup repair; partial failed aggregate run, not full UI/connection/seat-observer or phone qualification.",
+  "prior_RED": "native-installed-display-seat-red.json",
+  "candidate_profile_patch_sha256": "2830d0fb322cd48aa25eb84d6267bd629bc8fd15bd6aa9323dedcb2036a18f11",
+  "image_preparation": {
+    "passed": true,
+    "image_sha256": "90664d99eb173cc6e5c747db8813ccaa99cde37cd0f055e89885c3d870a4e3c4",
+    "manifest": {
+      "bytes": 64199,
+      "sha256": "541e6574fab8b92980aba6aa6459de249fe9d0558c8c7757772240376364f702"
+    },
+    "result": {
+      "bytes": 301441,
+      "sha256": "ba603e9378d0d46037cdd5649e90bd924fafce6336f7f631a1d3e5f42429ca20"
+    },
+    "outer": {
+      "bytes": 124149,
+      "sha256": "a5ef1dd5d62fe8526bef3088a77bf492dc6368dbe20e086515e686d8962f5fd5"
+    },
+    "seatd_provider": {
+      "bytes": 67760,
+      "sha256": "20fbb79ec7633f7e0db4fb571853c73a050087f594ba8a2a9e989e59bf3b2bc3",
+      "ELF_machine": 183,
+      "loader_sha256": "8ee330d519e644c3c074d352c86163b3373b8514e90b5262784d12408ced7e5c",
+      "package": "seatd0.9.3-1",
+      "separate_from14_radio_tools": true,
+      "actual_seat_started": false
+    }
+  },
+  "cold_boot": {
+    "passed": false,
+    "selection_sha256": "641243296a2b168301340f72476fbe25f4c49ab0301ef32a06119bfed4e5a494",
+    "result": {
+      "bytes": 398839,
+      "sha256": "465b368c61aadc7bcab76b8988c7ae355d71ef61f6820fee3fbd3363a96936ab"
+    },
+    "boot_receipt": {
+      "bytes": 20889,
+      "sha256": "a074e0bb8843412da35fb7f40de236127d3f0936d7c0c44190d5d3e864dee438"
+    },
+    "outer_receipt": {
+      "bytes": 23180,
+      "sha256": "94100f14dfbfe774020822ccf479d9dccaf5d5831b5f93cca613efc329a8fbed"
+    },
+    "PID1_observations": {
+      "pokelinux-vm-seatd.service": {
+        "start": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "MainPID": 424,
+          "InvocationID": "48b9b5657acf4062b5cd6449a2cd3d67",
+          "NRestarts": 0
+        },
+        "stop": {
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "MainPID": 0,
+          "ExecMainPID": 424,
+          "ExecMainCode": 1,
+          "ExecMainStatus": 0,
+          "InvocationID": "48b9b5657acf4062b5cd6449a2cd3d67",
+          "Result": "success"
+        }
+      },
+      "pokelinux-session-owner.service": {
+        "start": {
+          "ActiveState": "active",
+          "SubState": "running",
+          "MainPID": 897,
+          "InvocationID": "4662329500d14679b8ae9cbaf758aec0",
+          "NRestarts": 0
+        },
+        "stop": {
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "MainPID": 0,
+          "ExecMainPID": 897,
+          "ExecMainCode": 1,
+          "ExecMainStatus": 0,
+          "InvocationID": "4662329500d14679b8ae9cbaf758aec0",
+          "Result": "success"
+        }
+      }
+    },
+    "failure": "Observer ConfigParser strict mode rejects valid repeated Environment directives before the normal permission/connection flow.",
+    "full_seat_observer_qualified": false,
+    "seat_socket_absent_after_Stop": true,
+    "guest_case_closure_qualified": true,
+    "actual_QEMU_waited": true,
+    "QEMU_exit_code": 0,
+    "outer_cleanup_qualified": true,
+    "exact_CID_absent": true
+  },
+  "limits": [
+    "PID1 startup/exit observations do not replace the still-unqualified complete seat identity/socket/Stop observer",
+    "No normal UI permission/connection flow or screenshot qualification in this run",
+    "Two-boot persistence and all physical-phone gates remain open"
+  ]
+}

@@ -67,9 +67,17 @@ is added. ARM compilation and the next installed execution now pass the logging
 boundary: the journal exposes Hyprland's early backend abort. A read-only extract
 of the closed disk's named crash report records missing `/run/seatd.sock`, no
 logind primary session, and failed DRM seat initialization. The earlier working
-ARM fixture explicitly started seatd; the installed profile omitted it. Add an
-explicit owned VM seat dependency, with actual socket readiness before the owner
-and reverse shutdown ordering, then repeat the same installed flow. The failed
+ARM fixture explicitly started seatd; the installed profile omitted it. The
+[optional VM seat profile](../native-session-owner/packaging/vm/README.md) now
+packages that dependency using the existing Rust peer-checked readiness helper
+and reverse shutdown ordering. The next actual installed boot reaches active
+seatd and session-owner units, both with matching PID1 normal exit0 observations
+after Stop. It then fails in the observer's strict INI parser on valid repeated
+`Environment=` directives, before normal UI actions. Full seat identity/socket
+qualification remains false because binding did not complete. Repair that
+observer and repeat on the unchanged image; no new backend change is indicated.
+[Partial seat startup evidence](evidence/native-installed-vm-seat-startup.json).
+The earlier failed
 boot has normal guest shutdown, actual QEMU wait0 and qualified outer cleanup;
 UI consent/connection and persistence remain unqualified.
 [Logging regression](evidence/native-compositor-inherited-diagnostics.json) and

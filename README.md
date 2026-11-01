@@ -18,9 +18,9 @@ presses. The ARM consent app and session owner also pass build and loader checks
 Sounds and the current audio/theme helpers also pass ARM build and loader checks.
 Installed theme startup now passes after fixing a missing runtime-directory
 dependency. Simulated-radio provisioning now starts and stops successfully. The
-combined ARM boot now exposes a missing display-seat dependency: Hyprland cannot
-open a seat and aborts before desktop readiness. Installed UI consent and reboot
-persistence remain open.
+combined ARM boot now starts the desktop session after adding an explicit VM
+seat service. The permission/connection flow is still blocked by a test-runner
+parsing error; installed UI consent and reboot persistence remain open.
 [Cold-boot status](docs/native-installed-wireless-coldboot.md).
 [Permission progress](docs/native-network-permission-authority.md).
 
