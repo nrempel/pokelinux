@@ -1,5 +1,11 @@
 # Native one-shot wireless operations
 
+Retained radio refresh failures now include the observation phase, command
+transaction state and composed before/after-profile position. The first error,
+retirement and deadlines are preserved; completed framing does not authorize
+recovery. Actual host controls pass; installed ARM diagnostics remain open.
+[Scope and evidence](../docs/native-wireless-refresh-diagnostics.md).
+
 Rust Linux `nl80211` operations for a newly created, exclusively administered
 radio epoch: discovery, explicit open association and explicit Disconnect.
 There are no credentials, IP configuration, automatic retry or background

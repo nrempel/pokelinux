@@ -1,4 +1,7 @@
-use crate::{Bss, Completed, Error, Failure, RadioFact, RadioTarget, Request};
+use crate::{
+    Bss, CommandTransaction, Completed, Error, Failure, RadioFact, RadioObservationPhase,
+    RadioRefreshDiagnostic, RadioTarget, Request,
+};
 use netlink_sys::{Socket, protocols};
 use rustix::fd::OwnedFd;
 use rustix::{event, io::Errno, net, time};
@@ -252,6 +255,8 @@ struct Connection {
     socket: Socket,
     port: u32,
     sequence: u32,
+    transaction: std::cell::Cell<CommandTransaction>,
+    request_flags: Option<u16>,
 }
 impl Connection {
     fn new() -> Result<Self> {
@@ -268,6 +273,8 @@ impl Connection {
             socket,
             port,
             sequence: 0,
+            transaction: std::cell::Cell::new(CommandTransaction::NotSent),
+            request_flags: Some(0),
         })
     }
     fn request(
@@ -279,6 +286,13 @@ impl Connection {
         attrs: &[u8],
     ) -> Result<Vec<u8>> {
         self.sequence = self.sequence.checked_add(1).ok_or(Failure::Limit)?;
+        if self.transaction.get() == CommandTransaction::Pending {
+            // A new request cannot erase an older unvalidated expectation.
+            self.request_flags = None;
+        } else {
+            self.request_flags = Some(flags);
+            self.transaction.set(CommandTransaction::NotSent);
+        }
         let mut out = Vec::new();
         out.extend_from_slice(
             &u32::try_from(20 + attrs.len())
@@ -295,6 +309,8 @@ impl Connection {
     }
     fn send(&self, request: &[u8], budget: &Budget) -> Result<()> {
         budget.fence()?;
+        // Conservative even if sendto itself fails or its post-fence expires.
+        self.transaction.set(CommandTransaction::Pending);
         let n = net::sendto(
             &self.socket,
             request,
@@ -395,13 +411,26 @@ impl Connection {
         let frame = &messages[0];
         self.correlated(frame)?;
         if frame.kind == ERROR {
-            return Err(error_reply(frame, &request)?.ok_or(Failure::Malformed)?);
+            let failure = error_reply(frame, &request)?.ok_or(Failure::Malformed)?;
+            self.complete(0);
+            return Err(failure);
         }
         if frame.flags & MULTI != 0 {
             return Err(Failure::Malformed);
         }
         genl(frame, kind, version, reply_cmd)?;
+        self.complete(0);
         Ok(frame.body[4..].to_vec())
+    }
+    fn complete(&self, expected_flags: u16) {
+        // Current requests use exactly no flags, ACK, or DUMP. A combined or
+        // unknown expectation remains Pending, including DUMP with an ACK.
+        if matches!(expected_flags, 0 | ACK | DUMP)
+            && self.request_flags == Some(expected_flags)
+            && self.transaction.get() == CommandTransaction::Pending
+        {
+            self.transaction.set(CommandTransaction::Completed);
+        }
     }
     fn correlated(&self, frame: &Frame<'_>) -> Result<()> {
         if frame.seq != self.sequence || (frame.port != 0 && frame.port != self.port) {
@@ -417,7 +446,9 @@ impl Connection {
         }
         let frame = &messages[0];
         self.correlated(frame)?;
-        if let Some(error) = error_reply(frame, request)? {
+        let error = error_reply(frame, request)?;
+        self.complete(ACK);
+        if let Some(error) = error {
             return Err(error);
         }
         Ok(())
@@ -670,6 +701,7 @@ fn dump(
                 if frame.body.len() != 4 || u32n(frame.body)? != 0 || i + 1 != messages.len() {
                     return Err(Failure::Loss);
                 }
+                connection.complete(DUMP);
                 budget.fence()?;
                 return Ok(out);
             }
@@ -1050,6 +1082,7 @@ fn association_readback(
                 if frame.body.len() != 4 || u32n(frame.body)? != 0 || i + 1 != messages.len() {
                     return Err(Failure::Loss);
                 }
+                connection.complete(DUMP);
                 budget.fence()?;
                 return Ok(associated);
             }
@@ -1134,6 +1167,7 @@ struct RadioState {
     thread: std::thread::ThreadId,
     associated: bool,
     retired: Option<Error>,
+    refresh_failure_context: Option<RadioRefreshDiagnostic>,
 }
 impl RadioState {
     fn new() -> Self {
@@ -1141,6 +1175,7 @@ impl RadioState {
             thread: std::thread::current().id(),
             associated: false,
             retired: None,
+            refresh_failure_context: None,
         }
     }
     fn check_thread(&mut self) -> std::result::Result<(), Error> {
@@ -1156,6 +1191,12 @@ impl RadioState {
         *self
             .retired
             .get_or_insert_with(|| crate::classify_failure(failure, dispatched))
+    }
+    fn fail_refresh(&mut self, failure: Failure, context: RadioRefreshDiagnostic) -> Error {
+        if self.retired.is_none() {
+            self.refresh_failure_context = Some(context);
+        }
+        self.fail(failure, false)
     }
 }
 
@@ -1174,6 +1215,7 @@ pub struct RadioEpoch {
     selected: Identity,
     target: RadioTarget,
     state: RadioState,
+    phase: RadioObservationPhase,
 }
 impl RadioEpoch {
     /// Attach without changing the radio, requiring an initially disconnected
@@ -1222,6 +1264,7 @@ impl RadioEpoch {
             selected,
             target,
             state,
+            phase: RadioObservationPhase::NamespaceBefore,
         };
         epoch.observe(false, &mut budget)?;
         Ok(epoch)
@@ -1251,18 +1294,26 @@ impl RadioEpoch {
         )
     }
     fn observe(&mut self, expected: bool, budget: &mut Budget) -> Result<RadioFact> {
+        self.phase = RadioObservationPhase::NamespaceBefore;
         self.namespace.check()?;
+        self.phase = RadioObservationPhase::QuietBefore;
         self.quiet(expected, budget)?;
         // A dump is not an atomic kernel snapshot. Conservatively date the fact
         // before the first applicable readback, and fence both ends with events.
         let observed_at_boottime_ns = boottime_ns();
+        self.phase = RadioObservationPhase::InterfaceBefore;
         self.check_interface(budget)?;
+        self.phase = RadioObservationPhase::AssociationDump;
         let actual = association_readback(&mut self.command, &self.family, self.selected, budget)
             .map_err(|f| association_context(f, 3))?;
         check_radio_association(&self.target, expected, actual.as_ref())?;
+        self.phase = RadioObservationPhase::InterfaceAfter;
         self.check_interface(budget)?;
+        self.phase = RadioObservationPhase::QuietAfter;
         self.quiet(expected, budget)?;
+        self.phase = RadioObservationPhase::NamespaceAfter;
         self.namespace.check()?;
+        self.phase = RadioObservationPhase::FinalFence;
         budget.fence()?;
         Ok(RadioFact {
             associated: expected,
@@ -1284,7 +1335,20 @@ impl RadioEpoch {
     pub fn refresh(&mut self, until: u64) -> std::result::Result<RadioFact, Error> {
         let mut budget = self.budget(until)?;
         self.observe(self.state.associated, &mut budget)
-            .map_err(|failure| self.state.fail(failure, false))
+            .map_err(|failure| {
+                self.state.fail_refresh(
+                    failure,
+                    RadioRefreshDiagnostic {
+                        phase: self.phase,
+                        transaction: self.command.transaction.get(),
+                    },
+                )
+            })
+    }
+    /// Snapshot of the first failed refresh that reached observation. Admission
+    /// failures may have no context. This grants no freshness or retry authority.
+    pub fn refresh_failure_context(&self) -> Option<RadioRefreshDiagnostic> {
+        self.state.refresh_failure_context
     }
     /// Make at most one explicitly requested CONNECT or DISCONNECT. A repeated
     /// request for the confirmed state only refreshes readback. No retry, rollback,
@@ -1523,6 +1587,75 @@ pub(crate) fn disconnect(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn nlctrl_query() -> Vec<u8> {
+        let mut query = Vec::new();
+        // Query the built-in family by ID: no module-name lookup or autoload.
+        put(&mut query, 1, &CTRL.to_ne_bytes());
+        query
+    }
+
+    fn original_timer_expired(budget: &Budget) {
+        let mut fds = [event::PollFd::new(&budget.timer, event::PollFlags::IN)];
+        event::poll(
+            &mut fds,
+            Some(&event::Timespec {
+                tv_sec: 1,
+                tv_nsec: 0,
+            }),
+        )
+        .unwrap();
+        assert!(fds[0].revents().contains(event::PollFlags::IN));
+        assert_eq!(budget.fence(), Err(Failure::Expired));
+    }
+
+    #[test]
+    fn radio_diagnostic_real_nlctrl_expired_before_send_stays_not_sent() {
+        let mut command = Connection::new().unwrap();
+        let packet = command.request(CTRL, 2, 3, 0, &nlctrl_query()).unwrap();
+        let budget = Budget::new(boottime_ns().saturating_sub(1)).unwrap();
+        assert_eq!(command.send(&packet, &budget), Err(Failure::Expired));
+        assert_eq!(command.transaction.get(), CommandTransaction::NotSent);
+    }
+
+    #[test]
+    fn radio_diagnostic_real_nlctrl_expired_pending_reply_stays_pending() {
+        let mut command = Connection::new().unwrap();
+        let packet = command.request(CTRL, 2, 3, 0, &nlctrl_query()).unwrap();
+        let mut budget = Budget::new(boottime_ns() + 100_000_000).unwrap();
+        command.send(&packet, &budget).unwrap();
+        original_timer_expired(&budget);
+        // Pending describes the unvalidated transaction, not whether the
+        // kernel has already queued its reply. Expiry never drains that reply.
+        assert_eq!(command.receive(&mut budget), Err(Failure::Expired));
+        assert_eq!(
+            command.transaction.get(),
+            CommandTransaction::Pending,
+            "dispatched read-only query without terminal validation must be Pending"
+        );
+    }
+
+    #[test]
+    fn radio_diagnostic_real_nlctrl_completed_then_final_fence_stays_completed() {
+        let mut command = Connection::new().unwrap();
+        let mut budget = Budget::new(boottime_ns() + 100_000_000).unwrap();
+        let data = command
+            .single(CTRL, 2, 3, 1, &nlctrl_query(), &mut budget)
+            .unwrap();
+        let attrs = attributes(&data).unwrap();
+        assert_eq!(
+            u16n(raw(required(&attrs, 1).unwrap()).unwrap()).unwrap(),
+            CTRL
+        );
+        assert_eq!(raw(required(&attrs, 2).unwrap()).unwrap(), b"nlctrl\0");
+        original_timer_expired(&budget);
+        assert_eq!(
+            command.transaction.get(),
+            CommandTransaction::Completed,
+            "validated single reply without expected ACK or DONE must be Completed"
+        );
+    }
+
     fn radio_target() -> crate::RadioTarget {
         let namespace = Namespace::retain().unwrap();
         crate::RadioTarget {
@@ -1533,6 +1666,66 @@ mod tests {
             bssid: [2, 0, 0, 0, 0, 1],
             ssid: vec![0xff, 0, 0x80],
         }
+    }
+    #[test]
+    fn radio_diagnostic_real_nlctrl_receiving_bytes_does_not_complete() {
+        let mut command = Connection::new().unwrap();
+        let packet = command.request(CTRL, 2, 3, 0, &nlctrl_query()).unwrap();
+        let mut budget = Budget::new(boottime_ns() + 100_000_000).unwrap();
+        command.send(&packet, &budget).unwrap();
+        let data = command.receive(&mut budget).unwrap();
+        let replies = frames(&data).unwrap();
+        assert_eq!(replies.len(), 1);
+        command.correlated(&replies[0]).unwrap();
+        genl(&replies[0], CTRL, 2, 1).unwrap();
+        assert_eq!(command.transaction.get(), CommandTransaction::Pending);
+    }
+    #[test]
+    fn radio_diagnostic_completion_requires_matching_unambiguous_flags() {
+        let mut command = Connection::new().unwrap();
+        command.complete(0);
+        assert_eq!(command.transaction.get(), CommandTransaction::NotSent);
+        for flags in [ACK | DUMP, 0x8000] {
+            command.request_flags = Some(flags);
+            command.transaction.set(CommandTransaction::Pending);
+            for terminal in [0, ACK, DUMP, flags] {
+                command.complete(terminal);
+                assert_eq!(command.transaction.get(), CommandTransaction::Pending);
+            }
+        }
+        for flags in [0, ACK, DUMP] {
+            command.request_flags = Some(flags);
+            command.transaction.set(CommandTransaction::Pending);
+            command.complete(flags);
+            assert_eq!(command.transaction.get(), CommandTransaction::Completed);
+        }
+        command.transaction.set(CommandTransaction::Pending);
+        command.request(CTRL, 2, 3, 0, &nlctrl_query()).unwrap();
+        command.complete(0);
+        assert_eq!(command.transaction.get(), CommandTransaction::Pending);
+    }
+    #[test]
+    fn radio_diagnostic_first_refresh_context_preserves_retirement() {
+        let first = RadioRefreshDiagnostic {
+            phase: RadioObservationPhase::AssociationDump,
+            transaction: CommandTransaction::Pending,
+        };
+        let later = RadioRefreshDiagnostic {
+            phase: RadioObservationPhase::FinalFence,
+            transaction: CommandTransaction::Completed,
+        };
+        let mut state = RadioState::new();
+        assert_eq!(
+            state.fail_refresh(Failure::Expired, first),
+            Error::Failed(Failure::Expired)
+        );
+        assert_eq!(state.refresh_failure_context, Some(first));
+        assert_eq!(
+            state.fail_refresh(Failure::Loss, later),
+            Error::Failed(Failure::Expired)
+        );
+        assert_eq!(state.refresh_failure_context, Some(first));
+        assert_eq!(state.check_thread(), Err(Error::Failed(Failure::Expired)));
     }
     #[test]
     fn retained_radio_validates_original_one_second_cutoff_and_target_before_sockets() {

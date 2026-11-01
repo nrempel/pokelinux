@@ -20,8 +20,11 @@ The bounded journal-stream diagnostic now passes actual host RED→GREEN and all
 seven selected pipe/socket controls. It adds one nonblocking Unix stream send,
 with no delivery guarantee or lifecycle change. Installed journal delivery is
 still unexecuted. [Diagnostic evidence](evidence/native-connectivity-journal-stream.json).
-Next qualify precise stage/transaction diagnostics, then rebuild the affected
-worker and verify the installed error path with existing cutoffs and no retry.
+Precise stage/transaction diagnostics now pass the unchanged three real-kernel
+RED controls and 44 additional wireless/backend checks. Both crates pass strict
+Clippy and Release libtest compilation. [Diagnostic scope](native-wireless-refresh-diagnostics.md).
+Next rebuild ARM Main/worker from the combined published sources and verify the
+installed error path with existing cutoffs and no retry.
 Complete boot 1 before admitting boot 2 on the same disk. After the two-boot tracer,
 qualify the current Main/worker virtual pair and packet contract on the matched
 Google kernel. Its controller must account for `PROC_CHILDREN=n`; existing native

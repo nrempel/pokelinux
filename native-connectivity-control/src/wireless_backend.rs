@@ -6,7 +6,9 @@ use crate::{
     kernel::{self, Error},
 };
 use pokelinux_network_state::{NamespaceIdentity, ObserveError};
-use pokelinux_wireless_scan::{self as wireless, RadioEpoch, RadioFact, RadioTarget};
+use pokelinux_wireless_scan::{
+    self as wireless, RadioEpoch, RadioFact, RadioRefreshDiagnostic, RadioTarget,
+};
 use std::thread::ThreadId;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -26,10 +28,23 @@ pub enum ProfileOperation {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum RadioBracket {
+    BeforeProfile,
+    AfterProfile,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct RadioRefreshContext {
+    pub bracket: RadioBracket,
+    pub observation: Option<RadioRefreshDiagnostic>,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum ComponentFailure {
     Radio {
         operation: RadioOperation,
         error: wireless::Error,
+        refresh: Option<RadioRefreshContext>,
     },
     Profile {
         operation: ProfileOperation,
@@ -48,7 +63,11 @@ impl Failure {
     fn radio(operation: RadioOperation, error: wireless::Error) -> Self {
         Self {
             classification: radio_error(error),
-            component: Some(ComponentFailure::Radio { operation, error }),
+            component: Some(ComponentFailure::Radio {
+                operation,
+                error,
+                refresh: None,
+            }),
         }
     }
     fn profile(operation: ProfileOperation, error: Error) -> Self {
@@ -71,8 +90,27 @@ impl From<Error> for Failure {
 struct Diagnostic(Option<ComponentFailure>);
 impl Diagnostic {
     fn radio(&mut self, operation: RadioOperation, error: wireless::Error) -> wireless::Error {
-        self.0
-            .get_or_insert(ComponentFailure::Radio { operation, error });
+        self.0.get_or_insert(ComponentFailure::Radio {
+            operation,
+            error,
+            refresh: None,
+        });
+        error
+    }
+    fn radio_refresh(
+        &mut self,
+        bracket: RadioBracket,
+        observation: Option<RadioRefreshDiagnostic>,
+        error: wireless::Error,
+    ) -> wireless::Error {
+        self.0.get_or_insert(ComponentFailure::Radio {
+            operation: RadioOperation::Refresh,
+            error,
+            refresh: Some(RadioRefreshContext {
+                bracket,
+                observation,
+            }),
+        });
         error
     }
     fn profile(&mut self, operation: ProfileOperation, error: Error) -> Error {
@@ -254,7 +292,7 @@ fn retained_radio_error(error: wireless::Error) -> Error {
 // This private seam exercises only sequencing and composed uncertainty. The
 // production implementation always delegates to the two retained primitives.
 trait Components {
-    fn radio_refresh(&mut self, until: u64) -> Result<RadioFact, Error>;
+    fn radio_refresh(&mut self, bracket: RadioBracket, until: u64) -> Result<RadioFact, Error>;
     fn profile_refresh(&mut self, until: u64) -> Result<ProfileFact, Error>;
     fn associate(&mut self, value: bool, until: u64) -> Result<RadioFact, Error>;
     fn configure(&mut self, value: bool, until: u64) -> Result<ProfileFact, Error>;
@@ -266,9 +304,10 @@ struct Retained<'a> {
     diagnostic: &'a mut Diagnostic,
 }
 impl Components for Retained<'_> {
-    fn radio_refresh(&mut self, until: u64) -> Result<RadioFact, Error> {
+    fn radio_refresh(&mut self, bracket: RadioBracket, until: u64) -> Result<RadioFact, Error> {
         self.radio.refresh(until).map_err(|error| {
-            retained_radio_error(self.diagnostic.radio(RadioOperation::Refresh, error))
+            let observation = self.radio.refresh_failure_context();
+            retained_radio_error(self.diagnostic.radio_refresh(bracket, observation, error))
         })
     }
     fn profile_refresh(&mut self, until: u64) -> Result<ProfileFact, Error> {
@@ -352,9 +391,9 @@ fn observe(
     connected: bool,
     until: u64,
 ) -> Result<WirelessFact, Error> {
-    let first = parts.radio_refresh(until)?;
+    let first = parts.radio_refresh(RadioBracket::BeforeProfile, until)?;
     let profile = parts.profile_refresh(until)?;
-    let last = parts.radio_refresh(until)?;
+    let last = parts.radio_refresh(RadioBracket::AfterProfile, until)?;
     let fact = combine(expected, connected, first, &profile, last)?;
     parts.before(until)?;
     Ok(fact)
@@ -474,6 +513,7 @@ mod tests {
             Some(ComponentFailure::Radio {
                 operation: RadioOperation::Refresh,
                 error: raw,
+                refresh: None,
             })
         );
 
@@ -488,6 +528,7 @@ mod tests {
             Some(ComponentFailure::Radio {
                 operation: RadioOperation::Disconnect,
                 error: raw,
+                refresh: None,
             })
         );
     }
@@ -526,6 +567,54 @@ mod tests {
         );
     }
 
+    #[test]
+    fn radio_refresh_context_preserves_bracket_first_error_and_classification() {
+        let observation = RadioRefreshDiagnostic {
+            phase: wireless::RadioObservationPhase::AssociationDump,
+            transaction: wireless::CommandTransaction::Pending,
+        };
+        for bracket in [RadioBracket::BeforeProfile, RadioBracket::AfterProfile] {
+            for changed in [false, true] {
+                let raw = wireless::Error::Failed(wireless::Failure::Expired);
+                let mut diagnostic = Diagnostic::default();
+                let returned = diagnostic.radio_refresh(bracket, Some(observation), raw);
+                assert_eq!(returned, raw);
+                diagnostic.radio(RadioOperation::Disconnect, wireless::Error::Unavailable);
+                let mapped = ActionProgress { changed }.failure(retained_radio_error(returned));
+                assert_eq!(
+                    diagnostic.finish(mapped),
+                    Failure {
+                        classification: if changed {
+                            Error::Uncertain
+                        } else {
+                            Error::Deadline
+                        },
+                        component: Some(ComponentFailure::Radio {
+                            operation: RadioOperation::Refresh,
+                            error: raw,
+                            refresh: Some(RadioRefreshContext {
+                                bracket,
+                                observation: Some(observation),
+                            }),
+                        }),
+                    }
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn radio_refresh_brackets_surround_the_same_profile_read() {
+        let mut fake = Fake::new(false);
+        let mut terminal = false;
+        refresh_parts(&mut fake, &expected(), false, &mut terminal, until()).unwrap();
+        assert_eq!(
+            fake.brackets,
+            [RadioBracket::BeforeProfile, RadioBracket::AfterProfile]
+        );
+        assert!(!terminal);
+    }
+
     #[derive(Clone, Copy, Debug, PartialEq, Eq)]
     enum Step {
         Radio,
@@ -542,6 +631,7 @@ mod tests {
         associated: bool,
         configured: bool,
         calls: Vec<(Step, u64)>,
+        brackets: Vec<RadioBracket>,
         fail_at: Option<(usize, Error)>,
         contradict_at: Option<usize>,
         radio_times: VecDeque<u64>,
@@ -554,6 +644,7 @@ mod tests {
                 associated: connected,
                 configured: connected,
                 calls: vec![],
+                brackets: vec![],
                 fail_at: None,
                 contradict_at: None,
                 radio_times: [100, 300, 400, 600].into(),
@@ -587,7 +678,8 @@ mod tests {
         }
     }
     impl Components for Fake {
-        fn radio_refresh(&mut self, until: u64) -> Result<RadioFact, Error> {
+        fn radio_refresh(&mut self, bracket: RadioBracket, until: u64) -> Result<RadioFact, Error> {
+            self.brackets.push(bracket);
             self.call(Step::Radio, until)?;
             Ok(self.radio_fact())
         }

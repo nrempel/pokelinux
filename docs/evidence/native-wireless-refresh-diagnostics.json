@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "scope": "Native x86_64 read-only generic-netlink controls and diagnostic state only; no physical or simulated Wi-Fi association qualification.",
+  "red": {
+    "compiler_selection": {
+      "bytes": 363547,
+      "sha256": "52a8a4d849a95a15f818e791b0fd8ed69415b60492f73c0547fffbc75c3c4f43"
+    },
+    "compiler_receipt": {
+      "bytes": 20023,
+      "sha256": "91675500289ae11444470a448e63359aac04da4b6f7cce177d0a2f7d996440e5"
+    },
+    "runtime_selection": {
+      "bytes": 4391,
+      "sha256": "7d843cee349fddfd078478c381339b428019312c9108127040b13c07c566cfd4"
+    },
+    "runtime_receipt": {
+      "bytes": 19801,
+      "sha256": "fa99f8a8f8b9d115a869d951ea5d8cf5ec6a03c26d4df3638b3a33517db868c0"
+    },
+    "actual_test_exits": [
+      0,
+      101,
+      101
+    ],
+    "query": "Built-in nlctrl family by numeric ID; no module-name lookup, ACK, dump or multicast subscription.",
+    "actual_before_send": "Expired, NotSent",
+    "actual_pending_reply": "Expired, assertion NotSent != Pending",
+    "actual_completed_reply": "Validated nlctrl reply then original cutoff expiry, assertion NotSent != Completed",
+    "original_timed_test_budget_ns": 100000000,
+    "capabilities_zero": true,
+    "cleanup_independently_verified": true
+  },
+  "excluded_setup_failure": {
+    "compiler_receipt": {
+      "bytes": 19818,
+      "sha256": "1a63b032edde937ee5d93b1b784a5fb18d4e15159a0a32ea8ddf8254af925b4e"
+    },
+    "reason": "Formatting-only assertion layout mismatch; compiler/test execution not reached."
+  },
+  "green": {
+    "compiler_selection": {
+      "bytes": 472831,
+      "sha256": "36afb88e00e85c6d2f47728864bde9bc52644280725fef6a9b2a66ce73005c8a"
+    },
+    "compiler_receipt": {
+      "bytes": 20070,
+      "sha256": "32d2fdb822c1198174307938a1eb2467fa7b6ed186cde207de07eb4da273ae17"
+    },
+    "runtime_selection": {
+      "bytes": 11719,
+      "sha256": "4b1c7080aaaf61b7f3fb0f4bcb9f303e715c8c1e3a898706e10f9bd3c355cb5d"
+    },
+    "runtime_receipt": {
+      "bytes": 20029,
+      "sha256": "981438981ac90330dbd2ae024974eebfa83169402744243f5d6588982eb8ae61"
+    },
+    "qualified_runtime": {
+      "bytes": 475,
+      "sha256": "8f4e278121a5ce9c907d179029aa44d25616f598f8b22bf6a081b8a51c20aaf2"
+    },
+    "original_controls_exits": [
+      0,
+      0,
+      0
+    ],
+    "frozen_red_controls_unchanged": true,
+    "other_wireless_tests": 31,
+    "backend_tests": 13,
+    "total_tests": 47,
+    "actual_readonly_nlctrl_tests": 4,
+    "authored_flag_latch_and_backend_controls_are_separate": true,
+    "capabilities_zero": true,
+    "fmt_and_strict_all_target_clippy_both_crates": true,
+    "release_libtest_compilation_both_crates": true,
+    "exact_compiled_sources_published": true,
+    "all_outer_waits_and_pipe_EOF_within_original_cutoffs": true,
+    "no_adopted_children": true,
+    "exact_container_absence": true,
+    "unchanged_inputs": true
+  },
+  "limits": [
+    "Completed describes terminal command framing, not valid radio identity, fresh state, event-stream cleanliness or retry permission.",
+    "No retry, replacement socket, deadline extension or recovery policy change.",
+    "The failing installed refresh phase remains unknown until a later ARM run emits it."
+  ],
+  "sources": {
+    "native-wireless-scan/src/lib.rs": {
+      "bytes": 4711,
+      "sha256": "928321e24f17fdb0db3615071ad154241845a1c6504e3b3d64253034d0de9350"
+    },
+    "native-wireless-scan/src/wire.rs": {
+      "bytes": 79455,
+      "sha256": "0eca264b875d06d766f59ff4548f63ed52f7581fca7293d20bf694e838472318"
+    },
+    "native-connectivity-control/src/wireless_backend.rs": {
+      "bytes": 34229,
+      "sha256": "9aa40cf9a6dcc8f41768bf4391caf0831f1a4c87843249e3bf3d1b5827902eb1"
+    }
+  }
+}

@@ -1,5 +1,11 @@
 # Rust connectivity control
 
+Retained radio refresh failures now include the observation phase, command
+transaction state and composed before/after-profile position. The first error,
+retirement and deadlines are preserved; completed framing does not authorize
+recovery. Actual host controls pass; installed ARM diagnostics remain open.
+[Scope and evidence](../docs/native-wireless-refresh-diagnostics.md).
+
 Worker failures attempt a bounded diagnostic before error propagation drops the
 parent connection. FIFO output uses one independent nonblocking write; Unix stream
 output uses one nonblocking, signal-suppressed send without changing shared flags.

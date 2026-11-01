@@ -32,6 +32,35 @@ pub struct RadioFact {
     pub wdev: u64,
 }
 
+/// Framing progress for the retained command socket's current transaction.
+/// Completed means its expected terminal reply was validated, not that radio
+/// identity, attributes or MLME checks passed. It grants no permission to retry.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum CommandTransaction {
+    NotSent,
+    Pending,
+    Completed,
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum RadioObservationPhase {
+    NamespaceBefore,
+    QuietBefore,
+    InterfaceBefore,
+    AssociationDump,
+    InterfaceAfter,
+    QuietAfter,
+    NamespaceAfter,
+    FinalFence,
+}
+
+/// First failed refresh observation only; no payload, new clock or authority.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct RadioRefreshDiagnostic {
+    pub phase: RadioObservationPhase,
+    pub transaction: CommandTransaction,
+}
+
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub struct Request {
     pub ifindex: u32,
